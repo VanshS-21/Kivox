@@ -13,10 +13,10 @@ export default function ContactPage() {
       <Container size="narrow">
         <div className="flex flex-col gap-3">
           <Eyebrow>Inquiry</Eyebrow>
-          <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          <h1 className="studio-h1 font-sans font-bold text-foreground sm:text-5xl">
             {contact.title}
           </h1>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">{contact.intro}</p>
+          <p className="max-w-2xl text-base leading-8 text-muted-foreground studio-lede">{contact.intro}</p>
         </div>
 
         <div className="mt-10">
@@ -35,10 +35,10 @@ export default function ContactPage() {
                 "Propose scope + timeline + the next call.",
               ].map((line, idx) => (
                 <li key={line} className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface-0 font-mono text-xs text-foreground shadow-[var(--shadow-1)]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface-0 font-mono text-xs text-foreground shadow-(--shadow-1)">
                     {String(idx + 1).padStart(2, "0")}
                   </div>
-                  <div className="pt-1 text-sm leading-6 text-muted-foreground">{line}</div>
+                  <div className="pt-1 text-sm leading-7 text-muted-foreground">{line}</div>
                 </li>
               ))}
             </ol>

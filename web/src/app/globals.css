@@ -1,80 +1,139 @@
 @import "tailwindcss";
 
 /* -------------------------------------------------------------------------- */
-/* Design tokens (base)                                                        */
+/* Design tokens - Warm Craft Editorial                                        */
 /* -------------------------------------------------------------------------- */
 :root {
   color-scheme: light;
 
-  --bg: oklch(0.985 0.01 250);
-  --fg: oklch(0.18 0.02 255);
-  --muted: oklch(0.5 0.02 255);
-  --muted-fg: color-mix(in oklab, var(--fg) 74%, var(--muted));
+  /* Light mode (secondary) */
+  --bg-primary: oklch(0.98 0.01 85);        /* Warm white #fafaf8 */
+  --bg-elevated: oklch(1 0 0);              /* Pure white */
+  --bg-surface: oklch(0.96 0.01 85);        /* Subtle gray */
+  --bg-surface-alt: oklch(0.94 0.01 85);    /* Alternate surface */
+  
+  --fg-primary: oklch(0.10 0 0);            /* Near black #1a1a1a */
+  --fg-muted: oklch(0.10 0 0 / 0.65);       /* Muted text */
+  --fg-subtle: oklch(0.10 0 0 / 0.4);       /* Very subtle text */
 
-  --surface-0: var(--bg);
-  --surface-1: oklch(0.995 0.006 250);
-  --surface-2: oklch(0.975 0.01 250);
-  --surface-3: oklch(0.955 0.012 250);
+  --accent: oklch(0.72 0.18 65);            /* Warm Amber #ff9500 */
+  --accent-hover: oklch(0.78 0.18 65);      /* Lighter amber #ffaa33 */
+  --accent-glow: oklch(0.72 0.18 65 / 0.33);
+  --accent-muted: oklch(0.72 0.18 65 / 0.12);
+  --accent-ink: oklch(0 0 0);               /* Black text on amber */
 
-  --border: oklch(0.88 0.01 250);
-  --border-soft: color-mix(in oklab, var(--border) 70%, transparent);
-  --border-strong: color-mix(in oklab, var(--border) 92%, transparent);
-  --elevation-1: 0 1px 0 0 color-mix(in oklab, var(--fg) 8%, transparent),
-    0 18px 40px -30px color-mix(in oklab, black 18%, transparent);
-  --elevation-2: 0 1px 0 0 color-mix(in oklab, var(--fg) 10%, transparent),
-    0 30px 70px -40px color-mix(in oklab, black 26%, transparent);
-  --shadow-rest: var(--elevation-1);
-  --shadow-hover: var(--elevation-2);
+  --border: oklch(0 0 0 / 0.08);
+  --border-strong: oklch(0 0 0 / 0.12);
+  --border-soft: oklch(0 0 0 / 0.05);
 
-  --accent: oklch(0.92 0.18 104);
-  --accent-ink: oklch(0.12 0.02 255);
+  --shadow-rest: 
+    0 1px 0 0 oklch(1 0 0 / 0.08),
+    0 20px 60px -30px oklch(0 0 0 / 0.4);
+  --shadow-hover:
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
+    0 20px 60px oklch(0.72 0.18 65 / 0.06);
+  --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
+  --shadow-strong:
+    0 1px 0 0 oklch(1 0 0 / 0.12),
+    0 40px 90px -60px oklch(0 0 0 / 0.7);
 
-  --r-sm: 12px;
-  --r-md: 18px;
-  --r-lg: 24px;
+  /* Project-specific accents */
+  --project-hospital: oklch(0.68 0.15 240);  /* Blue */
+  --project-hotel: oklch(0.80 0.12 85);      /* Gold */
+  --project-school: oklch(0.75 0.18 155);    /* Green */
+  --project-fitness: oklch(0.68 0.20 300);   /* Purple */
+  --project-cafe: oklch(0.65 0.22 25);       /* Coral */
 
-  /* Signature intensity knobs */
-  --studio-grid-opacity: 0.35;
-  --studio-noise-opacity: 0.035;
-  --studio-mask: radial-gradient(circle at 50% 20%, black 0%, black 55%, transparent 90%);
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  /* Spacing */
+  --space-section: 120px;
+  --space-section-large: 160px;
+  --space-section-small: 80px;
+  --space-xl: 64px;
+  --space-lg: 48px;
+  --space-md: 32px;
+  --space-sm: 20px;
+  --space-xs: 12px;
+  --space-xxs: 8px;
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 200ms;
+  --duration-medium: 300ms;
+  --duration-slow: 600ms;
 }
 
 /* -------------------------------------------------------------------------- */
 /* Tailwind v4 token mapping (@theme)                                          */
 /* -------------------------------------------------------------------------- */
 @theme inline {
-  /* bg/fg/muted */
-  --color-background: var(--bg);
-  --color-foreground: var(--fg);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-fg);
+  /* backgrounds */
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--fg-primary);
+  --color-muted-foreground: var(--fg-muted);
+  --color-subtle-foreground: var(--fg-subtle);
 
   /* surfaces */
-  --color-surface-0: var(--surface-0);
-  --color-surface-1: var(--surface-1);
-  --color-surface-2: var(--surface-2);
-  --color-surface-3: var(--surface-3);
+  --color-elevated: var(--bg-elevated);
+  --color-surface: var(--bg-surface);
+  --color-surface-alt: var(--bg-surface-alt);
 
   /* border + accent */
   --color-border: var(--border);
   --color-border-soft: var(--border-soft);
   --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-glow: var(--accent-glow);
+  --color-accent-muted: var(--accent-muted);
   --color-accent-ink: var(--accent-ink);
+
+  /* project accents */
+  --color-project-hospital: var(--project-hospital);
+  --color-project-hotel: var(--project-hotel);
+  --color-project-school: var(--project-school);
+  --color-project-fitness: var(--project-fitness);
+  --color-project-cafe: var(--project-cafe);
 
   /* shadows */
   --shadow: var(--shadow-rest);
-  --shadow-1: var(--shadow-rest);
-  --shadow-2: var(--shadow-hover);
   --shadow-rest: var(--shadow-rest);
   --shadow-hover: var(--shadow-hover);
+  --shadow-amber-glow: var(--shadow-amber-glow);
+  --shadow-strong: var(--shadow-strong);
 
   /* radii */
-  --radius-sm: var(--r-sm);
-  --radius-md: var(--r-md);
-  --radius-lg: var(--r-lg);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
 
-  --font-sans: var(--font-space-grotesk);
+  /* spacing */
+  --space-section: var(--space-section);
+  --space-section-large: var(--space-section-large);
+  --space-section-small: var(--space-section-small);
+  --space-xl: var(--space-xl);
+  --space-lg: var(--space-lg);
+  --space-md: var(--space-md);
+  --space-sm: var(--space-sm);
+  --space-xs: var(--space-xs);
+  --space-xxs: var(--space-xxs);
+
+  /* animation */
+  --ease-out-expo: var(--ease-out-expo);
+  --duration-fast: var(--duration-fast);
+  --duration-medium: var(--duration-medium);
+  --duration-slow: var(--duration-slow);
+
+  /* fonts — Bricolage Grotesque (headline), Figtree (body), Spectral (serif), Geist Mono */
+  --font-sans: var(--font-headline);
+  --font-serif: var(--font-spectral);
+  --font-body: var(--font-body-sans);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -82,59 +141,72 @@
   :root {
     color-scheme: dark;
 
-    --bg: oklch(0.14 0.02 255);
-    --fg: oklch(0.96 0.01 255);
-    --muted: oklch(0.72 0.02 255);
-    --muted-fg: color-mix(in oklab, var(--fg) 78%, var(--muted));
+    /* Dark mode (primary) */
+    --bg-primary: oklch(0.05 0 0);            /* Deep black #0d0d0d */
+    --bg-elevated: oklch(0.10 0 0);           /* Card background #1a1a1a */
+    --bg-surface: oklch(0.13 0 0);            /* Elevated surfaces #222222 */
+    --bg-surface-alt: oklch(0.07 0 0);        /* Alternate surface #111111 */
+    
+    --fg-primary: oklch(0.98 0.01 85);        /* Warm white #fafaf8 */
+    --fg-muted: oklch(0.98 0.01 85 / 0.6);    /* Muted text */
+    --fg-subtle: oklch(0.98 0.01 85 / 0.35);  /* Very subtle text */
 
-    --surface-0: var(--bg);
-    --surface-1: oklch(0.18 0.02 255);
-    --surface-2: oklch(0.22 0.02 255);
-    --surface-3: oklch(0.26 0.02 255);
+    --accent: oklch(0.72 0.18 65);            /* Warm Amber #ff9500 */
+    --accent-hover: oklch(0.78 0.18 65);      /* Lighter amber */
+    --accent-glow: oklch(0.72 0.18 65 / 0.33);
+    --accent-muted: oklch(0.72 0.18 65 / 0.12);
+    --accent-ink: oklch(0 0 0);               /* Black text on amber */
 
-    --border: oklch(0.3 0.02 255);
-    --border-soft: color-mix(in oklab, var(--border) 70%, transparent);
-    --border-strong: color-mix(in oklab, var(--border) 92%, transparent);
-    --elevation-1: 0 1px 0 0 color-mix(in oklab, white 10%, transparent),
-      0 22px 50px -40px color-mix(in oklab, black 60%, transparent);
-    --elevation-2: 0 1px 0 0 color-mix(in oklab, white 12%, transparent),
-      0 40px 90px -60px color-mix(in oklab, black 70%, transparent);
-    --shadow-rest: var(--elevation-1);
-    --shadow-hover: var(--elevation-2);
+    --border: oklch(1 0 0 / 0.08);
+    --border-strong: oklch(1 0 0 / 0.12);
+    --border-soft: oklch(1 0 0 / 0.05);
 
-    --accent: oklch(0.92 0.18 104);
-    --accent-ink: oklch(0.1 0.02 255);
-
-    --studio-grid-opacity: 0.22;
-    --studio-noise-opacity: 0.03;
+    --shadow-rest: 
+      0 1px 0 0 oklch(1 0 0 / 0.08),
+      0 20px 60px -30px oklch(0 0 0 / 0.4);
+    --shadow-hover:
+      0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
+      0 20px 60px oklch(0.72 0.18 65 / 0.06);
+    --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
+    --shadow-strong:
+      0 1px 0 0 oklch(1 0 0 / 0.12),
+      0 40px 90px -60px oklch(0 0 0 / 0.7);
   }
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
 
-  --bg: oklch(0.985 0.01 250);
-  --fg: oklch(0.18 0.02 255);
-  --muted: oklch(0.5 0.02 255);
-  --muted-fg: color-mix(in oklab, var(--fg) 74%, var(--muted));
+  /* Light mode (secondary) - matches :root defaults */
+  --bg-primary: oklch(0.98 0.01 85);
+  --bg-elevated: oklch(1 0 0);
+  --bg-surface: oklch(0.96 0.01 85);
+  --bg-surface-alt: oklch(0.94 0.01 85);
+  
+  --fg-primary: oklch(0.10 0 0);
+  --fg-muted: oklch(0.10 0 0 / 0.65);
+  --fg-subtle: oklch(0.10 0 0 / 0.4);
 
-  --surface-0: var(--bg);
-  --surface-1: oklch(0.995 0.006 250);
-  --surface-2: oklch(0.975 0.01 250);
-  --surface-3: oklch(0.955 0.012 250);
+  --accent: oklch(0.72 0.18 65);
+  --accent-hover: oklch(0.78 0.18 65);
+  --accent-glow: oklch(0.72 0.18 65 / 0.33);
+  --accent-muted: oklch(0.72 0.18 65 / 0.12);
+  --accent-ink: oklch(0 0 0);
 
-  --border: oklch(0.88 0.01 250);
-  --border-soft: color-mix(in oklab, var(--border) 70%, transparent);
-  --border-strong: color-mix(in oklab, var(--border) 92%, transparent);
-  --elevation-1: 0 1px 0 0 color-mix(in oklab, var(--fg) 8%, transparent),
-    0 18px 40px -30px color-mix(in oklab, black 18%, transparent);
-  --elevation-2: 0 1px 0 0 color-mix(in oklab, var(--fg) 10%, transparent),
-    0 30px 70px -40px color-mix(in oklab, black 26%, transparent);
-  --shadow-rest: var(--elevation-1);
-  --shadow-hover: var(--elevation-2);
+  --border: oklch(0 0 0 / 0.08);
+  --border-strong: oklch(0 0 0 / 0.12);
+  --border-soft: oklch(0 0 0 / 0.05);
 
-  --accent: oklch(0.92 0.18 104);
-  --accent-ink: oklch(0.12 0.02 255);
+  --shadow-rest: 
+    0 1px 0 0 oklch(1 0 0 / 0.08),
+    0 20px 60px -30px oklch(0 0 0 / 0.4);
+  --shadow-hover:
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
+    0 20px 60px oklch(0.72 0.18 65 / 0.06);
+  --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
+  --shadow-strong:
+    0 1px 0 0 oklch(1 0 0 / 0.12),
+    0 40px 90px -60px oklch(0 0 0 / 0.7);
 
   --studio-grid-opacity: 0.35;
   --studio-noise-opacity: 0.035;
@@ -143,83 +215,255 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
 
-  --bg: oklch(0.14 0.02 255);
-  --fg: oklch(0.96 0.01 255);
-  --muted: oklch(0.72 0.02 255);
-  --muted-fg: color-mix(in oklab, var(--fg) 78%, var(--muted));
+  /* Dark mode (primary) - matches @media (prefers-color-scheme: dark) */
+  --bg-primary: oklch(0.05 0 0);
+  --bg-elevated: oklch(0.10 0 0);
+  --bg-surface: oklch(0.13 0 0);
+  --bg-surface-alt: oklch(0.07 0 0);
+  
+  --fg-primary: oklch(0.98 0.01 85);
+  --fg-muted: oklch(0.98 0.01 85 / 0.6);
+  --fg-subtle: oklch(0.98 0.01 85 / 0.35);
 
-  --surface-0: var(--bg);
-  --surface-1: oklch(0.18 0.02 255);
-  --surface-2: oklch(0.22 0.02 255);
-  --surface-3: oklch(0.26 0.02 255);
+  --accent: oklch(0.72 0.18 65);
+  --accent-hover: oklch(0.78 0.18 65);
+  --accent-glow: oklch(0.72 0.18 65 / 0.33);
+  --accent-muted: oklch(0.72 0.18 65 / 0.12);
+  --accent-ink: oklch(0 0 0);
 
-  --border: oklch(0.3 0.02 255);
-  --border-soft: color-mix(in oklab, var(--border) 70%, transparent);
-  --border-strong: color-mix(in oklab, var(--border) 92%, transparent);
-  --elevation-1: 0 1px 0 0 color-mix(in oklab, white 10%, transparent),
-    0 22px 50px -40px color-mix(in oklab, black 60%, transparent);
-  --elevation-2: 0 1px 0 0 color-mix(in oklab, white 12%, transparent),
-    0 40px 90px -60px color-mix(in oklab, black 70%, transparent);
-  --shadow-rest: var(--elevation-1);
-  --shadow-hover: var(--elevation-2);
+  --border: oklch(1 0 0 / 0.08);
+  --border-strong: oklch(1 0 0 / 0.12);
+  --border-soft: oklch(1 0 0 / 0.05);
 
-  --accent: oklch(0.92 0.18 104);
-  --accent-ink: oklch(0.1 0.02 255);
+  --shadow-rest: 
+    0 1px 0 0 oklch(1 0 0 / 0.08),
+    0 20px 60px -30px oklch(0 0 0 / 0.4);
+  --shadow-hover:
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
+    0 20px 60px oklch(0.72 0.18 65 / 0.06);
+  --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
+  --shadow-strong:
+    0 1px 0 0 oklch(1 0 0 / 0.12),
+    0 40px 90px -60px oklch(0 0 0 / 0.7);
 
   --studio-grid-opacity: 0.22;
   --studio-noise-opacity: 0.03;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Base typography                                                              */
+/* -------------------------------------------------------------------------- */
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-sans);
+  background: var(--bg-primary);
+  color: var(--fg-primary);
+  font-family: var(--font-body), var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Dark-mode body text compensation: bump line-height for light-on-dark */
+@media (prefers-color-scheme: dark) {
+  body { line-height: 1.65; }
+}
+:root[data-theme="dark"] body { line-height: 1.65; }
+
+/* Balanced headings, pretty prose */
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
 ::selection {
-  background: color-mix(in oklab, var(--accent) 35%, transparent);
-  color: var(--accent-ink);
+  background: var(--accent-muted);
+  color: var(--fg-primary);
 }
 
 :focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--accent) 80%, transparent);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
 /* -------------------------------------------------------------------------- */
-/* Signature surface utility                                                   */
+/* Typography system                                                            */
+/*                                                                              */
+/* Size tokens (studio-h1 … studio-caption) set size, line-height, and          */
+/* letter-spacing only. Font family + weight are applied via composed            */
+/* variants or Tailwind overrides.                                              */
+/*                                                                              */
+/* Scale ratio: ≥1.25× between adjacent heading levels.                         */
+/*   h1 6rem → h2 3.5rem (1.71×)                                               */
+/*   h2 3.5rem → h3 2.25rem (1.56×)                                            */
+/*   h3 2.25rem → h4 1.625rem (1.38×)                                          */
+/*   h4 1.625rem → body-large 1.25rem (1.30×)                                  */
 /* -------------------------------------------------------------------------- */
 @layer utilities {
+
+  /* --- Size tokens (font-family + weight intentionally omitted) ----------- */
+
   .studio-h1 {
-    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    font-size: clamp(3.25rem, 5vw + 1rem, 6rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
-    font-weight: 600;
   }
 
   .studio-h2 {
-    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-size: clamp(2rem, 3vw + 0.5rem, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+
+  .studio-h3 {
+    font-size: clamp(1.5rem, 1.5vw + 0.5rem, 2.25rem);
     line-height: 1.15;
     letter-spacing: -0.01em;
+  }
+
+  .studio-h4 {
+    font-size: clamp(1.25rem, 0.5vw + 0.75rem, 1.625rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .studio-body-large {
+    font-size: clamp(1.0625rem, 0.5vw + 0.5rem, 1.25rem);
+    line-height: 1.65;
+    letter-spacing: 0;
+  }
+
+  .studio-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+
+  .studio-body-small {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  /* --- Composed variants (size + family + weight) ------------------------- */
+
+  /* Headline: bold sans (Bricolage Grotesque) — hero titles, section headings */
+  .studio-h1-headline {
+    font-size: clamp(3.25rem, 5vw + 1rem, 6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-family: var(--font-sans);
+    font-weight: 700;
+  }
+
+  /* Editorial: regular serif (Spectral) — subheads, inner-page h2 */
+  .studio-h2-editorial {
+    font-size: clamp(2rem, 3vw + 0.5rem, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  /* Subsection: semibold sans — card titles, process steps */
+  .studio-h3-sans {
+    font-size: clamp(1.5rem, 1.5vw + 0.5rem, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-family: var(--font-sans);
     font-weight: 600;
   }
 
-  .studio-lede {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: var(--muted-fg);
+  .studio-h4-sans {
+    font-size: clamp(1.25rem, 0.5vw + 0.75rem, 1.625rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    font-family: var(--font-sans);
+    font-weight: 600;
   }
+
+  /* Body serif — editorial subheads, large body text */
+  .studio-body-serif {
+    font-size: clamp(1.0625rem, 0.5vw + 0.5rem, 1.25rem);
+    line-height: 1.65;
+    letter-spacing: 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  /* --- Labels (canonical definitions) ------------------------------------- */
+
+  /* Eyebrow: THE one eyebrow pattern. 0.75rem, mono, 0.12em tracking, accent. */
+  .studio-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .studio-caption {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+    font-weight: 400;
+    opacity: 0.4;
+  }
+
+  /* Tag: pill-style label */
+  .studio-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  /* Tabular numbers for data alignment */
+  .studio-tabular { font-variant-numeric: tabular-nums; }
+
+  /* --- Containers --------------------------------------------------------- */
+
+  .studio-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  .studio-container-text {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  .studio-container-narrow {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  @media (max-width: 767px) {
+    .studio-container,
+    .studio-container-text,
+    .studio-container-narrow {
+      padding: 0 1.5rem;
+    }
+  }
+
+  /* --- Surface utility ---------------------------------------------------- */
 
   .studio-surface {
     position: relative;
     isolation: isolate;
     overflow: hidden;
 
-    background-color: var(--surface-1);
-    color: var(--fg);
+    background-color: var(--bg-elevated);
+    color: var(--fg-primary);
 
     border: 1px solid var(--border-strong);
-    border-radius: var(--r-lg);
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-rest);
   }
 
@@ -232,17 +476,16 @@ body {
     background-image:
       linear-gradient(
         to right,
-        color-mix(in oklab, var(--fg) 7%, transparent) 1px,
+        var(--border-soft) 1px,
         transparent 1px
       ),
       linear-gradient(
         to bottom,
-        color-mix(in oklab, var(--fg) 7%, transparent) 1px,
+        var(--border-soft) 1px,
         transparent 1px
       );
     background-size: 28px 28px;
     opacity: var(--studio-grid-opacity);
-    mask-image: var(--studio-mask);
   }
 
   /* optional very-low noise */

@@ -40,8 +40,8 @@ export function WorkCase({
         >
           <motion.div variants={fadeUp} transition={transitionDefault}>
             <Eyebrow className="mb-3">Studio Demonstration</Eyebrow>
-            <h2 className="text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">{demonstrates}</p>
+            <h2 className="studio-h2 font-serif text-foreground">{title}</h2>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground studio-lede">{demonstrates}</p>
           </motion.div>
 
           <motion.div
@@ -71,7 +71,7 @@ export function WorkCase({
 function Meta({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
-      <div className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
+      <div className="studio-eyebrow text-muted-foreground">
         {title}
       </div>
       <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground marker:text-muted-foreground/70">

@@ -1,4 +1,153 @@
+# ==============================================================================
+# Kivox Project — Root .gitignore
+# ==============================================================================
+
+# ---------------------------------------------------------------------------- #
+# AI Agent & IDE Tool Directories                                               #
+# ---------------------------------------------------------------------------- #
+
+# Superpowers (AI brainstorm sessions — ephemeral, regenerated per session)
+.superpowers/
+
+# Windsurf AI workflows (local agent config)
+.windsurf/
+
+# Kiro AI steering (local agent config)
+.kiro/
+
+# Impeccable skill (vendored agent skill — not project code)
+impeccable/
+
+# Uploads (temporary capture scripts and screenshots used by agents)
+.uploads/
+
+# Gemini / Antigravity local state (if it ever appears in workspace)
+.gemini/
+
+# ---------------------------------------------------------------------------- #
+# IDE & Editor Settings                                                         #
+# ---------------------------------------------------------------------------- #
+
+# VS Code — workspace settings are project-specific, keep them
+# (Individual user settings in .vscode/ at root are fine to commit)
+# web/.vscode/ has Tailwind v4 lint suppression — keep it
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Vim / Neovim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# ---------------------------------------------------------------------------- #
+# OS-Generated Files                                                            #
+# ---------------------------------------------------------------------------- #
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.directory
+
+# ---------------------------------------------------------------------------- #
+# Inspiration Screenshots (large PNGs, not source code)                         #
+# ---------------------------------------------------------------------------- #
+
+inspiration/*.png
+inspiration/*.jpg
+inspiration/*.jpeg
+inspiration/*.webp
+
+# Keep the README for context
+!inspiration/README.md
+
+# ---------------------------------------------------------------------------- #
+# Next.js (web/)                                                                #
+# ---------------------------------------------------------------------------- #
+# Most Next.js ignores are in web/.gitignore — these catch paths from root
+
 web/.next/
 web/out/
+web/build/
 web/node_modules/
-.superpowers/
+
+# ---------------------------------------------------------------------------- #
+# Dependencies (any future workspaces)                                          #
+# ---------------------------------------------------------------------------- #
+
+node_modules/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# ---------------------------------------------------------------------------- #
+# Environment & Secrets                                                         #
+# ---------------------------------------------------------------------------- #
+
+.env
+.env.*
+!.env.example
+
+# ---------------------------------------------------------------------------- #
+# Build Artifacts & Caches                                                      #
+# ---------------------------------------------------------------------------- #
+
+*.tsbuildinfo
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Vercel
+.vercel/
+
+# Turbopack / Turborepo
+.turbo/
+
+# ---------------------------------------------------------------------------- #
+# Testing & Coverage                                                            #
+# ---------------------------------------------------------------------------- #
+
+coverage/
+.nyc_output/
+
+# ---------------------------------------------------------------------------- #
+# Miscellaneous                                                                 #
+# ---------------------------------------------------------------------------- #
+
+# Certificates
+*.pem
+
+# Debug
+*.pid
+*.seed
+*.pid.lock
+
+# Compiled output (if someone runs tsc manually)
+dist/
+out/
+
+# Temporary files
+*.tmp
+*.temp

@@ -11,10 +11,10 @@ export default function WorkPage() {
       <Container>
         <div className="flex flex-col gap-3">
           <Eyebrow>{work.label}</Eyebrow>
-          <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          <h1 className="studio-h1 font-sans font-bold text-foreground">
             {work.title}
           </h1>
-          <p className="max-w-2xl text-sm leading-6 text-muted-foreground">{work.intro}</p>
+          <p className="max-w-3xl text-sm leading-7 text-muted-foreground studio-lede">{work.intro}</p>
         </div>
         <div className="mt-10">
           <WorkGrid items={work.items} />
@@ -22,7 +22,7 @@ export default function WorkPage() {
         <div className="mt-14">
           <Panel padding="md" noise={false} className="studio-surface--quiet">
             <div className="flex flex-col gap-3">
-              <div className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
+              <div className="studio-eyebrow text-muted-foreground">
                 Policy
               </div>
               <div className="text-sm font-semibold text-foreground">Proof policy</div>

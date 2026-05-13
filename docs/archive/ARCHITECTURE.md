@@ -1,3 +1,5 @@
+> **⚠️ Archived**: This document was written pre-implementation. Typography references (Space Grotesk, Crimson Pro, Inter) have been superseded by the current font stack (Bricolage Grotesque, Spectral, Figtree). See `web/DESIGN.md` for the canonical design system.
+
 # Kivox Architecture
 
 ## Goal

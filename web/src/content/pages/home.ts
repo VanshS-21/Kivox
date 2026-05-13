@@ -14,36 +14,42 @@ export const home = {
       title: "Websites & Web Apps",
       summary:
         "High-craft websites and web apps that make your offer clear and your next step obvious.",
+      tags: ["LANDING PAGES", "WEB APPLICATIONS", "E-COMMERCE", "CMS"],
     },
     {
       id: "ui-ux-redesign",
       title: "UI/UX Redesign",
       summary:
-        "Fix what’s unclear: structure, usability, design, performance, and conversion paths.",
+        "Fix what's unclear: structure, usability, design, performance, and conversion paths.",
+      tags: ["WIREFRAMES", "PROTOTYPING", "USABILITY AUDIT", "CONVERSION"],
     },
     {
       id: "seo-ai-search-readiness",
       title: "SEO & AI Search Readiness",
       summary:
         "Technical and content foundations that help you show up for real searches — and be understandable to AI answers.",
+      tags: ["TECHNICAL SEO", "CONTENT STRATEGY", "SCHEMA", "AI READINESS"],
     },
     {
       id: "brand-identity",
       title: "Brand Identity",
       summary:
         "Naming, messaging, and visual systems that make your business feel as good online as it is offline.",
+      tags: ["LOGO DESIGN", "BRAND GUIDELINES", "MESSAGING", "VISUAL SYSTEMS"],
     },
     {
       id: "backend-enabled-systems",
-      title: "Backend-Enabled Systems (select)",
+      title: "Backend-Enabled Systems",
       summary:
         "Portals, dashboards, catalogs, inquiry workflows, and internal tools — built only when the business needs them.",
+      tags: ["DASHBOARDS", "PORTALS", "WORKFLOWS", "API INTEGRATION"],
     },
     {
       id: "android-apps",
-      title: "Android Apps (select)",
+      title: "Android Apps",
       summary:
         "When mobile access is truly necessary — not as a default upsell.",
+      tags: ["NATIVE APPS", "CROSS-PLATFORM", "APP STORE OPTIMIZATION"],
     },
   ],
   workPreview: {
@@ -52,12 +58,43 @@ export const home = {
       "Realistic projects built by Kivox to show how we structure, design, and build for trust and action.",
   },
   process: [
-    "Understand the business and the customer decision.",
-    "Fix the structure: pages, content order, and calls to action.",
-    "Design the interface with craft and clarity.",
-    "Build it fast, responsive, and maintainable.",
-    "Launch, measure, and iterate.",
+    {
+      title: "Discover",
+      subtitle: "Understand the landscape",
+      description:
+        "Understand the business and the customer decision.",
+    },
+    {
+      title: "Define",
+      subtitle: "Set the strategic foundation",
+      description:
+        "Fix the structure: pages, content order, and calls to action.",
+    },
+    {
+      title: "Design",
+      subtitle: "Craft the experience",
+      description:
+        "Design the interface with craft and clarity.",
+    },
+    {
+      title: "Build",
+      subtitle: "Engineer with precision",
+      description:
+        "Build it fast, responsive, and maintainable.",
+    },
+    {
+      title: "Launch & Evolve",
+      subtitle: "Grow & optimize continuously",
+      description:
+        "Launch, measure, and iterate.",
+    },
   ],
+  philosophy: {
+    quote:
+      "We believe great digital platforms are not built — they are crafted. Every pixel, every interaction, every line of code is a statement of intent.",
+    body:
+      "Kivox exists to raise the standard of digital craft. We partner with businesses that understand the value of exceptional digital experiences — and refuse to settle for less.",
+  },
   pov: {
     title: "Trust is a design system.",
     bullets: [
@@ -69,6 +106,6 @@ export const home = {
   },
   contact: {
     line:
-      "Tell us what you’re building. We reply within 24 hours with next steps and the few details we need to scope it right.",
+      "Tell us what you're building. We reply within 24 hours with next steps and the few details we need to scope it right.",
   },
 };

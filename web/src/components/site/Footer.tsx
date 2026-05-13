@@ -1,65 +1,85 @@
 import Link from "next/link";
 
 import { brand } from "@/content/brand";
-import { Container } from "@/components/ui/Container";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border">
-      <Container className="flex flex-col gap-6 py-10 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex flex-col gap-1">
-          <div className="text-sm font-semibold tracking-tight text-foreground">{brand.name}</div>
-          <div className="text-sm text-muted-foreground">{brand.locationLine}</div>
-        </div>
-        <div className="grid grid-cols-2 gap-x-10 gap-y-2 text-sm">
-          <div className="text-muted-foreground">Email</div>
-          <div>
-            <a
-              className="text-foreground hover:text-foreground/80"
-              href={`mailto:${brand.contact.email}`}
-            >
-              {brand.contact.email}
-            </a>
+    <footer className="border-t border-border bg-background">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-12">
+        <div className="flex flex-col lg:flex-row justify-between gap-12">
+          {/* Brand section */}
+          <div className="flex flex-col gap-3">
+            <div className="text-lg font-sans font-bold tracking-tight text-foreground">{brand.name}</div>
+            <div className="studio-caption">{brand.locationLine}</div>
           </div>
-          <div className="text-muted-foreground">Phone</div>
-          <div className="text-foreground">{brand.contact.phone}</div>
-          <div className="text-muted-foreground">Social</div>
-          <div className="flex items-center gap-4">
-            <a
-              className="text-foreground hover:text-foreground/80"
-              href={brand.socials.linkedin}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              LinkedIn
-            </a>
-            <a
-              className="text-foreground hover:text-foreground/80"
-              href={brand.socials.instagram}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Instagram
-            </a>
+
+          {/* Contact grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-4 text-sm">
+            <div className="flex flex-col gap-1">
+              <div className="studio-eyebrow text-muted-foreground opacity-60">Email</div>
+              <a
+                className="text-foreground hover:text-accent transition-colors"
+                href={`mailto:${brand.contact.email}`}
+              >
+                {brand.contact.email}
+              </a>
+            </div>
+            
+            <div className="flex flex-col gap-1">
+              <div className="studio-eyebrow text-muted-foreground opacity-60">Phone</div>
+              <div className="text-foreground">{brand.contact.phone}</div>
+            </div>
+            
+            <div className="flex flex-col gap-1">
+              <div className="studio-eyebrow text-muted-foreground opacity-60">Social</div>
+              <div className="flex items-center gap-4">
+                <a
+                  className="text-foreground hover:text-accent transition-colors"
+                  href={brand.socials.linkedin}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  className="text-foreground hover:text-accent transition-colors"
+                  href={brand.socials.instagram}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Instagram
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Legal links */}
+          <div className="flex flex-col gap-3">
+            <div className="studio-eyebrow text-muted-foreground opacity-60">Legal</div>
+            <div className="flex flex-col gap-2 text-sm">
+              <Link
+                className="text-foreground hover:text-accent transition-colors"
+                href="/privacy"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                className="text-foreground hover:text-accent transition-colors"
+                href="/terms"
+              >
+                Terms of Service
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="text-sm text-muted-foreground">
-          <div className="flex items-center gap-4">
-            <Link
-              className="hover:text-foreground"
-              href="/privacy"
-            >
-              Privacy
-            </Link>
-            <Link
-              className="hover:text-foreground"
-              href="/terms"
-            >
-              Terms
-            </Link>
+
+        {/* Copyright */}
+        <div className="mt-12 pt-8 border-t border-border">
+          <div className="studio-caption">
+            © {new Date().getFullYear()} {brand.name}. All rights reserved.
           </div>
         </div>
-      </Container>
+      </div>
     </footer>
   );
 }

@@ -8,7 +8,7 @@ export function Eyebrow({ className, ref, ...props }: EyebrowProps) {
     <div
       ref={ref}
       className={cn(
-        "text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground",
+        "studio-eyebrow text-muted-foreground",
         className,
       )}
       {...props}

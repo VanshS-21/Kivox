@@ -7,13 +7,13 @@ import { HomeWorkPreview } from "@/components/sections/HomeWorkPreview";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <HomeHero />
+      <HomeWorkPreview />
       <HomeServices />
       <HomePOV />
-      <HomeWorkPreview />
       <HomeProcess />
       <HomeContact />
-    </main>
+    </>
   );
 }
