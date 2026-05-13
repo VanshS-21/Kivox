@@ -21,6 +21,9 @@ function MagneticCTA({
   reduce: boolean | null;
 }) {
   const buttonRef = useRef<HTMLAnchorElement>(null);
+  const [isPressed, setIsPressed] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const offsetRef = useRef({ x: 0, y: 0 });
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -32,7 +35,10 @@ function MagneticCTA({
       const cy = rect.top + rect.height / 2;
       const dx = (e.clientX - cx) * 0.2;
       const dy = (e.clientY - cy) * 0.2;
+      offsetRef.current = { x: dx, y: dy };
       btn.style.transform = `translate(${dx}px, ${dy}px)`;
+      // Dynamic glow follows displacement
+      btn.style.boxShadow = `${dx * 0.3}px ${dy * 0.3 + 8}px 30px oklch(0.72 0.18 65 / 0.25)`;
     },
     [reduce]
   );
@@ -41,6 +47,24 @@ function MagneticCTA({
     const btn = buttonRef.current;
     if (!btn) return;
     btn.style.transform = "translate(0px, 0px)";
+    btn.style.boxShadow = "";
+    setIsHovered(false);
+  }, []);
+
+  const handleMouseDown = useCallback(() => setIsPressed(true), []);
+  const handleMouseUp = useCallback(() => {
+    setIsPressed(false);
+    // Snap-back animation
+    const btn = buttonRef.current;
+    if (!btn) return;
+    btn.style.transition = "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)";
+    btn.style.transform = "translate(0px, 0px) scale(1.02)";
+    setTimeout(() => {
+      if (btn) {
+        btn.style.transform = "translate(0px, 0px) scale(1)";
+        btn.style.transition = "";
+      }
+    }, 200);
   }, []);
 
   return (
@@ -49,8 +73,14 @@ function MagneticCTA({
       href={href}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-accent-ink rounded-xl text-sm font-semibold tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-300"
-      style={{ transitionProperty: "background-color, color, box-shadow, border-color, transform, scale" }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-accent-ink rounded-xl text-sm font-semibold tracking-tight transition-all duration-300"
+      style={{
+        transitionProperty: "background-color, color, border-color, scale",
+        transform: isPressed ? "scale(0.96)" : undefined,
+      }}
     >
       {children}
     </Link>
@@ -206,7 +236,13 @@ export function HomeContact() {
             >
               <MagneticCTA href="/contact" reduce={reduce}>
                 Start a project
-                <span className="text-base">→</span>
+                <motion.span
+                  className="text-base inline-block"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+                >
+                  →
+                </motion.span>
               </MagneticCTA>
             </motion.div>
           </div>

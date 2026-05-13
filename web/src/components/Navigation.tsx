@@ -210,7 +210,15 @@ export function Navigation() {
                         <Link
                           href={item.href}
                           onClick={() => setIsOpen(false)}
-                          className="flex items-baseline gap-6 py-5 lg:py-6 group"
+                          className="flex items-baseline gap-6 py-5 lg:py-6 group relative"
+                          onMouseEnter={(e) => {
+                            const line = e.currentTarget.querySelector<HTMLSpanElement>('[data-underline]');
+                            if (line) line.style.width = '100%';
+                          }}
+                          onMouseLeave={(e) => {
+                            const line = e.currentTarget.querySelector<HTMLSpanElement>('[data-underline]');
+                            if (line && !isActive) line.style.width = '0';
+                          }}
                         >
                           {/* Number */}
                           <span className="text-sm font-mono text-accent studio-tabular" style={{ letterSpacing: '0.12em' }}>
@@ -224,6 +232,12 @@ export function Navigation() {
                           }`}>
                             {item.label}
                           </span>
+                          {/* Amber underline draw — width transitions on hover */}
+                          <span
+                            data-underline
+                            className="absolute bottom-4 left-0 h-[2px] bg-accent origin-left transition-all duration-500 ease-out"
+                            style={{ width: isActive ? "100%" : "0" }}
+                          />
                           {/* Active indicator dot */}
                           {isActive && (
                             <motion.div

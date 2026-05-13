@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   Bricolage_Grotesque,
+  Caveat,
   Figtree,
   Geist_Mono,
   Spectral,
@@ -8,6 +9,8 @@ import {
 import "./globals.css";
 
 import { Analytics } from "@/components/analytics/Analytics";
+import { ConsoleEasterEgg } from "@/components/ui/ConsoleEasterEgg";
+import { CursorGlow } from "@/components/ui/CursorGlow";
 import { DevThemeOverride } from "@/components/dev/DevThemeOverride";
 import { Footer } from "@/components/site/Footer";
 import { Navigation } from "@/components/Navigation";
@@ -42,6 +45,12 @@ const mono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const handwritten = Caveat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-handwritten",
+});
+
 export const metadata: Metadata = {
   title: homeSeo.title,
   description: homeSeo.description,
@@ -58,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${serif.variable} ${body.variable} ${mono.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${body.variable} ${mono.variable} ${handwritten.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
@@ -75,6 +84,8 @@ export default function RootLayout({
           type="application/ld+json"
         />
         <Analytics />
+        <CursorGlow />
+        <ConsoleEasterEgg />
       </body>
     </html>
   );

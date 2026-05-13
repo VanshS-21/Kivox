@@ -98,36 +98,40 @@ export function HomeServices() {
                   {/* Service row */}
                   <div className="flex items-start gap-6 lg:gap-10">
                     {/* Arrow icon button */}
-                    <motion.div
-                      animate={{
-                        scale: isExpanded ? 1.12 : 1,
-                        rotate: isExpanded ? 45 : 0,
-                      }}
-                      transition={{ duration: 0.4, ease: easeOutExpo }}
-                      className="w-14 h-14 lg:w-16 lg:h-16 rounded-lg bg-accent flex items-center justify-center shrink-0 mt-1 transition-shadow duration-300"
-                      style={{
-                        boxShadow: isExpanded
-                          ? '0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15)'
-                          : 'none',
-                      }}
-                    >
-                      <svg
-                        width="22"
-                        height="22"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="text-accent-ink"
+                    <div className="relative shrink-0 mt-1">
+                      {/* Pulse ring — expands and fades on hover */}
+                      <motion.div
+                        animate={{
+                          scale: isExpanded ? [1, 1.8] : 1,
+                          opacity: isExpanded ? [0.4, 0] : 0,
+                        }}
+                        transition={{
+                          duration: 0.8,
+                          ease: easeOutExpo,
+                          repeat: isExpanded ? Infinity : 0,
+                          repeatDelay: 0.6,
+                        }}
+                        className="absolute inset-0 rounded-lg bg-accent pointer-events-none"
+                        aria-hidden="true"
+                      />
+                      <motion.div
+                        animate={{
+                          scale: isExpanded ? 1.12 : 1,
+                          rotate: isExpanded ? 45 : 0,
+                        }}
+                        transition={{ duration: 0.4, ease: easeOutExpo }}
+                        className="w-14 h-14 lg:w-16 lg:h-16 rounded-lg bg-accent flex items-center justify-center relative z-10 transition-shadow duration-300"
+                        style={{
+                          boxShadow: isExpanded
+                            ? '0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15)'
+                            : 'none',
+                        }}
                       >
-                        <path
-                          d="M5 15L15 5M15 5H7M15 5V13"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </motion.div>
+                        <svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-accent-ink">
+                          <path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </motion.div>
+                    </div>
 
                     {/* Title and tags */}
                     <div className="flex-1">

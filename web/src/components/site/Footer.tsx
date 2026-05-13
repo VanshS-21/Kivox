@@ -1,10 +1,41 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useInView } from "motion/react";
 
 import { brand } from "@/content/brand";
 import { fadeUp, viewportOnce, easeOutExpo } from "@/lib/motion";
+
+/** Counts up from 2020 to the current year over 0.6s when the footer scrolls into view */
+function YearCountUp() {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const currentYear = new Date().getFullYear();
+  const [displayYear, setDisplayYear] = useState(currentYear);
+
+  useEffect(() => {
+    if (!inView) return;
+    const startYear = 2020;
+    const duration = 600; // ms
+    const steps = currentYear - startYear;
+    if (steps <= 0) return;
+
+    let frame = 0;
+    const interval = duration / steps;
+    setDisplayYear(startYear);
+
+    const timer = setInterval(() => {
+      frame++;
+      setDisplayYear(startYear + frame);
+      if (frame >= steps) clearInterval(timer);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [inView, currentYear]);
+
+  return <span ref={ref} className="studio-tabular">{displayYear}</span>;
+}
 
 export function Footer() {
   const reduce = useReducedMotion();
@@ -33,7 +64,14 @@ export function Footer() {
             transition={{ duration: 0.5, ease: easeOutExpo }}
             className="flex flex-col gap-3"
           >
-            <div className="text-lg font-sans font-bold tracking-tight text-foreground">{brand.name}</div>
+            <motion.div
+              initial={{ color: "var(--accent)" }}
+              animate={{ color: "var(--fg-primary)" }}
+              transition={{ duration: 0.8, delay: 0.3, ease: easeOutExpo }}
+              className="text-lg font-sans font-bold tracking-tight"
+            >
+              {brand.name}
+            </motion.div>
             <div className="studio-caption">{brand.locationLine}</div>
           </motion.div>
 
@@ -121,7 +159,7 @@ export function Footer() {
             className="origin-left"
           >
             <div className="studio-caption">
-              © {new Date().getFullYear()} {brand.name}. All rights reserved.
+              © <YearCountUp /> {brand.name}. All rights reserved.
             </div>
           </motion.div>
         </motion.div>

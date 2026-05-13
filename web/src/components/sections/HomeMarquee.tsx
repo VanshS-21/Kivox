@@ -1,40 +1,96 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useRef, useState, useCallback } from "react";
+import { motion, useReducedMotion } from "motion/react";
+
+const marqueeItems = [
+  "Digital Craftsmanship",
+  "Clarity-First Design",
+  "Premium Experiences",
+  "Studio Excellence",
+  "Innovation & Precision",
+  "Thoughtful Engineering",
+];
 
 export function HomeMarquee() {
-  const marqueeContent = [
-    "Digital Craftsmanship",
-    "Clarity-First Design", 
-    "Premium Experiences",
-    "Studio Excellence",
-    "Innovation & Precision",
-    "Award-Winning Work"
-  ];
+  const reduce = useReducedMotion();
+  const [paused, setPaused] = useState(false);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseEnter = useCallback(() => setPaused(true), []);
+  const handleMouseLeave = useCallback(() => {
+    setPaused(false);
+    setHoveredIdx(null);
+  }, []);
+
+  // Duplicate items 4× to ensure seamless loop
+  const items = [...marqueeItems, ...marqueeItems, ...marqueeItems, ...marqueeItems];
 
   return (
-    <section className="relative py-16 overflow-hidden border-y border-border bg-surface-alt">
-      <div className="relative">
+    <section
+      className="relative py-10 lg:py-14 overflow-hidden border-y border-border bg-surface-alt"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Fade edges */}
+      <div
+        className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(to right, var(--bg-surface-alt), transparent)" }}
+      />
+      <div
+        className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(to left, var(--bg-surface-alt), transparent)" }}
+      />
+
+      <div className="relative" ref={trackRef}>
         <motion.div
-          animate={{ x: [0, -100] }}
-          transition={{ 
-            duration: 30, 
-            repeat: Infinity, 
-            ease: "linear" 
+          className="flex items-center whitespace-nowrap"
+          animate={{
+            x: reduce ? 0 : ["0%", "-50%"],
           }}
-          className="flex gap-12 items-center"
+          transition={{
+            x: {
+              duration: 40,
+              repeat: Infinity,
+              ease: "linear",
+              repeatType: "loop",
+            },
+          }}
+          style={{
+            animationPlayState: paused && !reduce ? "paused" : "running",
+          }}
         >
-          {[...marqueeContent, ...marqueeContent, ...marqueeContent].map((item, idx) => (
-            <div
-              key={`${item}-${idx}`}
-              className="shrink-0 flex items-center gap-12"
-            >
-              <span className="text-xl font-medium text-foreground/50 whitespace-nowrap tracking-tight uppercase font-mono">
-                {item}
-              </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-accent/40 shrink-0" />
-            </div>
-          ))}
+          {items.map((item, idx) => {
+            const isHovered = hoveredIdx === idx;
+            return (
+              <div
+                key={`${item}-${idx}`}
+                className="shrink-0 flex items-center gap-10 px-5"
+                onMouseEnter={() => setHoveredIdx(idx)}
+                onMouseLeave={() => setHoveredIdx(null)}
+              >
+                <motion.span
+                  animate={{
+                    scale: isHovered ? 1.08 : 1,
+                    color: isHovered ? "var(--accent)" : "var(--fg-muted)",
+                  }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="text-lg lg:text-xl font-medium whitespace-nowrap tracking-tight uppercase font-mono cursor-default select-none"
+                >
+                  {item}
+                </motion.span>
+                <motion.span
+                  animate={{
+                    scale: isHovered ? 1.6 : 1,
+                    opacity: isHovered ? 0.9 : 0.35,
+                  }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-1.5 h-1.5 rounded-full bg-accent shrink-0"
+                />
+              </div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

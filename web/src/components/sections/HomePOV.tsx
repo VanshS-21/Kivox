@@ -58,6 +58,50 @@ function WordByWordReveal({
   );
 }
 
+/**
+ * Hand-drawn SVG underline that draws itself beneath a word.
+ * Uses stroke-dasharray/dashoffset for the drawing animation.
+ */
+function HandDrawnUnderline({ reduce }: { reduce: boolean | null }) {
+  return (
+    <motion.svg
+      viewBox="0 0 200 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="absolute -bottom-1 left-[-4%] overflow-visible"
+      style={{ pointerEvents: "none", width: "108%", height: "0.22em" }}
+      aria-hidden="true"
+      preserveAspectRatio="none"
+    >
+      {/* Primary stroke — bold, wobbly, hand-drawn feel */}
+      <motion.path
+        d="M3 10 C 12 5, 22 13, 38 8 C 52 3, 62 14, 80 9 C 95 4, 108 13, 125 7 C 140 2, 155 12, 170 8 C 182 5, 192 10, 197 8"
+        stroke="var(--accent)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+        initial={reduce ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        whileInView={reduce ? undefined : { pathLength: 1, opacity: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 1, ease: easeOutQuint, delay: 1.0 }}
+      />
+      {/* Ghost stroke — fainter, slightly offset for a natural double-pass look */}
+      <motion.path
+        d="M5 12 C 18 7, 28 14, 42 10 C 58 6, 68 13, 85 10 C 100 7, 115 14, 130 9 C 148 5, 160 12, 175 10 C 188 8, 195 11, 198 10"
+        stroke="var(--accent)"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        fill="none"
+        opacity={0.3}
+        initial={reduce ? { pathLength: 1, opacity: 0.3 } : { pathLength: 0, opacity: 0 }}
+        whileInView={reduce ? undefined : { pathLength: 1, opacity: 0.3 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8, ease: easeOutQuint, delay: 1.3 }}
+      />
+    </motion.svg>
+  );
+}
+
 export function HomePOV() {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -133,16 +177,22 @@ export function HomePOV() {
             <WordByWordReveal reduce={reduce}>
               are not built; they are
             </WordByWordReveal>{" "}
-            {/* Special emphasis on "crafted." */}
+            {/* Special emphasis on "crafted." with hand-drawn underline */}
             <motion.em
               initial={reduce ? false : { opacity: 0, scale: 0.92, filter: "blur(8px)" }}
               whileInView={reduce ? undefined : { opacity: 1, scale: 1, filter: "blur(0px)" }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.9 }}
-              className="font-serif font-normal text-accent inline-block relative"
-              style={{ fontStyle: "italic" }}
+              className="text-accent inline-block relative not-italic"
+              style={{
+                fontFamily: "var(--font-handwritten)",
+                fontWeight: 700,
+                fontSize: "1.15em",
+                lineHeight: 1,
+              }}
             >
               crafted.
+              <HandDrawnUnderline reduce={reduce} />
             </motion.em>
           </p>
         </blockquote>
