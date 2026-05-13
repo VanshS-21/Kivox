@@ -5,11 +5,13 @@ export function Section({
   children,
   className,
   id,
+  style,
   spacing = "default",
 }: {
   children: ReactNode;
   className?: string;
   id?: string;
+  style?: React.CSSProperties;
   spacing?: "default" | "tight" | "loose" | "none";
 }) {
   const spacingClasses = {
@@ -20,7 +22,7 @@ export function Section({
   };
 
   return (
-    <section className={cn(spacingClasses[spacing], className)} id={id}>
+    <section className={cn(spacingClasses[spacing], className)} id={id} style={style}>
       {children}
     </section>
   );

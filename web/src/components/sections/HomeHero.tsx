@@ -12,36 +12,39 @@ export function HomeHero() {
   const reduce = useReducedMotion();
 
   return (
-    <Section className="min-h-screen flex items-center relative overflow-hidden pt-20 bg-background">
-      {/* Organic accent glow blobs */}
+    <Section className="min-h-screen flex items-center relative overflow-hidden pt-20 pb-32 lg:pb-44 bg-background">
+      {/* Larger, more committed ambient glow — primary amber */}
       <motion.div
         animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 45, 0],
-          x: [0, 50, 0],
-          y: [0, -30, 0]
+          scale: [1, 1.25, 1],
+          rotate: [0, 50, 0],
+          x: [0, 60, 0],
+          y: [0, -40, 0]
         }}
         transition={{
-          duration: 20,
+          duration: 22,
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-accent/[0.08] blur-[120px]"
+        className="absolute top-[15%] left-[18%] w-[750px] h-[750px] rounded-full blur-[150px]"
+        style={{ background: 'var(--accent)', opacity: 'var(--hero-glow-opacity)' }}
       />
       
+      {/* Secondary warm rose glow — adds depth to the ambient color field */}
       <motion.div
         animate={{
-          scale: [1, 1.3, 1],
-          rotate: [0, -30, 0],
-          x: [0, -40, 0],
-          y: [0, 20, 0]
+          scale: [1, 1.35, 1],
+          rotate: [0, -35, 0],
+          x: [0, -50, 0],
+          y: [0, 25, 0]
         }}
         transition={{
-          duration: 25,
+          duration: 28,
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-accent/[0.05] blur-[100px]"
+        className="absolute bottom-[20%] right-[20%] w-[600px] h-[600px] rounded-full blur-[130px]"
+        style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.6)' }}
       />
 
       <Container className="relative z-10">
@@ -55,19 +58,19 @@ export function HomeHero() {
           <motion.div
             variants={fadeUp}
             transition={{ ...transitionDefault, delay: 0.1 }}
-            className="inline-flex items-center gap-3 mb-10"
+            className="inline-flex items-center gap-3 mb-12 lg:mb-14"
           >
-            <div className="w-2 h-2 rounded-full bg-accent" />
+            <div className="w-2.5 h-2.5 rounded-full bg-accent" />
             <span className="studio-eyebrow text-subtle-foreground">
               [ Kivox Studio ]
             </span>
           </motion.div>
 
-          {/* Large headline — with italic serif accent on key phrase */}
+          {/* Large headline — pushed scale, extreme weight contrast on italic */}
           <motion.h1
             variants={fadeUp}
             transition={{ ...transitionDefault, delay: 0.2 }}
-            className="studio-h1 font-sans font-bold text-foreground mb-10"
+            className="studio-h1 font-sans font-bold text-foreground mb-12 lg:mb-14"
           >
             Make your business
             <br />
@@ -77,25 +80,26 @@ export function HomeHero() {
             </em>
           </motion.h1>
 
-          {/* Editorial subhead — capped line length */}
+          {/* Editorial subhead — lighter weight for extreme contrast against the heavy headline */}
           <motion.p
             variants={fadeUp}
             transition={{ ...transitionDefault, delay: 0.3 }}
-            className="studio-body-serif text-muted-foreground max-w-2xl mb-12"
+            className="studio-body-serif text-muted-foreground max-w-2xl mb-14 lg:mb-16"
+            style={{ fontWeight: 300 }}
           >
             {home.hero.subhead}
           </motion.p>
 
-          {/* CTAs — left-aligned row */}
+          {/* CTAs — left-aligned row, bolder primary */}
           <motion.div
             variants={fadeUp}
             transition={{ ...transitionDefault, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-5"
           >
             <ButtonLink 
               href="/#contact" 
               variant="primary"
-              className="text-base px-9 py-4 font-medium"
+              className="text-base px-10 py-[18px] font-semibold tracking-tight"
             >
               {home.hero.ctas.primary}
             </ButtonLink>
@@ -103,7 +107,7 @@ export function HomeHero() {
             <ButtonLink 
               href="/work" 
               variant="secondary"
-              className="text-base px-9 py-4 font-medium"
+              className="text-base px-10 py-[18px] font-medium"
             >
               {home.hero.ctas.secondary}
             </ButtonLink>

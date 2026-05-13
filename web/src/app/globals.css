@@ -7,24 +7,24 @@
   color-scheme: light;
 
   /* Light mode (secondary) */
-  --bg-primary: oklch(0.98 0.01 85);        /* Warm white #fafaf8 */
-  --bg-elevated: oklch(1 0 0);              /* Pure white */
-  --bg-surface: oklch(0.96 0.01 85);        /* Subtle gray */
-  --bg-surface-alt: oklch(0.94 0.01 85);    /* Alternate surface */
+  --bg-primary: oklch(0.98 0.01 85);        /* Warm white */
+  --bg-elevated: oklch(0.995 0.005 85);     /* Off-white, never pure */
+  --bg-surface: oklch(0.96 0.01 85);        /* Subtle warm gray */
+  --bg-surface-alt: oklch(0.94 0.012 80);   /* Alternate surface, slightly warmer */
   
-  --fg-primary: oklch(0.10 0 0);            /* Near black #1a1a1a */
-  --fg-muted: oklch(0.10 0 0 / 0.65);       /* Muted text */
-  --fg-subtle: oklch(0.10 0 0 / 0.4);       /* Very subtle text */
+  --fg-primary: oklch(0.13 0.005 65);       /* Warm near-black */
+  --fg-muted: oklch(0.13 0.005 65 / 0.65);  /* Muted text */
+  --fg-subtle: oklch(0.13 0.005 65 / 0.4);  /* Very subtle text */
 
   --accent: oklch(0.72 0.18 65);            /* Warm Amber #ff9500 */
   --accent-hover: oklch(0.78 0.18 65);      /* Lighter amber #ffaa33 */
   --accent-glow: oklch(0.72 0.18 65 / 0.33);
   --accent-muted: oklch(0.72 0.18 65 / 0.12);
-  --accent-ink: oklch(0 0 0);               /* Black text on amber */
+  --accent-ink: oklch(0.13 0.005 65);       /* Warm near-black on amber */
 
-  --border: oklch(0 0 0 / 0.08);
-  --border-strong: oklch(0 0 0 / 0.12);
-  --border-soft: oklch(0 0 0 / 0.05);
+  --border: oklch(0.25 0.01 65 / 0.08);
+  --border-strong: oklch(0.25 0.01 65 / 0.12);
+  --border-soft: oklch(0.25 0.01 65 / 0.05);
 
   --shadow-rest: 
     0 1px 0 0 oklch(1 0 0 / 0.08),
@@ -43,6 +43,14 @@
   --project-school: oklch(0.75 0.18 155);    /* Green */
   --project-fitness: oklch(0.68 0.20 300);   /* Purple */
   --project-cafe: oklch(0.65 0.22 25);       /* Coral */
+
+  /* Section-specific warm wash */
+  --pov-wash: oklch(0.93 0.035 70);           /* Light: warmer, more committed cream-amber */
+  --accent-rose: oklch(0.65 0.15 35);          /* Secondary warm hue for depth */
+  --hero-glow-opacity: 0.14;
+  --shadow-hover-strong:
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.2),
+    0 24px 80px oklch(0.72 0.18 65 / 0.1);
 
   /* Border radius */
   --radius-sm: 8px;
@@ -92,6 +100,7 @@
   --color-accent-glow: var(--accent-glow);
   --color-accent-muted: var(--accent-muted);
   --color-accent-ink: var(--accent-ink);
+  --color-accent-rose: var(--accent-rose);
 
   /* project accents */
   --color-project-hospital: var(--project-hospital);
@@ -141,25 +150,25 @@
   :root {
     color-scheme: dark;
 
-    /* Dark mode (primary) */
-    --bg-primary: oklch(0.05 0 0);            /* Deep black #0d0d0d */
-    --bg-elevated: oklch(0.10 0 0);           /* Card background #1a1a1a */
-    --bg-surface: oklch(0.13 0 0);            /* Elevated surfaces #222222 */
-    --bg-surface-alt: oklch(0.07 0 0);        /* Alternate surface #111111 */
+    /* Dark mode (primary) — warm-tinted neutrals */
+    --bg-primary: oklch(0.05 0.005 65);       /* Warm deep black */
+    --bg-elevated: oklch(0.10 0.005 65);      /* Warm card background */
+    --bg-surface: oklch(0.13 0.006 65);       /* Warm elevated surface */
+    --bg-surface-alt: oklch(0.07 0.005 65);   /* Warm alternate surface */
     
-    --fg-primary: oklch(0.98 0.01 85);        /* Warm white #fafaf8 */
+    --fg-primary: oklch(0.98 0.01 85);        /* Warm white */
     --fg-muted: oklch(0.98 0.01 85 / 0.6);    /* Muted text */
     --fg-subtle: oklch(0.98 0.01 85 / 0.35);  /* Very subtle text */
 
-    --accent: oklch(0.72 0.18 65);            /* Warm Amber #ff9500 */
-    --accent-hover: oklch(0.78 0.18 65);      /* Lighter amber */
+    --accent: oklch(0.72 0.18 65);            /* Warm Amber */
+    --accent-hover: oklch(0.78 0.18 65);
     --accent-glow: oklch(0.72 0.18 65 / 0.33);
     --accent-muted: oklch(0.72 0.18 65 / 0.12);
-    --accent-ink: oklch(0 0 0);               /* Black text on amber */
+    --accent-ink: oklch(0.13 0.005 65);       /* Warm near-black on amber */
 
-    --border: oklch(1 0 0 / 0.08);
-    --border-strong: oklch(1 0 0 / 0.12);
-    --border-soft: oklch(1 0 0 / 0.05);
+    --border: oklch(0.85 0.008 65 / 0.08);
+    --border-strong: oklch(0.85 0.008 65 / 0.12);
+    --border-soft: oklch(0.85 0.008 65 / 0.05);
 
     --shadow-rest: 
       0 1px 0 0 oklch(1 0 0 / 0.08),
@@ -171,31 +180,38 @@
     --shadow-strong:
       0 1px 0 0 oklch(1 0 0 / 0.12),
       0 40px 90px -60px oklch(0 0 0 / 0.7);
+
+    --pov-wash: oklch(0.09 0.025 60);         /* Dark: deeper, more committed amber-black */
+    --accent-rose: oklch(0.55 0.12 35);        /* Darker rose for depth */
+    --hero-glow-opacity: 0.16;
+    --shadow-hover-strong:
+      0 1px 0 0 oklch(0.72 0.18 65 / 0.25),
+      0 24px 80px oklch(0.72 0.18 65 / 0.12);
   }
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
 
-  /* Light mode (secondary) - matches :root defaults */
+  /* Light mode (secondary) — matches :root defaults */
   --bg-primary: oklch(0.98 0.01 85);
-  --bg-elevated: oklch(1 0 0);
+  --bg-elevated: oklch(0.995 0.005 85);
   --bg-surface: oklch(0.96 0.01 85);
-  --bg-surface-alt: oklch(0.94 0.01 85);
+  --bg-surface-alt: oklch(0.94 0.012 80);
   
-  --fg-primary: oklch(0.10 0 0);
-  --fg-muted: oklch(0.10 0 0 / 0.65);
-  --fg-subtle: oklch(0.10 0 0 / 0.4);
+  --fg-primary: oklch(0.13 0.005 65);
+  --fg-muted: oklch(0.13 0.005 65 / 0.65);
+  --fg-subtle: oklch(0.13 0.005 65 / 0.4);
 
   --accent: oklch(0.72 0.18 65);
   --accent-hover: oklch(0.78 0.18 65);
   --accent-glow: oklch(0.72 0.18 65 / 0.33);
   --accent-muted: oklch(0.72 0.18 65 / 0.12);
-  --accent-ink: oklch(0 0 0);
+  --accent-ink: oklch(0.13 0.005 65);
 
-  --border: oklch(0 0 0 / 0.08);
-  --border-strong: oklch(0 0 0 / 0.12);
-  --border-soft: oklch(0 0 0 / 0.05);
+  --border: oklch(0.25 0.01 65 / 0.08);
+  --border-strong: oklch(0.25 0.01 65 / 0.12);
+  --border-soft: oklch(0.25 0.01 65 / 0.05);
 
   --shadow-rest: 
     0 1px 0 0 oklch(1 0 0 / 0.08),
@@ -210,16 +226,17 @@
 
   --studio-grid-opacity: 0.35;
   --studio-noise-opacity: 0.035;
+  --pov-wash: oklch(0.93 0.035 70);
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
 
-  /* Dark mode (primary) - matches @media (prefers-color-scheme: dark) */
-  --bg-primary: oklch(0.05 0 0);
-  --bg-elevated: oklch(0.10 0 0);
-  --bg-surface: oklch(0.13 0 0);
-  --bg-surface-alt: oklch(0.07 0 0);
+  /* Dark mode (primary) — warm-tinted neutrals */
+  --bg-primary: oklch(0.05 0.005 65);
+  --bg-elevated: oklch(0.10 0.005 65);
+  --bg-surface: oklch(0.13 0.006 65);
+  --bg-surface-alt: oklch(0.07 0.005 65);
   
   --fg-primary: oklch(0.98 0.01 85);
   --fg-muted: oklch(0.98 0.01 85 / 0.6);
@@ -229,11 +246,11 @@
   --accent-hover: oklch(0.78 0.18 65);
   --accent-glow: oklch(0.72 0.18 65 / 0.33);
   --accent-muted: oklch(0.72 0.18 65 / 0.12);
-  --accent-ink: oklch(0 0 0);
+  --accent-ink: oklch(0.13 0.005 65);
 
-  --border: oklch(1 0 0 / 0.08);
-  --border-strong: oklch(1 0 0 / 0.12);
-  --border-soft: oklch(1 0 0 / 0.05);
+  --border: oklch(0.85 0.008 65 / 0.08);
+  --border-strong: oklch(0.85 0.008 65 / 0.12);
+  --border-soft: oklch(0.85 0.008 65 / 0.05);
 
   --shadow-rest: 
     0 1px 0 0 oklch(1 0 0 / 0.08),
@@ -248,6 +265,7 @@
 
   --studio-grid-opacity: 0.22;
   --studio-noise-opacity: 0.03;
+  --pov-wash: oklch(0.09 0.025 60);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -303,9 +321,9 @@ p { text-wrap: pretty; }
   /* --- Size tokens (font-family + weight intentionally omitted) ----------- */
 
   .studio-h1 {
-    font-size: clamp(3.25rem, 5vw + 1rem, 6rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    font-size: clamp(3.5rem, 6vw + 1.5rem, 7.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
   }
 
   .studio-h2 {
@@ -348,9 +366,9 @@ p { text-wrap: pretty; }
 
   /* Headline: bold sans (Bricolage Grotesque) — hero titles, section headings */
   .studio-h1-headline {
-    font-size: clamp(3.25rem, 5vw + 1rem, 6rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    font-size: clamp(3.5rem, 6vw + 1.5rem, 7.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
     font-family: var(--font-sans);
     font-weight: 700;
   }

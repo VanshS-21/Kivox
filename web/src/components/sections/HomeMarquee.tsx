@@ -22,14 +22,17 @@ export function HomeMarquee() {
             repeat: Infinity, 
             ease: "linear" 
           }}
-          className="flex gap-16"
+          className="flex gap-12 items-center"
         >
           {[...marqueeContent, ...marqueeContent, ...marqueeContent].map((item, idx) => (
             <div
               key={`${item}-${idx}`}
-              className="shrink-0 text-xl font-medium text-foreground/40 whitespace-nowrap tracking-tight uppercase font-mono"
+              className="shrink-0 flex items-center gap-12"
             >
-              {item}
+              <span className="text-xl font-medium text-foreground/50 whitespace-nowrap tracking-tight uppercase font-mono">
+                {item}
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-accent/40 shrink-0" />
             </div>
           ))}
         </motion.div>
