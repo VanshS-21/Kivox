@@ -1,14 +1,25 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useState, useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 import { home } from "@/content/pages/home";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { fadeUp, transitionDefault, viewportOnce } from "@/lib/motion";
+import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/motion";
 
 export function HomeProcess() {
   const reduce = useReducedMotion();
+  const [hoveredStep, setHoveredStep] = useState(-1);
+  const timelineRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-driven timeline progress
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 0.8", "end 0.4"],
+  });
+
+  const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <Section className="relative py-[140px] lg:py-[200px] overflow-hidden bg-surface-alt">
@@ -22,13 +33,24 @@ export function HomeProcess() {
           transition={transitionDefault}
           className="inline-flex items-center gap-3 mb-14 lg:mb-20"
         >
-          <div className="w-2.5 h-2.5 rounded-full bg-accent" />
+          <motion.div
+            animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="w-2.5 h-2.5 rounded-full bg-accent"
+          />
           <span className="studio-eyebrow text-accent">
             Our Methodology
           </span>
+          <motion.span
+            initial={reduce ? false : { scaleX: 0 }}
+            whileInView={reduce ? undefined : { scaleX: 1 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.3 }}
+            className="hidden lg:block w-20 h-px bg-accent/20 origin-left"
+          />
         </motion.div>
 
-        {/* Headline + description row — more generous gap */}
+        {/* Headline + description row */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 mb-16 lg:mb-24">
           <motion.h2
             initial={reduce ? false : "hidden"}
@@ -60,13 +82,27 @@ export function HomeProcess() {
           </motion.p>
         </div>
 
-        {/* Hairline divider */}
-        <div className="border-t border-border mb-0" />
+        {/* Hairline divider — animated draw */}
+        <motion.div
+          initial={reduce ? false : { scaleX: 0 }}
+          whileInView={reduce ? undefined : { scaleX: 1 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.15 }}
+          className="border-t border-border mb-0 origin-left"
+        />
 
         {/* Process steps — split layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-20">
-          {/* Left — numbered step list (40%) */}
-          <div className="lg:col-span-5 py-10 lg:py-14">
+          {/* Left — numbered step list with timeline */}
+          <div className="lg:col-span-5 py-10 lg:py-14 relative" ref={timelineRef}>
+            {/* Scroll-driven timeline line */}
+            <div className="absolute left-[1.1rem] top-10 bottom-10 w-px bg-border-soft hidden lg:block">
+              <motion.div
+                style={{ height: timelineHeight }}
+                className="w-full bg-accent/40 origin-top"
+              />
+            </div>
+
             {home.process.map((step, idx) => (
               <motion.div
                 key={idx}
@@ -74,76 +110,115 @@ export function HomeProcess() {
                 whileInView={reduce ? undefined : "show"}
                 viewport={viewportOnce}
                 variants={fadeUp}
-                transition={{ ...transitionDefault, delay: idx * 0.06 }}
-                className={`group flex items-start gap-6 py-6 lg:py-8 ${
+                transition={{ ...transitionDefault, delay: idx * 0.08 }}
+                className={`group flex items-start gap-6 py-6 lg:py-8 cursor-pointer relative ${
                   idx < home.process.length - 1
                     ? "border-b border-border-soft"
                     : ""
                 }`}
+                onMouseEnter={() => setHoveredStep(idx)}
+                onMouseLeave={() => setHoveredStep(-1)}
               >
-                {/* Step number — larger, more presence */}
-                <span className="text-[1.75rem] font-bold text-accent/50 font-mono leading-none shrink-0 pt-0.5 studio-tabular group-hover:text-accent/80 transition-colors duration-300">
+                {/* Step number — animated scale on hover */}
+                <motion.span
+                  animate={{
+                    scale: hoveredStep === idx ? 1.15 : 1,
+                    opacity: hoveredStep === idx ? 1 : 0.5,
+                  }}
+                  transition={{ duration: 0.3, ease: easeOutExpo }}
+                  className="text-[1.75rem] font-bold text-accent font-mono leading-none shrink-0 pt-0.5 studio-tabular transition-colors duration-300 relative z-10"
+                >
                   {String(idx + 1).padStart(2, "0")}
-                </span>
+                </motion.span>
 
                 {/* Step content */}
                 <div>
-                  <h3 className="studio-h4 font-sans font-semibold text-foreground mb-2 group-hover:text-accent transition-colors duration-200">
+                  <motion.h3
+                    animate={{
+                      color: hoveredStep === idx ? 'var(--accent)' : 'var(--fg-primary)',
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="studio-h4 font-sans font-semibold mb-2"
+                  >
                     {step.title}
-                  </h3>
+                  </motion.h3>
                   <span className="studio-eyebrow text-accent">
                     {step.subtitle}
                   </span>
+
+                  {/* Expandable description */}
+                  <div
+                    className="overflow-hidden transition-all duration-500"
+                    style={{
+                      display: "grid",
+                      gridTemplateRows: hoveredStep === idx ? "1fr" : "0fr",
+                    }}
+                  >
+                    <div className="min-h-0 overflow-hidden">
+                      <p className="studio-body-small text-muted-foreground pt-3">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Right — decorative visual (60%) — bolder, more committed */}
-          <div className="lg:col-span-7 relative hidden lg:flex items-center">
-            <div className="w-full aspect-[16/10] rounded-[20px] overflow-hidden bg-elevated border border-border relative">
-              {/* Bold amber gradient fill — committed, not tentative */}
+          {/* Right — decorative visual */}
+          <motion.div
+            initial={reduce ? false : { opacity: 0, scale: 0.96, filter: "blur(8px)" }}
+            whileInView={reduce ? undefined : { opacity: 1, scale: 1, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.2 }}
+            className="lg:col-span-7 relative hidden lg:flex items-center"
+          >
+            <div className="w-full aspect-[16/10] relative rounded-[20px] overflow-hidden bg-elevated border border-border">
+              {/* Radial glow */}
               <div
                 className="absolute inset-0"
                 style={{
-                  background: 'linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-surface) 40%, var(--bg-elevated) 100%)',
+                  background: "radial-gradient(ellipse at 40% 40%, var(--accent), transparent 70%)",
+                  opacity: 0.06,
                 }}
               />
+              {/* Secondary rose depth */}
               <div
-                className="absolute inset-0 opacity-[0.10]"
+                className="absolute inset-0"
                 style={{
-                  background: 'radial-gradient(ellipse at 30% 40%, var(--accent), transparent 65%)',
-                }}
-              />
-              <div
-                className="absolute inset-0 opacity-[0.05]"
-                style={{
-                  background: 'radial-gradient(ellipse at 80% 70%, var(--accent-rose), transparent 55%)',
+                  background: "radial-gradient(ellipse at 70% 70%, var(--accent-rose), transparent 60%)",
+                  opacity: 0.04,
                 }}
               />
 
-              {/* Refined geometric accents — fewer, larger, more confident */}
-              <div className="absolute top-10 left-10 w-40 h-40 border border-accent/[0.12] rounded-full" />
-              <div className="absolute top-16 left-16 w-24 h-24 border-2 border-accent/[0.08] rounded-full" />
-              <div className="absolute bottom-10 right-10 w-52 h-52 border border-border rounded-full" />
+              {/* Process step numbers watermark */}
+              <div className="absolute inset-0 flex items-center justify-center gap-4">
+                {home.process.map((_, idx) => (
+                  <motion.span
+                    key={idx}
+                    animate={{
+                      opacity: hoveredStep === idx ? 0.12 : 0.04,
+                      scale: hoveredStep === idx ? 1.1 : 1,
+                    }}
+                    transition={{ duration: 0.4, ease: easeOutExpo }}
+                    className="text-[5rem] lg:text-[6rem] font-bold font-mono leading-none select-none studio-tabular text-accent"
+                  >
+                    {String(idx + 1).padStart(2, "0")}
+                  </motion.span>
+                ))}
+              </div>
 
-              {/* Large step count watermark — bold presence */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span
-                  className="text-[8rem] font-bold font-mono leading-none select-none studio-tabular"
-                  style={{ color: 'var(--accent)', opacity: 0.06 }}
-                >
-                  05
+              {/* Phase label */}
+              <div className="absolute bottom-6 left-8 flex items-center gap-3 z-10">
+                <div className="w-6 h-px bg-accent/30" />
+                <span className="studio-tag text-subtle-foreground">
+                  {hoveredStep >= 0
+                    ? `Phase ${hoveredStep + 1}: ${home.process[hoveredStep]?.title || ""}`
+                    : "Five-Phase Methodology"}
                 </span>
               </div>
-
-              {/* Methodology label */}
-              <div className="absolute bottom-8 left-10 flex items-center gap-3">
-                <div className="w-8 h-px bg-accent/30" />
-                <span className="studio-tag text-subtle-foreground">Five-phase methodology</span>
-              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </Container>
     </Section>

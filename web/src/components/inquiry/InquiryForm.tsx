@@ -5,8 +5,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/Button";
-import { Field, inputBase } from "@/components/ui/Field";
-import { Panel } from "@/components/ui/Panel";
 import {
   businessTypeOptions,
   inquirySchema,
@@ -15,6 +13,69 @@ import {
 } from "@/features/inquiry/inquiry.schema";
 import type { Inquiry } from "@/features/inquiry/inquiry.types";
 import { submitProjectInquiry } from "@/features/inquiry/submitProjectInquiry";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Floating-label field — editorial form treatment
+   Input sits on a subtle bottom border, label floats above on focus/fill.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function FormField({
+  label,
+  error,
+  children,
+  className,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`flex flex-col gap-2 ${className || ""}`}>
+      <div className="flex items-center justify-between gap-4">
+        <label className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
+          {label}
+        </label>
+        {error && (
+          <span className="text-xs text-red-500 dark:text-red-400">{error}</span>
+        )}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+/** Clean input style — bottom border only, transparent background */
+const inputStyle = [
+  "w-full h-12 px-0 py-3",
+  "bg-transparent",
+  "border-0 border-b border-border",
+  "text-sm text-foreground",
+  "outline-none transition-colors duration-200",
+  "focus:border-accent",
+  "placeholder:text-muted-foreground/40",
+  "disabled:opacity-50 disabled:pointer-events-none",
+].join(" ");
+
+/** Select style — matching the input but with a subtle dropdown arrow */
+const selectStyle = [
+  "w-full h-12 px-0 py-3",
+  "bg-transparent",
+  "border-0 border-b border-border",
+  "text-sm text-foreground",
+  "outline-none transition-colors duration-200",
+  "focus:border-accent",
+  "disabled:opacity-50 disabled:pointer-events-none",
+  "appearance-none cursor-pointer",
+  // Custom dropdown arrow via background-image
+  "bg-no-repeat bg-[length:16px_16px]",
+  "bg-[position:right_0_center]",
+  "pr-6",
+].join(" ");
+
+const selectArrow = {
+  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E")`,
+};
 
 export function InquiryForm() {
   const [hp, setHp] = useState("");
@@ -57,7 +118,8 @@ export function InquiryForm() {
   const isDisabled = status.type === "submitting" || status.type === "success";
 
   return (
-    <form className="flex flex-col gap-5" onSubmit={form.handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-10" onSubmit={form.handleSubmit(onSubmit)}>
+      {/* Honeypot */}
       <input
         autoComplete="off"
         className="hidden"
@@ -66,36 +128,46 @@ export function InquiryForm() {
         tabIndex={-1}
         value={hp}
       />
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field label="Name" error={form.formState.errors.name?.message}>
+
+      {/* Row 1: Name + Email */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+        <FormField label="Name" error={form.formState.errors.name?.message}>
           <input
             autoComplete="name"
-            className={inputBase}
+            className={inputStyle}
             disabled={isDisabled}
+            placeholder="Your full name"
             {...form.register("name")}
           />
-        </Field>
-        <Field label="Email" error={form.formState.errors.email?.message}>
+        </FormField>
+        <FormField label="Email" error={form.formState.errors.email?.message}>
           <input
             autoComplete="email"
-            className={inputBase}
+            className={inputStyle}
             disabled={isDisabled}
             type="email"
+            placeholder="you@company.com"
             {...form.register("email")}
           />
-        </Field>
-        <Field label="Phone" error={form.formState.errors.phone?.message}>
+        </FormField>
+      </div>
+
+      {/* Row 2: Phone + Business type */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+        <FormField label="Phone" error={form.formState.errors.phone?.message}>
           <input
             autoComplete="tel"
-            className={inputBase}
+            className={inputStyle}
             disabled={isDisabled}
             type="tel"
+            placeholder="+91 ..."
             {...form.register("phone")}
           />
-        </Field>
-        <Field label="Business type" error={form.formState.errors.businessType?.message}>
+        </FormField>
+        <FormField label="Business type" error={form.formState.errors.businessType?.message}>
           <select
-            className={inputBase}
+            className={selectStyle}
+            style={selectArrow}
             disabled={isDisabled}
             {...form.register("businessType")}
           >
@@ -105,10 +177,15 @@ export function InquiryForm() {
               </option>
             ))}
           </select>
-        </Field>
-        <Field label="What you need" error={form.formState.errors.whatYouNeed?.message}>
+        </FormField>
+      </div>
+
+      {/* Row 3: What you need + Timeline */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+        <FormField label="What you need" error={form.formState.errors.whatYouNeed?.message}>
           <select
-            className={inputBase}
+            className={selectStyle}
+            style={selectArrow}
             disabled={isDisabled}
             {...form.register("whatYouNeed")}
           >
@@ -118,10 +195,11 @@ export function InquiryForm() {
               </option>
             ))}
           </select>
-        </Field>
-        <Field label="Timeline (optional)" error={form.formState.errors.timeline?.message}>
+        </FormField>
+        <FormField label="Timeline (optional)" error={form.formState.errors.timeline?.message}>
           <select
-            className={inputBase}
+            className={selectStyle}
+            style={selectArrow}
             disabled={isDisabled}
             {...form.register("timeline")}
           >
@@ -132,53 +210,68 @@ export function InquiryForm() {
               </option>
             ))}
           </select>
-        </Field>
+        </FormField>
       </div>
 
-      <Field label="Primary goal" error={form.formState.errors.primaryGoal?.message}>
+      {/* Full-width fields */}
+      <FormField label="Primary goal" error={form.formState.errors.primaryGoal?.message}>
         <input
-          className={inputBase}
+          className={inputStyle}
           disabled={isDisabled}
           placeholder="What should improve when this is live?"
           {...form.register("primaryGoal")}
         />
-      </Field>
+      </FormField>
 
-      <Field label="Current website/app (optional)" error={form.formState.errors.currentUrl?.message}>
+      <FormField label="Current website/app (optional)" error={form.formState.errors.currentUrl?.message}>
         <input
-          className={inputBase}
+          className={inputStyle}
           disabled={isDisabled}
           placeholder="https://"
           {...form.register("currentUrl")}
         />
-      </Field>
+      </FormField>
 
-      <Field label="Notes (optional)" error={form.formState.errors.notes?.message}>
+      <FormField label="Notes (optional)" error={form.formState.errors.notes?.message}>
         <textarea
-          className={inputBase + " min-h-28 py-3"}
+          className={`${inputStyle} min-h-32 py-4 resize-y`}
           disabled={isDisabled}
+          placeholder="Anything else we should know — timeline, budget, inspiration..."
           {...form.register("notes")}
         />
-      </Field>
+      </FormField>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <Button disabled={isDisabled} type="submit" variant="primary">
-          {status.type === "submitting" ? "Sending…" : status.type === "success" ? "Sent" : "Send inquiry"}
+      {/* Submit row */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-4">
+        <Button
+          disabled={isDisabled}
+          type="submit"
+          variant="primary"
+          className="px-10 py-3.5 text-sm font-semibold"
+        >
+          {status.type === "submitting"
+            ? "Sending…"
+            : status.type === "success"
+              ? "Sent ✓"
+              : "Send inquiry →"}
         </Button>
-        <div className="text-sm text-muted-foreground">We reply within 24 hours with next steps.</div>
+        <span className="text-xs text-muted-foreground">
+          We reply within 24 hours with next steps.
+        </span>
       </div>
 
-      {status.type === "error" ? (
-        <Panel noise={false} padding="sm" className="border-red-200 bg-red-50 text-red-900 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-100">
+      {/* Status messages */}
+      {status.type === "error" && (
+        <div className="rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-200 px-5 py-4 text-sm">
           {status.message}
-        </Panel>
-      ) : null}
+        </div>
+      )}
 
-      {status.type === "success" ? (
-        <Panel noise={false} padding="sm" className="border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-100">
-          Received. We’ll reply within 24 hours with next steps.
-        </Panel>
-      ) : null}
+      {status.type === "success" && (
+        <div className="rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200 px-5 py-4 text-sm">
+          Received. We&apos;ll reply within 24 hours with next steps.
+        </div>
+      )}
     </form>
   );
 }

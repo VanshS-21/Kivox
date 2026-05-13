@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 type Theme = "dark" | "light" | "system";
@@ -32,7 +32,7 @@ function applyTheme(theme: Theme) {
   }
 }
 
-export function ThemeToggle({ className = "" }: { className?: string }) {
+export function ThemeToggle({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   const [theme, setTheme] = useState<Theme>("system");
   const [mounted, setMounted] = useState(false);
 
@@ -75,6 +75,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     <button
       onClick={cycle}
       className={`w-9 h-9 rounded-lg flex items-center justify-center hover:bg-accent/10 transition-colors ${className}`}
+      style={style}
       aria-label={`Theme: ${theme}. Click to change.`}
       title={`Theme: ${theme}`}
     >
@@ -94,7 +95,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-foreground"
+            className=""
           >
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </motion.svg>
@@ -113,7 +114,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-foreground"
+            className=""
           >
             <circle cx="12" cy="12" r="5" />
             <line x1="12" y1="1" x2="12" y2="3" />
@@ -140,7 +141,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-foreground"
+            className=""
           >
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
             <line x1="8" y1="21" x2="16" y2="21" />

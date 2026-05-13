@@ -48,6 +48,13 @@
   --pov-wash: oklch(0.93 0.035 70);           /* Light: warmer, more committed cream-amber */
   --accent-rose: oklch(0.65 0.15 35);          /* Secondary warm hue for depth */
   --hero-glow-opacity: 0.14;
+
+  /* Hero constellation defaults (light) */
+  --hero-bg: oklch(0.96 0.012 80);
+  --hero-fg: oklch(0.13 0.005 65);
+  --hero-fg-muted: #666;
+  --hero-fg-subtle: #999;
+  --hero-noise-opacity: 0.2;
   --shadow-hover-strong:
     0 1px 0 0 oklch(0.72 0.18 65 / 0.2),
     0 24px 80px oklch(0.72 0.18 65 / 0.1);
@@ -71,9 +78,13 @@
 
   /* Animation */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-instant: 100ms;
   --duration-fast: 200ms;
   --duration-medium: 300ms;
   --duration-slow: 600ms;
+  --duration-entrance: 800ms;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -135,9 +146,13 @@
 
   /* animation */
   --ease-out-expo: var(--ease-out-expo);
+  --ease-out-quart: var(--ease-out-quart);
+  --ease-out-quint: var(--ease-out-quint);
+  --duration-instant: var(--duration-instant);
   --duration-fast: var(--duration-fast);
   --duration-medium: var(--duration-medium);
   --duration-slow: var(--duration-slow);
+  --duration-entrance: var(--duration-entrance);
 
   /* fonts — Bricolage Grotesque (headline), Figtree (body), Spectral (serif), Geist Mono */
   --font-sans: var(--font-headline);
@@ -227,6 +242,13 @@
   --studio-grid-opacity: 0.35;
   --studio-noise-opacity: 0.035;
   --pov-wash: oklch(0.93 0.035 70);
+
+  /* Hero constellation — light variant */
+  --hero-bg: oklch(0.96 0.012 80);
+  --hero-fg: oklch(0.13 0.005 65);
+  --hero-fg-muted: #666;
+  --hero-fg-subtle: #999;
+  --hero-noise-opacity: 0.2;
 }
 
 :root[data-theme="dark"] {
@@ -266,6 +288,13 @@
   --studio-grid-opacity: 0.22;
   --studio-noise-opacity: 0.03;
   --pov-wash: oklch(0.09 0.025 60);
+
+  /* Hero constellation — dark variant */
+  --hero-bg: #0d0a05;
+  --hero-fg: #f0ece4;
+  --hero-fg-muted: #888;
+  --hero-fg-subtle: #666;
+  --hero-noise-opacity: 0.35;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -572,5 +601,107 @@ p { text-wrap: pretty; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* OVERDRIVE — Scroll-driven section crossfades                                */
+/* Progressive enhancement: Chrome/Edge/Safari only.                           */
+/* Firefox + reduced-motion: static (no degradation, just no effect).          */
+/* -------------------------------------------------------------------------- */
+
+/* Register custom properties for animation */
+@property --section-reveal {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --section-blur {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* Scroll-driven reveal keyframes */
+@keyframes section-scroll-reveal {
+  0% {
+    --section-reveal: 0;
+    --section-blur: 6px;
+    opacity: 0.3;
+    transform: translateY(30px) scale(0.985);
+    filter: blur(6px);
+  }
+  15% {
+    --section-reveal: 1;
+    --section-blur: 0px;
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+    filter: blur(0px);
+  }
+  85% {
+    --section-reveal: 1;
+    --section-blur: 0px;
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    --section-reveal: 0;
+    --section-blur: 4px;
+    opacity: 0.4;
+    transform: translateY(-20px) scale(0.99);
+    filter: blur(4px);
+  }
+}
+
+/* Apply to sections with the overdrive-crossfade class */
+@supports (animation-timeline: view()) {
+  .overdrive-crossfade {
+    animation: section-scroll-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%, exit 60% exit 100%;
+    will-change: opacity, transform, filter;
+  }
+}
+
+/* Scroll-driven parallax for decorative elements */
+@keyframes overdrive-parallax-slow {
+  from { transform: translateY(40px); }
+  to { transform: translateY(-40px); }
+}
+
+@keyframes overdrive-parallax-fast {
+  from { transform: translateY(60px); }
+  to { transform: translateY(-60px); }
+}
+
+@supports (animation-timeline: view()) {
+  .overdrive-parallax-slow {
+    animation: overdrive-parallax-slow linear both;
+    animation-timeline: view();
+  }
+
+  .overdrive-parallax-fast {
+    animation: overdrive-parallax-fast linear both;
+    animation-timeline: view();
+  }
+}
+
+/* Smooth scroll for the whole document */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .overdrive-crossfade {
+    animation: none !important;
+  }
+  .overdrive-parallax-slow,
+  .overdrive-parallax-fast {
+    animation: none !important;
   }
 }

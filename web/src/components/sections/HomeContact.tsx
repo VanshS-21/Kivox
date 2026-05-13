@@ -1,199 +1,283 @@
 "use client";
 
+import { useRef, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 
 import { home } from "@/content/pages/home";
 import { brand } from "@/content/brand";
-import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { fadeUp, transitionDefault } from "@/lib/motion";
+import { easeOutExpo, easeOutQuint, viewportOnce } from "@/lib/motion";
+
+/** Magnetic button that shifts toward cursor */
+function MagneticCTA({
+  href,
+  children,
+  reduce,
+}: {
+  href: string;
+  children: React.ReactNode;
+  reduce: boolean | null;
+}) {
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (reduce) return;
+      const btn = buttonRef.current;
+      if (!btn) return;
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) * 0.2;
+      const dy = (e.clientY - cy) * 0.2;
+      btn.style.transform = `translate(${dx}px, ${dy}px)`;
+    },
+    [reduce]
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    const btn = buttonRef.current;
+    if (!btn) return;
+    btn.style.transform = "translate(0px, 0px)";
+  }, []);
+
+  return (
+    <Link
+      ref={buttonRef}
+      href={href}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-accent-ink rounded-xl text-sm font-semibold tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-300"
+      style={{ transitionProperty: "background-color, color, box-shadow, border-color, transform, scale" }}
+    >
+      {children}
+    </Link>
+  );
+}
+
+/**
+ * Magnetic field overlay — content elements drift microscopically
+ * toward the cursor, creating a gravitational pull across the section.
+ */
+function useMagneticField(reduce: boolean | null) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [fieldOffset, setFieldOffset] = useState({ x: 0, y: 0 });
+  const rafRef = useRef<number>(0);
+  const targetRef = useRef({ x: 0, y: 0 });
+  const currentRef = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (reduce) return;
+    const section = sectionRef.current;
+    if (!section) return;
+
+    function handleMouseMove(e: MouseEvent) {
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      targetRef.current = { x: dx * 6, y: dy * 4 };
+    }
+
+    function handleMouseLeave() {
+      targetRef.current = { x: 0, y: 0 };
+    }
+
+    function tick() {
+      const curr = currentRef.current;
+      const tgt = targetRef.current;
+      curr.x += (tgt.x - curr.x) * 0.08;
+      curr.y += (tgt.y - curr.y) * 0.08;
+
+      if (Math.abs(curr.x - fieldOffset.x) > 0.1 || Math.abs(curr.y - fieldOffset.y) > 0.1) {
+        setFieldOffset({ x: curr.x, y: curr.y });
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
+    }
+
+    section.addEventListener("mousemove", handleMouseMove, { passive: true });
+    section.addEventListener("mouseleave", handleMouseLeave);
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      section.removeEventListener("mousemove", handleMouseMove);
+      section.removeEventListener("mouseleave", handleMouseLeave);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [reduce]);
+
+  return { sectionRef, fieldOffset };
+}
 
 export function HomeContact() {
   const reduce = useReducedMotion();
+  const { sectionRef, fieldOffset } = useMagneticField(reduce);
 
   return (
-    <Section id="contact" className="relative pt-[180px] lg:pt-[240px] pb-[140px] lg:pb-[180px] overflow-hidden bg-background">
-      {/* Larger, more committed ambient glow */}
-      <motion.div
-        animate={{
-          scale: [1, 1.3, 1],
-          rotate: [0, 60, 0],
-          x: [0, 70, 0],
-          y: [0, -50, 0]
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute top-[20%] left-[20%] w-[800px] h-[800px] rounded-full blur-[160px]"
-        style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.9)' }}
-      />
-      
-      <motion.div
-        animate={{
-          scale: [1, 1.4, 1],
-          rotate: [0, -45, 0],
-          x: [0, -60, 0],
-          y: [0, 35, 0]
-        }}
-        transition={{
-          duration: 26,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute bottom-[15%] right-[20%] w-[650px] h-[650px] rounded-full blur-[140px]"
-        style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.45)' }}
-      />
-
-      <Container className="relative z-10">
-        {/* Section label */}
+    <div ref={sectionRef}>
+      <Section id="contact" className="relative pt-[140px] lg:pt-[200px] pb-[120px] lg:pb-[160px] overflow-hidden bg-background">
+        {/* Ambient amber glow — organic, no grid */}
         <motion.div
-          initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : "show"}
-          variants={fadeUp}
-          transition={{ ...transitionDefault, delay: 0.05 }}
-          className="inline-flex items-center gap-3 mb-14 lg:mb-20"
-        >
-          <div className="w-2.5 h-2.5 rounded-full bg-accent" />
-          <span className="studio-eyebrow text-accent">
-            Get In Touch
-          </span>
-        </motion.div>
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 40, 0],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[15%] left-[15%] w-[600px] h-[600px] rounded-full blur-[180px] pointer-events-none"
+          style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.7)' }}
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, -30, 0],
+          }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[20%] right-[15%] w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none"
+          style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.4)' }}
+        />
 
-        {/* Split layout — more generous gap */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-          {/* Left — headline, body, CTA */}
-          <motion.div
-            initial={reduce ? false : "hidden"}
-            animate={reduce ? undefined : "show"}
-            className="lg:col-span-7 space-y-10"
+        <Container className="relative z-10">
+          {/* Content with magnetic drift */}
+          <div
+            className="max-w-4xl mx-auto text-center"
+            style={{
+              transform: reduce ? undefined : `translate(${fieldOffset.x}px, ${fieldOffset.y}px)`,
+              transition: "transform 0.1s linear",
+            }}
           >
-            {/* Pushed headline scale — between h2 and h1 for impact */}
-            <motion.h2
-              variants={fadeUp}
-              transition={{ ...transitionDefault, delay: 0.1 }}
-              className="font-sans font-bold text-foreground"
-              style={{ fontSize: 'clamp(2.5rem, 4vw + 1rem, 4.5rem)', lineHeight: 1.06, letterSpacing: '-0.02em' }}
+            {/* Section label */}
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.6, ease: easeOutExpo }}
+              className="inline-flex items-center gap-3 mb-10"
             >
-              Let&apos;s build
+              <motion.div
+                animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="w-2 h-2 rounded-full bg-accent"
+              />
+              <span className="studio-eyebrow text-accent">
+                [ Get In Touch ]
+              </span>
+            </motion.div>
+
+            {/* Headline — large, centered, clear */}
+            <motion.h2
+              initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
+              className="font-sans font-bold text-foreground mb-8"
+              style={{ fontSize: 'clamp(2.5rem, 4vw + 1rem, 5rem)', lineHeight: 1.06, letterSpacing: '-0.025em' }}
+            >
+              Ready to build
               <br />
-              your next
-              <br />
-              <em
-                className="font-serif font-normal text-accent"
-                style={{ fontStyle: "italic" }}
-              >
-                big thing.
+              something{" "}
+              <em className="font-serif font-normal text-accent" style={{ fontStyle: "italic" }}>
+                exceptional?
               </em>
             </motion.h2>
-            
+
+            {/* Body text */}
             <motion.p
-              variants={fadeUp}
-              transition={{ ...transitionDefault, delay: 0.2 }}
-              className="studio-body-serif text-muted-foreground max-w-lg"
+              initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(6px)" }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.15 }}
+              className="studio-body-serif text-muted-foreground max-w-xl mx-auto mb-12"
             >
               {home.contact.line}
             </motion.p>
 
-            {/* CTA with circle arrow — bolder, larger */}
+            {/* Primary CTA — direct to contact form */}
             <motion.div
-              variants={fadeUp}
-              transition={{ ...transitionDefault, delay: 0.3 }}
-              className="flex items-center gap-5"
+              initial={reduce ? false : { opacity: 0, y: 16, filter: "blur(6px)" }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.25 }}
+              className="mb-16"
             >
-              <Link
-                href="/contact"
-                className="w-[72px] h-[72px] rounded-full border-2 border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-accent-ink hover:shadow-amber-glow transition-all duration-300"
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </Link>
-              <div>
-                <span className="studio-eyebrow text-foreground block">
-                  Start a Project
-                </span>
-                <span className="studio-caption">
-                  Takes less than 2 minutes
-                </span>
-              </div>
+              <MagneticCTA href="/contact" reduce={reduce}>
+                Start a project
+                <span className="text-base">→</span>
+              </MagneticCTA>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Right — contact card */}
+          {/* Contact info — clean horizontal strip, no cards */}
           <motion.div
-            initial={reduce ? false : "hidden"}
-            animate={reduce ? undefined : "show"}
-            variants={fadeUp}
-            transition={{ ...transitionDefault, delay: 0.25 }}
-            className="lg:col-span-5 flex flex-col gap-6"
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.3 }}
+            className="max-w-3xl mx-auto"
+            style={{
+              transform: reduce ? undefined : `translate(${-fieldOffset.x * 0.3}px, ${-fieldOffset.y * 0.3}px)`,
+            }}
           >
-            {/* Say Hello card — more padded, bolder */}
-            <div className="bg-elevated rounded-[20px] border border-border p-10 space-y-5 hover:border-accent/20 transition-colors duration-300">
-              <span className="studio-eyebrow text-subtle-foreground">
-                Say Hello
-              </span>
-              <div>
+            {/* Divider */}
+            <div className="h-px bg-border mb-10" />
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+              {/* Email */}
+              <div className="flex flex-col gap-1.5">
+                <span className="studio-eyebrow text-muted-foreground text-[11px]">Email</span>
                 <Link
                   href={`mailto:${brand.contact.email}`}
-                  className="studio-h4 font-sans font-semibold text-foreground hover:text-accent transition-colors"
+                  className="text-foreground font-medium hover:text-accent transition-colors"
                 >
                   {brand.contact.email}
                 </Link>
               </div>
-              <div className="flex gap-5 pt-2">
-                <Link
-                  href={brand.socials.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="studio-tag text-subtle-foreground hover:text-accent transition-colors"
-                >
-                  LinkedIn
-                </Link>
-                <Link
-                  href={brand.socials.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="studio-tag text-subtle-foreground hover:text-accent transition-colors"
-                >
-                  Instagram
-                </Link>
-              </div>
-            </div>
 
-            {/* Location — more padded, bolder */}
-            <div className="bg-elevated rounded-[20px] border border-border p-10 hover:border-accent/20 transition-colors duration-300">
-              <span className="studio-eyebrow text-subtle-foreground">
-                Based In
-              </span>
-              <div className="mt-5 flex items-center gap-4">
-                <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'oklch(0.72 0.17 155)' }} />
-                <div>
-                  <p className="text-xl text-foreground font-semibold tracking-tight">
-                    Bengaluru
-                  </p>
-                  <p className="studio-caption">
-                    India · Serving businesses worldwide
-                  </p>
+              {/* Location */}
+              <div className="flex flex-col gap-1.5">
+                <span className="studio-eyebrow text-muted-foreground text-[11px]">Based in</span>
+                <div className="flex items-center gap-2.5">
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-2 h-2 rounded-full"
+                    style={{ background: 'oklch(0.72 0.17 155)' }}
+                  />
+                  <span className="text-foreground font-medium">Bengaluru, India</span>
+                </div>
+              </div>
+
+              {/* Socials */}
+              <div className="flex flex-col gap-1.5">
+                <span className="studio-eyebrow text-muted-foreground text-[11px]">Connect</span>
+                <div className="flex items-center gap-4">
+                  <Link
+                    href={brand.socials.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground font-medium hover:text-accent transition-colors text-sm"
+                  >
+                    LinkedIn
+                  </Link>
+                  <span className="text-border-strong">·</span>
+                  <Link
+                    href={brand.socials.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground font-medium hover:text-accent transition-colors text-sm"
+                  >
+                    Instagram
+                  </Link>
                 </div>
               </div>
             </div>
           </motion.div>
-        </div>
-      </Container>
-    </Section>
+        </Container>
+      </Section>
+    </div>
   );
 }
