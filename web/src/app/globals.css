@@ -48,6 +48,7 @@
   --pov-wash: oklch(0.90 0.06 62);            /* Committed amber atmosphere */
   --accent-rose: oklch(0.58 0.14 25);          /* Richer rose for light */
   --hero-glow-opacity: 0.08;
+  --work-bg-overlay: 0.85;
 
   /* Hero constellation defaults (light) */
   --hero-bg: oklch(0.95 0.015 72);
@@ -198,6 +199,7 @@
 
     --pov-wash: oklch(0.09 0.025 60);         /* Dark: deeper, more committed amber-black */
     --accent-rose: oklch(0.55 0.12 35);        /* Darker rose for depth */
+    --work-bg-overlay: 0.78;
     --hero-glow-opacity: 0.16;
     --shadow-hover-strong:
       0 1px 0 0 oklch(0.72 0.18 65 / 0.25),
@@ -252,6 +254,7 @@
 
   --accent-rose: oklch(0.58 0.14 25);
   --hero-glow-opacity: 0.08;
+  --work-bg-overlay: 0.85;
 
   /* Hero constellation — light variant */
   --hero-bg: oklch(0.95 0.015 72);
@@ -308,6 +311,7 @@
   --hero-fg-muted: #888;
   --hero-fg-subtle: #666;
   --hero-noise-opacity: 0.35;
+  --work-bg-overlay: 0.78;
 }
 
 /* -------------------------------------------------------------------------- */

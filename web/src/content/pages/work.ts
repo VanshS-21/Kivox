@@ -5,9 +5,9 @@ import { hotel } from "../work/hotel";
 import { school } from "../work/school";
 
 export const work = {
-  title: "Work",
-  label: "Studio Demonstrations",
+  title: "Showcase",
+  label: "Selected Work",
   intro:
-    "Realistic projects built by Kivox to show how we structure, design, and build for trust and action.",
+    "Handcrafted digital experiences built by Kivox — each one a demonstration of how we structure, design, and build for trust and action.",
   items: [hospital, cafe, hotel, school, fitness],
 };

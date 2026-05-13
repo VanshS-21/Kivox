@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { brand } from "@/content/brand";
@@ -8,7 +9,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/work", label: "Projects" },
+  { href: "/work", label: "Showcase" },
   { href: "/#services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
@@ -18,6 +19,11 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const pathname = usePathname();
+
+  // Only the home page has the dark constellation hero.
+  // All other pages use theme-aware backgrounds from the start.
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,9 +79,9 @@ export function Navigation() {
   }, [isOpen]);
 
   // Nav color states:
-  //   overHero = still scrolling over the dark hero section
+  //   overHero = still scrolling over the dark hero section (home page only)
   //   pastHero = scrolled past the hero into the page content
-  const overHero = !pastHero;
+  const overHero = isHomePage && !pastHero;
 
   return (
     <>

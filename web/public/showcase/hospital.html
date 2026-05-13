@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedVista Hospital — Your Health, Our Priority</title>
+<meta name="description" content="Studio demonstration by Kivox — a trust-first hospital website with clear services, doctor discovery, and calm appointment booking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8fafb;--bg-card:#ffffff;--bg-hero:#0a2540;
+  --text:#1a2b3c;--text-muted:#5a6b7c;--text-light:#8a9bac;
+  --blue:#2563eb;--blue-light:#dbeafe;--blue-dark:#1d4ed8;
+  --teal:#0d9488;--teal-light:#ccfbf1;
+  --border:#e5e8ec;--shadow:0 1px 3px rgba(0,0,0,0.06),0 8px 24px rgba(0,0,0,0.04);
+  --shadow-lg:0 4px 12px rgba(0,0,0,0.06),0 20px 60px rgba(0,0,0,0.08);
+  --radius:12px;--radius-lg:20px;
+  --font-sans:'Inter',system-ui,sans-serif;--font-serif:'Playfair Display',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* ── Nav ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:all .4s ease}
+.nav.scrolled{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(0,0,0,0.04)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-brand{font-weight:700;font-size:20px;letter-spacing:-0.02em;color:#fff;transition:color .4s}
+.nav.scrolled .nav-brand{color:var(--text)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.7);transition:color .3s}
+.nav.scrolled .nav-links a{color:var(--text-muted)}
+.nav-links a:hover{color:#fff}
+.nav.scrolled .nav-links a:hover{color:var(--blue)}
+.nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:var(--blue);color:#fff;border-radius:8px;font-size:13px;font-weight:600;letter-spacing:0.02em;transition:all .2s}
+.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+
+/* ── Hero ── */
+.hero{background:var(--bg-hero);color:#fff;padding:140px 0 100px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,0.15),transparent 70%);border-radius:50%}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:20px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(36px,5vw,56px);font-weight:500;line-height:1.12;letter-spacing:-0.01em;margin-bottom:20px}
+.hero h1 em{color:var(--blue);font-style:italic}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.6);max-width:440px;line-height:1.7;margin-bottom:32px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--blue);color:#fff;border-radius:10px;font-size:14px;font-weight:600;transition:all .2s;border:none;cursor:pointer}
+.btn-primary:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,0.25)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:10px;font-size:14px;font-weight:500;transition:all .2s;cursor:pointer;background:none}
+.btn-secondary:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.05)}
+.hero-stats{display:flex;gap:40px;margin-top:48px}
+.stat{display:flex;flex-direction:column;gap:4px}
+.stat-num{font-size:28px;font-weight:700;color:#fff}
+.stat-label{font-size:12px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.08em}
+.hero-visual{position:relative;display:flex;justify-content:center}
+.hero-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:32px;backdrop-filter:blur(12px);width:100%;max-width:420px}
+.hero-card-title{font-size:14px;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:20px}
+.hero-card-item{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.hero-card-item:last-child{border-bottom:none}
+.hero-card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.hero-card-name{font-size:14px;font-weight:600;color:#fff}
+.hero-card-spec{font-size:12px;color:rgba(255,255,255,0.45)}
+
+/* ── Services ── */
+.services{padding:100px 0}
+.section-label{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.section-title{font-family:var(--font-serif);font-size:clamp(28px,3vw,40px);font-weight:500;line-height:1.2;letter-spacing:-0.01em;color:var(--text);margin-bottom:16px}
+.section-sub{font-size:15px;color:var(--text-muted);max-width:560px;line-height:1.7;margin-bottom:48px}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.service-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;transition:all .3s;position:relative;overflow:hidden}
+.service-card:hover{border-color:var(--blue);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.service-card:hover::before{transform:scaleX(1)}
+.service-icon{width:48px;height:48px;border-radius:12px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px}
+.service-name{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.service-desc{font-size:13px;color:var(--text-muted);line-height:1.6}
+.service-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:13px;font-weight:600;color:var(--blue);transition:gap .2s}
+.service-link:hover{gap:10px}
+
+/* ── Doctors ── */
+.doctors{padding:100px 0;background:var(--bg)}
+.doctors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.doctor-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .3s}
+.doctor-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.doctor-photo{height:220px;background:linear-gradient(135deg,var(--blue-light),#e0e7ff);display:flex;align-items:center;justify-content:center;font-size:64px;color:var(--blue)}
+.doctor-info{padding:20px}
+.doctor-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.doctor-spec{font-size:12px;color:var(--blue);font-weight:600;margin-bottom:8px}
+.doctor-exp{font-size:12px;color:var(--text-light)}
+.doctor-avail{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:12px;color:var(--teal);font-weight:600}
+.doctor-avail::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+/* ── CTA ── */
+.cta-section{padding:100px 0;background:var(--bg-hero);color:#fff;text-align:center}
+.cta-section h2{font-family:var(--font-serif);font-size:clamp(28px,3.5vw,44px);font-weight:500;margin-bottom:16px}
+.cta-section h2 em{color:var(--blue);font-style:italic}
+.cta-section p{color:rgba(255,255,255,0.55);font-size:15px;max-width:480px;margin:0 auto 32px}
+
+/* ── Footer ── */
+.footer{padding:48px 0;border-top:1px solid var(--border)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center}
+.footer-brand{font-weight:700;font-size:16px;color:var(--text)}
+.footer-note{font-size:12px;color:var(--text-light)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:13px;color:var(--text-muted);transition:color .2s}
+.footer-links a:hover{color:var(--blue)}
+
+/* ── Kivox badge ── */
+.kivox-badge{position:fixed;bottom:20px;right:20px;z-index:100;display:flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(13,10,5,0.9);color:#f0ece4;border-radius:8px;font-size:12px;font-weight:500;backdrop-filter:blur(12px);border:1px solid rgba(240,236,228,0.1);transition:all .2s}
+.kivox-badge:hover{background:rgba(13,10,5,1);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.kivox-badge span{color:#e07b20;font-weight:700}
+
+/* ── Responsive ── */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .hero-visual{display:none}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .doctors-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .services-grid,.doctors-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hero-stats{gap:24px}
+  .hero-actions{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-brand">MedVista</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#doctors">Our Doctors</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Book Appointment →</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">Trusted Healthcare Since 2002</div>
+        <h1>Your Health,<br>Our <em>Priority.</em></h1>
+        <p class="hero-sub">World-class medical care with compassion. From routine check-ups to advanced procedures — we're here when it matters most.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">Book Appointment →</a>
+          <a href="#services" class="btn-secondary">View Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Specialists</div></div>
+          <div class="stat"><div class="stat-num">15k</div><div class="stat-label">Patients / Year</div></div>
+          <div class="stat"><div class="stat-num">22</div><div class="stat-label">Years of Care</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-title">Quick Appointment</div>
+          <div class="hero-card-item">
+            <div class="hero-card-icon" style="background:rgba(37,99,235,0.15)">🫀</div>
+            <div><div class="hero-card-name">Dr. Priya Sharma</div><div class="hero-card-spec">Cardiology · Available Today</div></div>
+          </div>
+          <div class="hero-card-item">
+            <div class="hero-card-icon" style="background:rgba(13,148,136,0.15)">🧠</div>
+            <div><div class="hero-card-name">Dr. Arjun Mehta</div><div class="hero-card-spec">Neurology · Next Available: Tue</div></div>
+          </div>
+          <div class="hero-card-item">
+            <div class="hero-card-icon" style="background:rgba(147,51,234,0.15)">🦴</div>
+            <div><div class="hero-card-name">Dr. Kavita Rao</div><div class="hero-card-spec">Orthopedics · Available Today</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-label">Our Departments</div>
+    <h2 class="section-title">Comprehensive Care,<br>Expert Hands</h2>
+    <p class="section-sub">Every department is led by senior specialists with decades of experience, supported by modern diagnostics and treatment protocols.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🫀</div>
+        <div class="service-name">Cardiology</div>
+        <div class="service-desc">Advanced cardiac care including interventional procedures, electrophysiology, and preventive heart health programs.</div>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧠</div>
+        <div class="service-name">Neurology</div>
+        <div class="service-desc">Comprehensive neurological diagnostics and treatment for conditions from migraines to complex neurosurgical cases.</div>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🦴</div>
+        <div class="service-name">Orthopedics</div>
+        <div class="service-desc">Joint replacements, sports medicine, spine surgery, and rehabilitation with cutting-edge surgical techniques.</div>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👶</div>
+        <div class="service-name">Pediatrics</div>
+        <div class="service-desc">Child-friendly care from newborn screenings to adolescent health, with dedicated pediatric specialists.</div>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔬</div>
+        <div class="service-name">Diagnostics</div>
+        <div class="service-desc">State-of-the-art imaging, laboratory services, and health screening packages with same-day reports.</div>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏥</div>
+        <div class="service-name">Emergency</div>
+        <div class="service-desc">24/7 emergency and trauma care with rapid triage, critical care units, and ambulance coordination.</div>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Doctors -->
+<section class="doctors" id="doctors">
+  <div class="container">
+    <div class="section-label">Meet Our Team</div>
+    <h2 class="section-title">Doctors You Can Trust</h2>
+    <p class="section-sub">Our specialists are recognized leaders in their fields, committed to patient-centered care.</p>
+    <div class="doctors-grid">
+      <div class="doctor-card">
+        <div class="doctor-photo">👩‍⚕️</div>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. Priya Sharma</div>
+          <div class="doctor-spec">Cardiology</div>
+          <div class="doctor-exp">18 years experience · MBBS, MD, DM</div>
+          <div class="doctor-avail">Available Today</div>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo">👨‍⚕️</div>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. Arjun Mehta</div>
+          <div class="doctor-spec">Neurology</div>
+          <div class="doctor-exp">15 years experience · MBBS, MD, DM</div>
+          <div class="doctor-avail">Available Tomorrow</div>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo">👩‍⚕️</div>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. Kavita Rao</div>
+          <div class="doctor-spec">Orthopedics</div>
+          <div class="doctor-exp">20 years experience · MBBS, MS, MCh</div>
+          <div class="doctor-avail">Available Today</div>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <div class="doctor-photo">👨‍⚕️</div>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. Rohit Kapoor</div>
+          <div class="doctor-spec">Pediatrics</div>
+          <div class="doctor-exp">12 years experience · MBBS, MD</div>
+          <div class="doctor-avail">Available Today</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="section-label" style="color:rgba(255,255,255,0.4)">Get in Touch</div>
+    <h2>Ready to Take the<br>First <em>Step?</em></h2>
+    <p>Book an appointment online or call us directly. Our patient coordinators will guide you to the right specialist.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="#" class="btn-primary" style="font-size:15px;padding:16px 40px">Book Appointment →</a>
+      <a href="tel:+918000000000" class="btn-secondary" style="font-size:15px;padding:16px 40px">Call: +91 80 0000 0000</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-brand">MedVista Hospital</div>
+      <div class="footer-note" style="margin-top:4px">This is a studio demonstration by Kivox. Not a real hospital.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#">Services</a>
+      <a href="#">Doctors</a>
+      <a href="#">About</a>
+      <a href="#">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Kivox Badge -->
+<a href="/" class="kivox-badge">
+  Built by <span>Kivox</span> · Studio Demo
+</a>
+
+<script>
+// Scroll-based nav styling
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = 1; e.target.style.transform = 'translateY(0)'; }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.service-card, .doctor-card').forEach(el => {
+  el.style.opacity = 0; el.style.transform = 'translateY(20px)'; el.style.transition = 'all 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

@@ -1,9 +1,13 @@
 export const cafe = {
   id: "cafe",
   title: "Cafe Website",
-  label: "Studio Demonstration",
+  label: "Hospitality · Local Discovery",
+  image: "/work/cafe.png",
+  href: "/showcase/cafe.html",
   demonstrates:
     "Local discovery and visit intent: menu clarity, location confidence, and a fast mobile experience.",
+  caseStudy:
+    "Most cafe websites are afterthoughts — a logo, an Instagram embed, and a Google Maps link. We treated this differently. The core insight: people visiting a cafe site are making a real-time decision — 'should I go here right now?' That means the menu needs to load instantly, be scannable without pinching, and show prices without hiding them behind third-party delivery platforms. Hours and location need to be visible without scrolling. The design language mirrors the craft itself: warm serif headlines over clean sans-serif body text, espresso-tinted color tokens, and a layout rhythm that feels like a well-designed printed menu. The features section avoids marketing superlatives — instead, it states simple facts: 'We roast in small batches every week.' Proof over promises.",
   targetAudience: [
     "People nearby deciding where to go",
     "People checking menu/pricing quickly",
@@ -23,3 +27,4 @@ export const cafe = {
   ],
   proofNotes: ["Label: Studio Demonstration", "No real cafe branding or claim of operation."],
 };
+

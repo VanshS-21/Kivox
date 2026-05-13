@@ -5,7 +5,7 @@ export const home = {
       "Kivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast — and take the next step with confidence.",
     ctas: {
       primary: "Start a project",
-      secondary: "View studio work",
+      secondary: "Explore our showcase",
     },
   },
   services: [
@@ -53,9 +53,9 @@ export const home = {
     },
   ],
   workPreview: {
-    label: "Studio Demonstrations",
+    label: "Selected Work",
     summary:
-      "Realistic projects built by Kivox to show how we structure, design, and build for trust and action.",
+      "Handcrafted digital experiences built by Kivox — each one a demonstration of how we structure, design, and build for trust and action.",
   },
   process: [
     {
