@@ -41,71 +41,62 @@ export function Footer() {
   const reduce = useReducedMotion();
 
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-12">
-        <motion.div
-          initial={reduce ? false : "hidden"}
-          whileInView={reduce ? undefined : "show"}
-          viewport={viewportOnce}
-          variants={{
-            hidden: {},
-            show: {
-              transition: {
-                staggerChildren: 0.06,
-                delayChildren: 0.05,
+    <footer className="bg-surface-alt">
+      {/* ── Contact band ── */}
+      <div className="border-t border-border">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-12 lg:py-14">
+          <motion.div
+            initial={reduce ? false : "hidden"}
+            whileInView={reduce ? undefined : "show"}
+            viewport={viewportOnce}
+            variants={{
+              hidden: {},
+              show: {
+                transition: {
+                  staggerChildren: 0.06,
+                  delayChildren: 0.05,
+                },
               },
-            },
-          }}
-          className="flex flex-col lg:flex-row justify-between gap-12"
-        >
-          {/* Brand section */}
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.5, ease: easeOutExpo }}
-            className="flex flex-col gap-3"
+            }}
+            className="flex flex-col lg:flex-row justify-between gap-10 lg:items-end"
           >
+            {/* Left — brand + contact */}
             <motion.div
-              initial={{ color: "var(--accent)" }}
-              animate={{ color: "var(--fg-primary)" }}
-              transition={{ duration: 0.8, delay: 0.3, ease: easeOutExpo }}
-              className="text-lg font-sans font-bold tracking-tight"
+              variants={fadeUp}
+              transition={{ duration: 0.5, ease: easeOutExpo }}
+              className="space-y-5"
             >
-              {brand.name}
+              <div className="text-lg font-sans font-bold tracking-tight text-foreground">
+                {brand.name}
+              </div>
+              <div className="space-y-1.5">
+                <a
+                  href={`mailto:${brand.contact.email}`}
+                  className="block text-foreground hover:text-accent transition-colors font-medium"
+                >
+                  {brand.contact.email}
+                </a>
+                <div className="text-sm text-muted-foreground">
+                  {brand.contact.phone}
+                </div>
+              </div>
             </motion.div>
-            <div className="studio-caption">{brand.locationLine}</div>
-          </motion.div>
 
-          {/* Contact grid */}
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.5, ease: easeOutExpo }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-4 text-sm"
-          >
-            <div className="flex flex-col gap-1">
-              <div className="studio-eyebrow text-muted-foreground opacity-60">Email</div>
-              <a
-                className="text-foreground hover:text-accent transition-colors"
-                href={`mailto:${brand.contact.email}`}
-              >
-                {brand.contact.email}
-              </a>
-            </div>
-            
-            <div className="flex flex-col gap-1">
-              <div className="studio-eyebrow text-muted-foreground opacity-60">Phone</div>
-              <div className="text-foreground">{brand.contact.phone}</div>
-            </div>
-            
-            <div className="flex flex-col gap-1">
-              <div className="studio-eyebrow text-muted-foreground opacity-60">Social</div>
-              <div className="flex items-center gap-4">
+            {/* Right — social + legal, no labels */}
+            <motion.div
+              variants={fadeUp}
+              transition={{ duration: 0.5, ease: easeOutExpo }}
+              className="flex gap-10 sm:gap-14 text-sm"
+            >
+              {/* Social */}
+              <div className="flex flex-col gap-2">
                 <a
                   className="text-foreground hover:text-accent transition-colors"
                   href={brand.socials.linkedin}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  LinkedIn
+                  LinkedIn ↗
                 </a>
                 <a
                   className="text-foreground hover:text-accent transition-colors"
@@ -113,56 +104,48 @@ export function Footer() {
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Instagram
+                  Instagram ↗
                 </a>
               </div>
-            </div>
-          </motion.div>
 
-          {/* Legal links */}
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.5, ease: easeOutExpo }}
-            className="flex flex-col gap-3"
-          >
-            <div className="studio-eyebrow text-muted-foreground opacity-60">Legal</div>
-            <div className="flex flex-col gap-2 text-sm">
-              <Link
-                className="text-foreground hover:text-accent transition-colors"
-                href="/privacy"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                className="text-foreground hover:text-accent transition-colors"
-                href="/terms"
-              >
-                Terms of Service
-              </Link>
-            </div>
+              {/* Legal */}
+              <div className="flex flex-col gap-2">
+                <Link
+                  className="text-muted-foreground hover:text-accent transition-colors"
+                  href="/privacy"
+                >
+                  Privacy
+                </Link>
+                <Link
+                  className="text-muted-foreground hover:text-accent transition-colors"
+                  href="/terms"
+                >
+                  Terms
+                </Link>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
+      </div>
 
-        {/* Copyright with animated divider */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0 }}
-          whileInView={reduce ? undefined : { opacity: 1 }}
-          viewport={viewportOnce}
-          transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.3 }}
-          className="mt-12 pt-8 border-t border-border"
-        >
+      {/* ── Colophon ── */}
+      <div className="border-t border-border-soft">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-5">
           <motion.div
-            initial={reduce ? false : { scaleX: 0 }}
-            whileInView={reduce ? undefined : { scaleX: 1 }}
+            initial={reduce ? false : { opacity: 0 }}
+            whileInView={reduce ? undefined : { opacity: 1 }}
             viewport={viewportOnce}
-            transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.2 }}
-            className="origin-left"
+            transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.15 }}
+            className="flex flex-col sm:flex-row justify-between gap-3 items-start sm:items-center"
           >
             <div className="studio-caption">
-              © <YearCountUp /> {brand.name}. All rights reserved.
+              © <YearCountUp /> {brand.name} · {brand.locationLine}
+            </div>
+            <div className="studio-caption text-muted-foreground">
+              Crafted with intention
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

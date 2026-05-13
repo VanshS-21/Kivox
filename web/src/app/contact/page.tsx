@@ -103,31 +103,6 @@ export default function ContactPage() {
             ))}
           </div>
         </motion.div>
-
-        {/* Contact info strip */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0 }}
-          animate={reduce ? undefined : { opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-14"
-        >
-          <div className="h-px bg-border mb-8" />
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6 text-sm text-muted-foreground">
-            <div>
-              <span className="text-muted-foreground">Email </span>
-              <a className="font-medium text-foreground hover:text-accent transition-colors" href={`mailto:${brand.contact.email}`}>
-                {brand.contact.email}
-              </a>
-            </div>
-            <span className="hidden sm:inline text-border-strong">·</span>
-            <div>
-              <span className="text-muted-foreground">Phone </span>
-              <a className="font-medium text-foreground hover:text-accent transition-colors" href={`tel:${tel}`}>
-                {brand.contact.phone}
-              </a>
-            </div>
-          </div>
-        </motion.div>
       </Container>
     </div>
   );

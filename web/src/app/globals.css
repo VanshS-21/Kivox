@@ -6,58 +6,58 @@
 :root {
   color-scheme: light;
 
-  /* Light mode (secondary) */
-  --bg-primary: oklch(0.98 0.01 85);        /* Warm white */
-  --bg-elevated: oklch(0.995 0.005 85);     /* Off-white, never pure */
-  --bg-surface: oklch(0.96 0.01 85);        /* Subtle warm gray */
-  --bg-surface-alt: oklch(0.94 0.012 80);   /* Alternate surface, slightly warmer */
+  /* Light mode — warm parchment palette */
+  --bg-primary: oklch(0.97 0.012 75);        /* Warm parchment */
+  --bg-elevated: oklch(0.99 0.008 80);       /* Card float */
+  --bg-surface: oklch(0.95 0.015 72);        /* Warm linen */
+  --bg-surface-alt: oklch(0.92 0.02 68);     /* Warm sandstone */
   
-  --fg-primary: oklch(0.13 0.005 65);       /* Warm near-black */
-  --fg-muted: oklch(0.13 0.005 65 / 0.65);  /* Muted text */
-  --fg-subtle: oklch(0.13 0.005 65 / 0.4);  /* Very subtle text */
+  --fg-primary: oklch(0.16 0.01 55);         /* Rich warm-brown black */
+  --fg-muted: oklch(0.16 0.01 55 / 0.72);    /* Present muted text */
+  --fg-subtle: oklch(0.16 0.01 55 / 0.48);   /* Subtle but readable */
 
-  --accent: oklch(0.72 0.18 65);            /* Warm Amber #ff9500 */
-  --accent-hover: oklch(0.78 0.18 65);      /* Lighter amber #ffaa33 */
-  --accent-glow: oklch(0.72 0.18 65 / 0.33);
-  --accent-muted: oklch(0.72 0.18 65 / 0.12);
-  --accent-ink: oklch(0.13 0.005 65);       /* Warm near-black on amber */
+  --accent: oklch(0.62 0.2 55);              /* Burnt amber — deep, rich on light */
+  --accent-hover: oklch(0.57 0.22 52);       /* Darker on hover */
+  --accent-glow: oklch(0.62 0.2 55 / 0.2);
+  --accent-muted: oklch(0.62 0.2 55 / 0.1);
+  --accent-ink: oklch(0.99 0.008 80);        /* White/cream on amber */
 
-  --border: oklch(0.25 0.01 65 / 0.08);
-  --border-strong: oklch(0.25 0.01 65 / 0.12);
-  --border-soft: oklch(0.25 0.01 65 / 0.05);
+  --border: oklch(0.55 0.02 60 / 0.15);
+  --border-strong: oklch(0.55 0.02 60 / 0.22);
+  --border-soft: oklch(0.55 0.02 60 / 0.08);
 
   --shadow-rest: 
-    0 1px 0 0 oklch(1 0 0 / 0.08),
-    0 20px 60px -30px oklch(0 0 0 / 0.4);
+    0 1px 2px oklch(0.4 0.02 60 / 0.06),
+    0 4px 16px oklch(0.4 0.02 60 / 0.08);
   --shadow-hover:
-    0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
-    0 20px 60px oklch(0.72 0.18 65 / 0.06);
-  --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
+    0 2px 4px oklch(0.62 0.2 55 / 0.08),
+    0 12px 40px oklch(0.62 0.2 55 / 0.1);
+  --shadow-amber-glow: 0 0 30px oklch(0.62 0.2 55 / 0.18);
   --shadow-strong:
-    0 1px 0 0 oklch(1 0 0 / 0.12),
-    0 40px 90px -60px oklch(0 0 0 / 0.7);
+    0 2px 4px oklch(0.4 0.02 60 / 0.08),
+    0 20px 60px oklch(0.4 0.02 60 / 0.15);
 
-  /* Project-specific accents */
-  --project-hospital: oklch(0.68 0.15 240);  /* Blue */
-  --project-hotel: oklch(0.80 0.12 85);      /* Gold */
-  --project-school: oklch(0.75 0.18 155);    /* Green */
-  --project-fitness: oklch(0.68 0.20 300);   /* Purple */
-  --project-cafe: oklch(0.65 0.22 25);       /* Coral */
+  /* Project-specific accents — slightly deeper for light */
+  --project-hospital: oklch(0.55 0.17 240);  /* Blue */
+  --project-hotel: oklch(0.68 0.15 75);      /* Gold */
+  --project-school: oklch(0.58 0.2 155);     /* Green */
+  --project-fitness: oklch(0.55 0.22 300);   /* Purple */
+  --project-cafe: oklch(0.55 0.24 25);       /* Coral */
 
-  /* Section-specific warm wash */
-  --pov-wash: oklch(0.93 0.035 70);           /* Light: warmer, more committed cream-amber */
-  --accent-rose: oklch(0.65 0.15 35);          /* Secondary warm hue for depth */
-  --hero-glow-opacity: 0.14;
+  /* Section-specific committed warm wash */
+  --pov-wash: oklch(0.90 0.06 62);            /* Committed amber atmosphere */
+  --accent-rose: oklch(0.58 0.14 25);          /* Richer rose for light */
+  --hero-glow-opacity: 0.08;
 
   /* Hero constellation defaults (light) */
-  --hero-bg: oklch(0.96 0.012 80);
-  --hero-fg: oklch(0.13 0.005 65);
-  --hero-fg-muted: #666;
-  --hero-fg-subtle: #999;
-  --hero-noise-opacity: 0.2;
+  --hero-bg: oklch(0.95 0.015 72);
+  --hero-fg: oklch(0.16 0.01 55);
+  --hero-fg-muted: oklch(0.16 0.01 55 / 0.55);
+  --hero-fg-subtle: oklch(0.16 0.01 55 / 0.38);
+  --hero-noise-opacity: 0.12;
   --shadow-hover-strong:
-    0 1px 0 0 oklch(0.72 0.18 65 / 0.2),
-    0 24px 80px oklch(0.72 0.18 65 / 0.1);
+    0 2px 4px oklch(0.62 0.2 55 / 0.1),
+    0 20px 60px oklch(0.62 0.2 55 / 0.14);
 
   /* Border radius */
   --radius-sm: 8px;
@@ -179,7 +179,7 @@
     --accent-hover: oklch(0.78 0.18 65);
     --accent-glow: oklch(0.72 0.18 65 / 0.33);
     --accent-muted: oklch(0.72 0.18 65 / 0.12);
-    --accent-ink: oklch(0.13 0.005 65);       /* Warm near-black on amber */
+    --accent-ink: oklch(0.99 0.008 80);       /* White/cream on amber */
 
     --border: oklch(0.85 0.008 65 / 0.08);
     --border-strong: oklch(0.85 0.008 65 / 0.12);
@@ -208,47 +208,60 @@
 :root[data-theme="light"] {
   color-scheme: light;
 
-  /* Light mode (secondary) — matches :root defaults */
-  --bg-primary: oklch(0.98 0.01 85);
-  --bg-elevated: oklch(0.995 0.005 85);
-  --bg-surface: oklch(0.96 0.01 85);
-  --bg-surface-alt: oklch(0.94 0.012 80);
+  /* Light mode — warm parchment palette (mirrors :root defaults) */
+  --bg-primary: oklch(0.97 0.012 75);
+  --bg-elevated: oklch(0.99 0.008 80);
+  --bg-surface: oklch(0.95 0.015 72);
+  --bg-surface-alt: oklch(0.92 0.02 68);
   
-  --fg-primary: oklch(0.13 0.005 65);
-  --fg-muted: oklch(0.13 0.005 65 / 0.65);
-  --fg-subtle: oklch(0.13 0.005 65 / 0.4);
+  --fg-primary: oklch(0.16 0.01 55);
+  --fg-muted: oklch(0.16 0.01 55 / 0.72);
+  --fg-subtle: oklch(0.16 0.01 55 / 0.48);
 
-  --accent: oklch(0.72 0.18 65);
-  --accent-hover: oklch(0.78 0.18 65);
-  --accent-glow: oklch(0.72 0.18 65 / 0.33);
-  --accent-muted: oklch(0.72 0.18 65 / 0.12);
-  --accent-ink: oklch(0.13 0.005 65);
+  --accent: oklch(0.62 0.2 55);
+  --accent-hover: oklch(0.57 0.22 52);
+  --accent-glow: oklch(0.62 0.2 55 / 0.2);
+  --accent-muted: oklch(0.62 0.2 55 / 0.1);
+  --accent-ink: oklch(0.99 0.008 80);
 
-  --border: oklch(0.25 0.01 65 / 0.08);
-  --border-strong: oklch(0.25 0.01 65 / 0.12);
-  --border-soft: oklch(0.25 0.01 65 / 0.05);
+  --border: oklch(0.55 0.02 60 / 0.15);
+  --border-strong: oklch(0.55 0.02 60 / 0.22);
+  --border-soft: oklch(0.55 0.02 60 / 0.08);
 
   --shadow-rest: 
-    0 1px 0 0 oklch(1 0 0 / 0.08),
-    0 20px 60px -30px oklch(0 0 0 / 0.4);
+    0 1px 2px oklch(0.4 0.02 60 / 0.06),
+    0 4px 16px oklch(0.4 0.02 60 / 0.08);
   --shadow-hover:
-    0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
-    0 20px 60px oklch(0.72 0.18 65 / 0.06);
-  --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
+    0 2px 4px oklch(0.62 0.2 55 / 0.08),
+    0 12px 40px oklch(0.62 0.2 55 / 0.1);
+  --shadow-amber-glow: 0 0 30px oklch(0.62 0.2 55 / 0.18);
   --shadow-strong:
-    0 1px 0 0 oklch(1 0 0 / 0.12),
-    0 40px 90px -60px oklch(0 0 0 / 0.7);
+    0 2px 4px oklch(0.4 0.02 60 / 0.08),
+    0 20px 60px oklch(0.4 0.02 60 / 0.15);
 
-  --studio-grid-opacity: 0.35;
-  --studio-noise-opacity: 0.035;
-  --pov-wash: oklch(0.93 0.035 70);
+  --studio-grid-opacity: 0.22;
+  --studio-noise-opacity: 0.025;
+  --pov-wash: oklch(0.90 0.06 62);
+
+  /* Project accents — deeper for light */
+  --project-hospital: oklch(0.55 0.17 240);
+  --project-hotel: oklch(0.68 0.15 75);
+  --project-school: oklch(0.58 0.2 155);
+  --project-fitness: oklch(0.55 0.22 300);
+  --project-cafe: oklch(0.55 0.24 25);
+
+  --accent-rose: oklch(0.58 0.14 25);
+  --hero-glow-opacity: 0.08;
 
   /* Hero constellation — light variant */
-  --hero-bg: oklch(0.96 0.012 80);
-  --hero-fg: oklch(0.13 0.005 65);
-  --hero-fg-muted: #666;
-  --hero-fg-subtle: #999;
-  --hero-noise-opacity: 0.2;
+  --hero-bg: oklch(0.95 0.015 72);
+  --hero-fg: oklch(0.16 0.01 55);
+  --hero-fg-muted: oklch(0.16 0.01 55 / 0.55);
+  --hero-fg-subtle: oklch(0.16 0.01 55 / 0.38);
+  --hero-noise-opacity: 0.12;
+  --shadow-hover-strong:
+    0 2px 4px oklch(0.62 0.2 55 / 0.1),
+    0 20px 60px oklch(0.62 0.2 55 / 0.14);
 }
 
 :root[data-theme="dark"] {
@@ -268,7 +281,7 @@
   --accent-hover: oklch(0.78 0.18 65);
   --accent-glow: oklch(0.72 0.18 65 / 0.33);
   --accent-muted: oklch(0.72 0.18 65 / 0.12);
-  --accent-ink: oklch(0.13 0.005 65);
+  --accent-ink: oklch(0.99 0.008 80);
 
   --border: oklch(0.85 0.008 65 / 0.08);
   --border-strong: oklch(0.85 0.008 65 / 0.12);
