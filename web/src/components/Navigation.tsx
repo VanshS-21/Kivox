@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { brand } from "@/content/brand";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { KivoxLogo } from "@/components/ui/KivoxLogo";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -130,6 +131,8 @@ export function Navigation() {
   //   overHero = still scrolling over the dark hero section (home page only)
   //   pastHero = scrolled past the hero into the page content
   const overHero = isHomePage && !pastHero;
+  //   useHeroColors = true only if we are over the hero AND the menu is closed
+  const useHeroColors = overHero && !isOpen;
 
   return (
     <>
@@ -144,7 +147,7 @@ export function Navigation() {
           isScrolled ? "border-b border-border" : ""
         }`}
         style={{
-          backgroundColor: overHero
+          backgroundColor: useHeroColors
             ? isScrolled
               ? "var(--hero-bg-scroll)"
               : "transparent"
@@ -154,79 +157,85 @@ export function Navigation() {
         {/* Theme-aware background — fades in when past the hero */}
         <div
           className="absolute inset-0 bg-background/90 transition-opacity duration-500 pointer-events-none"
-          style={{ opacity: pastHero && isScrolled ? 1 : 0 }}
+          style={{ opacity: pastHero && isScrolled && !isOpen ? 1 : 0 }}
         />
 
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 relative">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link
-              href="/"
-              onClick={(e) => {
-                if (pathname === "/") {
-                  e.preventDefault();
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                  setIsOpen(false);
-                }
-              }}
-              className="flex items-center gap-2 group relative z-[60]"
-            >
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className={`transition-colors duration-500 group-hover:text-accent ${
-                  pastHero ? "text-foreground" : ""
-                }`}
-                style={overHero ? { color: "var(--hero-fg)" } : undefined}
+            <Magnetic strength={0.1}>
+              <Link
+                href="/"
+                onClick={(e) => {
+                  if (pathname === "/") {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    setIsOpen(false);
+                  }
+                }}
+                className="flex items-center gap-2 group relative z-[60]"
               >
-                <KivoxLogo height={24} variant="mono" />
-              </motion.div>
-            </Link>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className={`transition-colors duration-500 group-hover:text-accent ${
+                    !useHeroColors ? "text-foreground" : ""
+                  }`}
+                  style={useHeroColors ? { color: "var(--hero-fg)" } : undefined}
+                >
+                  <KivoxLogo height={24} variant="mono" />
+                </motion.div>
+              </Link>
+            </Magnetic>
 
             {/* Right side — CTA, theme toggle, hamburger */}
             <div className="flex items-center gap-3 relative z-[60]">
               {/* Primary CTA */}
-              <Link
-                href="/contact"
-                className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-200"
-              >
-                Start a project
-                <span className="text-base">→</span>
-              </Link>
+              <Magnetic strength={0.15}>
+                <Link
+                  href="/contact"
+                  className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-200"
+                >
+                  Start a project
+                  <span className="text-base">→</span>
+                </Link>
+              </Magnetic>
 
               {/* Theme toggle */}
               <ThemeToggle
-                className={pastHero ? "text-foreground" : ""}
-                style={overHero ? { color: "var(--hero-fg)" } : undefined}
+                className={!useHeroColors ? "text-foreground" : ""}
+                style={useHeroColors ? { color: "var(--hero-fg)" } : undefined}
               />
 
               {/* Hamburger button */}
-              <button
-                ref={hamburgerRef}
-                onClick={() => setIsOpen(!isOpen)}
-                className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-accent/10 transition-colors"
-                aria-label="Toggle menu"
-                aria-expanded={isOpen}
-              >
-                <motion.span
-                  animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-6 h-0.5 transition-colors duration-500"
-                  style={{ background: overHero ? "var(--hero-fg)" : "var(--fg-primary)" }}
-                />
-                <motion.span
-                  animate={isOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-6 h-0.5 origin-center transition-colors duration-500"
-                  style={{ background: overHero ? "var(--hero-fg)" : "var(--fg-primary)" }}
-                />
-                <motion.span
-                  animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-6 h-0.5 transition-colors duration-500"
-                  style={{ background: overHero ? "var(--hero-fg)" : "var(--fg-primary)" }}
-                />
-              </button>
+              <Magnetic strength={0.25}>
+                <button
+                  ref={hamburgerRef}
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-accent/10 transition-colors"
+                  aria-label="Toggle menu"
+                  aria-expanded={isOpen}
+                >
+                  <motion.span
+                    animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-6 h-0.5 transition-colors duration-500"
+                    style={{ background: useHeroColors ? "var(--hero-fg)" : "var(--fg-primary)" }}
+                  />
+                  <motion.span
+                    animate={isOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-6 h-0.5 origin-center transition-colors duration-500"
+                    style={{ background: useHeroColors ? "var(--hero-fg)" : "var(--fg-primary)" }}
+                  />
+                  <motion.span
+                    animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-6 h-0.5 transition-colors duration-500"
+                    style={{ background: useHeroColors ? "var(--hero-fg)" : "var(--fg-primary)" }}
+                  />
+                </button>
+              </Magnetic>
             </div>
           </div>
         </div>
@@ -255,7 +264,7 @@ export function Navigation() {
               }}
             />
 
-            <div className="h-full flex flex-col lg:flex-row px-6 lg:px-12 pt-28 pb-12">
+            <div className="h-full flex flex-col lg:flex-row px-6 md:px-12 lg:px-16 pt-28 pb-12 overflow-y-auto">
               {/* Left — navigation links with dramatic cascade */}
               <div className="flex-1 flex flex-col justify-center">
                 <nav className="space-y-0">
@@ -264,9 +273,9 @@ export function Navigation() {
                     return (
                       <motion.div
                         key={item.href}
-                        initial={{ y: 60, opacity: 0, filter: "blur(10px)" }}
-                        animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                        exit={{ y: -30, opacity: 0, filter: "blur(6px)" }}
+                        initial={{ y: 60, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -30, opacity: 0 }}
                         transition={{
                           duration: 0.6,
                           delay: 0.05 + idx * 0.08,
@@ -322,9 +331,9 @@ export function Navigation() {
 
               {/* Right — connect & contact info */}
               <motion.div
-                initial={{ y: 40, opacity: 0, filter: "blur(8px)" }}
-                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                exit={{ y: -20, opacity: 0, filter: "blur(4px)" }}
+                initial={{ y: 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -20, opacity: 0 }}
                 transition={{
                   duration: 0.6,
                   delay: 0.35,
@@ -338,24 +347,28 @@ export function Navigation() {
                     Connect
                   </span>
                   <div className="flex gap-5 mt-3">
-                    <Link
-                      href={brand.socials.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsOpen(false)}
-                      className="text-base text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      LinkedIn ↗
-                    </Link>
-                    <Link
-                      href={brand.socials.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsOpen(false)}
-                      className="text-base text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      Instagram ↗
-                    </Link>
+                    <Magnetic strength={0.1}>
+                      <Link
+                        href={brand.socials.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsOpen(false)}
+                        className="block text-base text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        LinkedIn ↗
+                      </Link>
+                    </Magnetic>
+                    <Magnetic strength={0.1}>
+                      <Link
+                        href={brand.socials.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsOpen(false)}
+                        className="block text-base text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        Instagram ↗
+                      </Link>
+                    </Magnetic>
                   </div>
                 </div>
 
@@ -365,13 +378,15 @@ export function Navigation() {
                     Say Hello
                   </span>
                   <div className="mt-3">
-                    <Link
-                      href={`mailto:${brand.contact.email}`}
-                      onClick={() => setIsOpen(false)}
-                      className="text-lg text-foreground hover:text-accent transition-colors font-medium"
-                    >
-                      {brand.contact.email}
-                    </Link>
+                    <Magnetic strength={0.1}>
+                      <Link
+                        href={`mailto:${brand.contact.email}`}
+                        onClick={() => setIsOpen(false)}
+                        className="inline-block text-lg text-foreground hover:text-accent transition-colors font-medium"
+                      >
+                        {brand.contact.email}
+                      </Link>
+                    </Magnetic>
                   </div>
                 </div>
               </motion.div>

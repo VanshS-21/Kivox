@@ -97,6 +97,7 @@ function useMagneticField(reduce: boolean | null) {
   const rafRef = useRef<number>(0);
   const targetRef = useRef({ x: 0, y: 0 });
   const currentRef = useRef({ x: 0, y: 0 });
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
     if (reduce) return;
@@ -119,6 +120,8 @@ function useMagneticField(reduce: boolean | null) {
     }
 
     function tick() {
+      if (!isVisibleRef.current) return;
+
       const curr = currentRef.current;
       const tgt = targetRef.current;
       curr.x += (tgt.x - curr.x) * 0.08;
@@ -131,14 +134,28 @@ function useMagneticField(reduce: boolean | null) {
       rafRef.current = requestAnimationFrame(tick);
     }
 
+    // Only run the rAF loop when the section is visible
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          rafRef.current = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(rafRef.current);
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(section);
+
     section.addEventListener("mousemove", handleMouseMove, { passive: true });
     section.addEventListener("mouseleave", handleMouseLeave);
-    rafRef.current = requestAnimationFrame(tick);
 
     return () => {
       section.removeEventListener("mousemove", handleMouseMove);
       section.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(rafRef.current);
+      observer.disconnect();
     };
   }, [reduce]);
 
@@ -151,7 +168,7 @@ export function HomeContact() {
 
   return (
     <div ref={sectionRef}>
-      <Section id="contact" className="relative pt-[140px] lg:pt-[200px] pb-[120px] lg:pb-[160px] overflow-hidden bg-background">
+      <Section id="contact" className="relative pt-[80px] md:pt-[120px] lg:pt-[200px] pb-[60px] md:pb-[100px] lg:pb-[160px] overflow-hidden bg-background">
         {/* Ambient amber glow — organic, no grid */}
         <motion.div
           animate={{
@@ -159,7 +176,7 @@ export function HomeContact() {
             rotate: [0, 40, 0],
           }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[15%] left-[15%] w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] rounded-full blur-[80px] lg:blur-[180px] pointer-events-none"
+          className="absolute top-[15%] left-[15%] w-[200px] md:w-[300px] lg:w-[600px] h-[200px] md:h-[300px] lg:h-[600px] rounded-full blur-[60px] md:blur-[80px] lg:blur-[180px] pointer-events-none"
           style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.7)' }}
         />
         <motion.div
@@ -168,7 +185,7 @@ export function HomeContact() {
             rotate: [0, -30, 0],
           }}
           transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[20%] right-[15%] w-[250px] lg:w-[500px] h-[250px] lg:h-[500px] rounded-full blur-[80px] lg:blur-[160px] pointer-events-none"
+          className="absolute bottom-[20%] right-[15%] w-[150px] md:w-[250px] lg:w-[500px] h-[150px] md:h-[250px] lg:h-[500px] rounded-full blur-[50px] md:blur-[80px] lg:blur-[160px] pointer-events-none"
           style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.4)' }}
         />
 
@@ -183,8 +200,8 @@ export function HomeContact() {
           >
             {/* Headline — large, centered, clear */}
             <motion.h2
-              initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={viewportOnce}
               transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
               className="font-sans font-bold text-foreground mb-8"
@@ -200,8 +217,8 @@ export function HomeContact() {
 
             {/* Body text */}
             <motion.p
-              initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(6px)" }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={viewportOnce}
               transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.15 }}
               className="studio-body-serif text-muted-foreground max-w-xl mx-auto mb-12"
@@ -211,8 +228,8 @@ export function HomeContact() {
 
             {/* Primary CTA — direct to contact form */}
             <motion.div
-              initial={reduce ? false : { opacity: 0, y: 16, filter: "blur(6px)" }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={viewportOnce}
               transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.25 }}
               className="mb-8"

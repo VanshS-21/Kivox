@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: new URL(path, base).toString(),
     lastModified: now,
     changeFrequency: "monthly",
-    priority: path === "/" ? 1 : path === "/blog" ? 0.8 : 0.6,
+    priority: path === "/" ? 1 : ["/work", "/contact", "/blog"].includes(path) ? 0.8 : 0.6,
   }));
 
   const blogEntries: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({

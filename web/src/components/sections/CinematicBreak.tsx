@@ -19,16 +19,17 @@ export function CinematicBreak() {
     >
       {/* Dark mode image */}
       <Image
-        src="/process/discover.png"
+        src="/process/discover.webp"
         alt=""
         fill
         className="object-cover object-center cinematic-img-dark"
         sizes="100vw"
         priority={false}
+        quality={80}
       />
       {/* Light mode image */}
       <Image
-        src="/process/inkonpaper.png"
+        src="/process/inkonpaper.webp"
         alt=""
         fill
         className="object-cover object-center cinematic-img-light"

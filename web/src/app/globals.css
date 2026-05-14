@@ -67,6 +67,7 @@
   --cursor-dot-glow: 0 0 20px 8px oklch(0.72 0.18 65 / 0.15);
   --cursor-trail: oklch(0.72 0.18 65 / 0.12);
   --cursor-trail-glow: 0 0 30px 12px oklch(0.72 0.18 65 / 0.06);
+  --cursor-blend: screen;
 
   /* Service arrow icon — expanded amber glow on hover */
   --shadow-service-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15);
@@ -80,12 +81,12 @@
   --radius-lg: 24px;
   --radius-xl: 32px;
 
-  /* Spacing */
-  --space-section: 120px;
-  --space-section-large: 160px;
-  --space-section-small: 80px;
-  --space-xl: 64px;
-  --space-lg: 48px;
+  /* Spacing — fluid responsive tokens */
+  --space-section: clamp(64px, 8vw + 20px, 120px);
+  --space-section-large: clamp(80px, 10vw + 24px, 160px);
+  --space-section-small: clamp(48px, 6vw + 16px, 80px);
+  --space-xl: clamp(40px, 4vw + 16px, 64px);
+  --space-lg: clamp(32px, 3vw + 12px, 48px);
   --space-md: 32px;
   --space-sm: 20px;
   --space-xs: 12px;
@@ -243,11 +244,12 @@
   --hero-glow-opacity: 0.06;
   --work-bg-overlay: 1;
 
-  /* Cursor glow — committed amber in light mode */
-  --cursor-dot: oklch(0.60 0.22 55 / 0.35);
-  --cursor-dot-glow: 0 0 20px 8px oklch(0.60 0.22 55 / 0.10);
-  --cursor-trail: oklch(0.60 0.22 55 / 0.08);
-  --cursor-trail-glow: 0 0 30px 12px oklch(0.60 0.22 55 / 0.04);
+  /* Cursor glow — stronger amber for visibility on light surfaces */
+  --cursor-dot: oklch(0.55 0.24 55 / 0.7);
+  --cursor-dot-glow: 0 0 18px 6px oklch(0.55 0.24 55 / 0.25);
+  --cursor-trail: oklch(0.55 0.24 55 / 0.18);
+  --cursor-trail-glow: 0 0 28px 10px oklch(0.55 0.24 55 / 0.10);
+  --cursor-blend: normal;
 
   /* Service arrow icon — bolder glow for cool surfaces */
   --shadow-service-glow: 0 0 30px oklch(0.60 0.22 55 / 0.18), 0 8px 32px oklch(0.60 0.22 55 / 0.10);
@@ -291,6 +293,27 @@
 :root[data-theme="light"] .cinematic-img-light { display: block; }
 :root[data-theme="dark"] .cinematic-img-dark { display: block; }
 :root[data-theme="dark"] .cinematic-img-light { display: none; }
+
+/* Hide the staggered media cluster when the website theme is explicitly dark */
+:root[data-theme="dark"] .showcase-cluster { display: none !important; }
+
+/* Center the text content in dark mode when the cluster is hidden */
+:root[data-theme="dark"] .work-preview-content {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+  align-items: center !important;
+}
+:root[data-theme="dark"] .work-preview-flex-center {
+  justify-content: center !important;
+}
+:root[data-theme="dark"] .work-preview-divider {
+  display: none !important;
+}
+:root[data-theme="dark"] .work-preview-tags-row {
+  flex-direction: column !important;
+  align-items: center !important;
+}
 
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -350,6 +373,7 @@
   --cursor-dot-glow: 0 0 20px 8px oklch(0.72 0.18 65 / 0.15);
   --cursor-trail: oklch(0.72 0.18 65 / 0.12);
   --cursor-trail-glow: 0 0 30px 12px oklch(0.72 0.18 65 / 0.06);
+  --cursor-blend: screen;
 
   /* Service arrow icon — amber glow */
   --shadow-service-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15);
@@ -662,6 +686,18 @@ p { text-wrap: pretty; }
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: auto 800px;
+  position: relative;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Cursor glow blend mode — screen on dark, normal on light                    */
+/* -------------------------------------------------------------------------- */
+.cursor-glow-element {
+  mix-blend-mode: screen;
+}
+
+:root[data-theme="light"] .cursor-glow-element {
+  mix-blend-mode: normal;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -790,11 +826,11 @@ html {
 /* Light mode: clean neutral shadow */
 :root[data-theme="light"] .carousel-frame {
   box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.08),
-    0 16px 48px rgba(0, 0, 0, 0.14),
-    0 32px 100px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(0, 0, 0, 0.06),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+    0 4px 8px oklch(0.13 0.005 250 / 0.08),
+    0 16px 48px oklch(0.13 0.005 250 / 0.14),
+    0 32px 100px oklch(0.13 0.005 250 / 0.08),
+    inset 0 1px 0 oklch(0.13 0.005 250 / 0.06),
+    inset 0 -1px 0 oklch(0.13 0.005 250 / 0.3);
 }
 
 /* ── Frame noise texture (subtle matte grain) ── */
@@ -854,5 +890,67 @@ html {
   }
   .back-to-top {
     transition: none;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Work Device Mockups — Photo-realistic MacBook Pro, light-mode only         */
+/*                                                                            */
+/* Layers (bottom→top):                                                       */
+/*   1. Desk reflection (CSS pseudo, flipped + gradient-masked)               */
+/*   2. Contact shadow (tight ellipse under base)                             */
+/*   3. Ambient occlusion (wide soft shadow)                                  */
+/*   4. Base chassis SVG                                                      */
+/*   5. Lid/screen SVG with metallic gradients                                */
+/*   6. Screen image                                                          */
+/*   7. Screen glass gloss overlay                                            */
+/*   8. Content-colored bloom glow                                            */
+/* -------------------------------------------------------------------------- */
+
+/* Hidden by default (dark mode) */
+.work-mockup-wrapper {
+  display: none;
+}
+
+/* Visible only in light mode */
+:root[data-theme="light"] .work-mockup-wrapper {
+  display: block;
+  position: absolute;
+  right: clamp(20px, 4vw, 80px);
+  top: 50%;
+  transform: translateY(-52%);   /* slight upward bias — feels more "placed" */
+  width: 46%;
+  max-width: 640px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+
+
+/* ── Entrance animation helper — the perspective "floating down" feel ── */
+@keyframes macbook-settle {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+    filter:
+      drop-shadow(0 1px 2px oklch(0.08 0.005 250 / 0.10))
+      drop-shadow(0 4px 12px oklch(0.08 0.005 250 / 0.08))
+      drop-shadow(0 12px 30px oklch(0.08 0.005 250 / 0.05));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter:
+      drop-shadow(0 1px 2px oklch(0.08 0.005 250 / 0.25))
+      drop-shadow(0 8px 24px oklch(0.08 0.005 250 / 0.18))
+      drop-shadow(0 24px 60px oklch(0.08 0.005 250 / 0.12))
+      drop-shadow(0 48px 100px oklch(0.08 0.005 250 / 0.06));
+  }
+}
+
+/* Hide on smaller screens where text needs full width */
+@media (max-width: 1023px) {
+  :root[data-theme="light"] .work-mockup-wrapper {
+    display: none;
   }
 }

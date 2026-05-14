@@ -2,7 +2,7 @@ export const hospital = {
   id: "hospital",
   title: "Hospital Website",
   label: "Healthcare · Web Design",
-  image: "/work/hospital copy.png",
+  image: "/work/hospital copy.webp",
   images: [
     "/work/mockups/Hospital-1.png",
     "/work/mockups/Hospital-2.png",

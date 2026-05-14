@@ -8,6 +8,17 @@ export const metadata: Metadata = {
   title: "FAQ | Kivox",
   description:
     "Answers to common questions about working with Kivox: process, pricing, timelines, ownership, and what to expect.",
+  alternates: {
+    canonical: "/faq",
+  },
+  openGraph: {
+    title: "FAQ | Kivox",
+    description:
+      "Answers to common questions about working with Kivox.",
+    url: "/faq",
+    siteName: "Kivox",
+    type: "website",
+  },
 };
 
 /** Generate JSON-LD FAQPage structured data for SEO */

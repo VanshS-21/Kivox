@@ -23,6 +23,7 @@ function WordByWordReveal({
   return (
     <motion.span
       className={className}
+      aria-hidden="true"
       initial={reduce ? false : "hidden"}
       whileInView={reduce ? undefined : "show"}
       viewport={{ once: true, amount: 0.4 }}
@@ -41,11 +42,10 @@ function WordByWordReveal({
           key={`${word}-${i}`}
           className="inline-block"
           variants={{
-            hidden: { opacity: 0.08, y: 6, filter: "blur(3px)" },
+            hidden: { opacity: 0.08, y: 6 },
             show: {
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
               transition: { duration: 0.45, ease: easeOutQuint },
             },
           }}
@@ -116,15 +116,15 @@ export function HomePOV() {
   const glowY2 = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
-    <div ref={sectionRef}>
+    <div ref={sectionRef} className="relative">
     <Section
-      className="relative py-[200px] lg:py-[300px] overflow-hidden"
+      className="relative py-[100px] md:py-[160px] lg:py-[300px] overflow-hidden"
       style={{ background: 'var(--bg-primary)' }}
     >
       {/* Committed amber glow — with parallax */}
       <motion.div
         style={{ y: reduce ? 0 : glowY1 }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[1100px] h-[600px] lg:h-[1100px] rounded-full blur-[80px] lg:blur-[200px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] lg:w-[1100px] h-[300px] md:h-[600px] lg:h-[1100px] rounded-full blur-[60px] md:blur-[80px] lg:blur-[200px] pointer-events-none"
         data-glow="primary"
       >
         <div
@@ -136,7 +136,7 @@ export function HomePOV() {
       {/* Secondary rose depth — with parallax */}
       <motion.div
         style={{ y: reduce ? 0 : glowY2 }}
-        className="absolute top-[30%] right-[15%] w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] rounded-full blur-[80px] lg:blur-[160px] pointer-events-none"
+        className="absolute top-[30%] right-[15%] w-[150px] md:w-[300px] lg:w-[600px] h-[150px] md:h-[300px] lg:h-[600px] rounded-full blur-[40px] md:blur-[80px] lg:blur-[160px] pointer-events-none"
         data-glow="secondary"
       >
         <div
@@ -150,18 +150,21 @@ export function HomePOV() {
 
         {/* Large centered quote — word-by-word reveal */}
         <blockquote className="text-center max-w-6xl mx-auto">
-          <p className="font-sans font-bold text-foreground" style={{ fontSize: 'clamp(2.5rem, 5vw + 1rem, 6rem)', lineHeight: 1.06, letterSpacing: '-0.02em' }}>
+          <span className="sr-only">We believe great digital platforms are not built; they are crafted.</span>
+          <p aria-hidden="true" className="font-sans font-bold text-foreground" style={{ fontSize: 'clamp(2.5rem, 5vw + 1rem, 6rem)', lineHeight: 1.06, letterSpacing: '-0.02em' }}>
             <WordByWordReveal reduce={reduce}>
               We believe great digital platforms
             </WordByWordReveal>
+            {" "}
             <br className="hidden lg:block" />
             <WordByWordReveal reduce={reduce}>
               are not built; they are
             </WordByWordReveal>{" "}
             {/* Special emphasis on "crafted." with hand-drawn underline */}
             <motion.em
-              initial={reduce ? false : { opacity: 0, scale: 0.92, filter: "blur(8px)" }}
-              whileInView={reduce ? undefined : { opacity: 1, scale: 1, filter: "blur(0px)" }}
+              aria-hidden="true"
+              initial={reduce ? false : { opacity: 0, scale: 0.92 }}
+              whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.9 }}
               className="text-accent inline-block relative not-italic"
@@ -185,7 +188,7 @@ export function HomePOV() {
           viewport={viewportOnce}
           variants={fadeUp}
           transition={{ ...transitionDefault, delay: 0.2 }}
-          className="text-center studio-body-serif text-muted-foreground max-w-2xl mx-auto mt-12 lg:mt-16"
+          className="text-center studio-body-serif text-muted-foreground max-w-2xl mx-auto mt-8 md:mt-12 lg:mt-16"
         >
           {home.philosophy.body}
         </motion.p>
@@ -196,7 +199,7 @@ export function HomePOV() {
           whileInView={reduce ? undefined : { scaleX: 1, opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 1, ease: easeOutExpo, delay: 0.4 }}
-          className="mx-auto mt-16 lg:mt-20 w-48 h-px bg-accent/30 origin-center"
+          className="mx-auto mt-10 md:mt-16 lg:mt-20 w-48 h-px bg-accent/30 origin-center"
         />
       </Container>
     </Section>

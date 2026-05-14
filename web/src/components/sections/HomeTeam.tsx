@@ -18,6 +18,7 @@ export function HomeTeam() {
   return (
     <Section
       className="relative overflow-hidden"
+      spacing="default"
       id="team"
     >
       <Container>
@@ -27,7 +28,7 @@ export function HomeTeam() {
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={viewportOnce}
           transition={{ duration: 0.7, ease: easeOutExpo }}
-          className="mb-16 lg:mb-24"
+          className="mb-10 md:mb-16 lg:mb-24"
         >
           <h2
             className="font-sans font-bold text-foreground mb-5"
@@ -49,7 +50,7 @@ export function HomeTeam() {
         </motion.div>
 
         {/* ── Featured row: 2 large portraits ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-10 gap-y-14 lg:gap-y-16 mb-12 lg:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 md:gap-x-8 lg:gap-x-10 gap-y-10 md:gap-y-14 lg:gap-y-16 mb-10 md:mb-12 lg:mb-16">
           {featured.map((member, idx) => (
             <motion.div
               key={member.id}
@@ -105,7 +106,7 @@ export function HomeTeam() {
         </div>
 
         {/* ── Supporting row: 4 compact portraits ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 lg:gap-x-8 gap-y-10">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 md:gap-x-6 lg:gap-x-8 gap-y-8 md:gap-y-10">
           {supporting.map((member, idx) => (
             <motion.div
               key={member.id}

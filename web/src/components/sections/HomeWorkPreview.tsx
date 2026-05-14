@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { type MotionValue, motion, useScroll, useTransform, useSpring, useReducedMotion } from "motion/react";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 import { work } from "@/content/pages/work";
 import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/motion";
@@ -27,9 +28,9 @@ export function HomeWorkPreview() {
 
   // Spring config: creates momentum overshoot then settles naturally
   const springX = useSpring(rawX, {
-    stiffness: 100,
-    damping: 25,
-    mass: 0.8,
+    stiffness: 80,
+    damping: 28,
+    mass: 1.0,
     restDelta: 0.01,
   });
 
@@ -40,8 +41,6 @@ export function HomeWorkPreview() {
   const totalPanels = featuredWork.length;
   const progressNum = useTransform(scrollYProgress, [0, 1], [1, totalPanels]);
 
-  // Parallax offsets for depth
-  const bgParallax = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   // Service tags per project type
   const projectTags: Record<string, string[]> = {
@@ -66,14 +65,15 @@ export function HomeWorkPreview() {
       ref={containerRef}
       className="relative bg-background work-showcase"
       // Height creates the scroll runway: N panels × 100vh
-      style={{ height: `${totalPanels * 100}vh` }}
+      style={{ height: `${totalPanels * 150}vh` }}
     >
       {/* Sticky viewport container */}
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* No section label — counter provides wayfinding */}
+        {/* No section label — counter provides wayfinding visually, h2 for screen readers */}
+        <h2 className="sr-only">Featured Work Showcase</h2>
 
         {/* Counter — top right with rolling animation */}
-        <div className="absolute top-28 right-6 lg:right-12 z-20 flex items-center gap-2">
+        <div className="absolute top-24 sm:top-28 right-6 lg:right-12 z-20 flex items-center gap-2" aria-hidden="true">
           <motion.span className="text-sm font-mono text-accent studio-tabular">
             {reduce ? "01" : <Counter value={progressNum} />}
           </motion.span>
@@ -85,7 +85,7 @@ export function HomeWorkPreview() {
 
         {/* Horizontal track — now with spring momentum */}
         <motion.div
-          style={{ x }}
+          style={{ x, willChange: "transform" }}
           className="flex h-full"
         >
           {featuredWork.map((project, idx) => (
@@ -95,9 +95,9 @@ export function HomeWorkPreview() {
             >
               {/* ── Full-bleed background image ── */}
               <div className="absolute inset-0 z-0">
-                <motion.div
-                  style={{ y: reduce ? 0 : bgParallax }}
-                  className="absolute inset-[-40px]"
+                <div
+                  className="absolute inset-0"
+                  style={{ willChange: "transform", transform: "translateZ(0)" }}
                 >
                   <Image
                     src={project.image}
@@ -107,7 +107,7 @@ export function HomeWorkPreview() {
                     sizes="100vw"
                     priority={idx === 0}
                   />
-                </motion.div>
+                </div>
                 {/* Opacity overlay — controls visibility in both themes */}
                 <div
                   className="absolute inset-0 bg-background"
@@ -123,7 +123,7 @@ export function HomeWorkPreview() {
               {/* ── Content layer ── */}
               <div className="relative z-10 w-full h-full flex flex-col justify-center">
                 {/* Main content */}
-                <div className="relative max-w-[1600px] w-full mx-auto px-6 sm:px-8 lg:px-16 xl:px-24">
+                <div className="relative max-w-[1400px] w-full mx-auto px-6 md:px-12 lg:px-16">
                   <motion.div
                     initial={reduce ? false : "hidden"}
                     whileInView={reduce ? undefined : "show"}
@@ -137,15 +137,15 @@ export function HomeWorkPreview() {
                         },
                       },
                     }}
-                    className="max-w-3xl space-y-8"
+                    className="max-w-3xl space-y-8 work-preview-content"
                   >
                     {/* Chapter label — project-colored */}
                     <motion.div
                       variants={{
-                        hidden: { opacity: 0, x: -16, filter: "blur(4px)" },
-                        show: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: easeOutExpo } },
+                        hidden: { opacity: 0, x: -16 },
+                        show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: easeOutExpo } },
                       }}
-                      className="flex items-center gap-4"
+                      className="flex items-center gap-4 work-preview-flex-center"
                     >
                       <span
                         className="studio-eyebrow font-bold"
@@ -158,8 +158,8 @@ export function HomeWorkPreview() {
                     {/* Project headline — BIG */}
                     <motion.h3
                       variants={{
-                        hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
-                        show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: easeOutExpo } },
+                        hidden: { opacity: 0, y: 20 },
+                        show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeOutExpo } },
                       }}
                       className="font-sans font-bold text-foreground"
                       style={{ fontSize: 'clamp(2.75rem, 5vw + 1rem, 5.5rem)', lineHeight: 1.05, letterSpacing: '-0.025em' }}
@@ -176,10 +176,10 @@ export function HomeWorkPreview() {
                     {/* Description — larger */}
                     <motion.p
                       variants={{
-                        hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
-                        show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: easeOutExpo } },
+                        hidden: { opacity: 0, y: 12 },
+                        show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOutExpo } },
                       }}
-                      className="text-muted-foreground max-w-xl"
+                      className="text-muted-foreground max-w-xl work-preview-content"
                       style={{ fontSize: 'clamp(1rem, 1.1vw + 0.5rem, 1.25rem)', lineHeight: 1.65 }}
                     >
                       {project.demonstrates}
@@ -191,10 +191,10 @@ export function HomeWorkPreview() {
                         hidden: { opacity: 0 },
                         show: { opacity: 1, transition: { duration: 0.5 } },
                       }}
-                      className="flex flex-col sm:flex-row sm:items-center gap-6 pt-2"
+                      className="flex flex-col sm:flex-row sm:items-center gap-6 pt-2 work-preview-tags-row"
                     >
                       {/* Tags */}
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono tracking-[0.15em] uppercase text-subtle-foreground">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono tracking-[0.15em] uppercase text-subtle-foreground work-preview-flex-center">
                         {(projectTags[project.id] || ["DESIGN", "DEVELOPMENT"]).map(
                           (tag, tagIdx) => (
                             <span key={tag} className="flex items-center gap-4">
@@ -206,40 +206,49 @@ export function HomeWorkPreview() {
                       </div>
 
                       {/* Divider */}
-                      <div className="hidden sm:block w-px h-5 bg-border-strong" />
+                      <div className="hidden sm:block w-px h-5 bg-border-strong work-preview-divider" />
 
                       {/* CTA — only on last slide */}
                       {idx === featuredWork.length - 1 && (
-                        <Link
-                          href="/work"
-                          className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-accent/40 text-accent text-sm font-semibold tracking-wide hover:bg-accent hover:text-background transition-all duration-300 group w-fit"
-                        >
-                          Explore Our Work
-                          <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                        </Link>
+                        <Magnetic strength={0.15}>
+                          <Link
+                            href="/work"
+                            className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-accent/40 text-accent text-sm font-semibold tracking-wide hover:bg-accent hover:text-background transition-all duration-300 group w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                          >
+                            Explore Our Work
+                            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                          </Link>
+                        </Magnetic>
                       )}
                     </motion.div>
                   </motion.div>
                 </div>
 
                 {/* Clickable showcase link — bottom right */}
-                <Link
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute bottom-12 left-6 sm:left-auto right-auto sm:right-8 lg:right-16 xl:right-24 inline-flex items-center gap-4 text-sm font-semibold opacity-60 hover:opacity-100 transition-opacity duration-300 group"
-                  style={{ color: projectColors[project.id] || "var(--accent)" }}
-                >
-                  <span
-                    className="px-5 py-2.5 bg-background/60 backdrop-blur-md rounded-full border transition-colors duration-300"
-                    style={{
-                      borderColor: `color-mix(in oklch, ${projectColors[project.id] || "var(--accent)"} 20%, transparent)`,
-                    }}
-                  >
-                    View Live Showcase →
-                  </span>
-                </Link>
+                <div className="absolute bottom-16 sm:bottom-12 left-6 sm:left-auto right-auto sm:right-8 lg:right-16 xl:right-24 z-30">
+                  <Magnetic strength={0.2}>
+                    <Link
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View Live Showcase: ${project.title} (opens in a new tab)`}
+                      className="inline-flex items-center gap-4 text-sm font-semibold opacity-60 hover:opacity-100 transition-opacity duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background rounded-full"
+                      style={{ color: projectColors[project.id] || "var(--accent)" }}
+                    >
+                      <span
+                        className="px-5 py-2.5 bg-[var(--bg-surface-alt)] rounded-full border transition-colors duration-300 block"
+                        style={{
+                          borderColor: `color-mix(in oklch, ${projectColors[project.id] || "var(--accent)"} 20%, transparent)`,
+                        }}
+                      >
+                        View Live Showcase →
+                      </span>
+                    </Link>
+                  </Magnetic>
+                </div>
 
+                {/* ── Cinematic Staggered Media Grid ── */}
+                <ShowcaseMediaCluster images={project.images} href={project.href} title={project.title} />
 
               </div>
             </div>
@@ -247,11 +256,11 @@ export function HomeWorkPreview() {
         </motion.div>
 
         {/* Full-width scroll progress bar — bottom */}
-        <div className="absolute bottom-8 left-0 right-0 z-20 px-6 lg:px-12">
+        <div className="absolute bottom-5 sm:bottom-8 left-0 right-0 z-20 px-6 md:px-12 lg:px-16 max-w-[1400px] mx-auto">
           <div className="flex items-center gap-4 lg:gap-6">
             {/* Label */}
             <div className="flex items-center gap-2 shrink-0">
-              <span className="studio-tag text-subtle-foreground">Scroll</span>
+              <span className="studio-tag text-subtle-foreground">More work</span>
               <motion.span
                 animate={{ x: [0, 4, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -270,7 +279,7 @@ export function HomeWorkPreview() {
             </div>
 
             {/* Percentage */}
-            <motion.span className="text-xs font-mono text-subtle-foreground studio-tabular shrink-0">
+            <motion.span className="text-xs font-mono text-subtle-foreground studio-tabular shrink-0" aria-hidden="true">
               {reduce ? "100%" : <Percentage value={scrollYProgress} />}
             </motion.span>
           </div>
@@ -294,4 +303,55 @@ function Percentage({ value }: { value: MotionValue<number> }) {
     `${Math.round(v * 100)}%`
   );
   return <motion.span>{pct}</motion.span>;
+}
+
+/** Staggered Bento Media Cluster for high-craft showcase right side */
+function ShowcaseMediaCluster({ images, href, title }: { images: string[], href: string, title: string }) {
+  const reduce = useReducedMotion();
+  if (!images || images.length < 3) return null;
+
+  return (
+    <Link 
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="View Live Showcase"
+      className="showcase-cluster absolute top-0 bottom-0 right-[4%] lg:right-[6%] w-[45%] max-w-[800px] flex items-center justify-center z-10 hidden lg:flex group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-3xl" 
+    >
+      <div className="relative w-full aspect-[4/3] transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+        {/* Back Image (Project view 3) */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 40, x: 20 }}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
+          transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="absolute top-[8%] right-[5%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] border border-white/10 bg-surface z-10"
+        >
+          <Image src={images[2]} alt={`${title} secondary interface view`} fill className="object-cover" sizes="(min-width: 1024px) 25vw" quality={90} />
+        </motion.div>
+
+        {/* Middle Image (Project view 2) */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 50, x: 20 }}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
+          transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.2 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="absolute top-[20%] right-[15%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[0_20px_40px_-12px_rgba(0,0,0,0.4)] border border-white/15 z-20 bg-surface"
+        >
+          <Image src={images[1]} alt={`${title} detail interface view`} fill className="object-cover" sizes="(min-width: 1024px) 25vw" quality={90} />
+        </motion.div>
+
+        {/* Front Image (Project view 1 - Main) */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 60, x: 20 }}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
+          transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="absolute top-[32%] right-[25%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)] border border-white/20 z-30 bg-surface"
+        >
+          <Image src={images[0]} alt={`${title} main interface view`} fill className="object-cover" sizes="(min-width: 1024px) 30vw" quality={90} />
+        </motion.div>
+      </div>
+    </Link>
+  );
 }

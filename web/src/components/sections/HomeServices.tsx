@@ -15,7 +15,8 @@ export function HomeServices() {
   return (
     <Section
       id="services"
-      className="relative py-[120px] lg:py-[180px] overflow-hidden bg-surface-alt"
+      spacing="loose"
+      className="relative overflow-hidden bg-surface-alt"
       style={{ perspective: "1200px" }}
     >
       <Container className="relative z-10">
@@ -26,7 +27,7 @@ export function HomeServices() {
           viewport={viewportOnce}
           variants={fadeUp}
           transition={transitionDefault}
-          className="mb-20 lg:mb-28"
+          className="mb-12 md:mb-20 lg:mb-28"
         >
           <span className="studio-eyebrow text-accent">[ Our Services ]</span>
         </motion.div>
@@ -39,27 +40,21 @@ export function HomeServices() {
             const distance = hoveredIdx !== null ? Math.abs(idx - hoveredIdx) : 0;
 
             return (
-              <motion.div
+              <motion.button
+                type="button"
                 key={service.id}
                 initial={reduce ? false : "hidden"}
                 whileInView={reduce ? undefined : "show"}
                 viewport={viewportOnce}
                 variants={fadeUp}
                 transition={{ ...transitionDefault, delay: idx * 0.06 }}
-                className="group cursor-pointer outline-none"
-                tabIndex={0}
-                role="button"
+                className="group w-full text-left outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-8 focus-visible:ring-offset-[color:var(--bg-surface-alt)] rounded-2xl"
                 aria-expanded={isHovered}
+                onClick={() => setHoveredIdx(isHovered ? null : idx)}
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
                 onFocus={() => setHoveredIdx(idx)}
                 onBlur={() => setHoveredIdx(null)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setHoveredIdx(isHovered ? null : idx);
-                  }
-                }}
                 style={{
                   transformStyle: "preserve-3d",
                   transformOrigin: "center center",
@@ -103,14 +98,14 @@ export function HomeServices() {
                       />
                       <motion.div
                         animate={{
-                          backgroundColor: isHovered ? 'var(--accent)' : 'transparent',
-                          borderColor: isHovered ? 'var(--accent)' : 'var(--border-strong)',
                           scale: isHovered ? 1.12 : 1,
                           rotate: isHovered ? 45 : 0,
                         }}
                         transition={{ duration: 0.4, ease: easeOutExpo }}
-                        className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl border-[1.5px] flex items-center justify-center relative z-10 transition-shadow duration-300"
+                        className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl border-[1.5px] flex items-center justify-center relative z-10 transition-all duration-300"
                         style={{
+                          backgroundColor: isHovered ? 'var(--accent)' : 'transparent',
+                          borderColor: isHovered ? 'var(--accent)' : 'var(--border-strong)',
                           boxShadow: isHovered
                             ? 'var(--shadow-service-glow)'
                             : 'none',
@@ -180,7 +175,7 @@ export function HomeServices() {
 
                 {/* Bottom divider */}
                 <div className="h-px bg-border" />
-              </motion.div>
+              </motion.button>
             );
           })}
         </div>

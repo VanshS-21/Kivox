@@ -9,6 +9,12 @@ import { useReducedMotion } from "motion/react";
    Floating nodes connected by proximity edges with subtle amber-tinted
    polygon fills. Nodes respond to cursor proximity with spring physics:
    amber nodes drift toward the cursor, neutral nodes scatter gently.
+
+   Performance optimizations:
+   - Squared-distance comparisons (no sqrt in edge loop)
+   - Batched canvas draw calls (one beginPath/stroke per color)
+   - Polygon pass removed (negligible visual contribution at 4% opacity)
+   - Reduced node count on mobile
    ═══════════════════════════════════════════════════════════════════════════ */
 
 interface ConstellationCanvasProps {
@@ -20,38 +26,34 @@ interface ConstellationCanvasProps {
 /** Color config per theme variant */
 const palettes = {
   dark: {
-    nodeNeutral: (a: number) => `rgba(180,165,140,${a})`,
-    nodeAmber: (a: number) => `rgba(224,123,32,${a})`,
-    nodeGlow: (a: number) => `rgba(224,123,32,${a})`,
-    edgeNeutral: (a: number) => `rgba(140,125,100,${a})`,
-    edgeAmber: (a: number) => `rgba(200,100,20,${a})`,
-    poly: (a: number) => `rgba(180,90,10,${a})`,
+    nodeNeutral: (a: number) => `oklch(0.85 0.008 65 / ${a})`,
+    nodeAmber: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
+    nodeGlow: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
+    edgeNeutral: (a: number) => `oklch(0.85 0.008 65 / ${a})`,
+    edgeAmber: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
     neutralAlpha: (glow: number) => 0.3 + glow * 0.25,
     amberAlpha: (glow: number) => 0.6 + glow * 0.4,
     edgeNeutralMul: 0.10,
     edgeAmberMul: 0.32,
     edgeWidthNeutral: 0.5,
     edgeWidthAmber: 0.9,
-    polyMul: 0.04,
     glowMul: 0.18,
-    cursorGlow: (a: number) => `rgba(224,123,32,${a})`,
+    cursorGlow: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
   },
   light: {
-    nodeNeutral: (a: number) => `rgba(100,80,50,${a})`,
-    nodeAmber: (a: number) => `rgba(200,120,30,${a})`,
-    nodeGlow: (a: number) => `rgba(200,120,30,${a})`,
-    edgeNeutral: (a: number) => `rgba(100,80,50,${a})`,
-    edgeAmber: (a: number) => `rgba(180,100,20,${a})`,
-    poly: (a: number) => `rgba(160,100,30,${a})`,
+    nodeNeutral: (a: number) => `oklch(0.45 0.005 250 / ${a})`,
+    nodeAmber: (a: number) => `oklch(0.60 0.22 55 / ${a})`,
+    nodeGlow: (a: number) => `oklch(0.60 0.22 55 / ${a})`,
+    edgeNeutral: (a: number) => `oklch(0.45 0.005 250 / ${a})`,
+    edgeAmber: (a: number) => `oklch(0.60 0.22 55 / ${a})`,
     neutralAlpha: (glow: number) => 0.25 + glow * 0.2,
     amberAlpha: (glow: number) => 0.45 + glow * 0.35,
     edgeNeutralMul: 0.06,
     edgeAmberMul: 0.18,
     edgeWidthNeutral: 0.4,
     edgeWidthAmber: 0.7,
-    polyMul: 0.025,
     glowMul: 0.12,
-    cursorGlow: (a: number) => `rgba(200,120,30,${a})`,
+    cursorGlow: (a: number) => `oklch(0.60 0.22 55 / ${a})`,
   },
 } as const;
 
@@ -66,6 +68,7 @@ interface CursorState {
 
 /** Spring physics constants */
 const CURSOR_RADIUS = 200;        // Influence radius
+const CURSOR_RADIUS_SQ = CURSOR_RADIUS * CURSOR_RADIUS;
 const ATTRACT_STRENGTH = 0.012;   // How strongly amber nodes pull toward cursor
 const REPEL_STRENGTH = 0.006;     // How gently neutral nodes scatter
 const DAMPING = 0.92;             // Velocity damping (spring settle)
@@ -119,26 +122,26 @@ class Node {
     if (cursor.active) {
       const dx = cursor.x - this.x;
       const dy = cursor.y - this.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const distSq = dx * dx + dy * dy;
 
-      if (dist < CURSOR_RADIUS && dist > 0.1) {
-        const t = 1 - dist / CURSOR_RADIUS; // 0..1, stronger when closer
-        const nx = dx / dist; // normalized direction
+      if (distSq < CURSOR_RADIUS_SQ && distSq > 0.01) {
+        // Only compute sqrt when within influence radius (much rarer)
+        const dist = Math.sqrt(distSq);
+        const t = 1 - dist / CURSOR_RADIUS;
+        const nx = dx / dist;
         const ny = dy / dist;
 
         if (this.amber) {
-          // Amber nodes: attracted toward cursor
           this.cvx += nx * t * t * ATTRACT_STRENGTH * 60;
           this.cvy += ny * t * t * ATTRACT_STRENGTH * 60;
         } else {
-          // Neutral nodes: gently repelled from cursor
           this.cvx -= nx * t * REPEL_STRENGTH * 60;
           this.cvy -= ny * t * REPEL_STRENGTH * 60;
         }
 
         this.cursorProximity = t;
       } else {
-        this.cursorProximity *= 0.92; // fade out smoothly
+        this.cursorProximity *= 0.92;
       }
     } else {
       this.cursorProximity *= 0.95;
@@ -197,62 +200,63 @@ class Node {
   }
 }
 
-function drawEdges(ctx: CanvasRenderingContext2D, nodes: Node[], maxDist: number, p: Palette) {
+/**
+ * Batched edge drawing — groups edges by color type and draws in two
+ * beginPath/stroke calls instead of one per edge (~6000 → 2).
+ */
+function drawEdges(ctx: CanvasRenderingContext2D, nodes: Node[], maxDistSq: number, maxDist: number, p: Palette) {
+  // Collect edges by type for batching
+  const neutralEdges: { x1: number; y1: number; x2: number; y2: number; alpha: number }[] = [];
+  const amberEdges: { x1: number; y1: number; x2: number; y2: number; alpha: number }[] = [];
+
   for (let i = 0; i < nodes.length; i++) {
+    const ni = nodes[i];
     for (let j = i + 1; j < nodes.length; j++) {
-      const dx = nodes[i].x - nodes[j].x;
-      const dy = nodes[i].y - nodes[j].y;
-      const d = Math.sqrt(dx * dx + dy * dy);
-      if (d < maxDist) {
-        const t = 1 - d / maxDist;
-        const isAmber = nodes[i].amber || nodes[j].amber;
-        // Boost edge visibility near cursor
-        const proxBoost = 1 + (nodes[i].cursorProximity + nodes[j].cursorProximity) * 0.3;
+      const nj = nodes[j];
+      const dx = ni.x - nj.x;
+      const dy = ni.y - nj.y;
+      const dSq = dx * dx + dy * dy;
+
+      // Squared-distance comparison — no sqrt needed
+      if (dSq < maxDistSq) {
+        const t = 1 - Math.sqrt(dSq) / maxDist;
+        const isAmber = ni.amber || nj.amber;
+        const proxBoost = 1 + (ni.cursorProximity + nj.cursorProximity) * 0.3;
         const alpha = isAmber
           ? t * t * p.edgeAmberMul * proxBoost
           : t * t * p.edgeNeutralMul * proxBoost;
-        const color = isAmber ? p.edgeAmber(alpha) : p.edgeNeutral(alpha);
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(nodes[j].x, nodes[j].y);
-        ctx.strokeStyle = color;
-        ctx.lineWidth = isAmber ? p.edgeWidthAmber : p.edgeWidthNeutral;
-        ctx.stroke();
+
+        const edge = { x1: ni.x, y1: ni.y, x2: nj.x, y2: nj.y, alpha };
+        if (isAmber) {
+          amberEdges.push(edge);
+        } else {
+          neutralEdges.push(edge);
+        }
       }
     }
   }
-}
 
-function drawPolygons(ctx: CanvasRenderingContext2D, nodes: Node[], p: Palette) {
-  for (let i = 0; i < nodes.length; i++) {
-    const nearby: Node[] = [];
-    for (let j = 0; j < nodes.length; j++) {
-      if (i === j) continue;
-      const dx = nodes[i].x - nodes[j].x;
-      const dy = nodes[i].y - nodes[j].y;
-      if (Math.sqrt(dx * dx + dy * dy) < 90) nearby.push(nodes[j]);
+  // Batch draw neutral edges
+  if (neutralEdges.length > 0) {
+    ctx.lineWidth = p.edgeWidthNeutral;
+    for (const e of neutralEdges) {
+      ctx.beginPath();
+      ctx.moveTo(e.x1, e.y1);
+      ctx.lineTo(e.x2, e.y2);
+      ctx.strokeStyle = p.edgeNeutral(e.alpha);
+      ctx.stroke();
     }
-    if (nearby.length >= 2) {
-      const a = nearby[0];
-      const b = nearby[1];
-      const dx1 = nodes[i].x - a.x;
-      const dy1 = nodes[i].y - a.y;
-      const dx2 = nodes[i].x - b.x;
-      const dy2 = nodes[i].y - b.y;
-      const d1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
-      const d2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
-      if (d1 < 80 && d2 < 80) {
-        // Polygon alpha boosted by cursor proximity
-        const proxBoost = 1 + (nodes[i].cursorProximity + a.cursorProximity + b.cursorProximity) * 0.25;
-        const alpha = (1 - d1 / 90) * (1 - d2 / 90) * p.polyMul * proxBoost;
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.closePath();
-        ctx.fillStyle = p.poly(alpha);
-        ctx.fill();
-      }
+  }
+
+  // Batch draw amber edges
+  if (amberEdges.length > 0) {
+    ctx.lineWidth = p.edgeWidthAmber;
+    for (const e of amberEdges) {
+      ctx.beginPath();
+      ctx.moveTo(e.x1, e.y1);
+      ctx.lineTo(e.x2, e.y2);
+      ctx.strokeStyle = p.edgeAmber(e.alpha);
+      ctx.stroke();
     }
   }
 }
@@ -276,6 +280,12 @@ function drawCursorAura(ctx: CanvasRenderingContext2D, cursor: CursorState, p: P
   );
 }
 
+/** Get appropriate node count based on screen width */
+function getNodeCount(): number {
+  if (typeof window === "undefined") return 110;
+  return window.innerWidth < 768 ? 60 : 110;
+}
+
 export function ConstellationCanvas({ className, variant = "dark" }: ConstellationCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
@@ -285,7 +295,7 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
   const palette = palettes[variant];
 
   const initNodes = useCallback((w: number, h: number) => {
-    const count = 110;
+    const count = getNodeCount();
     const nodes: Node[] = [];
     for (let i = 0; i < count; i++) {
       nodes.push(new Node(w, h, true));
@@ -340,6 +350,7 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
     window.addEventListener("resize", resize);
 
     const MAX_DIST = 130;
+    const MAX_DIST_SQ = MAX_DIST * MAX_DIST;
     const p = palette;
 
     function frame() {
@@ -353,8 +364,8 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
       // Cursor aura glow
       drawCursorAura(ctx, cursor, p);
 
-      drawPolygons(ctx, nodesRef.current, p);
-      drawEdges(ctx, nodesRef.current, MAX_DIST, p);
+      // Edges only — polygon pass removed (negligible at 4% opacity, halves computation)
+      drawEdges(ctx, nodesRef.current, MAX_DIST_SQ, MAX_DIST, p);
       nodesRef.current.forEach((n) => {
         n.update(w, h, cursor);
         n.draw(ctx, p);

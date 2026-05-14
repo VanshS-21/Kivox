@@ -8,6 +8,7 @@ import { brand } from "@/content/brand";
 import { navigation } from "@/content/navigation";
 import { fadeUp, viewportOnce, easeOutExpo } from "@/lib/motion";
 import { KivoxLogo } from "@/components/ui/KivoxLogo";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 /** Counts up from 2020 to the current year over 0.6s when the footer scrolls into view */
 function YearCountUp() {
@@ -43,176 +44,161 @@ export function Footer() {
   const reduce = useReducedMotion();
 
   return (
-    <footer className="bg-surface-alt">
-      {/* ── Main footer ── */}
-      <div className="border-t border-border">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={reduce ? false : "hidden"}
-            whileInView={reduce ? undefined : "show"}
-            viewport={viewportOnce}
-            variants={{
-              hidden: {},
-              show: {
-                transition: {
-                  staggerChildren: 0.08,
-                  delayChildren: 0.05,
-                },
+    <footer className="bg-surface-alt border-t border-border relative overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-20 lg:pt-32 pb-8">
+        <motion.div
+          initial={reduce ? false : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={viewportOnce}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.05,
               },
-            }}
-            className="py-20 lg:py-28"
-          >
-            {/* Top row: Brand name + tagline */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.5, ease: easeOutExpo }}
-              className="mb-16 lg:mb-24"
-            >
-              <Link
-                href="/"
-                className="inline-block text-foreground hover:text-accent transition-colors duration-300"
-              >
-                <KivoxLogo height={48} variant="brand" />
-              </Link>
-              <p className="mt-4 font-body text-muted-foreground max-w-md" style={{ fontSize: "clamp(0.95rem, 1vw + 0.4rem, 1.125rem)", lineHeight: 1.6 }}>
-                {brand.tagline}
-              </p>
-            </motion.div>
-
-            {/* Three-column grid: Navigate · Connect · Contact */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.5, ease: easeOutExpo }}
-              className="grid grid-cols-2 sm:grid-cols-3 gap-y-12 gap-x-8 lg:gap-x-16"
-            >
-              {/* Column 1: Navigate */}
-              <motion.div
-                initial={reduce ? false : { opacity: 0, y: 10 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0 }}
-              >
-                <div className="studio-eyebrow text-subtle-foreground mb-6">Navigate</div>
-                <div className="flex flex-col gap-3">
-                  {navigation.primary.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="text-foreground hover:text-accent transition-colors text-base font-medium"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
+            },
+          }}
+        >
+          {/* Top row: Asymmetrical split */}
+          <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-12 mb-16 lg:mb-24">
+            
+            {/* Left: Let's Talk & Contact */}
+            <div className="flex flex-col gap-8 max-w-xl">
+              <motion.div variants={fadeUp}>
+                <div className="studio-eyebrow text-accent mb-6">Let's Talk</div>
+                <h2 className="font-display text-4xl lg:text-5xl text-foreground tracking-tight leading-tight mb-4">
+                  Ready to build something <span className="text-muted-foreground italic">extraordinary?</span>
+                </h2>
               </motion.div>
-
-              {/* Column 2: Connect */}
-              <motion.div
-                initial={reduce ? false : { opacity: 0, y: 10 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.1 }}
-              >
-                <div className="studio-eyebrow text-subtle-foreground mb-6">Connect</div>
-                <div className="flex flex-col gap-3">
-                  <a
-                    className="text-foreground hover:text-accent transition-colors text-base font-medium"
-                    href={brand.socials.linkedin}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    LinkedIn ↗
-                  </a>
-                  <a
-                    className="text-foreground hover:text-accent transition-colors text-base font-medium"
-                    href={brand.socials.instagram}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Instagram ↗
-                  </a>
-                  <a
-                    className="text-foreground hover:text-accent transition-colors text-base font-medium"
-                    href={brand.socials.github}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    GitHub ↗
-                  </a>
-                </div>
-              </motion.div>
-
-              {/* Column 3: Contact */}
-              <motion.div
-                initial={reduce ? false : { opacity: 0, y: 10 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.2 }}
-                className="col-span-2 sm:col-span-1"
-              >
-                <div className="studio-eyebrow text-subtle-foreground mb-6">Contact</div>
-                <div className="flex flex-col gap-3">
-                  <a
-                    href={`mailto:${brand.contact.email}`}
-                    className="text-foreground hover:text-accent transition-colors text-base font-medium"
+              
+              <motion.div variants={fadeUp} className="flex flex-col gap-2 items-start">
+                <Magnetic strength={0.1} className="inline-block">
+                  <a 
+                    href={`mailto:${brand.contact.email}`} 
+                    className="text-3xl lg:text-4xl font-medium text-foreground hover:text-accent transition-colors break-all"
                   >
                     {brand.contact.email}
                   </a>
-                  <a
-                    href={`tel:${brand.contact.phone.replace(/\s+/g, "")}`}
-                    className="text-base text-muted-foreground hover:text-accent transition-colors"
-                  >
-                    {brand.contact.phone}
-                  </a>
-                  <span className="text-base text-muted-foreground">
-                    {brand.contact.address}
-                  </span>
-                </div>
+                </Magnetic>
               </motion.div>
-            </motion.div>
-          </motion.div>
-        </div>
+
+              <motion.div variants={fadeUp} className="flex flex-col gap-1 mt-2">
+                <a 
+                  href={`tel:${brand.contact.phone.replace(/\s+/g, "")}`} 
+                  className="text-lg text-muted-foreground hover:text-accent transition-colors"
+                >
+                  {brand.contact.phone}
+                </a>
+                <span className="text-lg text-muted-foreground">{brand.contact.address}</span>
+              </motion.div>
+            </div>
+
+            {/* Right: Navigation & Socials */}
+            <div className="flex flex-wrap sm:flex-nowrap gap-16 lg:gap-24">
+              {/* Navigate */}
+              <motion.div variants={fadeUp}>
+                <div className="studio-eyebrow text-subtle-foreground mb-6">Navigate</div>
+                <nav aria-label="Footer navigation" className="flex flex-col gap-4 items-start">
+                  {navigation.primary.map((link) => (
+                    <Magnetic key={link.href} strength={0.2} className="inline-block">
+                      <Link
+                        href={link.href}
+                        className="text-foreground hover:text-accent transition-colors text-lg font-medium"
+                      >
+                        {link.label}
+                      </Link>
+                    </Magnetic>
+                  ))}
+                </nav>
+              </motion.div>
+
+              {/* Connect */}
+              <motion.div variants={fadeUp}>
+                <div className="studio-eyebrow text-subtle-foreground mb-6">Connect</div>
+                <nav aria-label="Social connections" className="flex flex-col gap-4 items-start">
+                  <Magnetic strength={0.2} className="inline-block">
+                    <a
+                      className="text-foreground hover:text-accent transition-colors text-lg font-medium"
+                      href={brand.socials.linkedin}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      LinkedIn ↗
+                    </a>
+                  </Magnetic>
+                  <Magnetic strength={0.2} className="inline-block">
+                    <a
+                      className="text-foreground hover:text-accent transition-colors text-lg font-medium"
+                      href={brand.socials.instagram}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Instagram ↗
+                    </a>
+                  </Magnetic>
+                </nav>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Massive Brand Mark Anchor */}
+        <motion.div 
+          initial={reduce ? false : { opacity: 0, y: 40 }}
+          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          viewport={viewportOnce}
+          transition={{ duration: 1.2, ease: easeOutExpo, delay: 0.2 }}
+          className="w-full flex justify-center select-none pointer-events-none pb-4"
+        >
+          <KivoxLogo 
+            variant="mono" 
+            hideSuffix={true} 
+            className="w-full h-auto text-foreground opacity-[0.03] dark:opacity-[0.05]" 
+            style={{ width: "100%", height: "auto" }}
+          />
+        </motion.div>
       </div>
 
       {/* ── Colophon bar ── */}
-      <div className="border-t border-accent/10">
+      <div className="border-t border-accent/10 relative z-10 bg-surface-alt">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-5">
           <motion.div
             initial={reduce ? false : { opacity: 0 }}
             whileInView={reduce ? undefined : { opacity: 1 }}
             viewport={viewportOnce}
-            transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.15 }}
-            className="flex flex-col sm:flex-row justify-between gap-3 items-start sm:items-center"
+            transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.4 }}
+            className="flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center"
           >
             <div className="studio-caption">
               © <YearCountUp /> {brand.name} · {brand.locationLine}
             </div>
-            <div className="flex items-center gap-6">
+            <nav aria-label="Legal" className="flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-6">
               <Link
-                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100 py-2 sm:py-0 px-1 -mx-1"
                 href="/blog"
               >
                 Blog
               </Link>
               <Link
-                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100 py-2 sm:py-0 px-1 -mx-1"
                 href="/faq"
               >
                 FAQ
               </Link>
               <Link
-                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100 py-2 sm:py-0 px-1 -mx-1"
                 href="/privacy"
               >
                 Privacy
               </Link>
               <Link
-                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100 py-2 sm:py-0 px-1 -mx-1"
                 href="/terms"
               >
                 Terms
               </Link>
-            </div>
+            </nav>
           </motion.div>
         </div>
       </div>

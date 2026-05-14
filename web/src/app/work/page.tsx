@@ -57,7 +57,7 @@ export default function WorkPage() {
         <motion.div
           animate={reduce ? {} : { scale: [1, 1.15, 1], rotate: [0, 20, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[10%] right-[15%] w-[500px] h-[500px] rounded-full blur-[200px] pointer-events-none"
+          className="absolute top-[10%] right-[15%] w-[250px] md:w-[400px] lg:w-[500px] h-[250px] md:h-[400px] lg:h-[500px] rounded-full blur-[100px] md:blur-[160px] lg:blur-[200px] pointer-events-none"
           style={{ background: "var(--accent)", opacity: "calc(var(--hero-glow-opacity) * 0.4)" }}
         />
 

@@ -56,6 +56,19 @@ export const metadata: Metadata = {
   title: homeSeo.title,
   description: homeSeo.description,
   metadataBase: getMetadataBase(),
+  openGraph: {
+    title: homeSeo.title,
+    description: homeSeo.description,
+    url: "/",
+    siteName: "Kivox",
+    type: "website",
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary",
+    title: homeSeo.title,
+    description: homeSeo.description,
+  },
 };
 
 export default function RootLayout({

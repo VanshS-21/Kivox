@@ -9,6 +9,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { CanvasErrorBoundary } from "@/components/ui/CanvasErrorBoundary";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { easeOutExpo, easeOutQuint } from "@/lib/motion";
 
 const ConstellationCanvas = dynamic(
@@ -32,6 +33,7 @@ function SplitWords({
   return (
     <motion.span
       className={className}
+      aria-hidden="true"
       initial={reduce ? false : "hidden"}
       animate={reduce ? undefined : "show"}
       variants={{
@@ -49,11 +51,10 @@ function SplitWords({
           key={`${word}-${i}`}
           className="inline-block"
           variants={{
-            hidden: { opacity: 0, y: 14, filter: "blur(8px)" },
+            hidden: { opacity: 0, y: 14 },
             show: {
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
               transition: { duration: 0.5, ease: easeOutQuint },
             },
           }}
@@ -72,7 +73,7 @@ export function HomeHero() {
   return (
     <Section
       className="min-h-screen flex items-center relative overflow-hidden pt-20 pb-32 lg:pb-44"
-      style={{ background: "oklch(0.05 0.008 65)" }}
+      style={{ background: "var(--hero-bg)" }}
     >
       {/* Constellation canvas — always dark */}
       <CanvasErrorBoundary>
@@ -84,7 +85,7 @@ export function HomeHero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 65% 55%, rgba(180,90,10,0.25) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 60% at 65% 55%, color-mix(in oklch, var(--accent) 25%, transparent) 0%, transparent 70%)",
         }}
       />
 
@@ -113,11 +114,11 @@ export function HomeHero() {
                 transition: { duration: 0.7, ease: easeOutExpo, delay: 0.1 },
               },
             }}
-            className="inline-flex items-center gap-3 mb-12 lg:mb-14"
+            className="inline-flex items-center gap-3 mb-8 sm:mb-12 lg:mb-14"
           >
             <span
               className="text-[0.6875rem] font-normal tracking-[0.18em] uppercase"
-              style={{ color: "oklch(0.58 0.008 65)", fontFamily: "var(--font-mono)" }}
+              style={{ color: "var(--hero-fg-muted)", fontFamily: "var(--font-mono)" }}
             >
               Kivox Studio
             </span>
@@ -132,7 +133,7 @@ export function HomeHero() {
               }}
               className="hidden lg:block w-16 h-px origin-left"
               style={{
-                background: "linear-gradient(90deg, rgba(224,123,32,0.4), transparent)",
+                background: "linear-gradient(90deg, color-mix(in oklch, var(--accent) 40%, transparent), transparent)",
               }}
             />
           </motion.div>
@@ -140,30 +141,31 @@ export function HomeHero() {
           {/* Headline */}
           <h1
             className="font-sans font-bold mb-10 lg:mb-12"
+            aria-label="Make your business easier to trust online."
             style={{
               fontSize: "clamp(48px, 7vw, 88px)",
               lineHeight: 1.0,
-              color: "oklch(0.95 0.012 72)",
+              color: "var(--hero-fg)",
               letterSpacing: "-0.02em",
             }}
           >
             <SplitWords delay={0.2} reduce={reduce}>
               Make your
             </SplitWords>
-            <br />
+            {" "}<br className="hidden sm:block" />
             <SplitWords delay={0.35} reduce={reduce}>
               business
             </SplitWords>
-            <br />
+            {" "}<br className="hidden sm:block" />
             <SplitWords delay={0.5} reduce={reduce}>
               easier to
             </SplitWords>{" "}
             <motion.span
-              initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
-              animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              animate={reduce ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: easeOutQuint, delay: 0.65 }}
               className="inline-block font-serif"
-              style={{ fontStyle: "italic", fontWeight: 300, color: "oklch(0.72 0.18 65)" }}
+              style={{ fontStyle: "italic", fontWeight: 300, color: "var(--accent)" }}
             >
               trust online.
             </motion.span>
@@ -172,11 +174,10 @@ export function HomeHero() {
           {/* Subtext */}
           <motion.p
             variants={{
-              hidden: { opacity: 0, y: 12, filter: "blur(6px)" },
+              hidden: { opacity: 0, y: 12 },
               show: {
                 opacity: 1,
                 y: 0,
-                filter: "blur(0px)",
                 transition: { duration: 0.6, ease: easeOutExpo, delay: 0.75 },
               },
             }}
@@ -185,7 +186,7 @@ export function HomeHero() {
               fontSize: "1.125rem",
               fontWeight: 450,
               lineHeight: 1.7,
-              color: "oklch(0.58 0.008 65)",
+              color: "var(--hero-fg-muted)",
             }}
           >
             {home.hero.subhead}
@@ -206,44 +207,46 @@ export function HomeHero() {
           >
             <motion.div
               variants={{
-                hidden: { opacity: 0, y: 16, filter: "blur(6px)" },
+                hidden: { opacity: 0, y: 16 },
                 show: {
                   opacity: 1,
                   y: 0,
-                  filter: "blur(0px)",
                   transition: { duration: 0.5, ease: easeOutExpo },
                 },
               }}
             >
-              <ButtonLink
-                href="/contact"
-                variant="primary"
-                className="w-full sm:w-auto text-[15px] px-8 py-[15px] font-medium tracking-[0.02em] rounded-full"
-              >
-                {home.hero.ctas.primary}
-                <span className="ml-2 inline-block transition-transform group-hover:translate-x-0.5">→</span>
-              </ButtonLink>
+              <Magnetic strength={0.15}>
+                <ButtonLink
+                  href="/contact"
+                  variant="primary"
+                  className="w-full sm:w-auto text-[15px] px-8 py-[15px] font-medium tracking-[0.02em] rounded-full"
+                >
+                  {home.hero.ctas.primary}
+                  <span className="ml-2 inline-block transition-transform group-hover:translate-x-0.5">→</span>
+                </ButtonLink>
+              </Magnetic>
             </motion.div>
 
             <motion.div
               variants={{
-                hidden: { opacity: 0, y: 16, filter: "blur(6px)" },
+                hidden: { opacity: 0, y: 16 },
                 show: {
                   opacity: 1,
                   y: 0,
-                  filter: "blur(0px)",
                   transition: { duration: 0.5, ease: easeOutExpo },
                 },
               }}
             >
-              <ButtonLink
-                href="/work"
-                variant="secondary"
-                className="w-full sm:w-auto text-[15px] px-7 py-[15px] font-normal tracking-[0.02em] rounded-full"
-                style={{ color: "oklch(0.72 0.008 65)", borderColor: "oklch(0.32 0.008 65)" }}
-              >
-                {home.hero.ctas.secondary}
-              </ButtonLink>
+              <Magnetic strength={0.1}>
+                <ButtonLink
+                  href="/work"
+                  variant="secondary"
+                  className="w-full sm:w-auto text-[15px] px-7 py-[15px] font-normal tracking-[0.02em] rounded-full inline-block"
+                  style={{ color: "var(--hero-fg)", borderColor: "color-mix(in oklch, var(--hero-fg) 30%, transparent)" }}
+                >
+                  {home.hero.ctas.secondary}
+                </ButtonLink>
+              </Magnetic>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -256,14 +259,14 @@ export function HomeHero() {
         transition={{ duration: 0.6, ease: easeOutExpo, delay: 1.4 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
-        <span className="text-[0.625rem] tracking-[0.15em] uppercase font-mono" style={{ color: "oklch(0.45 0.008 65)" }}>
+        <span className="text-[0.625rem] tracking-[0.15em] uppercase font-mono" style={{ color: "var(--hero-fg-subtle)" }}>
           Scroll
         </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="w-px h-6"
-          style={{ background: "oklch(0.72 0.18 65 / 0.4)" }}
+          style={{ background: "color-mix(in oklch, var(--accent) 40%, transparent)" }}
         />
       </motion.div>
     </Section>

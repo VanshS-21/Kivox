@@ -23,15 +23,15 @@ export function HomeProcess() {
   ];
 
   return (
-    <Section id="process" className="relative py-[80px] lg:py-[120px] overflow-hidden bg-surface-alt">
+    <Section id="process" spacing="default" className="relative overflow-hidden bg-surface-alt">
       <Container className="relative z-10">
         {/* Section label */}
-        <motion.div initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={transitionDefault} className="inline-flex items-center gap-3 mb-14 lg:mb-20">
+        <motion.div initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={transitionDefault} className="inline-flex items-center gap-3 mb-8 md:mb-14 lg:mb-20">
           <span className="studio-eyebrow text-accent">Our Methodology</span>
         </motion.div>
 
         {/* Heading + intro */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 mb-20 lg:mb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 mb-10 md:mb-16 lg:mb-28">
           <motion.h2 initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: 0.05 }} className="lg:col-span-7 studio-h2 font-sans font-bold text-foreground">
             A proven process<br />
             <em className="font-serif font-normal text-accent" style={{ fontStyle: "italic" }}>for exceptional results.</em>

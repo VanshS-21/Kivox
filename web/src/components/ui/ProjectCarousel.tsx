@@ -100,7 +100,7 @@ export function ProjectCarousel({
               onClick={prev}
               disabled={active === 0}
               aria-label="Previous image"
-              className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[oklch(0.98_0.01_85/0.1)] backdrop-blur-sm text-[oklch(0.98_0.01_85/0.8)] flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 disabled:opacity-0 hover:bg-[oklch(0.98_0.01_85/0.2)] cursor-pointer"
+              className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-[var(--bg-surface-alt)] border border-[var(--border)] text-foreground flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 disabled:opacity-0 hover:border-[var(--accent)] hover:text-[var(--accent)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg-surface-alt)]"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="15 18 9 12 15 6" />
@@ -110,7 +110,7 @@ export function ProjectCarousel({
               onClick={next}
               disabled={active === total - 1}
               aria-label="Next image"
-              className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[oklch(0.98_0.01_85/0.1)] backdrop-blur-sm text-[oklch(0.98_0.01_85/0.8)] flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 disabled:opacity-0 hover:bg-[oklch(0.98_0.01_85/0.2)] cursor-pointer"
+              className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-[var(--bg-surface-alt)] border border-[var(--border)] text-foreground flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 disabled:opacity-0 hover:border-[var(--accent)] hover:text-[var(--accent)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg-surface-alt)]"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />

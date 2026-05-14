@@ -2,7 +2,7 @@ export const school = {
   id: "school",
   title: "School Website",
   label: "Education · Trust Architecture",
-  image: "/work/school copy.png",
+  image: "/work/school copy.webp",
   images: [
     "/work/mockups/School-1.png",
     "/work/mockups/School-2.png",

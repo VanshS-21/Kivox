@@ -13,8 +13,8 @@ export function Container({
   return (
     <div
       className={cn(
-        "mx-auto w-full px-6 md:px-10",
-        size === "default" && "max-w-6xl",
+        "mx-auto w-full px-6 md:px-12 lg:px-16",
+        size === "default" && "max-w-[1400px]",
         size === "narrow" && "max-w-3xl",
         size === "wide" && "max-w-7xl",
         className,

@@ -2,7 +2,7 @@ export const hotel = {
   id: "hotel",
   title: "Hotel Website",
   label: "Luxury · Hospitality",
-  image: "/work/hotel copy.png",
+  image: "/work/hotel copy.webp",
   images: [
     "/work/mockups/Hotel-1.png",
     "/work/mockups/Hotel-2.png",
