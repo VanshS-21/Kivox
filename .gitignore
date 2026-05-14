@@ -79,14 +79,21 @@ inspiration/*.webp
 !inspiration/README.md
 
 # ---------------------------------------------------------------------------- #
-# Next.js (web/)                                                                #
+# Next.js                                                                       #
 # ---------------------------------------------------------------------------- #
-# Most Next.js ignores are in web/.gitignore — these catch paths from root
 
-web/.next/
-web/out/
-web/build/
-web/node_modules/
+.next/
+out/
+build/
+next-env.d.ts
+
+# ---------------------------------------------------------------------------- #
+# Playwright                                                                    #
+# ---------------------------------------------------------------------------- #
+
+test-results/
+playwright-report/
+playwright/.cache/
 
 # ---------------------------------------------------------------------------- #
 # Dependencies (any future workspaces)                                          #
