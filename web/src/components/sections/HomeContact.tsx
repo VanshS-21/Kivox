@@ -38,7 +38,7 @@ function MagneticCTA({
       offsetRef.current = { x: dx, y: dy };
       btn.style.transform = `translate(${dx}px, ${dy}px)`;
       // Dynamic glow follows displacement
-      btn.style.boxShadow = `${dx * 0.3}px ${dy * 0.3 + 8}px 30px oklch(0.72 0.18 65 / 0.25)`;
+      btn.style.boxShadow = `${dx * 0.3}px ${dy * 0.3 + 8}px 30px var(--accent-glow)`;
     },
     [reduce]
   );
@@ -181,24 +181,6 @@ export function HomeContact() {
               transition: "transform 0.1s linear",
             }}
           >
-            {/* Section label */}
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={viewportOnce}
-              transition={{ duration: 0.6, ease: easeOutExpo }}
-              className="inline-flex items-center gap-3 mb-10"
-            >
-              <motion.div
-                animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="w-2 h-2 rounded-full bg-accent"
-              />
-              <span className="studio-eyebrow text-accent">
-                [ Get In Touch ]
-              </span>
-            </motion.div>
-
             {/* Headline — large, centered, clear */}
             <motion.h2
               initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }}
@@ -233,7 +215,7 @@ export function HomeContact() {
               whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={viewportOnce}
               transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.25 }}
-              className="mb-16"
+              className="mb-8"
             >
               <MagneticCTA href="/contact" reduce={reduce}>
                 Start a project
@@ -245,6 +227,23 @@ export function HomeContact() {
                   →
                 </motion.span>
               </MagneticCTA>
+            </motion.div>
+
+            {/* Direct contact — quick path */}
+            <motion.div
+              initial={reduce ? false : { opacity: 0 }}
+              whileInView={reduce ? undefined : { opacity: 1 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.4 }}
+              className="mb-16"
+            >
+              <span className="text-sm text-muted-foreground">or reach us directly at </span>
+              <a
+                href={`mailto:${brand.contact.email}`}
+                className="text-sm text-accent hover:underline underline-offset-4 transition-colors"
+              >
+                {brand.contact.email}
+              </a>
             </motion.div>
           </div>
         </Container>

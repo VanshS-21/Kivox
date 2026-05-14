@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion, useInView } from "motion/react";
 
 import { brand } from "@/content/brand";
+import { navigation } from "@/content/navigation";
 import { fadeUp, viewportOnce, easeOutExpo } from "@/lib/motion";
 
 /** Counts up from 2020 to the current year over 0.6s when the footer scrolls into view */
@@ -17,7 +18,7 @@ function YearCountUp() {
   useEffect(() => {
     if (!inView) return;
     const startYear = 2020;
-    const duration = 600; // ms
+    const duration = 600;
     const steps = currentYear - startYear;
     if (steps <= 0) return;
 
@@ -42,9 +43,9 @@ export function Footer() {
 
   return (
     <footer className="bg-surface-alt">
-      {/* ── Contact band ── */}
+      {/* ── Main footer ── */}
       <div className="border-t border-border">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-12 lg:py-14">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           <motion.div
             initial={reduce ? false : "hidden"}
             whileInView={reduce ? undefined : "show"}
@@ -53,82 +54,111 @@ export function Footer() {
               hidden: {},
               show: {
                 transition: {
-                  staggerChildren: 0.06,
+                  staggerChildren: 0.08,
                   delayChildren: 0.05,
                 },
               },
             }}
-            className="flex flex-col lg:flex-row justify-between gap-10 lg:items-end"
+            className="py-20 lg:py-28"
           >
-            {/* Left — brand + contact */}
+            {/* Top row: Brand name + tagline */}
             <motion.div
               variants={fadeUp}
               transition={{ duration: 0.5, ease: easeOutExpo }}
-              className="space-y-5"
+              className="mb-16 lg:mb-24"
             >
-              <div className="text-lg font-sans font-bold tracking-tight text-foreground">
+              <div
+                className="font-sans font-bold tracking-tight text-foreground"
+                style={{
+                  fontSize: "clamp(2.5rem, 4vw + 1rem, 5rem)",
+                  lineHeight: 1.05,
+                  letterSpacing: "-0.03em",
+                }}
+              >
                 {brand.name}
               </div>
-              <div className="space-y-1.5">
-                <a
-                  href={`mailto:${brand.contact.email}`}
-                  className="block text-foreground hover:text-accent transition-colors font-medium"
-                >
-                  {brand.contact.email}
-                </a>
-                <div className="text-sm text-muted-foreground">
-                  {brand.contact.phone}
-                </div>
-              </div>
+              <p className="mt-4 text-muted-foreground max-w-md" style={{ fontSize: "clamp(0.95rem, 1vw + 0.4rem, 1.125rem)", lineHeight: 1.6 }}>
+                {brand.tagline}
+              </p>
             </motion.div>
 
-            {/* Right — social + legal, no labels */}
+            {/* Three-column grid: Navigate · Connect · Contact */}
             <motion.div
               variants={fadeUp}
               transition={{ duration: 0.5, ease: easeOutExpo }}
-              className="flex gap-10 sm:gap-14 text-sm"
+              className="grid grid-cols-2 sm:grid-cols-3 gap-y-12 gap-x-8 lg:gap-x-16"
             >
-              {/* Social */}
-              <div className="flex flex-col gap-2">
-                <a
-                  className="text-foreground hover:text-accent transition-colors"
-                  href={brand.socials.linkedin}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  LinkedIn ↗
-                </a>
-                <a
-                  className="text-foreground hover:text-accent transition-colors"
-                  href={brand.socials.instagram}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Instagram ↗
-                </a>
+              {/* Column 1: Navigate */}
+              <div>
+                <div className="studio-eyebrow text-subtle-foreground mb-6">Navigate</div>
+                <div className="flex flex-col gap-3">
+                  {navigation.primary.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
 
-              {/* Legal */}
-              <div className="flex flex-col gap-2">
-                <Link
-                  className="text-muted-foreground hover:text-accent transition-colors"
-                  href="/privacy"
-                >
-                  Privacy
-                </Link>
-                <Link
-                  className="text-muted-foreground hover:text-accent transition-colors"
-                  href="/terms"
-                >
-                  Terms
-                </Link>
+              {/* Column 2: Connect */}
+              <div>
+                <div className="studio-eyebrow text-subtle-foreground mb-6">Connect</div>
+                <div className="flex flex-col gap-3">
+                  <a
+                    className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                    href={brand.socials.linkedin}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    LinkedIn ↗
+                  </a>
+                  <a
+                    className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                    href={brand.socials.instagram}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Instagram ↗
+                  </a>
+                  <a
+                    className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                    href={brand.socials.github}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    GitHub ↗
+                  </a>
+                </div>
+              </div>
+
+              {/* Column 3: Contact */}
+              <div className="col-span-2 sm:col-span-1">
+                <div className="studio-eyebrow text-subtle-foreground mb-6">Contact</div>
+                <div className="flex flex-col gap-3">
+                  <a
+                    href={`mailto:${brand.contact.email}`}
+                    className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                  >
+                    {brand.contact.email}
+                  </a>
+                  <span className="text-sm text-muted-foreground">
+                    {brand.contact.phone}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    {brand.contact.address}
+                  </span>
+                </div>
               </div>
             </motion.div>
           </motion.div>
         </div>
       </div>
 
-      {/* ── Colophon ── */}
+      {/* ── Colophon bar ── */}
       <div className="border-t border-border-soft">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-5">
           <motion.div
@@ -141,8 +171,19 @@ export function Footer() {
             <div className="studio-caption">
               © <YearCountUp /> {brand.name} · {brand.locationLine}
             </div>
-            <div className="studio-caption text-muted-foreground">
-              Crafted with intention
+            <div className="flex items-center gap-6">
+              <Link
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors"
+                href="/privacy"
+              >
+                Privacy
+              </Link>
+              <Link
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors"
+                href="/terms"
+              >
+                Terms
+              </Link>
             </div>
           </motion.div>
         </div>

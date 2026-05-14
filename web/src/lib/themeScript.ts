@@ -10,7 +10,7 @@ export function themeInitScript(): string {
     if (v === "light" || v === "dark") {
       root.dataset.theme = v;
     } else {
-      root.dataset.theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      root.dataset.theme = "dark";
     }
   } catch (e) {
     document.documentElement.dataset.theme = "dark";

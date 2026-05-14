@@ -40,11 +40,6 @@ export default function ContactPage() {
         >
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-3 mb-6">
-            <motion.div
-              animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="w-2 h-2 rounded-full bg-accent"
-            />
             <span className="studio-eyebrow text-accent">[ Start a Project ]</span>
           </div>
 

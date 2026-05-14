@@ -119,7 +119,7 @@ export function HomePOV() {
     <div ref={sectionRef}>
     <Section
       className="relative py-[180px] lg:py-[260px] overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--pov-wash) 40%, var(--pov-wash) 60%, var(--bg-primary) 100%)' }}
+      style={{ background: 'var(--bg-primary)' }}
     >
       {/* Committed amber glow — with parallax */}
       <motion.div
@@ -146,26 +146,7 @@ export function HomePOV() {
       </motion.div>
 
       <Container className="relative z-10">
-        {/* Section label */}
-        <motion.div
-          initial={reduce ? false : "hidden"}
-          whileInView={reduce ? undefined : "show"}
-          viewport={viewportOnce}
-          variants={fadeUp}
-          transition={transitionDefault}
-          className="flex justify-center mb-14 lg:mb-20"
-        >
-          <div className="inline-flex items-center gap-3">
-            <motion.div
-              animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="w-2.5 h-2.5 rounded-full bg-accent"
-            />
-            <span className="studio-eyebrow text-accent">
-              Philosophy
-            </span>
-          </div>
-        </motion.div>
+        {/* No section label — the quote speaks for itself */}
 
         {/* Large centered quote — word-by-word reveal */}
         <blockquote className="text-center max-w-6xl mx-auto">

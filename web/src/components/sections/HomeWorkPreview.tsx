@@ -10,7 +10,7 @@ import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/moti
 
 export function HomeWorkPreview() {
   const reduce = useReducedMotion();
-  const featuredWork = work.items;
+  const featuredWork = work.featured;
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -27,8 +27,8 @@ export function HomeWorkPreview() {
 
   // Spring config: creates momentum overshoot then settles naturally
   const springX = useSpring(rawX, {
-    stiffness: 80,
-    damping: 20,
+    stiffness: 100,
+    damping: 25,
     mass: 0.8,
     restDelta: 0.01,
   });
@@ -64,38 +64,13 @@ export function HomeWorkPreview() {
   return (
     <div
       ref={containerRef}
-      className="relative bg-background"
+      className="relative bg-background work-showcase"
       // Height creates the scroll runway: N panels × 100vh
       style={{ height: `${totalPanels * 100}vh` }}
     >
       {/* Sticky viewport container */}
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Section label — top left */}
-        <motion.div
-          initial={reduce ? false : "hidden"}
-          whileInView={reduce ? undefined : "show"}
-          viewport={viewportOnce}
-          variants={fadeUp}
-          transition={transitionDefault}
-          className="absolute top-28 left-6 lg:left-12 z-20 inline-flex items-center gap-3"
-        >
-          <motion.div
-            animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="w-2.5 h-2.5 rounded-full bg-accent"
-          />
-          <span className="studio-eyebrow text-subtle-foreground">
-            Selected Work
-          </span>
-          {/* Expanding line */}
-          <motion.span
-            initial={reduce ? false : { scaleX: 0 }}
-            whileInView={reduce ? undefined : { scaleX: 1 }}
-            viewport={viewportOnce}
-            transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.3 }}
-            className="hidden lg:block w-16 h-px bg-accent/30 origin-left"
-          />
-        </motion.div>
+        {/* No section label — counter provides wayfinding */}
 
         {/* Counter — top right with rolling animation */}
         <div className="absolute top-28 right-6 lg:right-12 z-20 flex items-center gap-2">
@@ -233,14 +208,16 @@ export function HomeWorkPreview() {
                       {/* Divider */}
                       <div className="hidden sm:block w-px h-5 bg-border-strong" />
 
-                      {/* CTA */}
-                      <Link
-                        href="/work"
-                        className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-accent/40 text-accent text-sm font-semibold tracking-wide hover:bg-accent hover:text-background transition-all duration-300 group w-fit"
-                      >
-                        Explore Our Work
-                        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                      </Link>
+                      {/* CTA — only on last slide */}
+                      {idx === featuredWork.length - 1 && (
+                        <Link
+                          href="/work"
+                          className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-accent/40 text-accent text-sm font-semibold tracking-wide hover:bg-accent hover:text-background transition-all duration-300 group w-fit"
+                        >
+                          Explore Our Work
+                          <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                        </Link>
+                      )}
                     </motion.div>
                   </motion.div>
                 </div>
@@ -257,38 +234,41 @@ export function HomeWorkPreview() {
                   </span>
                 </Link>
 
-                {/* Year badge — top right */}
-                <div className="absolute top-28 right-8 lg:right-16 xl:right-24 text-xs font-mono tracking-[0.2em] text-subtle-foreground hidden sm:block">
-                  2025
-                </div>
+
               </div>
             </div>
           ))}
         </motion.div>
 
-        {/* Scroll hint — bottom */}
-        <motion.div
-          initial={{ opacity: 1 }}
-          className="absolute bottom-8 left-6 lg:left-12 z-20 flex items-center gap-3"
-        >
-          <span className="studio-tag text-subtle-foreground">
-            Scroll
-          </span>
-          <motion.span
-            animate={{ x: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-subtle-foreground"
-          >
-            →
-          </motion.span>
-          {/* Progress bar */}
-          <div className="w-40 h-px bg-border-soft overflow-hidden">
-            <motion.div
-              style={{ scaleX: scrollYProgress }}
-              className="h-full bg-accent origin-left"
-            />
+        {/* Full-width scroll progress bar — bottom */}
+        <div className="absolute bottom-8 left-0 right-0 z-20 px-6 lg:px-12">
+          <div className="flex items-center gap-4 lg:gap-6">
+            {/* Label */}
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="studio-tag text-subtle-foreground">Scroll</span>
+              <motion.span
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="text-subtle-foreground text-xs"
+              >
+                →
+              </motion.span>
+            </div>
+
+            {/* Full-width track */}
+            <div className="flex-1 h-[2px] bg-border-soft rounded-full overflow-hidden">
+              <motion.div
+                style={{ scaleX: scrollYProgress }}
+                className="h-full bg-accent origin-left"
+              />
+            </div>
+
+            {/* Percentage */}
+            <motion.span className="text-xs font-mono text-subtle-foreground studio-tabular shrink-0">
+              {reduce ? "100%" : <Percentage value={scrollYProgress} />}
+            </motion.span>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
@@ -300,4 +280,12 @@ function Counter({ value }: { value: MotionValue<number> }) {
     String(Math.round(v)).padStart(2, "0")
   );
   return <motion.span>{rounded}</motion.span>;
+}
+
+/** Animated percentage display */
+function Percentage({ value }: { value: MotionValue<number> }) {
+  const pct = useTransform(value, (v: number) =>
+    `${Math.round(v * 100)}%`
+  );
+  return <motion.span>{pct}</motion.span>;
 }

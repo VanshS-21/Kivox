@@ -1,68 +1,78 @@
 @import "tailwindcss";
 
 /* -------------------------------------------------------------------------- */
-/* Design tokens - Warm Craft Editorial                                        */
+/* Design tokens — Atelier in Morning Light                                     */
 /* -------------------------------------------------------------------------- */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  /* Light mode — warm parchment palette */
-  --bg-primary: oklch(0.97 0.012 75);        /* Warm parchment */
-  --bg-elevated: oklch(0.99 0.008 80);       /* Card float */
-  --bg-surface: oklch(0.95 0.015 72);        /* Warm linen */
-  --bg-surface-alt: oklch(0.92 0.02 68);     /* Warm sandstone */
+  /* Dark mode defaults — site defaults to dark (see themeScript.ts) */
+  --bg-primary: oklch(0.05 0.005 65);
+  --bg-elevated: oklch(0.10 0.005 65);
+  --bg-surface: oklch(0.13 0.006 65);
+  --bg-surface-alt: oklch(0.07 0.005 65);
   
-  --fg-primary: oklch(0.16 0.01 55);         /* Rich warm-brown black */
-  --fg-muted: oklch(0.16 0.01 55 / 0.72);    /* Present muted text */
-  --fg-subtle: oklch(0.16 0.01 55 / 0.48);   /* Subtle but readable */
+  --fg-primary: oklch(0.98 0.01 85);
+  --fg-muted: oklch(0.98 0.01 85 / 0.6);
+  --fg-subtle: oklch(0.98 0.01 85 / 0.35);
 
-  --accent: oklch(0.62 0.2 55);              /* Burnt amber — deep, rich on light */
-  --accent-hover: oklch(0.57 0.22 52);       /* Darker on hover */
-  --accent-glow: oklch(0.62 0.2 55 / 0.2);
-  --accent-muted: oklch(0.62 0.2 55 / 0.1);
-  --accent-ink: oklch(0.99 0.008 80);        /* White/cream on amber */
+  --accent: oklch(0.72 0.18 65);
+  --accent-hover: oklch(0.78 0.18 65);
+  --accent-glow: oklch(0.72 0.18 65 / 0.33);
+  --accent-muted: oklch(0.72 0.18 65 / 0.12);
+  --accent-ink: oklch(0.99 0.008 80);
 
-  --border: oklch(0.55 0.02 60 / 0.15);
-  --border-strong: oklch(0.55 0.02 60 / 0.22);
-  --border-soft: oklch(0.55 0.02 60 / 0.08);
+  --border: oklch(0.85 0.008 65 / 0.08);
+  --border-strong: oklch(0.85 0.008 65 / 0.12);
+  --border-soft: oklch(0.85 0.008 65 / 0.05);
 
   --shadow-rest: 
-    0 1px 2px oklch(0.4 0.02 60 / 0.06),
-    0 4px 16px oklch(0.4 0.02 60 / 0.08);
+    0 1px 0 0 oklch(1 0 0 / 0.08),
+    0 20px 60px -30px oklch(0 0 0 / 0.4);
   --shadow-hover:
-    0 2px 4px oklch(0.62 0.2 55 / 0.08),
-    0 12px 40px oklch(0.62 0.2 55 / 0.1);
-  --shadow-amber-glow: 0 0 30px oklch(0.62 0.2 55 / 0.18);
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
+    0 20px 60px oklch(0.72 0.18 65 / 0.06);
+  --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
   --shadow-strong:
-    0 2px 4px oklch(0.4 0.02 60 / 0.08),
-    0 20px 60px oklch(0.4 0.02 60 / 0.15);
+    0 1px 0 0 oklch(1 0 0 / 0.12),
+    0 40px 90px -60px oklch(0 0 0 / 0.7);
 
-  /* Project-specific accents — slightly deeper for light */
-  --project-hospital: oklch(0.55 0.17 240);  /* Blue */
-  --project-hotel: oklch(0.68 0.15 75);      /* Gold */
-  --project-school: oklch(0.58 0.2 155);     /* Green */
-  --project-fitness: oklch(0.55 0.22 300);   /* Purple */
-  --project-cafe: oklch(0.55 0.24 25);       /* Coral */
+  /* Project-specific accents */
+  --project-hospital: oklch(0.55 0.17 240);
+  --project-hotel: oklch(0.68 0.15 75);
+  --project-school: oklch(0.58 0.2 155);
+  --project-fitness: oklch(0.55 0.22 300);
+  --project-cafe: oklch(0.55 0.24 25);
 
-  /* Section-specific committed warm wash */
-  --pov-wash: oklch(0.90 0.06 62);            /* Committed amber atmosphere */
-  --accent-rose: oklch(0.58 0.14 25);          /* Richer rose for light */
-  --hero-glow-opacity: 0.08;
-  --work-bg-overlay: 0.85;
+  /* Section-specific — dark defaults */
+  --pov-wash: oklch(0.09 0.025 60);
+  --accent-rose: oklch(0.55 0.12 35);
+  --hero-glow-opacity: 0.16;
+  --work-bg-overlay: 0.78;
 
-  /* Semantic feedback — warm-tinted, not generic red/green */
-  --error: oklch(0.52 0.18 25);            /* Warm brick red */
-  --success: oklch(0.52 0.14 155);         /* Warm olive green */
+  /* Semantic feedback */
+  --error: oklch(0.68 0.16 25);
+  --success: oklch(0.68 0.14 155);
 
-  /* Hero constellation defaults (light) */
-  --hero-bg: oklch(0.95 0.015 72);
-  --hero-fg: oklch(0.16 0.01 55);
-  --hero-fg-muted: oklch(0.16 0.01 55 / 0.55);
-  --hero-fg-subtle: oklch(0.16 0.01 55 / 0.38);
-  --hero-noise-opacity: 0.12;
+  /* Hero constellation — DARK-LOCKED (identical in all theme states) */
+  --hero-bg: oklch(0.05 0.008 65);
+  --hero-fg: oklch(0.95 0.012 72);
+  --hero-fg-muted: oklch(0.58 0.008 65);
+  --hero-fg-subtle: oklch(0.45 0.008 65);
+  --hero-noise-opacity: 0.35;
+  --hero-bg-scroll: oklch(0.05 0.008 65 / 0.92);
+
+  /* Cursor glow — amber accent with various opacities */
+  --cursor-dot: oklch(0.72 0.18 65 / 0.5);
+  --cursor-dot-glow: 0 0 20px 8px oklch(0.72 0.18 65 / 0.15);
+  --cursor-trail: oklch(0.72 0.18 65 / 0.12);
+  --cursor-trail-glow: 0 0 30px 12px oklch(0.72 0.18 65 / 0.06);
+
+  /* Service arrow icon — expanded amber glow on hover */
+  --shadow-service-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15);
   --shadow-hover-strong:
-    0 2px 4px oklch(0.62 0.2 55 / 0.1),
-    0 20px 60px oklch(0.62 0.2 55 / 0.14);
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.25),
+    0 24px 80px oklch(0.72 0.18 65 / 0.12);
 
   /* Border radius */
   --radius-sm: 8px;
@@ -177,62 +187,110 @@
 :root[data-theme="light"] {
   color-scheme: light;
 
-  /* Light mode — warm parchment palette (mirrors :root defaults) */
-  --bg-primary: oklch(0.97 0.012 75);
-  --bg-elevated: oklch(0.99 0.008 80);
-  --bg-surface: oklch(0.95 0.015 72);
-  --bg-surface-alt: oklch(0.92 0.02 68);
-  
-  --fg-primary: oklch(0.16 0.01 55);
-  --fg-muted: oklch(0.16 0.01 55 / 0.72);
-  --fg-subtle: oklch(0.16 0.01 55 / 0.48);
+  /* -------------------------------------------------------------------------- */
+  /* Atelier in Morning Light — cold architectural palette                       */
+  /*                                                                            */
+  /* North star: a master craftsman's studio in cold morning light.              */
+  /* White walls, raw materials, clean surfaces, sharp shadows from a single     */
+  /* window. Considered. Architectural. Precise.                                */
+  /*                                                                            */
+  /* Temperature rule: dark mode = warm-tinted (hue 65), light mode =           */
+  /* cold-tinted (hue 250). Amber accent bridges both.                          */
+  /* -------------------------------------------------------------------------- */
 
+  /* Backgrounds — uniform cool white */
+  --bg-primary: oklch(0.97 0.003 250);
+  --bg-elevated: oklch(0.99 0.002 250);
+  --bg-surface: oklch(0.97 0.003 250);
+  --bg-surface-alt: oklch(0.97 0.003 250);
+  
+  /* Foregrounds — cool-tinted inks */
+  --fg-primary: oklch(0.13 0.005 250);
+  --fg-muted: oklch(0.45 0.005 250);
+  --fg-subtle: oklch(0.62 0.004 250);
+
+  /* Accent — burnt amber, deeper for contrast on cool surfaces */
   --accent: oklch(0.62 0.2 55);
   --accent-hover: oklch(0.57 0.22 52);
-  --accent-glow: oklch(0.62 0.2 55 / 0.2);
-  --accent-muted: oklch(0.62 0.2 55 / 0.1);
-  --accent-ink: oklch(0.99 0.008 80);
+  --accent-glow: oklch(0.62 0.2 55 / 0.18);
+  --accent-muted: oklch(0.62 0.2 55 / 0.08);
+  --accent-ink: oklch(0.99 0.002 250);
 
-  --border: oklch(0.55 0.02 60 / 0.15);
-  --border-strong: oklch(0.55 0.02 60 / 0.22);
-  --border-soft: oklch(0.55 0.02 60 / 0.08);
+  /* Borders — cool-tinted */
+  --border: oklch(0.13 0.005 250 / 0.08);
+  --border-strong: oklch(0.13 0.005 250 / 0.14);
+  --border-soft: oklch(0.13 0.005 250 / 0.04);
 
+  /* Shadows — cool at rest, warm on interaction (single-window lighting) */
   --shadow-rest: 
-    0 1px 2px oklch(0.4 0.02 60 / 0.06),
-    0 4px 16px oklch(0.4 0.02 60 / 0.08);
+    0 1px 3px oklch(0.13 0.005 250 / 0.06),
+    0 6px 24px oklch(0.13 0.005 250 / 0.06);
   --shadow-hover:
-    0 2px 4px oklch(0.62 0.2 55 / 0.08),
-    0 12px 40px oklch(0.62 0.2 55 / 0.1);
-  --shadow-amber-glow: 0 0 30px oklch(0.62 0.2 55 / 0.18);
+    0 2px 6px oklch(0.62 0.2 55 / 0.08),
+    0 16px 48px oklch(0.62 0.2 55 / 0.08);
+  --shadow-amber-glow: 0 0 30px oklch(0.62 0.2 55 / 0.14);
   --shadow-strong:
-    0 2px 4px oklch(0.4 0.02 60 / 0.08),
-    0 20px 60px oklch(0.4 0.02 60 / 0.15);
+    0 2px 6px oklch(0.13 0.005 250 / 0.08),
+    0 24px 72px oklch(0.13 0.005 250 / 0.10);
 
-  --studio-grid-opacity: 0.22;
-  --studio-noise-opacity: 0.025;
-  --pov-wash: oklch(0.90 0.06 62);
+  /* Surface texture — precise, not heavy */
+  --studio-grid-opacity: 0.10;
+  --studio-noise-opacity: 0.008;
 
-  /* Project accents — deeper for light */
+  /* Section-specific */
+  --pov-wash: oklch(0.95 0.003 250);
+  --accent-rose: oklch(0.52 0.12 25);
+  --hero-glow-opacity: 0.04;
+  --work-bg-overlay: 1;
+
+  /* Cursor glow — burnt amber in light mode */
+  --cursor-dot: oklch(0.62 0.2 55 / 0.35);
+  --cursor-dot-glow: 0 0 20px 8px oklch(0.62 0.2 55 / 0.10);
+  --cursor-trail: oklch(0.62 0.2 55 / 0.08);
+  --cursor-trail-glow: 0 0 30px 12px oklch(0.62 0.2 55 / 0.04);
+
+  /* Service arrow icon — lighter glow for cool surfaces */
+  --shadow-service-glow: 0 0 30px oklch(0.62 0.2 55 / 0.18), 0 8px 32px oklch(0.62 0.2 55 / 0.10);
+
+  /* Project accents — unchanged */
   --project-hospital: oklch(0.55 0.17 240);
   --project-hotel: oklch(0.68 0.15 75);
   --project-school: oklch(0.58 0.2 155);
   --project-fitness: oklch(0.55 0.22 300);
   --project-cafe: oklch(0.55 0.24 25);
 
-  --accent-rose: oklch(0.58 0.14 25);
-  --hero-glow-opacity: 0.08;
-  --work-bg-overlay: 0.85;
+  /* Semantic feedback — deeper for cool bg contrast */
+  --error: oklch(0.48 0.18 25);
+  --success: oklch(0.48 0.14 155);
 
-  /* Hero constellation — light variant */
-  --hero-bg: oklch(0.95 0.015 72);
-  --hero-fg: oklch(0.16 0.01 55);
-  --hero-fg-muted: oklch(0.16 0.01 55 / 0.55);
-  --hero-fg-subtle: oklch(0.16 0.01 55 / 0.38);
-  --hero-noise-opacity: 0.12;
+  /* Hero tokens: INTENTIONALLY OMITTED.
+     Hero section is dark-locked — uses :root dark defaults regardless of theme.
+     DO NOT add --hero-bg, --hero-fg, --hero-fg-muted, --hero-fg-subtle,
+     --hero-noise-opacity here. They inherit from :root (dark). */
+
   --shadow-hover-strong:
-    0 2px 4px oklch(0.62 0.2 55 / 0.1),
-    0 20px 60px oklch(0.62 0.2 55 / 0.14);
+    0 2px 6px oklch(0.62 0.2 55 / 0.10),
+    0 24px 72px oklch(0.62 0.2 55 / 0.12);
 }
+
+/* Footer — dark-locked in light mode (same treatment as hero) */
+:root[data-theme="light"] footer {
+  --bg-surface-alt: oklch(0.07 0.005 65);
+  --bg-primary: oklch(0.05 0.005 65);
+  --fg-primary: oklch(0.98 0.01 85);
+  --fg-muted: oklch(0.98 0.01 85 / 0.6);
+  --fg-subtle: oklch(0.98 0.01 85 / 0.35);
+  --accent: oklch(0.72 0.18 65);
+  --border: oklch(0.85 0.008 65 / 0.08);
+  --border-soft: oklch(0.85 0.008 65 / 0.05);
+  color-scheme: dark;
+}
+
+/* Cinematic break — theme-specific image */
+:root[data-theme="light"] .cinematic-img-dark { display: none; }
+:root[data-theme="light"] .cinematic-img-light { display: block; }
+:root[data-theme="dark"] .cinematic-img-dark { display: block; }
+:root[data-theme="dark"] .cinematic-img-light { display: none; }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -282,9 +340,20 @@
   --hero-fg-muted: oklch(0.58 0.008 65);
   --hero-fg-subtle: oklch(0.45 0.008 65);
   --hero-noise-opacity: 0.35;
+  --hero-bg-scroll: oklch(0.05 0.008 65 / 0.92);
   --work-bg-overlay: 0.78;
   --accent-rose: oklch(0.55 0.12 35);        /* Darker rose for depth */
   --hero-glow-opacity: 0.16;
+
+  /* Cursor glow — warm amber */
+  --cursor-dot: oklch(0.72 0.18 65 / 0.5);
+  --cursor-dot-glow: 0 0 20px 8px oklch(0.72 0.18 65 / 0.15);
+  --cursor-trail: oklch(0.72 0.18 65 / 0.12);
+  --cursor-trail-glow: 0 0 30px 12px oklch(0.72 0.18 65 / 0.06);
+
+  /* Service arrow icon — amber glow */
+  --shadow-service-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15);
+
   --shadow-hover-strong:
     0 1px 0 0 oklch(0.72 0.18 65 / 0.25),
     0 24px 80px oklch(0.72 0.18 65 / 0.12);
@@ -702,14 +771,14 @@ html {
     inset 0 -1px 0 oklch(0.05 0.01 55 / 0.5);
 }
 
-/* Light mode: slightly stronger shadow to separate from parchment bg */
-:root .carousel-frame {
+/* Light mode: clean neutral shadow to separate from cold bg */
+:root[data-theme="light"] .carousel-frame {
   box-shadow:
-    0 4px 8px oklch(0.3 0.02 60 / 0.10),
-    0 16px 48px oklch(0.2 0.02 60 / 0.20),
-    0 32px 100px oklch(0.2 0.02 60 / 0.12),
-    inset 0 1px 0 oklch(0.25 0.02 60 / 0.10),
-    inset 0 -1px 0 oklch(0.05 0.01 55 / 0.5);
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 16px 48px rgba(0, 0, 0, 0.14),
+    0 32px 100px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(0, 0, 0, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* ── Frame noise texture (matches hero) ── */
@@ -779,6 +848,8 @@ html {
   box-shadow: inset 0 0 0 0.5px oklch(0.2 0.01 55 / 0.15);
 }
 
+
+
 @media (prefers-reduced-motion: reduce) {
   .carousel-image {
     transition: none;
@@ -792,5 +863,8 @@ html {
   .overdrive-parallax-slow,
   .overdrive-parallax-fast {
     animation: none !important;
+  }
+  .back-to-top {
+    transition: none;
   }
 }

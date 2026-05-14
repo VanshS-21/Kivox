@@ -9,6 +9,7 @@ import {
 import "./globals.css";
 
 import { Analytics } from "@/components/analytics/Analytics";
+import { BackToTop } from "@/components/ui/BackToTop";
 import { ConsoleEasterEgg } from "@/components/ui/ConsoleEasterEgg";
 import { CursorGlow } from "@/components/ui/CursorGlow";
 import { DevThemeOverride } from "@/components/dev/DevThemeOverride";
@@ -79,6 +80,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <BackToTop />
         <script
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           type="application/ld+json"

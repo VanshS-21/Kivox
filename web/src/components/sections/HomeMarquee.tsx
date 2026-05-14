@@ -76,7 +76,7 @@ export function HomeMarquee() {
                     color: isHovered ? "var(--accent)" : "var(--fg-muted)",
                   }}
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-lg lg:text-xl font-medium whitespace-nowrap tracking-tight uppercase font-mono cursor-default select-none"
+                  className="text-base lg:text-lg font-medium whitespace-nowrap tracking-tight capitalize font-sans cursor-default select-none"
                 >
                   {item}
                 </motion.span>

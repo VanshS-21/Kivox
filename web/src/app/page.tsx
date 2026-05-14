@@ -1,3 +1,4 @@
+import { CinematicBreak } from "@/components/sections/CinematicBreak";
 import { HomeContact } from "@/components/sections/HomeContact";
 import { HomeHero } from "@/components/sections/HomeHero";
 import { HomeMarquee } from "@/components/sections/HomeMarquee";
@@ -16,6 +17,7 @@ export default function Home() {
       <HomeServices />
       <HomePOV />
       <HomeProcess />
+      <CinematicBreak />
       <HomeTeam />
       <HomeContact />
     </>

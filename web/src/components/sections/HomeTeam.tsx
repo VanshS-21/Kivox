@@ -11,13 +11,17 @@ import { easeOutExpo, viewportOnce } from "@/lib/motion";
 export function HomeTeam() {
   const reduce = useReducedMotion();
 
+  // Split: first 2 are featured (larger), rest are supporting (compact)
+  const featured = team.members.slice(0, 2);
+  const supporting = team.members.slice(2);
+
   return (
     <Section
       className="relative overflow-hidden"
       id="team"
     >
       <Container>
-        {/* ── Section header ── */}
+        {/* ── Section header — no eyebrow, label integrated into headline ── */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 20 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -25,15 +29,6 @@ export function HomeTeam() {
           transition={{ duration: 0.7, ease: easeOutExpo }}
           className="mb-16 lg:mb-24"
         >
-          <div className="inline-flex items-center gap-3 mb-6">
-            <motion.div
-              animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="w-2 h-2 rounded-full bg-accent"
-            />
-            <span className="studio-eyebrow text-accent">[ {team.label} ]</span>
-          </div>
-
           <h2
             className="font-sans font-bold text-foreground mb-5"
             style={{
@@ -42,9 +37,9 @@ export function HomeTeam() {
               letterSpacing: "-0.015em",
             }}
           >
-            {team.title.split(" ").slice(0, -1).join(" ")}{" "}
+            Built by{" "}
             <em className="font-serif font-normal text-accent" style={{ fontStyle: "italic" }}>
-              {team.title.split(" ").slice(-1)[0]}.
+              People.
             </em>
           </h2>
 
@@ -53,9 +48,9 @@ export function HomeTeam() {
           </p>
         </motion.div>
 
-        {/* ── Team grid ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-10 gap-y-14 lg:gap-y-20">
-          {team.members.map((member, idx) => (
+        {/* ── Featured row: 2 large portraits ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-10 gap-y-14 lg:gap-y-16 mb-12 lg:mb-16">
+          {featured.map((member, idx) => (
             <motion.div
               key={member.id}
               initial={reduce ? false : { opacity: 0, y: 30 }}
@@ -64,31 +59,24 @@ export function HomeTeam() {
               transition={{
                 duration: 0.6,
                 ease: easeOutExpo,
-                delay: idx * 0.08,
+                delay: idx * 0.1,
               }}
               className="group"
             >
-              {/* Portrait */}
+              {/* Portrait — large */}
               <div className="relative mb-5 lg:mb-6 overflow-hidden rounded-xl lg:rounded-2xl">
-                <div className="aspect-[3/4] relative">
+                <div className="aspect-[4/5] relative">
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.role} at Kivox`}
                     fill
                     className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, 50vw"
                   />
 
                   {/* Subtle warm overlay on hover */}
                   <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.06] transition-colors duration-500" />
                 </div>
-
-                {/* Number badge */}
-                <span
-                  className="absolute top-3 left-3 lg:top-4 lg:left-4 text-xs font-mono font-bold tracking-wider text-[oklch(0.98_0.01_85/0.5)] studio-tabular"
-                >
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
               </div>
 
               {/* Info */}
@@ -111,6 +99,54 @@ export function HomeTeam() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {member.focus}
                 </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ── Supporting row: 4 compact portraits ── */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 lg:gap-x-8 gap-y-10">
+          {supporting.map((member, idx) => (
+            <motion.div
+              key={member.id}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{
+                duration: 0.5,
+                ease: easeOutExpo,
+                delay: 0.15 + idx * 0.06,
+              }}
+              className="group"
+            >
+              {/* Portrait — compact */}
+              <div className="relative mb-4 overflow-hidden rounded-lg lg:rounded-xl">
+                <div className="aspect-[3/4] relative">
+                  <Image
+                    src={member.image}
+                    alt={`${member.name}, ${member.role} at Kivox`}
+                    fill
+                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    sizes="(max-width: 640px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.06] transition-colors duration-500" />
+                </div>
+              </div>
+
+              {/* Compact info — name + role only */}
+              <div>
+                <h3
+                  className="font-sans font-semibold text-foreground mb-1 transition-colors duration-300 group-hover:text-accent"
+                  style={{
+                    fontSize: "clamp(0.9rem, 0.8vw + 0.5rem, 1.1rem)",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {member.name}
+                </h3>
+                <span className="text-xs text-muted-foreground tracking-wide uppercase">
+                  {member.role}
+                </span>
               </div>
             </motion.div>
           ))}

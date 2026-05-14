@@ -12,15 +12,15 @@ colors:
   amber-glow: "oklch(0.72 0.18 65 / 0.33)"
   amber-muted: "oklch(0.72 0.18 65 / 0.12)"
   amber-ink: "oklch(0.99 0.008 80)"
-  parchment: "oklch(0.97 0.012 75)"
-  parchment-card: "oklch(0.99 0.008 80)"
-  warm-linen: "oklch(0.95 0.015 72)"
-  warm-sandstone: "oklch(0.92 0.02 68)"
-  rich-warm-ink: "oklch(0.16 0.01 55)"
+  atelier-white: "oklch(0.97 0.003 250)"
+  atelier-elevated: "oklch(0.99 0.002 250)"
+  atelier-surface: "oklch(0.99 0.002 250)"
+  atelier-alt: "oklch(0.94 0.004 250)"
+  atelier-ink: "oklch(0.13 0.005 250)"
   burnt-amber: "oklch(0.62 0.2 55)"
   burnt-amber-deep: "oklch(0.57 0.22 52)"
   pov-wash-dark: "oklch(0.09 0.025 60)"
-  pov-wash-light: "oklch(0.90 0.06 62)"
+  pov-wash-light: "oklch(0.95 0.003 250)"
   ember-rose: "oklch(0.55 0.12 35)"
   hospital-blue: "oklch(0.55 0.17 240)"
   hotel-gold: "oklch(0.68 0.15 75)"
@@ -117,27 +117,30 @@ components:
 
 ## 1. Overview
 
-**Creative North Star: "The Firelit Studio"**
+**Creative North Stars:**
 
-Kivox's visual language is built around a single conviction: the site itself is the portfolio. Every pixel demonstrates the craft, clarity, and warmth the studio promises to deliver. The aesthetic draws from the intimacy of a well-lit workshop at dusk; warm amber light pooling across dark surfaces, the confidence of tools laid out with intention, materials that feel honest rather than polished to anonymity.
+**Dark Mode: "The Firelit Studio."** Kivox's dark mode draws from the intimacy of a well-lit workshop at dusk; warm amber light pooling across dark surfaces, the confidence of tools laid out with intention, materials that feel honest rather than polished to anonymity. Warm-tinted neutrals (hue 55–85, chroma 0.005–0.02) ground everything. Amber carries 30–60% of visual weight at hero moments.
 
-The system is Committed: warm amber carries 30–60% of visual weight at key moments (hero, CTAs, section transitions), while warm-tinted neutrals ground everything else. There is no pure black, no pure white, no cold gray anywhere in the palette. Every neutral is shifted toward the amber hue family at chroma 0.005–0.02, creating a cohesion that feels inevitable rather than decorated.
+**Light Mode: "The Atelier in Morning Light."** A master craftsman's studio in cold morning light. White walls, raw materials, clean surfaces, sharp shadows from a single window. Considered. Architectural. Precise. The same craft and intention as the dark mode, expressed through clarity and restraint rather than drama and atmosphere. Cold-tinted neutrals (hue 250, chroma 0.002–0.005) replace every warm surface. Amber deepens to burnt amber for authority against cool backgrounds.
+
+The system is Committed: amber is the only chromatic color in site chrome. The dual-theme system uses deliberate temperature polarity: dark mode is warm, light mode is cold. The amber accent bridges both, operating as firelight in dark mode and as deliberate tooling marks in light mode.
 
 This system explicitly rejects generic SaaS template sites, loud startup pages, dark tech aesthetics with neon accents, enterprise posturing, and luxury hotel minimalism. If a visitor could mistake this for a template, the design has failed. The proof is in the execution: typography that demonstrates mastery, spacing that breathes without pretension, motion that responds rather than performs.
 
 **Key Characteristics:**
-- Warm-tinted neutrals in every surface (hue 55–85, chroma 0.005–0.02)
+- Temperature polarity: dark mode warm-tinted (hue 65), light mode cold-tinted (hue 250)
 - Committed amber accent at key moments, restrained everywhere else
 - Editorial serif/sans pairing (Spectral + Bricolage Grotesque) for headline variety
 - Structural shadows with amber-tinted hover states
 - Scroll-driven section crossfades (overdrive system) for cinematic pacing
-- Dual-theme: warm parchment (light) and firelit dark, both fully warm-tinted
+- Dual-theme: cold architectural (light) and firelit dark, connected by amber
+- Hero section dark-locked in both themes
 
 Motion energy is Choreographed: orchestrated word-by-word hero entrances, scroll-driven crossfade reveals, magnetic CTA physics, 3D depth-fan service rows, and constellation/tunnel canvas generative backgrounds. All motion respects `prefers-reduced-motion` with instant fallbacks.
 
 ## 2. Colors: The Firelit Palette
 
-A dual-theme palette where every value is warm-tinted. The dark mode is primary (the hero is always dark); light mode is a warm parchment variant. OKLCH is the canonical color space. Hex approximations appear in parentheses for reference only; the OKLCH values in the frontmatter are normative.
+A dual-theme palette with deliberate temperature polarity. The dark mode is warm-tinted (hue 55–85); the light mode is cold-tinted (hue 250). The hero is always dark. OKLCH is the canonical color space. Hex approximations appear in parentheses for reference only; the OKLCH values in the frontmatter are normative.
 
 ### Primary
 
@@ -162,14 +165,17 @@ Dark mode (primary):
 - **Warm Subtle** `oklch(0.98 0.01 85 / 0.35)`: Tertiary text, captions.
 - **Amber Ink** `oklch(0.99 0.008 80)`: Text rendered on amber backgrounds (buttons, badges).
 
-Light mode:
-- **Parchment** `oklch(0.97 0.012 75)` (≈ #f7f3ec): Base background.
-- **Parchment Card** `oklch(0.99 0.008 80)` (≈ #fdfbf7): Elevated cards.
-- **Warm Linen** `oklch(0.95 0.015 72)` (≈ #f0ebe2): Surface level.
-- **Warm Sandstone** `oklch(0.92 0.02 68)` (≈ #e6dfd3): Alternate surface.
-- **Rich Warm Ink** `oklch(0.16 0.01 55)` (≈ #1c1815): Primary text.
+Light mode ("The Atelier in Morning Light"):
+- **Atelier White** `oklch(0.97 0.003 250)`: Base background. Cool blue-gray white, like architectural concrete.
+- **Atelier Elevated** `oklch(0.99 0.002 250)`: Card surfaces. Near-white with faintest cool tint.
+- **Atelier Surface** `oklch(0.99 0.002 250)`: Same as elevated in light mode.
+- **Atelier Alt** `oklch(0.94 0.004 250)`: Alternate surface for services/process sections.
+- **Atelier Ink** `oklch(0.13 0.005 250)`: Primary text. Cool-tinted near-black.
+- **Atelier Muted** `oklch(0.45 0.005 250)`: Secondary text, descriptions.
+- **Atelier Subtle** `oklch(0.62 0.004 250)`: Tertiary text, captions.
 
-Borders use the same warm tint at 0.08/0.12/0.05 alpha (strong/standard/soft).
+Light mode borders use cool-tinted values at `oklch(0.13 0.005 250)` with 0.08/0.14/0.04 alpha.
+Light mode accent deepens to Burnt Amber `oklch(0.62 0.2 55)` for stronger contrast against cool backgrounds. Hover darkens to `oklch(0.57 0.22 52)` (opposite direction from dark mode).
 
 ### Project Showcase Accents
 
@@ -183,11 +189,13 @@ Used exclusively for Work page slides and case study contexts. Never in site chr
 
 ### Named Rules
 
-**The Warm Tint Rule.** Every neutral in both themes carries chroma 0.005–0.02 toward the amber hue family (H 55–85). Pure `#000`, `#fff`, and `#808080` are forbidden. The warmth is the identity.
+**The Temperature Rule.** Dark mode is warm-tinted (hue 55–85, chroma 0.005–0.02). Light mode is cold-tinted (hue 250, chroma 0.002–0.005). This is deliberate polarity, not inconsistency. The amber accent is the connective thread. Pure `#000`, `#fff`, and `#808080` remain forbidden in both modes.
 
-**The Committed Amber Rule.** Amber is the only chromatic color in site chrome. It carries 30–60% of visual weight at hero moments, CTAs, and section transitions, then retreats to ≤10% in content-heavy sections. Its presence is deliberate; its absence is equally deliberate.
+**The Committed Amber Rule.** Amber is the only chromatic color in site chrome. It carries 30–60% of visual weight at hero moments, CTAs, and section transitions, then retreats to ≤10% in content-heavy sections. In light mode, amber deepens to burnt amber `oklch(0.62 0.2 55)` for authority against cool surfaces. Its presence is deliberate; its absence is equally deliberate.
 
-**The POV Wash Rule.** The philosophical section (POV) and services section use a committed amber-tinted environmental wash (`--pov-wash`) that shifts between `oklch(0.90 0.06 62)` in light mode and `oklch(0.09 0.025 60)` in dark mode. This is the one surface where amber becomes atmospheric rather than accent.
+**The POV Wash Rule.** The philosophical section (POV) uses `--pov-wash` that shifts between `oklch(0.95 0.003 250)` (cool architectural shadow) in light mode and `oklch(0.09 0.025 60)` (warm amber atmosphere) in dark mode.
+
+**The Dark-Locked Hero Rule.** The hero section is permanently dark in both themes. Hero tokens (`--hero-bg`, `--hero-fg`, etc.) are defined only in `:root` and `:root[data-theme="dark"]`, never in `[data-theme="light"]`. The hero inherits dark values regardless of theme state.
 
 ## 3. Typography
 

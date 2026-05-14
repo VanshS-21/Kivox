@@ -106,15 +106,6 @@ export function HomeHero() {
             }}
             className="inline-flex items-center gap-3 mb-12 lg:mb-14"
           >
-            <motion.div
-              animate={{ scale: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-              className="w-[7px] h-[7px] rounded-full"
-              style={{
-                background: "oklch(0.72 0.18 65)",
-                boxShadow: "0 0 8px oklch(0.72 0.18 65 / 0.65)",
-              }}
-            />
             <span
               className="text-[11px] font-normal tracking-[0.18em] uppercase"
               style={{ color: "oklch(0.58 0.008 65)", fontFamily: "var(--font-body)" }}
@@ -183,7 +174,7 @@ export function HomeHero() {
             className="max-w-[500px] mb-10 lg:mb-12"
             style={{
               fontSize: "14px",
-              fontWeight: 300,
+              fontWeight: 400,
               lineHeight: 1.7,
               color: "oklch(0.58 0.008 65)",
             }}

@@ -10,4 +10,6 @@ export const work = {
   intro:
     "Handcrafted digital experiences built by Kivox. Each one a demonstration of how we structure, design, and build for trust and action.",
   items: [hospital, cafe, hotel, school, fitness],
+  /** Curated subset for the homepage preview */
+  featured: [cafe, hotel, school],
 };

@@ -108,7 +108,7 @@ export function Navigation() {
         style={{
           backgroundColor: overHero
             ? isScrolled
-              ? "rgba(13,10,5,0.92)"
+              ? "var(--hero-bg-scroll)"
               : "transparent"
             : undefined,
         }}
@@ -132,7 +132,7 @@ export function Navigation() {
                 className={`font-sans font-bold text-lg tracking-tight transition-colors duration-500 group-hover:text-accent ${
                   pastHero ? "text-foreground" : ""
                 }`}
-                style={overHero ? { color: "#f0ece4" } : undefined}
+                style={overHero ? { color: "var(--hero-fg)" } : undefined}
               >
                 Kivox
               </motion.span>
@@ -152,7 +152,7 @@ export function Navigation() {
               {/* Theme toggle */}
               <ThemeToggle
                 className={pastHero ? "text-foreground" : ""}
-                style={overHero ? { color: "#f0ece4" } : undefined}
+                style={overHero ? { color: "var(--hero-fg)" } : undefined}
               />
 
               {/* Hamburger button */}
@@ -166,19 +166,19 @@ export function Navigation() {
                   animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   className="w-6 h-0.5 transition-colors duration-500"
-                  style={{ background: overHero ? "#f0ece4" : "var(--fg-primary)" }}
+                  style={{ background: overHero ? "var(--hero-fg)" : "var(--fg-primary)" }}
                 />
                 <motion.span
                   animate={isOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
                   transition={{ duration: 0.3 }}
                   className="w-6 h-0.5 origin-center transition-colors duration-500"
-                  style={{ background: overHero ? "#f0ece4" : "var(--fg-primary)" }}
+                  style={{ background: overHero ? "var(--hero-fg)" : "var(--fg-primary)" }}
                 />
                 <motion.span
                   animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   className="w-6 h-0.5 transition-colors duration-500"
-                  style={{ background: overHero ? "#f0ece4" : "var(--fg-primary)" }}
+                  style={{ background: overHero ? "var(--hero-fg)" : "var(--fg-primary)" }}
                 />
               </button>
             </div>
