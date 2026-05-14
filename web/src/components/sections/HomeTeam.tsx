@@ -64,7 +64,7 @@ export function HomeTeam() {
               className="group"
             >
               {/* Portrait — large */}
-              <div className="relative mb-5 lg:mb-6 overflow-hidden rounded-xl lg:rounded-2xl">
+              <div className="relative mb-5 lg:mb-6 overflow-hidden rounded-xl lg:rounded-2xl ring-0 group-hover:ring-1 ring-accent/20 transition-all duration-500">
                 <div className="aspect-[4/5] relative">
                   <Image
                     src={member.image}
@@ -75,7 +75,7 @@ export function HomeTeam() {
                   />
 
                   {/* Subtle warm overlay on hover */}
-                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.06] transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.08] transition-colors duration-500" />
                 </div>
               </div>
 
@@ -120,7 +120,7 @@ export function HomeTeam() {
               className="group"
             >
               {/* Portrait — compact */}
-              <div className="relative mb-4 overflow-hidden rounded-lg lg:rounded-xl">
+              <div className="relative mb-4 overflow-hidden rounded-lg lg:rounded-xl ring-0 group-hover:ring-1 ring-accent/20 transition-all duration-500">
                 <div className="aspect-[3/4] relative">
                   <Image
                     src={member.image}
@@ -129,7 +129,7 @@ export function HomeTeam() {
                     className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                     sizes="(max-width: 640px) 50vw, 25vw"
                   />
-                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.06] transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.08] transition-colors duration-500" />
                 </div>
               </div>
 
@@ -144,7 +144,7 @@ export function HomeTeam() {
                 >
                   {member.name}
                 </h3>
-                <span className="text-xs text-muted-foreground tracking-wide uppercase">
+                <span className="studio-eyebrow text-muted-foreground">
                   {member.role}
                 </span>
               </div>

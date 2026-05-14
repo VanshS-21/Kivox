@@ -77,7 +77,7 @@ export default function ContactPage() {
           className="mt-16 lg:mt-24"
         >
           <div className="h-px bg-border mb-10" />
-          <h2 className="text-sm font-semibold text-foreground tracking-tight mb-8">What happens next</h2>
+          <h2 className="text-base font-semibold text-foreground tracking-tight mb-8 font-body">What happens next</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
@@ -92,8 +92,8 @@ export default function ContactPage() {
                 transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.4 + idx * 0.1 }}
                 className="flex flex-col gap-3"
               >
-                <span className="text-accent font-mono text-xs tracking-wider">{item.step}</span>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+                <span className="studio-eyebrow text-accent studio-tabular">{item.step}</span>
+                <p className="text-base text-muted-foreground leading-relaxed">{item.text}</p>
               </motion.div>
             ))}
           </div>

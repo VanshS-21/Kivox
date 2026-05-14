@@ -77,7 +77,7 @@ export function Footer() {
               >
                 {brand.name}
               </div>
-              <p className="mt-4 text-muted-foreground max-w-md" style={{ fontSize: "clamp(0.95rem, 1vw + 0.4rem, 1.125rem)", lineHeight: 1.6 }}>
+              <p className="mt-4 font-body text-muted-foreground max-w-md" style={{ fontSize: "clamp(0.95rem, 1vw + 0.4rem, 1.125rem)", lineHeight: 1.6 }}>
                 {brand.tagline}
               </p>
             </motion.div>
@@ -96,7 +96,7 @@ export function Footer() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                      className="text-foreground hover:text-accent transition-colors text-base font-medium"
                     >
                       {link.label}
                     </Link>
@@ -109,7 +109,7 @@ export function Footer() {
                 <div className="studio-eyebrow text-subtle-foreground mb-6">Connect</div>
                 <div className="flex flex-col gap-3">
                   <a
-                    className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                    className="text-foreground hover:text-accent transition-colors text-base font-medium"
                     href={brand.socials.linkedin}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -117,7 +117,7 @@ export function Footer() {
                     LinkedIn ↗
                   </a>
                   <a
-                    className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                    className="text-foreground hover:text-accent transition-colors text-base font-medium"
                     href={brand.socials.instagram}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -125,7 +125,7 @@ export function Footer() {
                     Instagram ↗
                   </a>
                   <a
-                    className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                    className="text-foreground hover:text-accent transition-colors text-base font-medium"
                     href={brand.socials.github}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -141,14 +141,14 @@ export function Footer() {
                 <div className="flex flex-col gap-3">
                   <a
                     href={`mailto:${brand.contact.email}`}
-                    className="text-foreground hover:text-accent transition-colors text-sm font-medium"
+                    className="text-foreground hover:text-accent transition-colors text-base font-medium"
                   >
                     {brand.contact.email}
                   </a>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-base text-muted-foreground">
                     {brand.contact.phone}
                   </span>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-base text-muted-foreground">
                     {brand.contact.address}
                   </span>
                 </div>
@@ -159,7 +159,7 @@ export function Footer() {
       </div>
 
       {/* ── Colophon bar ── */}
-      <div className="border-t border-border-soft">
+      <div className="border-t border-accent/10">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-5">
           <motion.div
             initial={reduce ? false : { opacity: 0 }}
@@ -173,13 +173,13 @@ export function Footer() {
             </div>
             <div className="flex items-center gap-6">
               <Link
-                className="studio-caption text-muted-foreground hover:text-accent transition-colors"
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
                 href="/privacy"
               >
                 Privacy
               </Link>
               <Link
-                className="studio-caption text-muted-foreground hover:text-accent transition-colors"
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
                 href="/terms"
               >
                 Terms

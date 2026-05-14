@@ -36,7 +36,7 @@ function FormField({
   return (
     <div className={`flex flex-col gap-2 ${className || ""}`}>
       <div className="flex items-center justify-between gap-4">
-        <label htmlFor={id} className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
+        <label htmlFor={id} className="studio-eyebrow text-muted-foreground">
           {label}
         </label>
         {error && (
@@ -55,9 +55,9 @@ const inputStyle = [
   "w-full h-12 px-0 py-3",
   "bg-transparent",
   "border-0 border-b border-border",
-  "text-sm text-foreground",
+  "text-base text-foreground",
   "outline-none transition-colors duration-200",
-  "focus:border-accent",
+  "focus:border-accent focus:bg-accent-muted/50",
   "placeholder:text-muted-foreground/40",
   "disabled:opacity-50 disabled:pointer-events-none",
 ].join(" ");
@@ -67,9 +67,9 @@ const selectStyle = [
   "w-full h-12 px-0 py-3",
   "bg-transparent",
   "border-0 border-b border-border",
-  "text-sm text-foreground",
+  "text-base text-foreground",
   "outline-none transition-colors duration-200",
-  "focus:border-accent",
+  "focus:border-accent focus:bg-accent-muted/50",
   "disabled:opacity-50 disabled:pointer-events-none",
   "appearance-none cursor-pointer",
   // Custom dropdown arrow via background-image
@@ -308,13 +308,13 @@ export function InquiryForm() {
       {/* Status messages — aria-live for screen reader announcements */}
       <div aria-live="polite" aria-atomic="true">
         {status.type === "error" && (
-          <div className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-sm" role="alert">
+          <div className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-base" role="alert">
             {status.message} Please try again, or reach us at hello@kivox.in.
           </div>
         )}
 
         {status.type === "success" && (
-          <div className="rounded-xl border border-success/20 bg-success/5 text-success px-5 py-4 text-sm" role="status">
+          <div className="rounded-xl border border-success/20 bg-success/5 text-success px-5 py-4 text-base" role="status">
             Received. We&apos;ll reply within 24 hours with next steps.
           </div>
         )}

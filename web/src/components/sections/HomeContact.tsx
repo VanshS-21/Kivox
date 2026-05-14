@@ -237,10 +237,10 @@ export function HomeContact() {
               transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.4 }}
               className="mb-16"
             >
-              <span className="text-sm text-muted-foreground">or reach us directly at </span>
+              <span className="text-base text-muted-foreground">or reach us directly at </span>
               <a
                 href={`mailto:${brand.contact.email}`}
-                className="text-sm text-accent hover:underline underline-offset-4 transition-colors"
+                className="text-base text-accent hover:underline underline-offset-4 transition-colors"
               >
                 {brand.contact.email}
               </a>

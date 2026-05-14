@@ -198,11 +198,11 @@
   /* cold-tinted (hue 250). Amber accent bridges both.                          */
   /* -------------------------------------------------------------------------- */
 
-  /* Backgrounds — uniform cool white */
+  /* Backgrounds — cool white body, warm linen for alternating sections */
   --bg-primary: oklch(0.97 0.003 250);
   --bg-elevated: oklch(0.99 0.002 250);
   --bg-surface: oklch(0.97 0.003 250);
-  --bg-surface-alt: oklch(0.97 0.003 250);
+  --bg-surface-alt: oklch(0.955 0.008 70);
   
   /* Foregrounds — cool-tinted inks */
   --fg-primary: oklch(0.13 0.005 250);
@@ -216,10 +216,10 @@
   --accent-muted: oklch(0.62 0.2 55 / 0.08);
   --accent-ink: oklch(0.99 0.002 250);
 
-  /* Borders — cool-tinted */
-  --border: oklch(0.13 0.005 250 / 0.08);
-  --border-strong: oklch(0.13 0.005 250 / 0.14);
-  --border-soft: oklch(0.13 0.005 250 / 0.04);
+  /* Borders — cool-tinted, stronger for definition */
+  --border: oklch(0.13 0.005 250 / 0.10);
+  --border-strong: oklch(0.13 0.005 250 / 0.18);
+  --border-soft: oklch(0.13 0.005 250 / 0.05);
 
   /* Shadows — cool at rest, warm on interaction (single-window lighting) */
   --shadow-rest: 
@@ -240,7 +240,7 @@
   /* Section-specific */
   --pov-wash: oklch(0.95 0.003 250);
   --accent-rose: oklch(0.52 0.12 25);
-  --hero-glow-opacity: 0.04;
+  --hero-glow-opacity: 0.06;
   --work-bg-overlay: 1;
 
   /* Cursor glow — burnt amber in light mode */
@@ -302,7 +302,7 @@
   --bg-surface-alt: oklch(0.07 0.005 65);
   
   --fg-primary: oklch(0.98 0.01 85);
-  --fg-muted: oklch(0.98 0.01 85 / 0.6);
+  --fg-muted: oklch(0.98 0.015 80 / 0.6);
   --fg-subtle: oklch(0.98 0.01 85 / 0.35);
 
   --accent: oklch(0.72 0.18 65);
@@ -446,8 +446,8 @@ p { text-wrap: pretty; }
   }
 
   .studio-body-small {
-    font-size: 0.875rem;
-    line-height: 1.5;
+    font-size: 0.9375rem;
+    line-height: 1.55;
     letter-spacing: 0;
   }
 
@@ -495,6 +495,16 @@ p { text-wrap: pretty; }
     letter-spacing: 0;
     font-family: var(--font-serif);
     font-weight: 400;
+  }
+
+  /* Lead paragraph — intro text on legal/content pages */
+  .studio-lede {
+    font-size: clamp(1.0625rem, 0.5vw + 0.5rem, 1.25rem);
+    line-height: 1.65;
+    letter-spacing: 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    color: var(--fg-muted);
   }
 
   /* --- Labels (canonical definitions) ------------------------------------- */

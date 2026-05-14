@@ -14,6 +14,14 @@ export function HomeProcess() {
 
   const steps = home.process;
 
+  // Subtle hue gradient: warmer amber → amber-gold across phases
+  const stepColors = [
+    "oklch(0.72 0.18 55)",
+    "oklch(0.72 0.18 60)",
+    "oklch(0.72 0.18 65)",
+    "oklch(0.72 0.18 72)",
+  ];
+
   return (
     <Section className="relative py-[80px] lg:py-[120px] overflow-hidden bg-surface-alt">
       <Container className="relative z-10">
@@ -63,11 +71,12 @@ export function HomeProcess() {
                       scale: isActive ? 1 : 0.9,
                     }}
                     transition={{ duration: 0.4, ease: easeOutExpo }}
-                    className="block font-mono text-accent studio-tabular select-none"
+                    className="block font-mono studio-tabular select-none"
                     style={{
                       fontSize: "clamp(3rem, 4vw, 5rem)",
                       fontWeight: 700,
                       lineHeight: 1,
+                      color: isActive ? stepColors[idx] : undefined,
                     }}
                   >
                     {num}
@@ -77,10 +86,9 @@ export function HomeProcess() {
                   <motion.span
                     animate={{ opacity: isActive ? 1 : 0.3 }}
                     transition={{ duration: 0.3 }}
-                    className="block text-xs uppercase tracking-[0.12em] mt-3"
+                    className="block text-xs uppercase tracking-[0.12em] mt-3 font-mono"
                     style={{
                       color: isActive ? "var(--accent)" : "var(--fg-muted)",
-                      fontFamily: "var(--font-body)",
                       transition: "color 0.3s",
                     }}
                   >
@@ -131,14 +139,12 @@ export function HomeProcess() {
                   {steps[activeStep].title}
                 </h3>
                 <span
-                  className="block text-accent uppercase tracking-[0.15em] mb-3"
-                  style={{ fontSize: "10.5px", fontFamily: "var(--font-body)" }}
+                  className="block studio-eyebrow text-accent mb-3"
                 >
                   {steps[activeStep].subtitle}
                 </span>
                 <p
-                  className="text-muted-foreground"
-                  style={{ fontSize: "15px", lineHeight: 1.7 }}
+                  className="text-muted-foreground studio-body"
                 >
                   {steps[activeStep].description}
                 </p>
@@ -163,8 +169,8 @@ export function HomeProcess() {
                 style={idx === steps.length - 1 ? { borderBottom: "0.5px solid var(--border)" } : undefined}
               >
                 <span
-                  className="block font-serif text-accent text-sm mb-2 studio-tabular"
-                  style={{ fontStyle: "italic" }}
+                  className="block font-serif text-sm mb-2 studio-tabular"
+                  style={{ fontStyle: "italic", color: stepColors[idx] }}
                 >
                   {num}
                 </span>
@@ -179,14 +185,12 @@ export function HomeProcess() {
                   {step.title}
                 </h3>
                 <span
-                  className="block text-accent uppercase tracking-[0.15em] mb-2"
-                  style={{ fontSize: "10px", fontFamily: "var(--font-body)" }}
+                  className="block studio-eyebrow text-accent mb-2"
                 >
                   {step.subtitle}
                 </span>
                 <p
-                  className="text-muted-foreground"
-                  style={{ fontSize: "13px", lineHeight: 1.65 }}
+                  className="text-muted-foreground studio-body"
                 >
                   {step.description}
                 </p>

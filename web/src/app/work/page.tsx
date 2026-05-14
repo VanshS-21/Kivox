@@ -216,7 +216,7 @@ export default function WorkPage() {
                         <span className="studio-eyebrow block mb-3" style={{ color }}>
                           The Challenge
                         </span>
-                        <p className="text-[15px] leading-[1.75] text-muted-foreground">
+                        <p className="text-base leading-[1.75] text-muted-foreground">
                           {project.challenge}
                         </p>
                       </div>
@@ -226,7 +226,7 @@ export default function WorkPage() {
                         <span className="studio-eyebrow block mb-3" style={{ color }}>
                           Our Approach
                         </span>
-                        <p className="text-[15px] leading-[1.75] text-muted-foreground">
+                        <p className="text-base leading-[1.75] text-muted-foreground">
                           {project.approach}
                         </p>
                       </div>
@@ -283,7 +283,7 @@ export default function WorkPage() {
                       {project.uxDecisions.map((decision) => (
                         <span
                           key={decision}
-                          className="text-[13px] text-muted-foreground leading-relaxed"
+                          className="text-sm text-muted-foreground leading-relaxed"
                         >
                           {decision}
                         </span>
@@ -332,7 +332,7 @@ function DataBlock({
       </span>
       <ul className="space-y-2">
         {items.map((item) => (
-          <li key={item} className="flex items-start gap-2.5 text-[14px] text-muted-foreground leading-snug">
+          <li key={item} className="flex items-start gap-2.5 text-base text-muted-foreground leading-snug">
             <span
               className="mt-1.5 w-1 h-1 rounded-full shrink-0"
               style={{ background: color }}

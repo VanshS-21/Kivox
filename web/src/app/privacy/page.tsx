@@ -7,7 +7,7 @@ import { Prose } from "@/components/ui/Prose";
 
 export default function PrivacyPage() {
   return (
-    <div className="py-16 sm:py-20">
+    <div className="pt-28 sm:pt-32 pb-16 sm:pb-20">
       <Container size="narrow">
         <Eyebrow>Privacy</Eyebrow>
         <h1 className="mt-3 studio-h2 font-sans font-bold text-foreground">{legal.privacy.title}</h1>

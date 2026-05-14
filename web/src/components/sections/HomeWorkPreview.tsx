@@ -148,7 +148,7 @@ export function HomeWorkPreview() {
                       className="flex items-center gap-4"
                     >
                       <span
-                        className="text-xs font-mono font-bold tracking-[0.2em] uppercase"
+                        className="studio-eyebrow font-bold"
                         style={{ color: projectColors[project.id] || "var(--accent)" }}
                       >
                         Showcase · {project.title}
@@ -227,9 +227,15 @@ export function HomeWorkPreview() {
                   href={project.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute bottom-12 left-6 sm:left-auto right-auto sm:right-8 lg:right-16 xl:right-24 inline-flex items-center gap-4 text-sm font-semibold text-accent opacity-60 hover:opacity-100 transition-opacity duration-300 group"
+                  className="absolute bottom-12 left-6 sm:left-auto right-auto sm:right-8 lg:right-16 xl:right-24 inline-flex items-center gap-4 text-sm font-semibold opacity-60 hover:opacity-100 transition-opacity duration-300 group"
+                  style={{ color: projectColors[project.id] || "var(--accent)" }}
                 >
-                  <span className="px-5 py-2.5 bg-background/60 backdrop-blur-md rounded-full border border-accent/20 group-hover:border-accent/50 transition-colors duration-300">
+                  <span
+                    className="px-5 py-2.5 bg-background/60 backdrop-blur-md rounded-full border transition-colors duration-300"
+                    style={{
+                      borderColor: `color-mix(in oklch, ${projectColors[project.id] || "var(--accent)"} 20%, transparent)`,
+                    }}
+                  >
                     View Live Showcase →
                   </span>
                 </Link>

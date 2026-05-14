@@ -293,7 +293,7 @@ export function Navigation() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-base text-muted-foreground hover:text-foreground transition-colors"
                     >
                       LinkedIn ↗
                     </Link>
@@ -302,7 +302,7 @@ export function Navigation() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-base text-muted-foreground hover:text-foreground transition-colors"
                     >
                       Instagram ↗
                     </Link>

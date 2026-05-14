@@ -107,8 +107,8 @@ export function HomeHero() {
             className="inline-flex items-center gap-3 mb-12 lg:mb-14"
           >
             <span
-              className="text-[11px] font-normal tracking-[0.18em] uppercase"
-              style={{ color: "oklch(0.58 0.008 65)", fontFamily: "var(--font-body)" }}
+              className="text-[0.6875rem] font-normal tracking-[0.18em] uppercase"
+              style={{ color: "oklch(0.58 0.008 65)", fontFamily: "var(--font-mono)" }}
             >
               Kivox Studio
             </span>
@@ -173,7 +173,7 @@ export function HomeHero() {
             }}
             className="max-w-[500px] mb-10 lg:mb-12"
             style={{
-              fontSize: "14px",
+              fontSize: "1rem",
               fontWeight: 400,
               lineHeight: 1.7,
               color: "oklch(0.58 0.008 65)",
@@ -247,7 +247,7 @@ export function HomeHero() {
         transition={{ duration: 0.6, ease: easeOutExpo, delay: 1.4 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "oklch(0.45 0.008 65)" }}>
+        <span className="text-[0.625rem] tracking-[0.15em] uppercase font-mono" style={{ color: "oklch(0.45 0.008 65)" }}>
           Scroll
         </span>
         <motion.div

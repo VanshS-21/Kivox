@@ -170,7 +170,7 @@ export function HomeServices() {
                         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                         viewport={viewportOnce}
                         transition={{ duration: 0.4, ease: easeOutExpo, delay: idx * 0.06 + tagIdx * 0.04 }}
-                        className="px-4 py-2 border border-border rounded-full studio-tag text-muted-foreground transition-all duration-200 hover:border-accent/40 hover:text-accent"
+                        className="px-4 py-2 border border-border rounded-full studio-tag text-muted-foreground transition-all duration-200 hover:border-accent/40 hover:text-accent hover:bg-accent-muted"
                       >
                         {tag}
                       </motion.span>
