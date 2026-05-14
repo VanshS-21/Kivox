@@ -76,7 +76,7 @@ function MagneticCTA({
       onMouseEnter={() => setIsHovered(true)}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-accent-ink rounded-xl text-sm font-semibold tracking-tight transition-all duration-300"
+      className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-accent-ink rounded-full text-sm font-semibold tracking-tight transition-all duration-300"
       style={{
         transitionProperty: "background-color, color, border-color, scale",
         transform: isPressed ? "scale(0.96)" : undefined,
@@ -93,7 +93,7 @@ function MagneticCTA({
  */
 function useMagneticField(reduce: boolean | null) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [fieldOffset, setFieldOffset] = useState({ x: 0, y: 0 });
+  const contentRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const targetRef = useRef({ x: 0, y: 0 });
   const currentRef = useRef({ x: 0, y: 0 });
@@ -101,7 +101,8 @@ function useMagneticField(reduce: boolean | null) {
   useEffect(() => {
     if (reduce) return;
     const section = sectionRef.current;
-    if (!section) return;
+    const content = contentRef.current;
+    if (!section || !content) return;
 
     function handleMouseMove(e: MouseEvent) {
       if (!section) return;
@@ -123,8 +124,8 @@ function useMagneticField(reduce: boolean | null) {
       curr.x += (tgt.x - curr.x) * 0.08;
       curr.y += (tgt.y - curr.y) * 0.08;
 
-      if (Math.abs(curr.x - fieldOffset.x) > 0.1 || Math.abs(curr.y - fieldOffset.y) > 0.1) {
-        setFieldOffset({ x: curr.x, y: curr.y });
+      if (content) {
+        content.style.transform = `translate(${curr.x}px, ${curr.y}px)`;
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -141,12 +142,12 @@ function useMagneticField(reduce: boolean | null) {
     };
   }, [reduce]);
 
-  return { sectionRef, fieldOffset };
+  return { sectionRef, contentRef };
 }
 
 export function HomeContact() {
   const reduce = useReducedMotion();
-  const { sectionRef, fieldOffset } = useMagneticField(reduce);
+  const { sectionRef, contentRef } = useMagneticField(reduce);
 
   return (
     <div ref={sectionRef}>
@@ -158,7 +159,7 @@ export function HomeContact() {
             rotate: [0, 40, 0],
           }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[15%] left-[15%] w-[600px] h-[600px] rounded-full blur-[180px] pointer-events-none"
+          className="absolute top-[15%] left-[15%] w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] rounded-full blur-[80px] lg:blur-[180px] pointer-events-none"
           style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.7)' }}
         />
         <motion.div
@@ -167,16 +168,16 @@ export function HomeContact() {
             rotate: [0, -30, 0],
           }}
           transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[20%] right-[15%] w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none"
+          className="absolute bottom-[20%] right-[15%] w-[250px] lg:w-[500px] h-[250px] lg:h-[500px] rounded-full blur-[80px] lg:blur-[160px] pointer-events-none"
           style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.4)' }}
         />
 
         <Container className="relative z-10">
           {/* Content with magnetic drift */}
           <div
+            ref={contentRef}
             className="max-w-4xl mx-auto text-center"
             style={{
-              transform: reduce ? undefined : `translate(${fieldOffset.x}px, ${fieldOffset.y}px)`,
               transition: "transform 0.1s linear",
             }}
           >

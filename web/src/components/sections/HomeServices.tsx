@@ -72,9 +72,20 @@ export function HomeServices() {
                   idx < home.services.length - 1
                     ? "border-b border-border"
                     : ""
-                }`}
+                } outline-none`}
+                tabIndex={0}
+                role="button"
+                aria-expanded={isExpanded}
                 onMouseEnter={() => setExpandedIdx(idx)}
                 onMouseLeave={() => setExpandedIdx(null)}
+                onFocus={() => setExpandedIdx(idx)}
+                onBlur={() => setExpandedIdx(null)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setExpandedIdx(isExpanded ? null : idx);
+                  }
+                }}
                 style={{
                   transformStyle: "preserve-3d",
                   transformOrigin: "center center",
@@ -96,7 +107,7 @@ export function HomeServices() {
                   className="py-10 lg:py-14"
                 >
                   {/* Service row */}
-                  <div className="flex items-start gap-6 lg:gap-10">
+                  <div className="flex items-start gap-4 sm:gap-6 lg:gap-10">
                     {/* Arrow icon button */}
                     <div className="relative shrink-0 mt-1">
                       {/* Pulse ring — expands and fades on hover */}
@@ -120,7 +131,7 @@ export function HomeServices() {
                           rotate: isExpanded ? 45 : 0,
                         }}
                         transition={{ duration: 0.4, ease: easeOutExpo }}
-                        className="w-14 h-14 lg:w-16 lg:h-16 rounded-lg bg-accent flex items-center justify-center relative z-10 transition-shadow duration-300"
+                        className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg bg-accent flex items-center justify-center relative z-10 transition-shadow duration-300"
                         style={{
                           boxShadow: isExpanded
                             ? '0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15)'

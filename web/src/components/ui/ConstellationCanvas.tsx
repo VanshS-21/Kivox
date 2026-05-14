@@ -300,6 +300,8 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    let isVisible = true;
+
     // Mouse tracking relative to canvas
     function handleMouseMove(e: MouseEvent) {
       if (!canvas) return;
@@ -341,7 +343,7 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
     const p = palette;
 
     function frame() {
-      if (!ctx || !canvas) return;
+      if (!ctx || !canvas || !isVisible) return;
       const w = canvas.width;
       const h = canvas.height;
       const cursor = cursorRef.current;
@@ -360,11 +362,26 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
       animationRef.current = requestAnimationFrame(frame);
     }
 
+    // Pause when off-screen, resume when visible
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          animationRef.current = requestAnimationFrame(frame);
+        } else {
+          cancelAnimationFrame(animationRef.current);
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
+
     frame();
 
     return () => {
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
+      observer.disconnect();
       if (parent) {
         parent.removeEventListener("mousemove", handleMouseMove);
         parent.removeEventListener("mouseleave", handleMouseLeave);

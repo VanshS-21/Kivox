@@ -31,7 +31,11 @@ export function applyThemePreference(v: ThemePreference): void {
   const root = document.documentElement;
 
   if (v === "system") {
-    delete root.dataset.theme;
+    // Resolve to explicit attribute — CSS has no @media fallback
+    const resolved = typeof window !== "undefined"
+      && window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark" : "light";
+    root.dataset.theme = resolved;
     return;
   }
 

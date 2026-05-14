@@ -78,6 +78,16 @@ export function Navigation() {
     };
   }, [isOpen]);
 
+  // Dismiss menu with Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setIsOpen(false);
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
   // Nav color states:
   //   overHero = still scrolling over the dark hero section (home page only)
   //   pastHero = scrolled past the hero into the page content
@@ -150,6 +160,7 @@ export function Navigation() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-accent/10 transition-colors"
                 aria-label="Toggle menu"
+                aria-expanded={isOpen}
               >
                 <motion.span
                   animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}

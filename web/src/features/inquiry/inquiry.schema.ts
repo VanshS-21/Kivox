@@ -30,10 +30,10 @@ export const timelineOptions = [
 export const inquirySchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
   email: z.string().trim().email("Enter a valid email"),
-  phone: z.string().trim().min(6, "Enter a valid phone number"),
+  phone: z.string().trim().min(6, "Please enter a valid phone number"),
   businessType: z.enum(businessTypeOptions),
   whatYouNeed: z.enum(whatYouNeedOptions),
-  primaryGoal: z.string().trim().min(4, "Primary goal is required"),
+  primaryGoal: z.string().trim().min(4, "Tell us what should improve when this goes live"),
   currentUrl: z
     .string()
     .trim()

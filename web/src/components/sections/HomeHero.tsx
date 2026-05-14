@@ -65,7 +65,7 @@ export function HomeHero() {
   return (
     <Section
       className="min-h-screen flex items-center relative overflow-hidden pt-20 pb-32 lg:pb-44"
-      style={{ background: "#0d0a05" }}
+      style={{ background: "oklch(0.05 0.008 65)" }}
     >
       {/* Constellation canvas — always dark */}
       <ConstellationCanvas variant="dark" />
@@ -111,13 +111,13 @@ export function HomeHero() {
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
               className="w-[7px] h-[7px] rounded-full"
               style={{
-                background: "#e07b20",
-                boxShadow: "0 0 8px rgba(224,123,32,0.65)",
+                background: "oklch(0.72 0.18 65)",
+                boxShadow: "0 0 8px oklch(0.72 0.18 65 / 0.65)",
               }}
             />
             <span
               className="text-[11px] font-normal tracking-[0.18em] uppercase"
-              style={{ color: "#888", fontFamily: "var(--font-body)" }}
+              style={{ color: "oklch(0.58 0.008 65)", fontFamily: "var(--font-body)" }}
             >
               Kivox Studio
             </span>
@@ -143,7 +143,7 @@ export function HomeHero() {
             style={{
               fontSize: "clamp(48px, 7vw, 88px)",
               lineHeight: 1.0,
-              color: "#f0ece4",
+              color: "oklch(0.95 0.012 72)",
               letterSpacing: "-0.02em",
             }}
           >
@@ -163,7 +163,7 @@ export function HomeHero() {
               animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.7, ease: easeOutQuint, delay: 0.65 }}
               className="inline-block font-serif"
-              style={{ fontStyle: "italic", fontWeight: 300, color: "#e07b20" }}
+              style={{ fontStyle: "italic", fontWeight: 300, color: "oklch(0.72 0.18 65)" }}
             >
               trust online.
             </motion.span>
@@ -185,7 +185,7 @@ export function HomeHero() {
               fontSize: "14px",
               fontWeight: 300,
               lineHeight: 1.7,
-              color: "#888",
+              color: "oklch(0.58 0.008 65)",
             }}
           >
             {home.hero.subhead}
@@ -202,7 +202,7 @@ export function HomeHero() {
                 },
               },
             }}
-            className="flex flex-col sm:flex-row items-start gap-4"
+            className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4"
           >
             <motion.div
               variants={{
@@ -218,7 +218,7 @@ export function HomeHero() {
               <ButtonLink
                 href="/contact"
                 variant="primary"
-                className="text-[13px] px-7 py-[13px] font-medium tracking-[0.02em] rounded-full"
+                className="w-full sm:w-auto text-[13px] px-7 py-[13px] font-medium tracking-[0.02em] rounded-full"
               >
                 {home.hero.ctas.primary}
                 <span className="ml-2 inline-block transition-transform group-hover:translate-x-0.5">→</span>
@@ -239,8 +239,8 @@ export function HomeHero() {
               <ButtonLink
                 href="/work"
                 variant="secondary"
-                className="text-[13px] px-6 py-[13px] font-normal tracking-[0.02em] rounded-full"
-                style={{ color: "#aaa", borderColor: "#333" }}
+                className="w-full sm:w-auto text-[13px] px-6 py-[13px] font-normal tracking-[0.02em] rounded-full"
+                style={{ color: "oklch(0.72 0.008 65)", borderColor: "oklch(0.32 0.008 65)" }}
               >
                 {home.hero.ctas.secondary}
               </ButtonLink>
@@ -256,14 +256,14 @@ export function HomeHero() {
         transition={{ duration: 0.6, ease: easeOutExpo, delay: 1.4 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "#666" }}>
+        <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "oklch(0.45 0.008 65)" }}>
           Scroll
         </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="w-px h-6"
-          style={{ background: "rgba(224,123,32,0.4)" }}
+          style={{ background: "oklch(0.72 0.18 65 / 0.4)" }}
         />
       </motion.div>
     </Section>

@@ -50,6 +50,10 @@
   --hero-glow-opacity: 0.08;
   --work-bg-overlay: 0.85;
 
+  /* Semantic feedback — warm-tinted, not generic red/green */
+  --error: oklch(0.52 0.18 25);            /* Warm brick red */
+  --success: oklch(0.52 0.14 155);         /* Warm olive green */
+
   /* Hero constellation defaults (light) */
   --hero-bg: oklch(0.95 0.015 72);
   --hero-fg: oklch(0.16 0.01 55);
@@ -114,6 +118,10 @@
   --color-accent-ink: var(--accent-ink);
   --color-accent-rose: var(--accent-rose);
 
+  /* semantic feedback */
+  --color-error: var(--error);
+  --color-success: var(--success);
+
   /* project accents */
   --color-project-hospital: var(--project-hospital);
   --color-project-hotel: var(--project-hotel);
@@ -162,50 +170,9 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-
-    /* Dark mode (primary) — warm-tinted neutrals */
-    --bg-primary: oklch(0.05 0.005 65);       /* Warm deep black */
-    --bg-elevated: oklch(0.10 0.005 65);      /* Warm card background */
-    --bg-surface: oklch(0.13 0.006 65);       /* Warm elevated surface */
-    --bg-surface-alt: oklch(0.07 0.005 65);   /* Warm alternate surface */
-    
-    --fg-primary: oklch(0.98 0.01 85);        /* Warm white */
-    --fg-muted: oklch(0.98 0.01 85 / 0.6);    /* Muted text */
-    --fg-subtle: oklch(0.98 0.01 85 / 0.35);  /* Very subtle text */
-
-    --accent: oklch(0.72 0.18 65);            /* Warm Amber */
-    --accent-hover: oklch(0.78 0.18 65);
-    --accent-glow: oklch(0.72 0.18 65 / 0.33);
-    --accent-muted: oklch(0.72 0.18 65 / 0.12);
-    --accent-ink: oklch(0.99 0.008 80);       /* White/cream on amber */
-
-    --border: oklch(0.85 0.008 65 / 0.08);
-    --border-strong: oklch(0.85 0.008 65 / 0.12);
-    --border-soft: oklch(0.85 0.008 65 / 0.05);
-
-    --shadow-rest: 
-      0 1px 0 0 oklch(1 0 0 / 0.08),
-      0 20px 60px -30px oklch(0 0 0 / 0.4);
-    --shadow-hover:
-      0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
-      0 20px 60px oklch(0.72 0.18 65 / 0.06);
-    --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
-    --shadow-strong:
-      0 1px 0 0 oklch(1 0 0 / 0.12),
-      0 40px 90px -60px oklch(0 0 0 / 0.7);
-
-    --pov-wash: oklch(0.09 0.025 60);         /* Dark: deeper, more committed amber-black */
-    --accent-rose: oklch(0.55 0.12 35);        /* Darker rose for depth */
-    --work-bg-overlay: 0.78;
-    --hero-glow-opacity: 0.16;
-    --shadow-hover-strong:
-      0 1px 0 0 oklch(0.72 0.18 65 / 0.25),
-      0 24px 80px oklch(0.72 0.18 65 / 0.12);
-  }
-}
+/* @media (prefers-color-scheme: dark) block REMOVED.
+   Theme is now controlled exclusively via data-theme attribute.
+   See themeInitScript.ts for system-preference resolution. */
 
 :root[data-theme="light"] {
   color-scheme: light;
@@ -305,13 +272,22 @@
   --studio-noise-opacity: 0.03;
   --pov-wash: oklch(0.09 0.025 60);
 
+  /* Semantic feedback — dark mode */
+  --error: oklch(0.68 0.16 25);            /* Warm coral on dark */
+  --success: oklch(0.68 0.14 155);         /* Warm sage on dark */
+
   /* Hero constellation — dark variant */
-  --hero-bg: #0d0a05;
-  --hero-fg: #f0ece4;
-  --hero-fg-muted: #888;
-  --hero-fg-subtle: #666;
+  --hero-bg: oklch(0.05 0.008 65);
+  --hero-fg: oklch(0.95 0.012 72);
+  --hero-fg-muted: oklch(0.58 0.008 65);
+  --hero-fg-subtle: oklch(0.45 0.008 65);
   --hero-noise-opacity: 0.35;
   --work-bg-overlay: 0.78;
+  --accent-rose: oklch(0.55 0.12 35);        /* Darker rose for depth */
+  --hero-glow-opacity: 0.16;
+  --shadow-hover-strong:
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.25),
+    0 24px 80px oklch(0.72 0.18 65 / 0.12);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -330,9 +306,7 @@ body {
 }
 
 /* Dark-mode body text compensation: bump line-height for light-on-dark */
-@media (prefers-color-scheme: dark) {
-  body { line-height: 1.65; }
-}
+/* Dark body line-height: handled by [data-theme] only */
 :root[data-theme="dark"] body { line-height: 1.65; }
 
 /* Balanced headings, pretty prose */
@@ -757,6 +731,16 @@ html {
     inset 3px 0 8px oklch(0.03 0.01 55 / 0.2),
     inset -3px 0 8px oklch(0.03 0.01 55 / 0.2),
     inset 0 0 0 1px oklch(0.3 0.02 60 / 0.15);
+
+  /* Edge-fade mask: image dissolves into the dark frame at all edges */
+  -webkit-mask-image:
+    linear-gradient(to right,  transparent 0%, black 27%, black 70%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 27%, black 70%, transparent 100%);
+  -webkit-mask-composite: destination-in;
+  mask-image:
+    linear-gradient(to right,  transparent 0%, black 27%, black 70%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 27%, black 70%, transparent 100%);
+  mask-composite: intersect;
 }
 
 @media (min-width: 1024px) {

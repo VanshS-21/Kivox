@@ -14,10 +14,9 @@ export function DevThemeOverride() {
 
       if (theme === "light" || theme === "dark") {
         root.dataset.theme = theme;
-        return;
       }
-
-      delete root.dataset.theme;
+      // If no ?theme param, leave data-theme as-is.
+      // The init script and ThemeToggle handle normal resolution.
     }
 
     apply();

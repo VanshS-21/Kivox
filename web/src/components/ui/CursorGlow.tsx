@@ -48,6 +48,18 @@ export function CursorGlow() {
     function handleMouseMove(e: MouseEvent) {
       posRef.current = { x: e.clientX, y: e.clientY };
 
+      /* Hide glow inside carousel frames — clashes with tunnel canvas */
+      const target = e.target as HTMLElement;
+      const inFrame = target.closest?.(".carousel-frame");
+      if (inFrame) {
+        if (visibleRef.current) {
+          glow!.style.opacity = "0";
+          trail!.style.opacity = "0";
+          visibleRef.current = false;
+        }
+        return;
+      }
+
       if (!visibleRef.current) {
         visibleRef.current = true;
         glow!.style.opacity = "1";

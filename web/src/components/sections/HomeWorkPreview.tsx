@@ -10,7 +10,7 @@ import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/moti
 
 export function HomeWorkPreview() {
   const reduce = useReducedMotion();
-  const featuredWork = work.items.slice(0, 3);
+  const featuredWork = work.items;
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -126,7 +126,7 @@ export function HomeWorkPreview() {
                 >
                   <Image
                     src={project.image}
-                    alt=""
+                    alt={`${project.title} project showcase`}
                     fill
                     className="object-cover"
                     sizes="100vw"
@@ -148,7 +148,7 @@ export function HomeWorkPreview() {
               {/* ── Content layer ── */}
               <div className="relative z-10 w-full h-full flex flex-col justify-center">
                 {/* Main content */}
-                <div className="relative max-w-[1600px] w-full mx-auto px-8 lg:px-16 xl:px-24">
+                <div className="relative max-w-[1600px] w-full mx-auto px-6 sm:px-8 lg:px-16 xl:px-24">
                   <motion.div
                     initial={reduce ? false : "hidden"}
                     whileInView={reduce ? undefined : "show"}
@@ -250,7 +250,7 @@ export function HomeWorkPreview() {
                   href={project.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute bottom-12 right-8 lg:right-16 xl:right-24 inline-flex items-center gap-4 text-sm font-semibold text-accent opacity-60 hover:opacity-100 transition-opacity duration-300 group"
+                  className="absolute bottom-12 left-6 sm:left-auto right-auto sm:right-8 lg:right-16 xl:right-24 inline-flex items-center gap-4 text-sm font-semibold text-accent opacity-60 hover:opacity-100 transition-opacity duration-300 group"
                 >
                   <span className="px-5 py-2.5 bg-background/60 backdrop-blur-md rounded-full border border-accent/20 group-hover:border-accent/50 transition-colors duration-300">
                     View Live Showcase →
@@ -258,7 +258,7 @@ export function HomeWorkPreview() {
                 </Link>
 
                 {/* Year badge — top right */}
-                <div className="absolute top-28 right-8 lg:right-16 xl:right-24 text-xs font-mono tracking-[0.2em] text-subtle-foreground">
+                <div className="absolute top-28 right-8 lg:right-16 xl:right-24 text-xs font-mono tracking-[0.2em] text-subtle-foreground hidden sm:block">
                   2025
                 </div>
               </div>

@@ -10,7 +10,7 @@ export default function PrivacyPage() {
     <div className="py-16 sm:py-20">
       <Container size="narrow">
         <Eyebrow>Privacy</Eyebrow>
-        <h1 className="mt-3 studio-h1 font-sans font-bold text-foreground">{legal.privacy.title}</h1>
+        <h1 className="mt-3 studio-h2 font-sans font-bold text-foreground">{legal.privacy.title}</h1>
         <p className="mt-4 studio-lede">{legal.privacy.intro}</p>
 
         <Prose className="mt-10">

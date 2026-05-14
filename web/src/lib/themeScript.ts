@@ -1,5 +1,6 @@
 export function themeInitScript(): string {
   // Keep as a single self-invoking function string to run before hydration.
+  // IMPORTANT: data-theme is ALWAYS set — the CSS has no @media fallback.
   return `
 (function () {
   try {
@@ -9,11 +10,10 @@ export function themeInitScript(): string {
     if (v === "light" || v === "dark") {
       root.dataset.theme = v;
     } else {
-      delete root.dataset.theme;
+      root.dataset.theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
   } catch (e) {
-    // ignore
+    document.documentElement.dataset.theme = "dark";
   }
 })();`.trim();
 }
-

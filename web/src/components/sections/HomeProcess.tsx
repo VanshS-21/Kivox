@@ -81,8 +81,18 @@ export function HomeProcess() {
 
             {home.process.map((step, idx) => (
               <motion.div key={idx} initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: idx * 0.08 }}
-                className={`group flex items-start gap-6 py-6 lg:py-8 cursor-pointer relative ${idx < home.process.length - 1 ? "border-b border-border-soft" : ""}`}
+                className={`group flex items-start gap-6 py-6 lg:py-8 cursor-pointer relative outline-none ${idx < home.process.length - 1 ? "border-b border-border-soft" : ""}`}
+                tabIndex={0}
+                role="button"
+                aria-expanded={hoveredStep === idx}
                 onMouseEnter={() => setHoveredStep(idx)} onMouseLeave={() => setHoveredStep(-1)}
+                onFocus={() => setHoveredStep(idx)} onBlur={() => setHoveredStep(-1)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setHoveredStep(hoveredStep === idx ? -1 : idx);
+                  }
+                }}
               >
                 <motion.span
                   animate={{ scale: hoveredStep === idx ? 1.15 : 1, opacity: hoveredStep === idx ? 1 : 0.5 }}

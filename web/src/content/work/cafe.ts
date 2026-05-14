@@ -2,7 +2,7 @@ export const cafe = {
   id: "cafe",
   title: "Cafe Website",
   label: "Hospitality · Local Discovery",
-  image: "/work/cafe.png",
+  image: "/work/cafe copy.png",
   images: [
     "/work/mockups/Cafe-1.png",
     "/work/mockups/Cafe-2.png",

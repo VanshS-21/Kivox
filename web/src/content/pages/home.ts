@@ -2,7 +2,7 @@ export const home = {
   hero: {
     headline: "Make your business easier to trust online.",
     subhead:
-      "Kivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast — and take the next step with confidence.",
+      "Kivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.",
     ctas: {
       primary: "Start a project",
       secondary: "Explore our showcase",
@@ -27,7 +27,7 @@ export const home = {
       id: "seo-ai-search-readiness",
       title: "SEO & AI Search Readiness",
       summary:
-        "Technical and content foundations that help you show up for real searches — and be understandable to AI answers.",
+        "Technical and content foundations that help you show up for real searches, and be understandable to AI answers.",
       tags: ["TECHNICAL SEO", "CONTENT STRATEGY", "SCHEMA", "AI READINESS"],
     },
     {
@@ -41,21 +41,21 @@ export const home = {
       id: "backend-enabled-systems",
       title: "Backend-Enabled Systems",
       summary:
-        "Portals, dashboards, catalogs, inquiry workflows, and internal tools — built only when the business needs them.",
+        "Portals, dashboards, catalogs, inquiry workflows, and internal tools. Built only when the business needs them.",
       tags: ["DASHBOARDS", "PORTALS", "WORKFLOWS", "API INTEGRATION"],
     },
     {
       id: "android-apps",
       title: "Android Apps",
       summary:
-        "When mobile access is truly necessary — not as a default upsell.",
+        "When mobile access is truly necessary (not as a default upsell).",
       tags: ["NATIVE APPS", "CROSS-PLATFORM", "APP STORE OPTIMIZATION"],
     },
   ],
   workPreview: {
     label: "Selected Work",
     summary:
-      "Handcrafted digital experiences built by Kivox — each one a demonstration of how we structure, design, and build for trust and action.",
+      "Handcrafted digital experiences built by Kivox. Each one a demonstration of how we structure, design, and build for trust and action.",
   },
   process: [
     {
@@ -91,15 +91,15 @@ export const home = {
   ],
   philosophy: {
     quote:
-      "We believe great digital platforms are not built — they are crafted. Every pixel, every interaction, every line of code is a statement of intent.",
+      "We believe great digital platforms are not built; they are crafted. Every pixel, every interaction, every line of code is a statement of intent.",
     body:
-      "Kivox exists to raise the standard of digital craft. We partner with businesses that understand the value of exceptional digital experiences — and refuse to settle for less.",
+      "Kivox exists to raise the standard of digital craft. We partner with businesses that understand the value of exceptional digital experiences, and refuse to settle for less.",
   },
   pov: {
     title: "Trust is a design system.",
     bullets: [
-      "Customers decide in seconds—structure beats decoration.",
-      "Proof beats claims—show your work, show the next step.",
+      "Customers decide in seconds. Structure beats decoration.",
+      "Proof beats claims. Show your work, show the next step.",
       "Performance is part of credibility.",
       "Good motion is restraint, not fireworks.",
     ],

@@ -124,7 +124,7 @@ export function HomePOV() {
       {/* Committed amber glow — with parallax */}
       <motion.div
         style={{ y: reduce ? 0 : glowY1 }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full blur-[200px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[1100px] h-[600px] lg:h-[1100px] rounded-full blur-[80px] lg:blur-[200px] pointer-events-none"
         data-glow="primary"
       >
         <div
@@ -136,7 +136,7 @@ export function HomePOV() {
       {/* Secondary rose depth — with parallax */}
       <motion.div
         style={{ y: reduce ? 0 : glowY2 }}
-        className="absolute top-[30%] right-[15%] w-[600px] h-[600px] rounded-full blur-[160px] pointer-events-none"
+        className="absolute top-[30%] right-[15%] w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] rounded-full blur-[80px] lg:blur-[160px] pointer-events-none"
         data-glow="secondary"
       >
         <div

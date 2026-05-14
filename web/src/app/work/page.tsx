@@ -190,7 +190,7 @@ export default function WorkPage() {
                 >
                   <ProjectCarousel
                     images={project.images || [project.image]}
-                    alt={`${project.title} — Kivox showcase`}
+                    alt={`${project.title}: Kivox showcase`}
                     accentColor={color}
                     priority={idx === 0}
                   />

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
-import { ConstellationCanvas } from "@/components/ui/ConstellationCanvas";
+import { TunnelCanvas } from "@/components/ui/TunnelCanvas";
 
 interface ProjectCarouselProps {
   images: string[];
@@ -62,9 +62,9 @@ export function ProjectCarousel({
       {/* ── Wall-frame: dark matte container with depth ── */}
       <div className="carousel-frame relative rounded-xl lg:rounded-2xl overflow-hidden">
 
-        {/* Constellation canvas — same as hero but lower intensity */}
-        <div className="absolute inset-0 z-[3] opacity-85 pointer-events-auto">
-          <ConstellationCanvas variant="dark" />
+        {/* Tunnel perspective lines — converge toward the image */}
+        <div className="absolute inset-0 z-[3]">
+          <TunnelCanvas />
         </div>
 
         {/* Frame noise texture */}
@@ -101,7 +101,7 @@ export function ProjectCarousel({
               >
                 <Image
                   src={src}
-                  alt={`${alt} — slide ${idx + 1}`}
+                  alt={`${alt}, slide ${idx + 1}`}
                   fill
                   className="carousel-image object-cover"
                   sizes="(max-width: 768px) 100vw, 85vw"
@@ -119,7 +119,7 @@ export function ProjectCarousel({
               onClick={prev}
               disabled={active === 0}
               aria-label="Previous image"
-              className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm text-white/80 flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 disabled:opacity-0 hover:bg-white/20 cursor-pointer"
+              className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[oklch(0.98_0.01_85/0.1)] backdrop-blur-sm text-[oklch(0.98_0.01_85/0.8)] flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 disabled:opacity-0 hover:bg-[oklch(0.98_0.01_85/0.2)] cursor-pointer"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="15 18 9 12 15 6" />
@@ -129,7 +129,7 @@ export function ProjectCarousel({
               onClick={next}
               disabled={active === total - 1}
               aria-label="Next image"
-              className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm text-white/80 flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 disabled:opacity-0 hover:bg-white/20 cursor-pointer"
+              className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-[oklch(0.98_0.01_85/0.1)] backdrop-blur-sm text-[oklch(0.98_0.01_85/0.8)] flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 disabled:opacity-0 hover:bg-[oklch(0.98_0.01_85/0.2)] cursor-pointer"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />
@@ -141,9 +141,9 @@ export function ProjectCarousel({
         {/* ── Slide counter (inside frame, bottom-right) ── */}
         {total > 1 && (
           <div className="absolute bottom-4 lg:bottom-6 right-5 lg:right-7 z-10">
-            <span className="text-white/40 text-xs font-mono tracking-widest">
+            <span className="text-[oklch(0.98_0.01_85/0.4)] text-xs font-mono tracking-widest">
               {String(active + 1).padStart(2, "0")}
-              <span className="text-white/20 mx-1">/</span>
+              <span className="text-[oklch(0.98_0.01_85/0.2)] mx-1">/</span>
               {String(total).padStart(2, "0")}
             </span>
           </div>

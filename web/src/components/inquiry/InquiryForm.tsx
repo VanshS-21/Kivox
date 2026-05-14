@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/Button";
@@ -24,20 +24,25 @@ function FormField({
   error,
   children,
   className,
+  id,
 }: {
   label: string;
   error?: string;
   children: React.ReactNode;
   className?: string;
+  id: string;
 }) {
+  const errorId = `${id}-error`;
   return (
     <div className={`flex flex-col gap-2 ${className || ""}`}>
       <div className="flex items-center justify-between gap-4">
-        <label className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
+        <label htmlFor={id} className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
           {label}
         </label>
         {error && (
-          <span className="text-xs text-red-500 dark:text-red-400">{error}</span>
+          <span id={errorId} className="text-xs text-error" role="alert">
+            {error}
+          </span>
         )}
       </div>
       {children}
@@ -83,6 +88,10 @@ export function InquiryForm() {
     { type: "idle" } | { type: "submitting" } | { type: "success" } | { type: "error"; message: string }
   >({ type: "idle" });
 
+  const uid = useId();
+  const fieldId = (name: string) => `${uid}-${name}`;
+  const errorId = (name: string) => `${uid}-${name}-error`;
+
   const form = useForm<Inquiry>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
@@ -98,6 +107,8 @@ export function InquiryForm() {
     },
     mode: "onTouched",
   });
+
+  const errors = form.formState.errors;
 
   async function onSubmit(values: Inquiry) {
     setStatus({ type: "submitting" });
@@ -118,7 +129,7 @@ export function InquiryForm() {
   const isDisabled = status.type === "submitting" || status.type === "success";
 
   return (
-    <form className="flex flex-col gap-10" onSubmit={form.handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-10" onSubmit={form.handleSubmit(onSubmit)} noValidate>
       {/* Honeypot */}
       <input
         autoComplete="off"
@@ -127,26 +138,35 @@ export function InquiryForm() {
         onChange={(e) => setHp(e.target.value)}
         tabIndex={-1}
         value={hp}
+        aria-hidden="true"
       />
 
       {/* Row 1: Name + Email */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
-        <FormField label="Name" error={form.formState.errors.name?.message}>
+        <FormField label="Name" error={errors.name?.message} id={fieldId("name")}>
           <input
+            id={fieldId("name")}
             autoComplete="name"
             className={inputStyle}
             disabled={isDisabled}
             placeholder="Your full name"
+            maxLength={100}
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? errorId("name") : undefined}
             {...form.register("name")}
           />
         </FormField>
-        <FormField label="Email" error={form.formState.errors.email?.message}>
+        <FormField label="Email" error={errors.email?.message} id={fieldId("email")}>
           <input
+            id={fieldId("email")}
             autoComplete="email"
             className={inputStyle}
             disabled={isDisabled}
             type="email"
             placeholder="you@company.com"
+            maxLength={254}
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? errorId("email") : undefined}
             {...form.register("email")}
           />
         </FormField>
@@ -154,21 +174,28 @@ export function InquiryForm() {
 
       {/* Row 2: Phone + Business type */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
-        <FormField label="Phone" error={form.formState.errors.phone?.message}>
+        <FormField label="Phone" error={errors.phone?.message} id={fieldId("phone")}>
           <input
+            id={fieldId("phone")}
             autoComplete="tel"
             className={inputStyle}
             disabled={isDisabled}
             type="tel"
             placeholder="+91 ..."
+            maxLength={20}
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? errorId("phone") : undefined}
             {...form.register("phone")}
           />
         </FormField>
-        <FormField label="Business type" error={form.formState.errors.businessType?.message}>
+        <FormField label="Business type" error={errors.businessType?.message} id={fieldId("businessType")}>
           <select
+            id={fieldId("businessType")}
             className={selectStyle}
             style={selectArrow}
             disabled={isDisabled}
+            aria-invalid={!!errors.businessType}
+            aria-describedby={errors.businessType ? errorId("businessType") : undefined}
             {...form.register("businessType")}
           >
             {businessTypeOptions.map((v) => (
@@ -182,11 +209,14 @@ export function InquiryForm() {
 
       {/* Row 3: What you need + Timeline */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
-        <FormField label="What you need" error={form.formState.errors.whatYouNeed?.message}>
+        <FormField label="What you need" error={errors.whatYouNeed?.message} id={fieldId("whatYouNeed")}>
           <select
+            id={fieldId("whatYouNeed")}
             className={selectStyle}
             style={selectArrow}
             disabled={isDisabled}
+            aria-invalid={!!errors.whatYouNeed}
+            aria-describedby={errors.whatYouNeed ? errorId("whatYouNeed") : undefined}
             {...form.register("whatYouNeed")}
           >
             {whatYouNeedOptions.map((v) => (
@@ -196,14 +226,17 @@ export function InquiryForm() {
             ))}
           </select>
         </FormField>
-        <FormField label="Timeline (optional)" error={form.formState.errors.timeline?.message}>
+        <FormField label="Timeline (optional)" error={errors.timeline?.message} id={fieldId("timeline")}>
           <select
+            id={fieldId("timeline")}
             className={selectStyle}
             style={selectArrow}
             disabled={isDisabled}
+            aria-invalid={!!errors.timeline}
+            aria-describedby={errors.timeline ? errorId("timeline") : undefined}
             {...form.register("timeline")}
           >
-            <option value="">Select</option>
+            <option value="">Choose a timeline</option>
             {timelineOptions.map((v) => (
               <option key={v} value={v}>
                 {v}
@@ -214,29 +247,41 @@ export function InquiryForm() {
       </div>
 
       {/* Full-width fields */}
-      <FormField label="Primary goal" error={form.formState.errors.primaryGoal?.message}>
+      <FormField label="Primary goal" error={errors.primaryGoal?.message} id={fieldId("primaryGoal")}>
         <input
+          id={fieldId("primaryGoal")}
           className={inputStyle}
           disabled={isDisabled}
           placeholder="What should improve when this is live?"
+          maxLength={300}
+          aria-invalid={!!errors.primaryGoal}
+          aria-describedby={errors.primaryGoal ? errorId("primaryGoal") : undefined}
           {...form.register("primaryGoal")}
         />
       </FormField>
 
-      <FormField label="Current website/app (optional)" error={form.formState.errors.currentUrl?.message}>
+      <FormField label="Current website/app (optional)" error={errors.currentUrl?.message} id={fieldId("currentUrl")}>
         <input
+          id={fieldId("currentUrl")}
           className={inputStyle}
           disabled={isDisabled}
           placeholder="https://"
+          maxLength={500}
+          aria-invalid={!!errors.currentUrl}
+          aria-describedby={errors.currentUrl ? errorId("currentUrl") : undefined}
           {...form.register("currentUrl")}
         />
       </FormField>
 
-      <FormField label="Notes (optional)" error={form.formState.errors.notes?.message}>
+      <FormField label="Notes (optional)" error={errors.notes?.message} id={fieldId("notes")}>
         <textarea
+          id={fieldId("notes")}
           className={`${inputStyle} min-h-32 py-4 resize-y`}
           disabled={isDisabled}
-          placeholder="Anything else we should know — timeline, budget, inspiration..."
+          placeholder="Anything else we should know: timeline, budget, inspiration..."
+          maxLength={5000}
+          aria-invalid={!!errors.notes}
+          aria-describedby={errors.notes ? errorId("notes") : undefined}
           {...form.register("notes")}
         />
       </FormField>
@@ -260,18 +305,21 @@ export function InquiryForm() {
         </span>
       </div>
 
-      {/* Status messages */}
-      {status.type === "error" && (
-        <div className="rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-200 px-5 py-4 text-sm">
-          {status.message}
-        </div>
-      )}
+      {/* Status messages — aria-live for screen reader announcements */}
+      <div aria-live="polite" aria-atomic="true">
+        {status.type === "error" && (
+          <div className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-sm" role="alert">
+            {status.message} Please try again, or reach us at hello@kivox.in.
+          </div>
+        )}
 
-      {status.type === "success" && (
-        <div className="rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200 px-5 py-4 text-sm">
-          Received. We&apos;ll reply within 24 hours with next steps.
-        </div>
-      )}
+        {status.type === "success" && (
+          <div className="rounded-xl border border-success/20 bg-success/5 text-success px-5 py-4 text-sm" role="status">
+            Received. We&apos;ll reply within 24 hours with next steps.
+          </div>
+        )}
+      </div>
     </form>
   );
 }
+

@@ -85,7 +85,7 @@ export function HomeTeam() {
 
                 {/* Number badge */}
                 <span
-                  className="absolute top-3 left-3 lg:top-4 lg:left-4 text-xs font-mono font-bold tracking-wider text-white/50 studio-tabular"
+                  className="absolute top-3 left-3 lg:top-4 lg:left-4 text-xs font-mono font-bold tracking-wider text-[oklch(0.98_0.01_85/0.5)] studio-tabular"
                 >
                   {String(idx + 1).padStart(2, "0")}
                 </span>

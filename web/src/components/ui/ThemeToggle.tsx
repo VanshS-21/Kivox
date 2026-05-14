@@ -21,10 +21,15 @@ function getStoredTheme(): Theme {
   return "system";
 }
 
+/**
+ * Apply theme to the DOM. data-theme is ALWAYS set — the CSS has no
+ * @media (prefers-color-scheme) fallback, so we must resolve "system"
+ * to an explicit "light" or "dark" attribute.
+ */
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
   if (theme === "system") {
-    delete root.dataset.theme;
+    root.dataset.theme = getSystemTheme();
     window.localStorage.removeItem(STORAGE_KEY);
   } else {
     root.dataset.theme = theme;
@@ -45,7 +50,10 @@ export function ThemeToggle({ className = "", style }: { className?: string; sty
   useEffect(() => {
     if (theme !== "system") return;
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = () => applyTheme("system");
+    const handler = () => {
+      // Re-resolve system preference to explicit data-theme
+      document.documentElement.dataset.theme = mq.matches ? "dark" : "light";
+    };
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, [theme]);
@@ -58,8 +66,11 @@ export function ThemeToggle({ className = "", style }: { className?: string; sty
     applyTheme(next);
   }, [theme]);
 
-  // Determine which icon to show
-  const resolvedTheme = theme === "system" ? getSystemTheme() : theme;
+  // Determine which icon to show based on preference (not DOM)
+  const resolvedTheme: "dark" | "light" = (() => {
+    if (theme === "dark" || theme === "light") return theme;
+    return getSystemTheme();
+  })();
 
   if (!mounted) {
     // SSR placeholder — same size, no icon

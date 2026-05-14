@@ -2,7 +2,7 @@ export const fitness = {
   id: "fitness",
   title: "Fitness / Wellness Website",
   label: "Fitness · Lead Generation",
-  image: "/work/fitness.png",
+  image: "/work/gym.png",
   images: [
     "/work/mockups/Gym-1.png",
     "/work/mockups/Gym-2.png",

@@ -19,13 +19,13 @@ export default function ContactPage() {
         <motion.div
           animate={reduce ? {} : { scale: [1, 1.2, 1], rotate: [0, 30, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[5%] right-[10%] w-[500px] h-[500px] rounded-full blur-[200px]"
+          className="absolute top-[5%] right-[10%] w-[250px] lg:w-[500px] h-[250px] lg:h-[500px] rounded-full blur-[80px] lg:blur-[200px]"
           style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.5)' }}
         />
         <motion.div
           animate={reduce ? {} : { scale: [1, 1.3, 1], rotate: [0, -20, 0] }}
           transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[10%] left-[5%] w-[400px] h-[400px] rounded-full blur-[180px]"
+          className="absolute bottom-[10%] left-[5%] w-[200px] lg:w-[400px] h-[200px] lg:h-[400px] rounded-full blur-[80px] lg:blur-[180px]"
           style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.3)' }}
         />
       </div>
@@ -86,8 +86,8 @@ export default function ContactPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              { step: "01", text: "Confirm receipt — you'll hear from us within 24 hours." },
-              { step: "02", text: "Ask 2–3 clarifying questions to scope it correctly." },
+              { step: "01", text: "Confirm receipt: you'll hear from us within 24 hours." },
+              { step: "02", text: "Ask 2 to 3 clarifying questions to scope it correctly." },
               { step: "03", text: "Propose scope + timeline + the next call." },
             ].map((item, idx) => (
               <motion.div
