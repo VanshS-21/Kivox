@@ -12,7 +12,7 @@ export function CursorGlow() {
   const posRef = useRef({ x: -100, y: -100 });
   const trailPosRef = useRef({ x: -100, y: -100 });
   const visibleRef = useRef(false);
-  const idleTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const rafRef = useRef<number>(0);
 
   const tick = useCallback(() => {

@@ -3,30 +3,39 @@ export const hospital = {
   title: "Hospital Website",
   label: "Healthcare · Web Design",
   image: "/work/hospital.png",
+  images: [
+    "/work/mockups/Hospital-1.png",
+    "/work/mockups/Hospital-2.png",
+    "/work/mockups/Hospital-3.png",
+    "/work/mockups/Hospital-4.png",
+    "/work/mockups/Hospital-5.png",
+  ],
   href: "/showcase/hospital.html",
   demonstrates:
     "Trust-first healthcare information architecture: clear services, doctor discovery, and a calm path to appointment/contact.",
-  caseStudy:
-    "Healthcare websites carry an unusual burden — visitors arrive stressed, scanning for clarity under pressure. Our approach stripped away the noise that plagues most hospital sites: rotating banners, marketing jargon, buried contact information. Instead, we built a trust-first architecture where the three critical actions (find a department, find a doctor, request an appointment) are reachable within two taps from any page. The typography is deliberately calm — generous whitespace, high-contrast text, and zero decorative animation. The doctor profiles are structured to answer the questions patients actually ask: speciality, experience, and availability. The result is an interface that feels like a well-organized reception desk — not a billboard.",
+  challenge:
+    "Healthcare websites carry an unusual burden: visitors arrive stressed, scanning for clarity under pressure. Most hospital sites bury critical actions behind rotating banners, marketing jargon, and cluttered navigation. Patients don't want to explore; they want to act.",
+  approach:
+    "We built a trust-first architecture where the three critical actions (find a department, find a doctor, request an appointment) are reachable within two taps from any page. The typography is deliberately calm: generous whitespace, high-contrast text, zero decorative animation. Doctor profiles answer the questions patients actually ask: speciality, experience, availability. The result feels like a well-organized reception desk, not a billboard.",
   targetAudience: [
     "Patients and caregivers on mobile",
-    "People searching for a specific department/service",
-    "People comparing providers before calling/booking",
+    "People searching for a specific department or service",
+    "People comparing providers before calling or booking",
   ],
   primaryActions: [
-    "Find the right department/service",
-    "Find a doctor (or care type) and understand fit",
-    "Request an appointment / call the hospital",
+    "Find the right department or service",
+    "Find a doctor and understand fit",
+    "Request an appointment or call the hospital",
   ],
   coreSections: [
     "Home (service overview + urgent actions)",
-    "Services/Departments (structured list + detail pages)",
-    "Doctors (profiles with availability/contact route)",
-    "Appointment / Contact",
-    "Location + visiting info",
+    "Services & Departments (structured list + detail pages)",
+    "Doctors (profiles with availability and contact)",
+    "Appointment & Contact",
+    "Location + visiting information",
   ],
   uxDecisions: [
-    "Clear “what to do next” on every page (call, request appointment, find department).",
+    "Clear 'what to do next' on every page.",
     "Calm typography and spacing; no noisy marketing language.",
     "Accessibility-first form and contact patterns.",
   ],
