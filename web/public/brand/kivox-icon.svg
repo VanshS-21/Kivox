@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 0 84 64" fill="none" width="168" height="128">
+  <title>Kivox Icon — Voice Mark</title>
+  <path d="M4 32L20 12" stroke="#c8a050" stroke-width="4" stroke-linecap="round"/>
+  <path d="M4 32L20 32" stroke="#c8a050" stroke-width="4" stroke-linecap="round"/>
+  <path d="M4 32L20 52" stroke="#c8a050" stroke-width="4" stroke-linecap="round"/>
+  <path d="M28 20a16 16 0 0 1 0 24" stroke="#c8a050" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M36 14a24 24 0 0 1 0 36" stroke="#c8a050" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".6"/>
+  <path d="M44 8a32 32 0 0 1 0 48" stroke="#c8a050" stroke-width="2" stroke-linecap="round" fill="none" opacity=".3"/>
+</svg>

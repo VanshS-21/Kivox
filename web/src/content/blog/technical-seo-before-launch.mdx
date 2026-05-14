@@ -1,0 +1,76 @@
+---
+title: "Technical SEO Your Developer Should Handle Before Launch"
+description: "The SEO checklist that matters before your site goes live. No jargon, no guesswork: the specific technical decisions that determine whether search engines find you."
+date: "2025-04-26"
+category: "SEO"
+---
+
+Content gets most of the SEO attention. Keywords, blog posts, meta descriptions. But none of that matters if the technical foundation is broken. A search engine cannot rank a page it cannot crawl, index, or understand.
+
+Technical SEO is not a marketing task. It is an engineering task. And the right time to handle it is during development, not after launch. Here is what your developer should be doing before the site goes live.
+
+## The foundation: crawlability
+
+Before Google can rank your pages, Googlebot has to find them. Three decisions determine whether that happens reliably.
+
+### A clean URL structure
+
+Every page should have one canonical URL. Not `/about-us`, `/about`, and `/about/index.html` all serving the same content. Duplicate URLs split ranking signals and confuse crawlers.
+
+Good URL patterns are short, readable, and hierarchical: `/services/web-design` is better than `/page?id=47&cat=services`.
+
+### XML sitemap
+
+Your sitemap tells search engines every page they should know about. It should be generated automatically from your actual page structure (not maintained by hand), include only pages you want indexed, and be submitted via Google Search Console.
+
+### Robots.txt
+
+This file tells crawlers what they can and cannot access. Getting it wrong can accidentally block your entire site from being indexed. Your developer should verify that no important pages are blocked and that no sensitive routes (admin panels, staging URLs) are exposed.
+
+## Page-level requirements
+
+Once crawlers find your pages, they need to understand them. These elements should be present on every page.
+
+### Title tags and meta descriptions
+
+Every page needs a unique title tag (under 60 characters) and a unique meta description (under 155 characters). These are what appear in search results. Duplicate titles across pages signal to Google that those pages are interchangeable.
+
+### Heading hierarchy
+
+Use a single `h1` per page, followed by `h2` and `h3` in logical order. Headings are not just design elements. They are the structural outline that search engines use to understand your content.
+
+### Structured data
+
+Schema.org markup tells search engines what your content is: a business, a service, an FAQ, an article. Adding `LocalBusiness` schema for a service business, `Article` schema for blog posts, and `FAQPage` schema for FAQ sections gives search engines explicit context that improves how your pages appear in results.
+
+## Performance and user experience
+
+Google has been explicit: page speed and mobile experience are ranking factors. These are not suggestions.
+
+### Core Web Vitals
+
+Three metrics matter: Largest Contentful Paint (how fast the main content loads), Cumulative Layout Shift (whether elements jump around while loading), and Interaction to Next Paint (how quickly the page responds to user input). Your developer should test these with Lighthouse and fix any failures before launch.
+
+### Mobile-first indexing
+
+Google indexes the mobile version of your site, not the desktop version. If your mobile layout is missing content, has tiny text, or breaks navigation, that is the version Google is evaluating.
+
+### Image optimization
+
+Images are typically the largest files on a website. Every image should be served in WebP or AVIF format, appropriately sized for the display context (not a 4000px image in a 400px container), and lazy-loaded below the fold.
+
+## What to verify before going live
+
+Before launch, your developer should run through this checklist:
+
+- Every page has a unique title and meta description
+- The sitemap is generated and accurate
+- Robots.txt allows crawling of all public pages
+- Structured data validates without errors (use Google's Rich Results Test)
+- Core Web Vitals pass on both mobile and desktop
+- No broken internal links
+- HTTPS is configured with proper redirects from HTTP
+- The site returns a 404 page (not a redirect) for missing URLs
+- Open Graph and Twitter card meta tags are present for social sharing
+
+This is not optional polish. This is the baseline that determines whether your site appears in search results at all. A developer who ships without this checklist is shipping incomplete work.

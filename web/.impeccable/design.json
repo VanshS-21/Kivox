@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-05-14T01:28:00Z",
+  "generatedAt": "2026-05-14T12:30:00Z",
   "title": "Design System: Kivox",
   "extensions": {
     "colorMeta": {
@@ -8,198 +8,76 @@
         "role": "neutral",
         "displayName": "Firelit Black",
         "canonical": "oklch(0.05 0.005 65)",
-        "tonalRamp": [
-          "oklch(0.05 0.005 65)",
-          "oklch(0.18 0.008 65)",
-          "oklch(0.30 0.010 65)",
-          "oklch(0.43 0.012 65)",
-          "oklch(0.55 0.010 65)",
-          "oklch(0.68 0.008 65)",
-          "oklch(0.80 0.006 65)",
-          "oklch(0.93 0.004 65)"
-        ]
+        "tonalRamp": ["oklch(0.05 0.005 65)","oklch(0.18 0.008 65)","oklch(0.30 0.010 65)","oklch(0.43 0.012 65)","oklch(0.55 0.010 65)","oklch(0.68 0.008 65)","oklch(0.80 0.006 65)","oklch(0.93 0.004 65)"]
       },
       "warm-amber": {
         "role": "primary",
         "displayName": "Warm Amber",
         "canonical": "oklch(0.72 0.18 65)",
-        "tonalRamp": [
-          "oklch(0.15 0.05 65)",
-          "oklch(0.27 0.10 65)",
-          "oklch(0.39 0.14 65)",
-          "oklch(0.51 0.17 65)",
-          "oklch(0.63 0.18 65)",
-          "oklch(0.72 0.18 65)",
-          "oklch(0.82 0.14 65)",
-          "oklch(0.93 0.07 65)"
-        ]
+        "tonalRamp": ["oklch(0.15 0.05 65)","oklch(0.27 0.10 65)","oklch(0.39 0.14 65)","oklch(0.51 0.17 65)","oklch(0.63 0.18 65)","oklch(0.72 0.18 65)","oklch(0.82 0.14 65)","oklch(0.93 0.07 65)"]
       },
       "burnt-amber": {
         "role": "primary",
         "displayName": "Burnt Amber",
-        "canonical": "oklch(0.62 0.2 55)",
-        "tonalRamp": [
-          "oklch(0.15 0.05 55)",
-          "oklch(0.25 0.10 55)",
-          "oklch(0.36 0.15 55)",
-          "oklch(0.47 0.18 55)",
-          "oklch(0.57 0.20 55)",
-          "oklch(0.67 0.18 55)",
-          "oklch(0.78 0.13 55)",
-          "oklch(0.90 0.06 55)"
-        ]
+        "canonical": "oklch(0.60 0.22 55)",
+        "tonalRamp": ["oklch(0.15 0.05 55)","oklch(0.25 0.10 55)","oklch(0.36 0.15 55)","oklch(0.47 0.18 55)","oklch(0.55 0.22 55)","oklch(0.65 0.18 55)","oklch(0.76 0.13 55)","oklch(0.88 0.06 55)"]
       },
-      "parchment": {
+      "warm-linen": {
         "role": "neutral",
-        "displayName": "Parchment",
-        "canonical": "oklch(0.97 0.012 75)",
-        "tonalRamp": [
-          "oklch(0.15 0.005 75)",
-          "oklch(0.28 0.008 75)",
-          "oklch(0.42 0.010 75)",
-          "oklch(0.55 0.012 75)",
-          "oklch(0.68 0.012 75)",
-          "oklch(0.80 0.012 75)",
-          "oklch(0.90 0.012 75)",
-          "oklch(0.97 0.012 75)"
-        ]
+        "displayName": "Warm Linen",
+        "canonical": "oklch(0.955 0.008 70)",
+        "tonalRamp": ["oklch(0.15 0.004 70)","oklch(0.28 0.006 70)","oklch(0.42 0.007 70)","oklch(0.55 0.008 70)","oklch(0.68 0.008 70)","oklch(0.80 0.008 70)","oklch(0.90 0.008 70)","oklch(0.955 0.008 70)"]
+      },
+      "atelier-white": {
+        "role": "neutral",
+        "displayName": "Atelier White",
+        "canonical": "oklch(0.97 0.003 250)",
+        "tonalRamp": ["oklch(0.15 0.002 250)","oklch(0.28 0.003 250)","oklch(0.42 0.003 250)","oklch(0.55 0.003 250)","oklch(0.68 0.003 250)","oklch(0.80 0.003 250)","oklch(0.90 0.003 250)","oklch(0.97 0.003 250)"]
       },
       "ember-rose": {
         "role": "secondary",
         "displayName": "Ember Rose",
         "canonical": "oklch(0.55 0.12 35)",
-        "tonalRamp": [
-          "oklch(0.15 0.04 35)",
-          "oklch(0.25 0.07 35)",
-          "oklch(0.35 0.09 35)",
-          "oklch(0.45 0.11 35)",
-          "oklch(0.55 0.12 35)",
-          "oklch(0.65 0.10 35)",
-          "oklch(0.78 0.07 35)",
-          "oklch(0.90 0.03 35)"
-        ]
+        "tonalRamp": ["oklch(0.15 0.04 35)","oklch(0.25 0.07 35)","oklch(0.35 0.09 35)","oklch(0.45 0.11 35)","oklch(0.55 0.12 35)","oklch(0.65 0.10 35)","oklch(0.78 0.07 35)","oklch(0.90 0.03 35)"]
       },
       "hospital-blue": {
         "role": "tertiary",
         "displayName": "Hospital Blue",
         "canonical": "oklch(0.55 0.17 240)",
-        "tonalRamp": [
-          "oklch(0.15 0.05 240)",
-          "oklch(0.25 0.09 240)",
-          "oklch(0.35 0.13 240)",
-          "oklch(0.45 0.16 240)",
-          "oklch(0.55 0.17 240)",
-          "oklch(0.65 0.15 240)",
-          "oklch(0.78 0.10 240)",
-          "oklch(0.90 0.05 240)"
-        ]
+        "tonalRamp": ["oklch(0.15 0.05 240)","oklch(0.25 0.09 240)","oklch(0.35 0.13 240)","oklch(0.45 0.16 240)","oklch(0.55 0.17 240)","oklch(0.65 0.15 240)","oklch(0.78 0.10 240)","oklch(0.90 0.05 240)"]
       },
       "hotel-gold": {
         "role": "tertiary",
         "displayName": "Hotel Gold",
         "canonical": "oklch(0.68 0.15 75)",
-        "tonalRamp": [
-          "oklch(0.15 0.04 75)",
-          "oklch(0.27 0.07 75)",
-          "oklch(0.38 0.10 75)",
-          "oklch(0.49 0.13 75)",
-          "oklch(0.60 0.15 75)",
-          "oklch(0.68 0.15 75)",
-          "oklch(0.80 0.10 75)",
-          "oklch(0.92 0.05 75)"
-        ]
+        "tonalRamp": ["oklch(0.15 0.04 75)","oklch(0.27 0.07 75)","oklch(0.38 0.10 75)","oklch(0.49 0.13 75)","oklch(0.60 0.15 75)","oklch(0.68 0.15 75)","oklch(0.80 0.10 75)","oklch(0.92 0.05 75)"]
       }
     },
     "typographyMeta": {
-      "display": {
-        "displayName": "Display",
-        "purpose": "Hero headlines only. Bricolage Grotesque Bold with word-by-word stagger entrance."
-      },
-      "headline": {
-        "displayName": "Headline",
-        "purpose": "Section subheads and editorial moments. Spectral Regular, often italic."
-      },
-      "title": {
-        "displayName": "Title",
-        "purpose": "Card titles, service names, subsection headings. Bricolage Grotesque Semibold."
-      },
-      "body": {
-        "displayName": "Body",
-        "purpose": "Running text and descriptions. Figtree Regular. Max 65-75ch line length."
-      },
-      "label": {
-        "displayName": "Label / Eyebrow",
-        "purpose": "Section eyebrows, tags, metadata. Geist Mono. Always uppercase, always tracked."
-      }
+      "display": { "displayName": "Display", "purpose": "Hero headlines only. Bricolage Grotesque Bold with word-by-word stagger entrance." },
+      "headline": { "displayName": "Headline", "purpose": "Section subheads and editorial moments. Spectral Regular, often italic." },
+      "title": { "displayName": "Title", "purpose": "Card titles, service names, subsection headings. Bricolage Grotesque Semibold." },
+      "body": { "displayName": "Body", "purpose": "Running text and descriptions. Figtree Regular. Max 65-75ch. Dark mode line-height 1.65." },
+      "label": { "displayName": "Label / Eyebrow", "purpose": "Section eyebrows, tags, metadata. Geist Mono. Always uppercase, always tracked." }
     },
     "shadows": [
-      {
-        "name": "rest",
-        "value": "0 1px 0 0 oklch(1 0 0 / 0.08), 0 20px 60px -30px oklch(0 0 0 / 0.4)",
-        "purpose": "Default card elevation. Subtle top highlight + soft depth."
-      },
-      {
-        "name": "hover",
-        "value": "0 1px 0 0 oklch(0.72 0.18 65 / 0.15), 0 20px 60px oklch(0.72 0.18 65 / 0.06)",
-        "purpose": "Amber-tinted hover state. Cards warm on interaction."
-      },
-      {
-        "name": "hover-strong",
-        "value": "0 1px 0 0 oklch(0.72 0.18 65 / 0.25), 0 24px 80px oklch(0.72 0.18 65 / 0.12)",
-        "purpose": "Intensified amber glow for featured interactive elements."
-      },
-      {
-        "name": "amber-glow",
-        "value": "0 0 40px oklch(0.72 0.18 65 / 0.3)",
-        "purpose": "Pure radial amber glow for CTAs, active states, focus indicators."
-      },
-      {
-        "name": "strong",
-        "value": "0 1px 0 0 oklch(1 0 0 / 0.12), 0 40px 90px -60px oklch(0 0 0 / 0.7)",
-        "purpose": "Maximum elevation for modals, popovers, carousel frame."
-      }
+      { "name": "rest", "value": "0 1px 0 0 oklch(1 0 0 / 0.08), 0 20px 60px -30px oklch(0 0 0 / 0.4)", "purpose": "Default card elevation (dark mode)." },
+      { "name": "rest-light", "value": "0 1px 3px oklch(0.13 0.005 250 / 0.06), 0 6px 24px oklch(0.13 0.005 250 / 0.06)", "purpose": "Default card elevation (light mode). Cool, restrained." },
+      { "name": "hover", "value": "0 1px 0 0 oklch(0.72 0.18 65 / 0.15), 0 20px 60px oklch(0.72 0.18 65 / 0.06)", "purpose": "Amber-tinted hover state (dark mode)." },
+      { "name": "hover-light", "value": "0 2px 6px oklch(0.60 0.22 55 / 0.08), 0 16px 48px oklch(0.60 0.22 55 / 0.08)", "purpose": "Burnt-amber hover state (light mode)." },
+      { "name": "hover-strong", "value": "0 1px 0 0 oklch(0.72 0.18 65 / 0.25), 0 24px 80px oklch(0.72 0.18 65 / 0.12)", "purpose": "Intensified amber glow for featured elements." },
+      { "name": "amber-glow", "value": "0 0 40px oklch(0.72 0.18 65 / 0.3)", "purpose": "Pure radial amber glow for CTAs and focus." },
+      { "name": "strong", "value": "0 1px 0 0 oklch(1 0 0 / 0.12), 0 40px 90px -60px oklch(0 0 0 / 0.7)", "purpose": "Maximum elevation for carousel frame." }
     ],
     "motion": [
-      {
-        "name": "ease-out-expo",
-        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Primary easing. Smooth exponential deceleration for all state transitions."
-      },
-      {
-        "name": "ease-out-quart",
-        "value": "cubic-bezier(0.25, 1, 0.5, 1)",
-        "purpose": "Secondary easing. Slightly less dramatic deceleration."
-      },
-      {
-        "name": "ease-out-quint",
-        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
-        "purpose": "Tertiary easing. Used for 3D depth-fan service rows."
-      },
-      {
-        "name": "duration-instant",
-        "value": "100ms",
-        "purpose": "Instant feedback. Opacity changes, micro-state shifts."
-      },
-      {
-        "name": "duration-fast",
-        "value": "200ms",
-        "purpose": "Hover states, button interactions, small transitions."
-      },
-      {
-        "name": "duration-medium",
-        "value": "300ms",
-        "purpose": "Card hovers, navigation transitions."
-      },
-      {
-        "name": "duration-slow",
-        "value": "600ms",
-        "purpose": "Entrance animations, fadeUp reveals."
-      },
-      {
-        "name": "duration-entrance",
-        "value": "800ms",
-        "purpose": "Hero word-by-word stagger entrances."
-      }
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Primary easing for all state transitions." },
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.25, 1, 0.5, 1)", "purpose": "Secondary easing. Slightly less dramatic." },
+      { "name": "ease-out-quint", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Tertiary easing. 3D depth-fan service rows." },
+      { "name": "duration-instant", "value": "100ms", "purpose": "Opacity changes, micro-state shifts." },
+      { "name": "duration-fast", "value": "200ms", "purpose": "Hover states, button interactions." },
+      { "name": "duration-medium", "value": "300ms", "purpose": "Card hovers, navigation transitions." },
+      { "name": "duration-slow", "value": "600ms", "purpose": "Entrance animations, fadeUp reveals." },
+      { "name": "duration-entrance", "value": "800ms", "purpose": "Hero word-by-word stagger entrances." }
     ],
     "breakpoints": [
       { "name": "mobile", "value": "767px" },
@@ -215,7 +93,7 @@
       "refersTo": "button-primary",
       "description": "Amber CTA pill. Lifts on hover with amber glow, compresses on press.",
       "html": "<button class=\"ds-btn-primary\">Start a project <span class=\"ds-btn-arrow\">→</span></button>",
-      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 24px; background: oklch(0.72 0.18 65); color: oklch(0.99 0.008 80); border: none; border-radius: 9999px; font-family: 'Figtree', system-ui, sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.01em; cursor: pointer; transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; } .ds-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px oklch(0.72 0.18 65 / 0.3); } .ds-btn-primary:active { transform: translateY(0) scale(0.98); } .ds-btn-primary:focus-visible { outline: 2px solid oklch(0.72 0.18 65); outline-offset: 3px; } .ds-btn-arrow { font-size: 16px; transition: transform 200ms ease-out; } .ds-btn-primary:hover .ds-btn-arrow { transform: translateX(2px); }"
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 24px; background: oklch(0.72 0.18 65); color: oklch(0.99 0.008 80); border: none; border-radius: 9999px; font-family: 'Figtree', system-ui, sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.01em; cursor: pointer; transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px oklch(0.72 0.18 65 / 0.3); } .ds-btn-primary:active { transform: translateY(0) scale(0.98); } .ds-btn-primary:focus-visible { outline: 2px solid oklch(0.72 0.18 65); outline-offset: 3px; } .ds-btn-arrow { font-size: 16px; transition: transform 200ms ease-out; } .ds-btn-primary:hover .ds-btn-arrow { transform: translateX(2px); }"
     },
     {
       "name": "Secondary Button",
@@ -223,7 +101,7 @@
       "refersTo": "button-secondary",
       "description": "Outlined pill button. Transparent background with border.",
       "html": "<button class=\"ds-btn-secondary\">View showcase</button>",
-      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 24px; background: transparent; color: oklch(0.98 0.01 85); border: 1px solid oklch(0.85 0.008 65 / 0.12); border-radius: 9999px; font-family: 'Figtree', system-ui, sans-serif; font-size: 14px; font-weight: 400; letter-spacing: -0.01em; cursor: pointer; transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease-out, box-shadow 200ms ease-out; will-change: transform; } .ds-btn-secondary:hover { transform: translateY(-2px); border-color: oklch(0.85 0.008 65 / 0.3); box-shadow: 0 1px 0 0 oklch(0.72 0.18 65 / 0.15), 0 20px 60px oklch(0.72 0.18 65 / 0.06); } .ds-btn-secondary:active { transform: translateY(0); } .ds-btn-secondary:focus-visible { outline: 2px solid oklch(0.72 0.18 65); outline-offset: 3px; }"
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 24px; background: transparent; color: oklch(0.98 0.01 85); border: 1px solid oklch(0.85 0.008 65 / 0.12); border-radius: 9999px; font-family: 'Figtree', system-ui, sans-serif; font-size: 14px; font-weight: 400; letter-spacing: -0.01em; cursor: pointer; transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease-out, box-shadow 200ms ease-out; } .ds-btn-secondary:hover { transform: translateY(-2px); border-color: oklch(0.85 0.008 65 / 0.3); box-shadow: 0 1px 0 0 oklch(0.72 0.18 65 / 0.15), 0 20px 60px oklch(0.72 0.18 65 / 0.06); } .ds-btn-secondary:active { transform: translateY(0); } .ds-btn-secondary:focus-visible { outline: 2px solid oklch(0.72 0.18 65); outline-offset: 3px; }"
     },
     {
       "name": "Eyebrow Label",
@@ -258,45 +136,48 @@
       "css": ".ds-field { display: flex; flex-direction: column; gap: 8px; } .ds-field-label { font-family: 'Figtree', sans-serif; font-size: 14px; font-weight: 500; color: oklch(0.98 0.01 85); } .ds-input { background: oklch(1 0 0 / 0.05); border: 1px solid oklch(0.85 0.008 65 / 0.08); border-radius: 14px; padding: 16px 20px; font-family: 'Figtree', sans-serif; font-size: 16px; color: oklch(0.98 0.01 85); outline: none; transition: border-color 200ms ease-out, box-shadow 200ms ease-out; } .ds-input::placeholder { color: oklch(0.98 0.01 85 / 0.4); } .ds-input:focus { border-color: oklch(0.72 0.18 65); box-shadow: 0 0 0 3px oklch(0.72 0.18 65 / 0.12); }"
     },
     {
-      "name": "Navigation CTA",
-      "kind": "nav",
-      "refersTo": "button-primary",
-      "description": "Nav-bar CTA button. Smaller amber pill with arrow.",
-      "html": "<a class=\"ds-nav-cta\" href=\"#\">Start a project <span class=\"ds-nav-arrow\">→</span></a>",
-      "css": ".ds-nav-cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: oklch(0.72 0.18 65); color: oklch(0.99 0.008 80); border-radius: 8px; font-family: 'Figtree', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.01em; text-decoration: none; transition: transform 200ms ease-out, box-shadow 200ms ease-out; } .ds-nav-cta:hover { transform: scale(1.05); box-shadow: 0 0 40px oklch(0.72 0.18 65 / 0.3); } .ds-nav-arrow { font-size: 16px; }"
-    },
-    {
       "name": "Magnetic CTA",
       "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Large CTA with magnetic cursor-follow physics and dynamic glow.",
+      "refersTo": "button-magnetic",
+      "description": "Large CTA with magnetic cursor-follow physics and dynamic glow. Rounded-full pill.",
       "html": "<a class=\"ds-magnetic-cta\" href=\"#\">Start a project <span class=\"ds-magnetic-arrow\">→</span></a>",
-      "css": ".ds-magnetic-cta { display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; background: oklch(0.72 0.18 65); color: oklch(0.99 0.008 80); border-radius: 12px; font-family: 'Figtree', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; transition: background-color 300ms ease-out, scale 300ms ease-out; } .ds-magnetic-cta:hover { background: oklch(0.75 0.18 65); } .ds-magnetic-cta:active { scale: 0.96; } .ds-magnetic-cta:focus-visible { outline: 2px solid oklch(0.72 0.18 65); outline-offset: 3px; } .ds-magnetic-arrow { font-size: 16px; display: inline-block; animation: ds-arrow-drift 1.5s ease-in-out infinite 1s; } @keyframes ds-arrow-drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }"
+      "css": ".ds-magnetic-cta { display: inline-flex; align-items: center; gap: 12px; padding: 20px 40px; background: oklch(0.72 0.18 65); color: oklch(0.99 0.008 80); border-radius: 9999px; font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; transition: background-color 300ms ease-out, scale 300ms ease-out; } .ds-magnetic-cta:hover { background: oklch(0.75 0.18 65); } .ds-magnetic-cta:active { scale: 0.96; } .ds-magnetic-cta:focus-visible { outline: 2px solid oklch(0.72 0.18 65); outline-offset: 3px; } .ds-magnetic-arrow { font-size: 16px; display: inline-block; animation: ds-arrow-drift 1.5s ease-in-out infinite 1s; } @keyframes ds-arrow-drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }"
+    },
+    {
+      "name": "Back to Top",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Floating circular button with backdrop blur. Amber fill on hover with glow ring.",
+      "html": "<button class=\"ds-back-to-top\" aria-label=\"Back to top\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" fill=\"none\"><path d=\"M9 14V4m0 0L4 9m5-5l5 5\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button>",
+      "css": ".ds-back-to-top { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid oklch(0.72 0.18 65 / 0.33); background: oklch(0.10 0.005 65); backdrop-filter: blur(12px); color: oklch(0.72 0.18 65); cursor: pointer; transition: background 250ms ease, border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease; } .ds-back-to-top:hover { background: oklch(0.72 0.18 65); color: oklch(0.99 0.008 80); border-color: oklch(0.72 0.18 65); box-shadow: 0 4px 20px oklch(0.72 0.18 65 / 0.33), 0 0 0 4px oklch(0.72 0.18 65 / 0.12); transform: translateY(-2px); } .ds-back-to-top:focus-visible { outline: 2px solid oklch(0.72 0.18 65); outline-offset: 3px; }"
     }
   ],
   "narrative": {
-    "northStar": "The Firelit Studio",
-    "overview": "Kivox's visual language is built around a single conviction: the site itself is the portfolio. Every pixel demonstrates the craft, clarity, and warmth the studio promises to deliver. The aesthetic draws from the intimacy of a well-lit workshop at dusk; warm amber light pooling across dark surfaces, the confidence of tools laid out with intention, materials that feel honest rather than polished to anonymity.\n\nThe system is Committed: warm amber carries 30–60% of visual weight at hero moments, CTAs, and section transitions, while warm-tinted neutrals ground everything else. There is no pure black, no pure white, no cold gray anywhere in the palette. Every neutral is shifted toward the amber hue family at chroma 0.005–0.02, creating a cohesion that feels inevitable rather than decorated.\n\nThis system explicitly rejects generic SaaS template sites, loud startup pages, dark tech aesthetics with neon accents, enterprise posturing, and luxury hotel minimalism. If a visitor could mistake this for a template, the design has failed.",
+    "northStar": "The Firelit Studio / The Atelier in Morning Light",
+    "overview": "Kivox's visual language is built around a single conviction: the site itself is the portfolio. Every pixel demonstrates the craft, clarity, and warmth the studio promises to deliver.\n\nThe dark mode draws from the intimacy of a well-lit workshop at dusk: warm amber light pooling across dark surfaces, tools laid out with intention, materials that feel honest rather than polished to anonymity. Warm-tinted neutrals (hue 55-85, chroma 0.005-0.02) ground everything.\n\nThe light mode channels a master craftsman's studio in cold morning light: white walls, raw materials, clean surfaces, sharp shadows from a single window. Cold-tinted neutrals (hue 250, chroma 0.002-0.005) replace every warm surface, with the deliberate Warm Linen Exception for content-dense sections.\n\nAmber is the connective thread. In dark mode it's firelight; in light mode it deepens to burnt amber as deliberate tooling marks against cool surfaces.",
     "keyCharacteristics": [
-      "Warm-tinted neutrals in every surface (hue 55–85, chroma 0.005–0.02)",
+      "Temperature polarity: dark mode warm-tinted (hue 65), light mode cold-tinted (hue 250) with Warm Linen exception",
       "Committed amber accent at key moments, restrained everywhere else",
       "Editorial serif/sans pairing (Spectral + Bricolage Grotesque) for headline variety",
       "Structural shadows with amber-tinted hover states",
       "Scroll-driven section crossfades (overdrive system) for cinematic pacing",
-      "Dual-theme: warm parchment (light) and firelit dark, both fully warm-tinted"
+      "Dual-theme: cold architectural (light) and firelit dark, connected by amber",
+      "Hero and footer dark-locked in both themes"
     ],
     "rules": [
-      { "name": "The Warm Tint Rule", "body": "Every neutral in both themes carries chroma 0.005–0.02 toward the amber hue family (H 55–85). Pure #000, #fff, and #808080 are forbidden. The warmth is the identity.", "section": "colors" },
-      { "name": "The Committed Amber Rule", "body": "Amber is the only chromatic color in site chrome. It carries 30–60% of visual weight at hero moments, CTAs, and section transitions, then retreats to ≤10% in content-heavy sections.", "section": "colors" },
-      { "name": "The POV Wash Rule", "body": "The philosophical section and services use a committed amber-tinted environmental wash that shifts between oklch(0.90 0.06 62) in light and oklch(0.09 0.025 60) in dark.", "section": "colors" },
-      { "name": "The Three-Voice Rule", "body": "Headlines use Bricolage Grotesque (confident craft), subheads use Spectral (editorial warmth), body uses Figtree (clear readability). Never substitute one for another.", "section": "typography" },
-      { "name": "The Tabular Rule", "body": "All numeric data uses font-variant-numeric: tabular-nums via the studio-tabular utility. No exceptions.", "section": "typography" },
+      { "name": "The Temperature Rule", "body": "Dark mode is warm-tinted (hue 55-85, chroma 0.005-0.02). Light mode is cold-tinted (hue 250, chroma 0.002-0.005). Pure #000, #fff, and #808080 are forbidden.", "section": "colors" },
+      { "name": "The Warm Linen Exception", "body": "Light mode uses cold neutrals everywhere except --bg-surface-alt, which uses oklch(0.955 0.008 70) (warm, hue 70) to prevent content-dense sections from feeling clinical.", "section": "colors" },
+      { "name": "The Committed Amber Rule", "body": "Amber is the only chromatic color in site chrome. It carries 30-60% of visual weight at hero moments, then retreats to ≤10% in content-heavy sections. Light mode deepens to burnt amber oklch(0.60 0.22 55).", "section": "colors" },
+      { "name": "The Dark-Locked Zones Rule", "body": "Hero and footer are permanently dark in both themes. Hero tokens inherit from :root defaults. Footer resets to warm dark tokens in [data-theme=light] footer.", "section": "colors" },
+      { "name": "The POV Wash Rule", "body": "The philosophical section uses --pov-wash: oklch(0.95 0.003 250) in light mode and oklch(0.09 0.025 60) in dark mode.", "section": "colors" },
+      { "name": "The Three-Voice Rule", "body": "Headlines use Bricolage Grotesque, subheads use Spectral, body uses Figtree. Never substitute one for another.", "section": "typography" },
+      { "name": "The Tabular Rule", "body": "All numeric data uses font-variant-numeric: tabular-nums via studio-tabular. No exceptions.", "section": "typography" },
       { "name": "The Balance Rule", "body": "All headings use text-wrap: balance. All prose uses text-wrap: pretty. Non-negotiable.", "section": "typography" },
-      { "name": "The Warm Response Rule", "body": "Shadows are neutral at rest and warm on interaction. The transition from colorless depth to amber-tinted glow is the fundamental feedback pattern.", "section": "elevation" },
-      { "name": "The Frame Rule", "body": "The carousel frame uses 5 shadow layers including inset shadows. No other component may approach this shadow complexity.", "section": "elevation" }
+      { "name": "The Warm Response Rule", "body": "Shadows are neutral at rest and warm on interaction. Never amber shadows at rest; never cold shadows on hover.", "section": "elevation" },
+      { "name": "The Frame Rule", "body": "The carousel frame uses 5 shadow layers including inset shadows. No other component may approach this complexity.", "section": "elevation" }
     ],
     "dos": [
-      "Do tint every neutral toward hue 55–85 at chroma 0.005–0.02.",
+      "Do tint every neutral toward the theme hue: hue 55-85 in dark, hue 250 in light, except Warm Linen.",
       "Do use OKLCH as the canonical color format. Reduce chroma as lightness approaches 0 or 100.",
       "Do apply text-wrap: balance on all headings and text-wrap: pretty on all prose.",
       "Do increase body line-height from 1.6 to 1.65 in dark mode.",
@@ -305,7 +186,9 @@
       "Do ease out with exponential curves (cubic-bezier(0.16, 1, 0.3, 1)).",
       "Do respect prefers-reduced-motion with instant fallbacks.",
       "Do use the studio-surface utility for card containers.",
-      "Do pair Bricolage Grotesque headlines with Spectral italic for the key emotional word."
+      "Do pair Bricolage Grotesque headlines with Spectral italic for the key emotional word.",
+      "Do dark-lock the hero and footer in both themes.",
+      "Do deepen amber to burnt amber oklch(0.60 0.22 55) in light mode."
     ],
     "donts": [
       "Don't use pure black (#000), pure white (#fff), or any un-tinted gray.",
@@ -320,7 +203,9 @@
       "Don't restate headings or write intros that repeat the title.",
       "Don't use modals as a first thought.",
       "Don't animate CSS layout properties. Use transform and opacity only.",
-      "Don't use Inter, Space Grotesk, or any geometric grotesque as a substitute for Bricolage Grotesque."
+      "Don't use Inter, Space Grotesk, or any geometric grotesque as a substitute for Bricolage Grotesque.",
+      "Don't override hero or footer tokens in [data-theme=light].",
+      "Don't use cold neutrals (hue 250) for --bg-surface-alt in light mode."
     ]
   }
 }

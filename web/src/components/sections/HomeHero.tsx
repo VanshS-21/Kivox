@@ -2,12 +2,19 @@
 
 import { motion, useReducedMotion } from "motion/react";
 
+import dynamic from "next/dynamic";
+
 import { home } from "@/content/pages/home";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { ConstellationCanvas } from "@/components/ui/ConstellationCanvas";
+import { CanvasErrorBoundary } from "@/components/ui/CanvasErrorBoundary";
 import { easeOutExpo, easeOutQuint } from "@/lib/motion";
+
+const ConstellationCanvas = dynamic(
+  () => import("@/components/ui/ConstellationCanvas").then((m) => m.ConstellationCanvas),
+  { ssr: false },
+);
 
 /** Split text into words, preserving spaces for natural flow */
 function SplitWords({
@@ -68,7 +75,9 @@ export function HomeHero() {
       style={{ background: "oklch(0.05 0.008 65)" }}
     >
       {/* Constellation canvas — always dark */}
-      <ConstellationCanvas variant="dark" />
+      <CanvasErrorBoundary>
+        <ConstellationCanvas variant="dark" />
+      </CanvasErrorBoundary>
 
       {/* Radial amber glow */}
       <div

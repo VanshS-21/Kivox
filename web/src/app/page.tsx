@@ -13,13 +13,27 @@ export default function Home() {
     <>
       <HomeHero />
       <HomeMarquee />
-      <HomeWorkPreview />
-      <HomeServices />
-      <HomePOV />
-      <HomeProcess />
-      <CinematicBreak />
-      <HomeTeam />
-      <HomeContact />
+      <div className="cv-auto">
+        <HomeWorkPreview />
+      </div>
+      <div className="cv-auto">
+        <HomeServices />
+      </div>
+      <div className="cv-auto">
+        <HomePOV />
+      </div>
+      <div className="cv-auto">
+        <HomeProcess />
+      </div>
+      <div className="cv-auto">
+        <CinematicBreak />
+      </div>
+      <div className="cv-auto">
+        <HomeTeam />
+      </div>
+      <div className="cv-auto">
+        <HomeContact />
+      </div>
     </>
   );
 }

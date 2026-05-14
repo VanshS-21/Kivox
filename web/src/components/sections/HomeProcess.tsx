@@ -23,7 +23,7 @@ export function HomeProcess() {
   ];
 
   return (
-    <Section className="relative py-[80px] lg:py-[120px] overflow-hidden bg-surface-alt">
+    <Section id="process" className="relative py-[80px] lg:py-[120px] overflow-hidden bg-surface-alt">
       <Container className="relative z-10">
         {/* Section label */}
         <motion.div initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={transitionDefault} className="inline-flex items-center gap-3 mb-14 lg:mb-20">

@@ -7,6 +7,7 @@ import { motion, useReducedMotion, useInView } from "motion/react";
 import { brand } from "@/content/brand";
 import { navigation } from "@/content/navigation";
 import { fadeUp, viewportOnce, easeOutExpo } from "@/lib/motion";
+import { KivoxLogo } from "@/components/ui/KivoxLogo";
 
 /** Counts up from 2020 to the current year over 0.6s when the footer scrolls into view */
 function YearCountUp() {
@@ -67,16 +68,12 @@ export function Footer() {
               transition={{ duration: 0.5, ease: easeOutExpo }}
               className="mb-16 lg:mb-24"
             >
-              <div
-                className="font-sans font-bold tracking-tight text-foreground"
-                style={{
-                  fontSize: "clamp(2.5rem, 5vw + 1rem, 6rem)",
-                  lineHeight: 1.05,
-                  letterSpacing: "-0.035em",
-                }}
+              <Link
+                href="/"
+                className="inline-block text-foreground hover:text-accent transition-colors duration-300"
               >
-                {brand.name}
-              </div>
+                <KivoxLogo height={48} variant="brand" />
+              </Link>
               <p className="mt-4 font-body text-muted-foreground max-w-md" style={{ fontSize: "clamp(0.95rem, 1vw + 0.4rem, 1.125rem)", lineHeight: 1.6 }}>
                 {brand.tagline}
               </p>
@@ -161,9 +158,12 @@ export function Footer() {
                   >
                     {brand.contact.email}
                   </a>
-                  <span className="text-base text-muted-foreground">
+                  <a
+                    href={`tel:${brand.contact.phone.replace(/\s+/g, "")}`}
+                    className="text-base text-muted-foreground hover:text-accent transition-colors"
+                  >
                     {brand.contact.phone}
-                  </span>
+                  </a>
                   <span className="text-base text-muted-foreground">
                     {brand.contact.address}
                   </span>
@@ -188,6 +188,18 @@ export function Footer() {
               © <YearCountUp /> {brand.name} · {brand.locationLine}
             </div>
             <div className="flex items-center gap-6">
+              <Link
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
+                href="/blog"
+              >
+                Blog
+              </Link>
+              <Link
+                className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
+                href="/faq"
+              >
+                FAQ
+              </Link>
               <Link
                 className="studio-caption text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
                 href="/privacy"

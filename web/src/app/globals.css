@@ -657,6 +657,14 @@ p { text-wrap: pretty; }
 }
 
 /* -------------------------------------------------------------------------- */
+/* Content-visibility: skip layout/paint for offscreen sections                */
+/* -------------------------------------------------------------------------- */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* -------------------------------------------------------------------------- */
 /* Reduced motion baseline                                                     */
 /* -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 
 export default function Error({
@@ -32,12 +33,20 @@ export default function Error({
         </p>
 
         {/* Retry CTA */}
-        <button
-          onClick={reset}
-          className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-accent text-accent-ink text-sm font-semibold tracking-wide hover:scale-105 hover:shadow-amber-glow transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]"
-        >
-          Try again →
-        </button>
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <button
+            onClick={reset}
+            className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-accent text-accent-ink text-sm font-semibold tracking-wide hover:scale-105 hover:shadow-amber-glow transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]"
+          >
+            Try again →
+          </button>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors duration-200"
+          >
+            ← Back to Home
+          </Link>
+        </div>
 
         {/* Error digest for support reference */}
         {error.digest && (

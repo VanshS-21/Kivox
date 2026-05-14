@@ -1,21 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { brand } from "@/content/brand";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { KivoxLogo } from "@/components/ui/KivoxLogo";
 
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/work", label: "Showcase" },
+  { href: "/blog", label: "Blog" },
   { href: "/#services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -78,14 +82,48 @@ export function Navigation() {
     };
   }, [isOpen]);
 
-  // Dismiss menu with Escape key
+  // Focus trap + Escape key for overlay
   useEffect(() => {
     if (!isOpen) return;
+
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") setIsOpen(false);
+      if (e.key === "Escape") {
+        setIsOpen(false);
+        return;
+      }
+
+      // Focus trap: cycle through focusable elements inside the overlay + hamburger
+      if (e.key === "Tab" && overlayRef.current) {
+        const focusable = overlayRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
+
+    // Move focus into the overlay after entrance animation settles
+    const timer = setTimeout(() => {
+      const firstLink = overlayRef.current?.querySelector<HTMLElement>('a[href]');
+      firstLink?.focus();
+    }, 100);
+
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      clearTimeout(timer);
+      // Restore focus to hamburger on close
+      hamburgerRef.current?.focus();
+    };
   }, [isOpen]);
 
   // Nav color states:
@@ -124,18 +162,25 @@ export function Navigation() {
             {/* Logo */}
             <Link
               href="/"
+              onClick={(e) => {
+                if (pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  setIsOpen(false);
+                }
+              }}
               className="flex items-center gap-2 group relative z-[60]"
             >
-              <motion.span
+              <motion.div
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className={`font-sans font-bold text-lg tracking-tight transition-colors duration-500 group-hover:text-accent ${
+                className={`transition-colors duration-500 group-hover:text-accent ${
                   pastHero ? "text-foreground" : ""
                 }`}
                 style={overHero ? { color: "var(--hero-fg)" } : undefined}
               >
-                Kivox
-              </motion.span>
+                <KivoxLogo height={24} variant="mono" />
+              </motion.div>
             </Link>
 
             {/* Right side — CTA, theme toggle, hamburger */}
@@ -157,6 +202,7 @@ export function Navigation() {
 
               {/* Hamburger button */}
               <button
+                ref={hamburgerRef}
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-accent/10 transition-colors"
                 aria-label="Toggle menu"
@@ -190,11 +236,15 @@ export function Navigation() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={overlayRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-40 bg-background"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
           >
             {/* Subtle grain texture */}
             <div
