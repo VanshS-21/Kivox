@@ -7,8 +7,6 @@ export const fitness = {
     "/work/mockups/Gym-1.png",
     "/work/mockups/Gym-2.png",
     "/work/mockups/Gym-3.png",
-    "/work/mockups/Gym-4.png",
-    "/work/mockups/Gym-5.png",
   ],
   href: "/showcase/fitness.html",
   demonstrates:

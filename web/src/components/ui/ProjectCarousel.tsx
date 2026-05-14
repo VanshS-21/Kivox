@@ -2,7 +2,6 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
-import { TunnelCanvas } from "@/components/ui/TunnelCanvas";
 
 interface ProjectCarouselProps {
   images: string[];
@@ -59,31 +58,13 @@ export function ProjectCarousel({
 
   return (
     <div className="relative group/carousel">
-      {/* ── Wall-frame: dark matte container with depth ── */}
+      {/* ── Clean CSS frame: dark matte with depth shadows ── */}
       <div className="carousel-frame relative rounded-xl lg:rounded-2xl overflow-hidden">
 
-        {/* Tunnel perspective lines — converge toward the image */}
-        <div className="absolute inset-0 z-[3]">
-          <TunnelCanvas />
-        </div>
-
-        {/* Frame noise texture */}
+        {/* Subtle noise texture */}
         <div className="carousel-frame-noise absolute inset-0 pointer-events-none z-[2]" />
 
-        {/* ── Amber corner glows ── */}
-        <div className="absolute inset-0 pointer-events-none z-[2]" style={{
-          background: [
-            'radial-gradient(ellipse 50% 50% at 0% 0%, oklch(0.55 0.18 55 / 0.50), transparent 70%)',
-            'radial-gradient(ellipse 50% 50% at 100% 0%, oklch(0.55 0.18 55 / 0.50), transparent 70%)',
-            'radial-gradient(ellipse 50% 50% at 0% 100%, oklch(0.55 0.18 55 / 0.50), transparent 70%)',
-            'radial-gradient(ellipse 50% 50% at 100% 100%, oklch(0.55 0.18 55 / 0.50), transparent 70%)',
-          ].join(', '),
-        }} />
-
-        {/* ── Depth vignette: darken edges for cave tunnel effect ── */}
-        <div className="carousel-depth-vignette absolute inset-0 z-[1] pointer-events-none" />
-
-        {/* ── Image track (inset deep within the frame) ── */}
+        {/* ── Image track ── */}
         <div className="carousel-frame-inner relative z-[4]">
           <div
             ref={trackRef}
@@ -103,7 +84,7 @@ export function ProjectCarousel({
                   src={src}
                   alt={`${alt}, slide ${idx + 1}`}
                   fill
-                  className="carousel-image object-cover"
+                  className="carousel-image object-cover object-top"
                   sizes="(max-width: 768px) 100vw, 85vw"
                   priority={priority && idx === 0}
                 />

@@ -7,8 +7,6 @@ export const cafe = {
     "/work/mockups/Cafe-1.png",
     "/work/mockups/Cafe-2.png",
     "/work/mockups/Cafe-3.png",
-    "/work/mockups/Cafe-4.png",
-    "/work/mockups/Cafe-5.png",
   ],
   href: "/showcase/cafe.html",
   demonstrates:

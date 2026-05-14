@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
+import { motion, AnimatePresence } from "motion/react";
+import { easeOutExpo } from "@/lib/motion";
 
 import { Button } from "@/components/ui/Button";
 import {
@@ -142,7 +144,12 @@ export function InquiryForm() {
       />
 
       {/* Row 1: Name + Email */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0 }}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8"
+      >
         <FormField label="Name" error={errors.name?.message} id={fieldId("name")}>
           <input
             id={fieldId("name")}
@@ -170,10 +177,15 @@ export function InquiryForm() {
             {...form.register("email")}
           />
         </FormField>
-      </div>
+      </motion.div>
 
       {/* Row 2: Phone + Business type */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.06 }}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8"
+      >
         <FormField label="Phone" error={errors.phone?.message} id={fieldId("phone")}>
           <input
             id={fieldId("phone")}
@@ -205,10 +217,15 @@ export function InquiryForm() {
             ))}
           </select>
         </FormField>
-      </div>
+      </motion.div>
 
       {/* Row 3: What you need + Timeline */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.12 }}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8"
+      >
         <FormField label="What you need" error={errors.whatYouNeed?.message} id={fieldId("whatYouNeed")}>
           <select
             id={fieldId("whatYouNeed")}
@@ -244,9 +261,14 @@ export function InquiryForm() {
             ))}
           </select>
         </FormField>
-      </div>
+      </motion.div>
 
       {/* Full-width fields */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.18 }}
+      >
       <FormField label="Primary goal" error={errors.primaryGoal?.message} id={fieldId("primaryGoal")}>
         <input
           id={fieldId("primaryGoal")}
@@ -285,9 +307,15 @@ export function InquiryForm() {
           {...form.register("notes")}
         />
       </FormField>
+      </motion.div>
 
       {/* Submit row */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-4">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.36 }}
+        className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-4"
+      >
         <Button
           disabled={isDisabled}
           type="submit"
@@ -303,21 +331,39 @@ export function InquiryForm() {
         <span className="text-xs text-muted-foreground">
           We reply within 24 hours with next steps.
         </span>
-      </div>
+      </motion.div>
 
       {/* Status messages — aria-live for screen reader announcements */}
       <div aria-live="polite" aria-atomic="true">
-        {status.type === "error" && (
-          <div className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-base" role="alert">
-            {status.message} Please try again, or reach us at hello@kivox.in.
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {status.type === "error" && (
+            <motion.div
+              key="error"
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.3, ease: easeOutExpo }}
+              className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-base"
+              role="alert"
+            >
+              {status.message} Please try again, or reach us at hello@kivox.in.
+            </motion.div>
+          )}
 
-        {status.type === "success" && (
-          <div className="rounded-xl border border-success/20 bg-success/5 text-success px-5 py-4 text-base" role="status">
-            Received. We&apos;ll reply within 24 hours with next steps.
-          </div>
-        )}
+          {status.type === "success" && (
+            <motion.div
+              key="success"
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.4, ease: easeOutExpo }}
+              className="rounded-xl border border-success/20 bg-success/5 text-success px-5 py-4 text-base"
+              role="status"
+            >
+              Received. We&apos;ll reply within 24 hours with next steps.
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </form>
   );

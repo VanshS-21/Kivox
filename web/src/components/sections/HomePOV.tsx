@@ -118,7 +118,7 @@ export function HomePOV() {
   return (
     <div ref={sectionRef}>
     <Section
-      className="relative py-[180px] lg:py-[260px] overflow-hidden"
+      className="relative py-[200px] lg:py-[300px] overflow-hidden"
       style={{ background: 'var(--bg-primary)' }}
     >
       {/* Committed amber glow — with parallax */}
@@ -150,7 +150,7 @@ export function HomePOV() {
 
         {/* Large centered quote — word-by-word reveal */}
         <blockquote className="text-center max-w-6xl mx-auto">
-          <p className="font-sans font-bold text-foreground" style={{ fontSize: 'clamp(2.25rem, 4vw + 1rem, 5rem)', lineHeight: 1.06, letterSpacing: '-0.02em' }}>
+          <p className="font-sans font-bold text-foreground" style={{ fontSize: 'clamp(2.5rem, 5vw + 1rem, 6rem)', lineHeight: 1.06, letterSpacing: '-0.02em' }}>
             <WordByWordReveal reduce={reduce}>
               We believe great digital platforms
             </WordByWordReveal>
@@ -168,7 +168,7 @@ export function HomePOV() {
               style={{
                 fontFamily: "var(--font-handwritten)",
                 fontWeight: 700,
-                fontSize: "1.15em",
+                fontSize: "1.25em",
                 lineHeight: 1,
               }}
             >
@@ -196,7 +196,7 @@ export function HomePOV() {
           whileInView={reduce ? undefined : { scaleX: 1, opacity: 1 }}
           viewport={viewportOnce}
           transition={{ duration: 1, ease: easeOutExpo, delay: 0.4 }}
-          className="mx-auto mt-16 lg:mt-20 w-32 h-px bg-accent/20 origin-center"
+          className="mx-auto mt-16 lg:mt-20 w-48 h-px bg-accent/30 origin-center"
         />
       </Container>
     </Section>

@@ -54,9 +54,9 @@ export function TunnelCanvas({ className }: TunnelCanvasProps) {
     resize();
     window.addEventListener("resize", resize);
 
-    const LINE_COUNT_H = 24;  /* lines per horizontal edge (top/bottom) */
-    const LINE_COUNT_V = 16;  /* lines per vertical edge (left/right) */
-    const RING_COUNT = 7;     /* concentric depth rings */
+    const LINE_COUNT_H = 12;  /* lines per horizontal edge (top/bottom) */
+    const LINE_COUNT_V = 8;   /* lines per vertical edge (left/right) */
+    const RING_COUNT = 4;     /* concentric depth rings */
 
     function frame(timestamp: number) {
       if (!ctx || !canvas || !isVisible) return;
@@ -81,13 +81,13 @@ export function TunnelCanvas({ className }: TunnelCanvasProps) {
         const innerX = ix + frac * iw;
 
         const pulse = Math.sin(t * 0.6 + i * 0.4) * 0.5 + 0.5;
-        const alpha = 0.06 + pulse * 0.14;
+        const alpha = 0.03 + pulse * 0.08;
 
         ctx.beginPath();
         ctx.moveTo(ox, 0);
         ctx.lineTo(innerX, iy);
         ctx.strokeStyle = rgba(AMBER, alpha);
-        ctx.lineWidth = 0.4 + pulse * 0.4;
+        ctx.lineWidth = 0.3 + pulse * 0.3;
         ctx.stroke();
       }
 
@@ -98,13 +98,13 @@ export function TunnelCanvas({ className }: TunnelCanvasProps) {
         const innerX = ix + frac * iw;
 
         const pulse = Math.sin(t * 0.6 + i * 0.4 + 2.0) * 0.5 + 0.5;
-        const alpha = 0.06 + pulse * 0.14;
+        const alpha = 0.03 + pulse * 0.08;
 
         ctx.beginPath();
         ctx.moveTo(ox, H);
         ctx.lineTo(innerX, ib);
         ctx.strokeStyle = rgba(AMBER, alpha);
-        ctx.lineWidth = 0.4 + pulse * 0.4;
+        ctx.lineWidth = 0.3 + pulse * 0.3;
         ctx.stroke();
       }
 
@@ -115,13 +115,13 @@ export function TunnelCanvas({ className }: TunnelCanvasProps) {
         const innerY = iy + frac * ih;
 
         const pulse = Math.sin(t * 0.7 + i * 0.5) * 0.5 + 0.5;
-        const alpha = 0.06 + pulse * 0.14;
+        const alpha = 0.03 + pulse * 0.08;
 
         ctx.beginPath();
         ctx.moveTo(0, oy);
         ctx.lineTo(ix, innerY);
         ctx.strokeStyle = rgba(AMBER, alpha);
-        ctx.lineWidth = 0.4 + pulse * 0.4;
+        ctx.lineWidth = 0.3 + pulse * 0.3;
         ctx.stroke();
       }
 
@@ -132,13 +132,13 @@ export function TunnelCanvas({ className }: TunnelCanvasProps) {
         const innerY = iy + frac * ih;
 
         const pulse = Math.sin(t * 0.7 + i * 0.5 + 2.0) * 0.5 + 0.5;
-        const alpha = 0.06 + pulse * 0.14;
+        const alpha = 0.03 + pulse * 0.08;
 
         ctx.beginPath();
         ctx.moveTo(W, oy);
         ctx.lineTo(ir, innerY);
         ctx.strokeStyle = rgba(AMBER, alpha);
-        ctx.lineWidth = 0.4 + pulse * 0.4;
+        ctx.lineWidth = 0.3 + pulse * 0.3;
         ctx.stroke();
       }
 
@@ -152,7 +152,7 @@ export function TunnelCanvas({ className }: TunnelCanvasProps) {
         const rr = 4 + frac * 8;
 
         const pulse = Math.sin(t * 0.4 + i * 0.8) * 0.5 + 0.5;
-        const alpha = 0.04 + pulse * 0.08;
+        const alpha = 0.02 + pulse * 0.05;
 
         ctx.beginPath();
         ctx.roundRect(rx, ry, rw, rh, rr);
@@ -161,10 +161,10 @@ export function TunnelCanvas({ className }: TunnelCanvasProps) {
         ctx.stroke();
       }
 
-      /* ── Corner accent: brighter diagonal lines at corners ── */
-      const cornerAlpha = 0.12 + Math.sin(t * 0.5) * 0.08;
+      /* ── Corner accent: subtle diagonal lines at corners ── */
+      const cornerAlpha = 0.06 + Math.sin(t * 0.5) * 0.04;
       ctx.strokeStyle = rgba(AMBER, cornerAlpha);
-      ctx.lineWidth = 0.8;
+      ctx.lineWidth = 0.6;
 
       ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(ix, iy); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(W, 0); ctx.lineTo(ir, iy); ctx.stroke();
@@ -173,8 +173,8 @@ export function TunnelCanvas({ className }: TunnelCanvasProps) {
 
       /* ── Traveling light dots along corner diagonals ── */
       const dotT = (t * 0.7) % 1;
-      const dotAlpha = 0.3 + Math.sin(dotT * Math.PI) * 0.3;
-      const dotR = 1.5 + Math.sin(dotT * Math.PI) * 1;
+      const dotAlpha = 0.2 + Math.sin(dotT * Math.PI) * 0.2;
+      const dotR = 1.2 + Math.sin(dotT * Math.PI) * 0.8;
 
       ctx.fillStyle = rgba(AMBER, dotAlpha);
 

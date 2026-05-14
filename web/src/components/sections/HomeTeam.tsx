@@ -38,7 +38,7 @@ export function HomeTeam() {
             }}
           >
             Built by{" "}
-            <em className="font-serif font-normal text-accent" style={{ fontStyle: "italic" }}>
+            <em className="font-serif font-medium text-accent" style={{ fontStyle: "italic" }}>
               People.
             </em>
           </h2>

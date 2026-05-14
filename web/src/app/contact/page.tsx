@@ -76,7 +76,12 @@ export default function ContactPage() {
           transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.3 }}
           className="mt-16 lg:mt-24"
         >
-          <div className="h-px bg-border mb-10" />
+          <motion.div
+            initial={reduce ? false : { scaleX: 0 }}
+            animate={reduce ? undefined : { scaleX: 1 }}
+            transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.35 }}
+            className="h-px bg-border mb-10 origin-left"
+          />
           <h2 className="text-base font-semibold text-foreground tracking-tight mb-8 font-body">What happens next</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -89,7 +94,7 @@ export default function ContactPage() {
                 key={item.step}
                 initial={reduce ? false : { opacity: 0, y: 12 }}
                 animate={reduce ? undefined : { opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.4 + idx * 0.1 }}
+                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.45 + idx * 0.15 }}
                 className="flex flex-col gap-3"
               >
                 <span className="studio-eyebrow text-accent studio-tabular">{item.step}</span>

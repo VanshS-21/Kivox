@@ -67,13 +67,13 @@ export function HomeProcess() {
                   {/* Number */}
                   <motion.span
                     animate={{
-                      opacity: isActive ? 1 : 0.12,
+                      opacity: isActive ? 1 : 0.15,
                       scale: isActive ? 1 : 0.9,
                     }}
                     transition={{ duration: 0.4, ease: easeOutExpo }}
                     className="block font-mono studio-tabular select-none"
                     style={{
-                      fontSize: "clamp(3rem, 4vw, 5rem)",
+                      fontSize: "clamp(3.5rem, 5vw, 6rem)",
                       fontWeight: 700,
                       lineHeight: 1,
                       color: isActive ? stepColors[idx] : undefined,

@@ -76,7 +76,7 @@ function MagneticCTA({
       onMouseEnter={() => setIsHovered(true)}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-accent-ink rounded-full text-sm font-semibold tracking-tight transition-all duration-300"
+      className="inline-flex items-center gap-3 px-10 py-5 bg-accent text-accent-ink rounded-full text-base font-semibold tracking-tight transition-all duration-300"
       style={{
         transitionProperty: "background-color, color, border-color, scale",
         transform: isPressed ? "scale(0.96)" : undefined,

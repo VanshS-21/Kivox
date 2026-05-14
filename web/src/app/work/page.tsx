@@ -236,35 +236,52 @@ export default function WorkPage() {
 
                 {/* ── Structured data grid ── */}
                 {(project.targetAudience || project.primaryActions || project.coreSections) && (
-                  <motion.div
-                    initial={reduce ? false : { opacity: 0, y: 16 }}
-                    whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                    viewport={viewportOnce}
-                    transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.12 }}
+                  <div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 mb-10 lg:mb-14"
                   >
                     {project.targetAudience && (
-                      <DataBlock
-                        label="Who it serves"
-                        items={project.targetAudience}
-                        color={color}
-                      />
+                      <motion.div
+                        initial={reduce ? false : { opacity: 0, y: 14 }}
+                        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                        viewport={viewportOnce}
+                        transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.12 }}
+                      >
+                        <DataBlock
+                          label="Who it serves"
+                          items={project.targetAudience}
+                          color={color}
+                        />
+                      </motion.div>
                     )}
                     {project.primaryActions && (
-                      <DataBlock
-                        label="Primary actions"
-                        items={project.primaryActions}
-                        color={color}
-                      />
+                      <motion.div
+                        initial={reduce ? false : { opacity: 0, y: 14 }}
+                        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                        viewport={viewportOnce}
+                        transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.20 }}
+                      >
+                        <DataBlock
+                          label="Primary actions"
+                          items={project.primaryActions}
+                          color={color}
+                        />
+                      </motion.div>
                     )}
                     {project.coreSections && (
-                      <DataBlock
-                        label="Key sections"
-                        items={project.coreSections}
-                        color={color}
-                      />
+                      <motion.div
+                        initial={reduce ? false : { opacity: 0, y: 14 }}
+                        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                        viewport={viewportOnce}
+                        transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.28 }}
+                      >
+                        <DataBlock
+                          label="Key sections"
+                          items={project.coreSections}
+                          color={color}
+                        />
+                      </motion.div>
                     )}
-                  </motion.div>
+                  </div>
                 )}
 
                 {/* ── UX decisions — inline list ── */}

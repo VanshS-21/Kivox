@@ -29,7 +29,7 @@ export function HomeMarquee() {
 
   return (
     <section
-      className="relative py-10 lg:py-14 overflow-hidden border-y border-border bg-surface-alt"
+      className="relative py-8 lg:py-12 overflow-hidden border-y border-border bg-surface-alt"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -66,7 +66,7 @@ export function HomeMarquee() {
             return (
               <div
                 key={`${item}-${idx}`}
-                className="shrink-0 flex items-center gap-10 px-5"
+                className="shrink-0 flex items-center gap-12 px-6"
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
               >
@@ -76,7 +76,7 @@ export function HomeMarquee() {
                     color: isHovered ? "var(--accent)" : "var(--fg-muted)",
                   }}
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-base lg:text-lg font-medium whitespace-nowrap font-sans cursor-default select-none"
+                  className="text-xl lg:text-2xl font-semibold whitespace-nowrap font-sans cursor-default select-none"
                 >
                   {item}
                 </motion.span>
@@ -86,7 +86,7 @@ export function HomeMarquee() {
                     opacity: isHovered ? 0.9 : 0.35,
                   }}
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="w-1.5 h-1.5 rounded-full bg-accent shrink-0"
+                  className="w-2 h-2 rounded-full bg-accent shrink-0"
                 />
               </div>
             );

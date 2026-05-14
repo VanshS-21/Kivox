@@ -173,8 +173,8 @@ export function HomeHero() {
             }}
             className="max-w-[500px] mb-10 lg:mb-12"
             style={{
-              fontSize: "1rem",
-              fontWeight: 400,
+              fontSize: "1.125rem",
+              fontWeight: 450,
               lineHeight: 1.7,
               color: "oklch(0.58 0.008 65)",
             }}
@@ -209,7 +209,7 @@ export function HomeHero() {
               <ButtonLink
                 href="/contact"
                 variant="primary"
-                className="w-full sm:w-auto text-[13px] px-7 py-[13px] font-medium tracking-[0.02em] rounded-full"
+                className="w-full sm:w-auto text-[15px] px-8 py-[15px] font-medium tracking-[0.02em] rounded-full"
               >
                 {home.hero.ctas.primary}
                 <span className="ml-2 inline-block transition-transform group-hover:translate-x-0.5">→</span>
@@ -230,7 +230,7 @@ export function HomeHero() {
               <ButtonLink
                 href="/work"
                 variant="secondary"
-                className="w-full sm:w-auto text-[13px] px-6 py-[13px] font-normal tracking-[0.02em] rounded-full"
+                className="w-full sm:w-auto text-[15px] px-7 py-[15px] font-normal tracking-[0.02em] rounded-full"
                 style={{ color: "oklch(0.72 0.008 65)", borderColor: "oklch(0.32 0.008 65)" }}
               >
                 {home.hero.ctas.secondary}

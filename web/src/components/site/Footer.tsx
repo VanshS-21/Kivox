@@ -70,9 +70,9 @@ export function Footer() {
               <div
                 className="font-sans font-bold tracking-tight text-foreground"
                 style={{
-                  fontSize: "clamp(2.5rem, 4vw + 1rem, 5rem)",
+                  fontSize: "clamp(2.5rem, 5vw + 1rem, 6rem)",
                   lineHeight: 1.05,
-                  letterSpacing: "-0.03em",
+                  letterSpacing: "-0.035em",
                 }}
               >
                 {brand.name}
@@ -89,7 +89,12 @@ export function Footer() {
               className="grid grid-cols-2 sm:grid-cols-3 gap-y-12 gap-x-8 lg:gap-x-16"
             >
               {/* Column 1: Navigate */}
-              <div>
+              <motion.div
+                initial={reduce ? false : { opacity: 0, y: 10 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0 }}
+              >
                 <div className="studio-eyebrow text-subtle-foreground mb-6">Navigate</div>
                 <div className="flex flex-col gap-3">
                   {navigation.primary.map((link) => (
@@ -102,10 +107,15 @@ export function Footer() {
                     </Link>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Column 2: Connect */}
-              <div>
+              <motion.div
+                initial={reduce ? false : { opacity: 0, y: 10 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.1 }}
+              >
                 <div className="studio-eyebrow text-subtle-foreground mb-6">Connect</div>
                 <div className="flex flex-col gap-3">
                   <a
@@ -133,10 +143,16 @@ export function Footer() {
                     GitHub ↗
                   </a>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Column 3: Contact */}
-              <div className="col-span-2 sm:col-span-1">
+              <motion.div
+                initial={reduce ? false : { opacity: 0, y: 10 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.2 }}
+                className="col-span-2 sm:col-span-1"
+              >
                 <div className="studio-eyebrow text-subtle-foreground mb-6">Contact</div>
                 <div className="flex flex-col gap-3">
                   <a
@@ -152,7 +168,7 @@ export function Footer() {
                     {brand.contact.address}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
