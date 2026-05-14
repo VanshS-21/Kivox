@@ -12,6 +12,7 @@ import { Section } from "@/components/ui/Section";
 import { CanvasErrorBoundary } from "@/components/ui/CanvasErrorBoundary";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { easeOutExpo, easeOutQuint } from "@/lib/motion";
+import { useLoadingContext } from "@/lib/context/LoadingContext";
 
 const ConstellationCanvas = dynamic(
   () => import("@/components/ui/ConstellationCanvas").then((m) => m.ConstellationCanvas),
@@ -24,11 +25,13 @@ function SplitWords({
   className,
   delay = 0,
   reduce,
+  isReady = true,
 }: {
   children: string;
   className?: string;
   delay?: number;
   reduce: boolean | null;
+  isReady?: boolean;
 }) {
   const words = children.split(" ");
   return (
@@ -41,7 +44,7 @@ function SplitWords({
         className={className}
         aria-hidden="true"
         initial={reduce ? false : "hidden"}
-        animate={reduce ? undefined : "show"}
+        animate={reduce ? undefined : (isReady ? "show" : "hidden")}
         variants={{
           hidden: {},
           show: {
@@ -76,6 +79,7 @@ function SplitWords({
 
 export function HomeHero() {
   const reduce = useReducedMotion();
+  const { isReady } = useLoadingContext();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -120,7 +124,7 @@ export function HomeHero() {
       <Container className="relative z-10">
         <motion.div
           initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : "show"}
+          animate={reduce ? undefined : (isReady ? "show" : "hidden")}
           style={{ 
             scale: reduce ? 1 : scale, 
             opacity: reduce ? 1 : opacity, 
@@ -173,20 +177,20 @@ export function HomeHero() {
               letterSpacing: "-0.02em",
             }}
           >
-            <SplitWords delay={0.2} reduce={reduce}>
+            <SplitWords delay={0.2} reduce={reduce} isReady={isReady}>
               Make your
             </SplitWords>
             {" "}<br className="hidden sm:block" />
-            <SplitWords delay={0.35} reduce={reduce}>
+            <SplitWords delay={0.35} reduce={reduce} isReady={isReady}>
               business
             </SplitWords>
             {" "}<br className="hidden sm:block" />
-            <SplitWords delay={0.5} reduce={reduce}>
+            <SplitWords delay={0.5} reduce={reduce} isReady={isReady}>
               easier to
             </SplitWords>{" "}
             <motion.span
               initial={reduce ? false : { opacity: 0, y: 14 }}
-              animate={reduce ? undefined : { opacity: 1, y: 0 }}
+              animate={reduce ? undefined : (isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 })}
               transition={{ duration: 0.7, ease: easeOutQuint, delay: 0.65 }}
               className="inline-block font-serif"
               style={{ fontStyle: "italic", fontWeight: 300, color: "var(--accent)" }}
@@ -279,7 +283,7 @@ export function HomeHero() {
       {/* Scroll indicator */}
       <motion.div
         initial={reduce ? false : { opacity: 0, y: -10 }}
-        animate={reduce ? undefined : { opacity: 1, y: 0 }}
+        animate={reduce ? undefined : (isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 })}
         transition={{ duration: 0.6, ease: easeOutExpo, delay: 1.4 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >

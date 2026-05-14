@@ -17,7 +17,9 @@ import { Footer } from "@/components/site/Footer";
 import { Navigation } from "@/components/Navigation";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { SkipLink } from "@/components/site/SkipLink";
+import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { homeSeo } from "@/content/seo/home";
+import { LoadingProvider } from "@/lib/context/LoadingContext";
 import { getMetadataBase } from "@/lib/metadata";
 import { getOrganizationJsonLd } from "@/lib/structuredData";
 import { themeInitScript } from "@/lib/themeScript";
@@ -86,22 +88,25 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
-        <DevThemeOverride />
-        <ScrollProgress />
-        <SkipLink />
-        <Navigation />
-        <main className="flex-1" id="main-content">
-          {children}
-        </main>
-        <Footer />
-        <BackToTop />
-        <script
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          type="application/ld+json"
-        />
-        <Analytics />
-        <CursorGlow />
-        <ConsoleEasterEgg />
+        <LoadingProvider>
+          <LoadingScreen />
+          <DevThemeOverride />
+          <ScrollProgress />
+          <SkipLink />
+          <Navigation />
+          <main className="flex-1" id="main-content">
+            {children}
+          </main>
+          <Footer />
+          <BackToTop />
+          <script
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            type="application/ld+json"
+          />
+          <Analytics />
+          <CursorGlow />
+          <ConsoleEasterEgg />
+        </LoadingProvider>
       </body>
     </html>
   );
