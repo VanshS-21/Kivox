@@ -125,9 +125,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                     href={project.liveUrl}
                     target={project.liveUrl.startsWith("/") ? "_self" : "_blank"}
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-border bg-card/30 hover:bg-accent hover:border-accent hover:text-[var(--bg-primary)] text-sm font-semibold tracking-wide transition-all duration-300 shrink-0 w-fit group/cta"
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full border text-sm font-semibold tracking-wide transition-all duration-300 hover:opacity-80 shrink-0 w-fit group/cta"
                     style={{
-                      color,
+                      backgroundColor: color,
+                      borderColor: color,
+                      color: "var(--bg-primary)",
                     }}
                   >
                     {ctaLabel}

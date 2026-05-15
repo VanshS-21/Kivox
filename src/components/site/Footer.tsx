@@ -45,6 +45,8 @@ export function Footer() {
   const reduce = useReducedMotion();
   const pathname = usePathname();
 
+  if (pathname.startsWith("/showcase")) return null;
+
   return (
     <footer className="bg-surface-alt border-t border-border relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-20 lg:pt-32 pb-8">

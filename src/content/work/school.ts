@@ -8,7 +8,7 @@ export const school = {
     "/work/mockups/School-2.webp",
     "/work/mockups/School-3.webp",
   ],
-  liveUrl: "/showcase/school.html",
+  liveUrl: "/showcase/school",
   demonstrates:
     "Admissions clarity: structure and trust for parents, with a clean inquiry path and information hierarchy that reduces back-and-forth calls.",
   challenge:

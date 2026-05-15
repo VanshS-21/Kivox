@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, animate, useReducedMotion } from "motion/react";
 import { useLoadingContext } from "@/lib/context/LoadingContext";
 import { easeOutExpo, easeOutQuint } from "@/lib/motion";
@@ -10,6 +11,7 @@ export function LoadingScreen() {
   const [isVisible, setIsVisible] = useState(true);
   const [progress, setProgress] = useState(0);
   const reduce = useReducedMotion();
+  const pathname = usePathname();
 
   useEffect(() => {
     // If the user has already seen the loader, unmount immediately
@@ -59,6 +61,8 @@ export function LoadingScreen() {
       if (controls) controls.stop();
     };
   }, [hasSeenLoader, reduce, setReady]);
+
+  if (pathname.startsWith("/showcase")) return null;
 
   return (
     <AnimatePresence>

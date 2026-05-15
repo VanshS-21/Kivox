@@ -134,6 +134,9 @@ export function Navigation() {
   //   useHeroColors = true only if we are over the hero AND the menu is closed
   const useHeroColors = overHero && !isOpen;
 
+  // Hide on showcase demo sites
+  if (pathname.startsWith("/showcase")) return null;
+
   return (
     <>
       {/* Navigation bar */}

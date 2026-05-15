@@ -8,7 +8,7 @@ export const cafe = {
     "/work/mockups/Cafe-2.webp",
     "/work/mockups/Cafe-3.webp",
   ],
-  liveUrl: "/showcase/cafe.html",
+  liveUrl: "/showcase/cafe",
   demonstrates:
     "Local discovery and visit intent: menu clarity, location confidence, and a fast mobile experience.",
   challenge:

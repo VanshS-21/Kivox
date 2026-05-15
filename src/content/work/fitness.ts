@@ -8,7 +8,7 @@ export const fitness = {
     "/work/mockups/Gym-2.webp",
     "/work/mockups/Gym-3.webp",
   ],
-  href: "/showcase/fitness.html",
+  liveUrl: "/showcase/fitness",
   demonstrates:
     "Schedule and inquiry clarity: memberships/services, class schedules, trainer/service credibility, and a clean lead path.",
   challenge:
