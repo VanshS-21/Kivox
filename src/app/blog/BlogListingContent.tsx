@@ -13,7 +13,6 @@ import {
 } from "@/lib/motion";
 import type { BlogPostMeta } from "@/lib/blog-types";
 import { formatDate } from "@/lib/blog-types";
-
 /* ─── Reading time icon — small book glyph ─── */
 function ReadingTimeIcon() {
   return (

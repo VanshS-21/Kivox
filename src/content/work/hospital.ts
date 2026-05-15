@@ -1,5 +1,5 @@
 export const hospital = {
-  id: "hospital",
+  slug: "hospital",
   title: "Hospital Website",
   label: "Healthcare · Web Design",
   image: "/work/hospital copy.webp",
@@ -8,7 +8,7 @@ export const hospital = {
     "/work/mockups/Hospital-2.webp",
     "/work/mockups/Hospital-3.webp",
   ],
-  href: "/showcase/hospital.html",
+  liveUrl: "https://example.com/hospital",
   demonstrates:
     "Trust-first healthcare information architecture: clear services, doctor discovery, and a calm path to appointment/contact.",
   challenge:

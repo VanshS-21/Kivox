@@ -1,5 +1,5 @@
 export const cafe = {
-  id: "cafe",
+  slug: "cafe",
   title: "Cafe Website",
   label: "Hospitality · Local Discovery",
   image: "/work/cafe copy.webp",
@@ -8,7 +8,7 @@ export const cafe = {
     "/work/mockups/Cafe-2.webp",
     "/work/mockups/Cafe-3.webp",
   ],
-  href: "/showcase/cafe.html",
+  liveUrl: "/showcase/cafe.html",
   demonstrates:
     "Local discovery and visit intent: menu clarity, location confidence, and a fast mobile experience.",
   challenge:

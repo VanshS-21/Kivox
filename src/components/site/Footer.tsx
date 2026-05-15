@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, useReducedMotion, useInView } from "motion/react";
 
 import { brand } from "@/content/brand";
@@ -42,6 +43,7 @@ function YearCountUp() {
 
 export function Footer() {
   const reduce = useReducedMotion();
+  const pathname = usePathname();
 
   return (
     <footer className="bg-surface-alt border-t border-border relative overflow-hidden">
@@ -100,16 +102,19 @@ export function Footer() {
               <motion.div variants={fadeUp}>
                 <div className="studio-eyebrow text-subtle-foreground mb-6">Navigate</div>
                 <nav aria-label="Footer navigation" className="flex flex-col gap-4 items-start">
-                  {navigation.primary.map((link) => (
-                    <Magnetic key={link.href} strength={0.2} className="inline-block">
-                      <Link
-                        href={link.href}
-                        className="text-foreground hover:text-accent transition-colors text-lg font-medium"
-                      >
-                        {link.label}
-                      </Link>
-                    </Magnetic>
-                  ))}
+                  {navigation.primary.map((link) => {
+                    if (pathname === link.href) return null;
+                    return (
+                      <Magnetic key={link.href} strength={0.2} className="inline-block">
+                        <Link
+                          href={link.href}
+                          className="text-foreground hover:text-accent transition-colors text-lg font-medium"
+                        >
+                          {link.label}
+                        </Link>
+                      </Magnetic>
+                    );
+                  })}
                 </nav>
               </motion.div>
 

@@ -23,6 +23,7 @@ import { LoadingProvider } from "@/lib/context/LoadingContext";
 import { getMetadataBase } from "@/lib/metadata";
 import { getOrganizationJsonLd } from "@/lib/structuredData";
 import { themeInitScript } from "@/lib/themeScript";
+import { CursorProvider } from "@/lib/context/CursorContext";
 
 const sans = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -88,25 +89,27 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
-        <LoadingProvider>
-          <LoadingScreen />
-          <DevThemeOverride />
-          <ScrollProgress />
-          <SkipLink />
-          <Navigation />
-          <main className="flex-1" id="main-content">
-            {children}
-          </main>
-          <Footer />
-          <BackToTop />
-          <script
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            type="application/ld+json"
-          />
-          <Analytics />
-          <CursorGlow />
-          <ConsoleEasterEgg />
-        </LoadingProvider>
+        <CursorProvider>
+          <LoadingProvider>
+            <LoadingScreen />
+            <DevThemeOverride />
+            <ScrollProgress />
+            <SkipLink />
+            <Navigation />
+            <main className="flex-1" id="main-content">
+              {children}
+            </main>
+            <Footer />
+            <BackToTop />
+            <script
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+              type="application/ld+json"
+            />
+            <Analytics />
+            <CursorGlow />
+            <ConsoleEasterEgg />
+          </LoadingProvider>
+        </CursorProvider>
       </body>
     </html>
   );

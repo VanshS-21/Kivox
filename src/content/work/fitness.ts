@@ -1,5 +1,5 @@
 export const fitness = {
-  id: "fitness",
+  slug: "fitness",
   title: "Fitness / Wellness Website",
   label: "Fitness · Lead Generation",
   image: "/work/gym.webp",

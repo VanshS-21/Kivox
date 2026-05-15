@@ -1,5 +1,5 @@
 export const hotel = {
-  id: "hotel",
+  slug: "hotel",
   title: "Hotel Website",
   label: "Luxury · Hospitality",
   image: "/work/hotel copy.webp",
@@ -8,7 +8,7 @@ export const hotel = {
     "/work/mockups/Hotel-2.webp",
     "/work/mockups/Hotel-3.webp",
   ],
-  href: "/showcase/hotel.html",
+  liveUrl: "https://example.com/hotel",
   demonstrates:
     "Booking confidence: clear rooms, policies, and direct inquiry/booking paths with premium presentation.",
   challenge:

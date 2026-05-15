@@ -112,7 +112,7 @@ export function HomeWorkPreview() {
         >
           {featuredWork.map((project, idx) => (
             <div
-              key={project.id}
+              key={project.slug}
               className={reduce ? "w-full min-h-[85vh] flex items-center relative overflow-hidden border-b border-border/20" : "min-w-[100vw] h-full flex items-center relative overflow-hidden carousel-frame"}
             >
               {/* ── Full-bleed background image ── */}
@@ -138,7 +138,7 @@ export function HomeWorkPreview() {
                 {/* Project-color accent wash */}
                 <div
                   className="absolute inset-0 opacity-[0.06]"
-                  style={{ background: `radial-gradient(ellipse at 70% 50%, ${projectColors[project.id] || "var(--accent)"}, transparent 60%)` }}
+                  style={{ background: `radial-gradient(ellipse at 70% 50%, ${projectColors[project.slug] || "var(--accent)"}, transparent 60%)` }}
                 />
               </div>
 
@@ -171,7 +171,7 @@ export function HomeWorkPreview() {
                     >
                       <span
                         className="studio-eyebrow font-bold"
-                        style={{ color: projectColors[project.id] || "var(--accent)" }}
+                        style={{ color: projectColors[project.slug] || "var(--accent)" }}
                       >
                         Showcase · {project.title}
                       </span>
@@ -233,7 +233,7 @@ export function HomeWorkPreview() {
                     >
                       {/* Tags */}
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono tracking-[0.15em] uppercase text-subtle-foreground work-preview-flex-center">
-                        {(projectTags[project.id] || ["DESIGN", "DEVELOPMENT"]).map(
+                        {(projectTags[project.slug] || ["DESIGN", "DEVELOPMENT"]).map(
                           (tag, tagIdx) => (
                             <span key={tag} className="flex items-center gap-4">
                               {tagIdx > 0 ? <span className="opacity-40">·</span> : null}
@@ -266,27 +266,25 @@ export function HomeWorkPreview() {
                 <div className="absolute bottom-16 sm:bottom-12 left-6 sm:left-auto right-auto sm:right-8 lg:right-16 xl:right-24 z-30">
                   <Magnetic strength={0.2}>
                     <Link
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`View Live Showcase: ${project.title} (opens in a new tab)`}
+                      href={`/work/${project.slug}`}
+                      aria-label={`View Case Study: ${project.title}`}
                       className="inline-flex items-center gap-4 text-sm font-semibold opacity-60 hover:opacity-100 transition-opacity duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background rounded-full"
-                      style={{ color: projectColors[project.id] || "var(--accent)" }}
+                      style={{ color: projectColors[project.slug] || "var(--accent)" }}
                     >
                       <span
                         className="px-5 py-2.5 bg-[var(--bg-surface-alt)] rounded-full border transition-colors duration-300 block"
                         style={{
-                          borderColor: `color-mix(in oklch, ${projectColors[project.id] || "var(--accent)"} 20%, transparent)`,
+                          borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 20%, transparent)`,
                         }}
                       >
-                        View Live Showcase →
+                        View Case Study →
                       </span>
                     </Link>
                   </Magnetic>
                 </div>
 
                 {/* ── Cinematic Staggered Media Grid ── */}
-                <ShowcaseMediaCluster images={project.images} href={project.href} title={project.title} />
+                <ShowcaseMediaCluster images={project.images} href={`/work/${project.slug}`} title={project.title} />
 
               </div>
             </div>

@@ -1,190 +1,158 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, useSpring, useReducedMotion } from "motion/react";
+import { useCursor } from "@/lib/context/CursorContext";
+import { usePathname } from "next/navigation";
 
-/**
- * A beautiful, minimal difference-blended cursor.
- * Features a single, smooth-tracking dot that elegantly scales
- * on interactive elements without overwhelming the UI.
- */
 export function CursorGlow() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const tailRef = useRef<HTMLDivElement>(null);
-  const posRef = useRef({ x: -100, y: -100 });
-  const lerpPosRef = useRef({ x: -100, y: -100 });
-  const tailPosRef = useRef({ x: -100, y: -100 });
-  const scaleRef = useRef(1);
-  const currentScaleRef = useRef(1);
-  const visibleRef = useRef(false);
+  const { state, setCursor, resetCursor } = useCursor();
+  const [isVisible, setIsVisible] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const pathname = usePathname();
+
+  // We use springs for that buttery smooth "magnetic" feel
+  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
+  const cursorX = useSpring(-100, springConfig);
+  const cursorY = useSpring(-100, springConfig);
+
   const idleTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-  const rafRef = useRef<number>(0);
-  const isTickingRef = useRef(false);
 
-  const tick = useCallback(() => {
-    const dot = dotRef.current;
-    const tail = tailRef.current;
-    if (!dot || !tail) {
-      isTickingRef.current = false;
-      return;
-    }
-
-    const tp = lerpPosRef.current;
-    const tlp = tailPosRef.current;
-    const gp = posRef.current;
-    
-    // Smooth trailing physics for main dot
-    tp.x += (gp.x - tp.x) * 0.25;
-    tp.y += (gp.y - tp.y) * 0.25;
-
-    // Fluid trailing physics for tail (follows the main dot)
-    tlp.x += (tp.x - tlp.x) * 0.15;
-    tlp.y += (tp.y - tlp.y) * 0.15;
-
-    // Smooth scaling physics
-    currentScaleRef.current += (scaleRef.current - currentScaleRef.current) * 0.2;
-    const s = currentScaleRef.current;
-    
-    // Tail shrinks when hovering over interactive elements
-    const tailScale = s > 1.1 ? 0 : 1;
-
-    dot.style.transform = `translate(${tp.x}px, ${tp.y}px) translate(-50%, -50%) scale(${s})`;
-    tail.style.transform = `translate(${tlp.x}px, ${tlp.y}px) translate(-50%, -50%) scale(${tailScale})`;
-
-    // Stop ticking if we've converged
-    const dx = gp.x - tp.x;
-    const dy = gp.y - tp.y;
-    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5 && Math.abs(scaleRef.current - s) < 0.01) {
-      isTickingRef.current = false;
-      return;
-    }
-
-    rafRef.current = requestAnimationFrame(tick);
-  }, []);
-
-  const ensureTicking = useCallback(() => {
-    if (!isTickingRef.current) {
-      isTickingRef.current = true;
-      rafRef.current = requestAnimationFrame(tick);
-    }
-  }, [tick]);
+  // Reset cursor on route changes
+  useEffect(() => {
+    resetCursor();
+  }, [pathname, resetCursor]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) return;
+    if (typeof window === "undefined" || reduceMotion) return;
+
+    // Only enable on devices with fine pointer (mouse)
     const pointer = window.matchMedia("(pointer: fine)");
     if (!pointer.matches) return;
 
-    const dot = dotRef.current;
-    const tail = tailRef.current;
-    if (!dot || !tail) return;
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
 
-    function handleMouseMove(e: MouseEvent) {
-      posRef.current = { x: e.clientX, y: e.clientY };
-
+      // Handle custom target data attributes
       const target = e.target as HTMLElement;
-      if (target.closest?.(".carousel-frame")) {
-        if (visibleRef.current) {
-          dot!.style.opacity = "0";
-          tail!.style.opacity = "0";
-          visibleRef.current = false;
-        }
+      if (target.closest?.(".carousel-frame") || target.closest?.("[data-cursor='hidden']")) {
+        if (isVisible) setIsVisible(false);
         return;
       }
 
-      if (!visibleRef.current) {
-        visibleRef.current = true;
-        dot!.style.opacity = "1";
-        tail!.style.opacity = "1";
-        // Snap the lerp position to cursor on first appearance to prevent flying in
-        lerpPosRef.current = { x: e.clientX, y: e.clientY };
-        tailPosRef.current = { x: e.clientX, y: e.clientY };
-      }
+      if (!isVisible) setIsVisible(true);
 
-      ensureTicking();
       clearTimeout(idleTimerRef.current);
       idleTimerRef.current = setTimeout(() => {
-        if (dot) dot.style.opacity = "0";
-        if (tail) tail.style.opacity = "0";
-        visibleRef.current = false;
+        setIsVisible(false);
       }, 3000);
-    }
+    };
 
-    function handleMouseOver(e: MouseEvent) {
+    const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
-      if (target.closest?.("[data-cursor='logo']")) {
-        scaleRef.current = 2.5; // Larger pop for the brand logo
-      } else if (target.closest?.("a, button, [role='button'], input, textarea, select")) {
-        scaleRef.current = 1.5; // Slight elegant pop
-      } else {
-        scaleRef.current = 1;
+
+      // Event delegation for standard interactive elements (if they don't have a CursorTrigger)
+      // We check if the current variant is default to not override CursorTrigger contexts
+      if (state.variant === "default") {
+        if (target.closest?.("[data-cursor='logo']")) {
+          setCursor({ variant: "hover" });
+        } else if (target.closest?.("a, button, [role='button'], input, textarea, select")) {
+          setCursor({ variant: "hover" });
+        }
       }
-      ensureTicking();
-    }
+    };
 
-    function handleMouseLeave() {
-      if (dot) dot.style.opacity = "0";
-      if (tail) tail.style.opacity = "0";
-      visibleRef.current = false;
-    }
+    const handleMouseLeave = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (state.variant === "hover" && target.closest?.("a, button, [role='button'], input, textarea, select")) {
+        resetCursor();
+      }
+    };
 
-    document.addEventListener("mousemove", handleMouseMove, { passive: true });
+    const handleGlobalLeave = () => setIsVisible(false);
+
+    window.addEventListener("mousemove", moveCursor, { passive: true });
     document.addEventListener("mouseover", handleMouseOver, { passive: true });
-    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseout", handleMouseLeave, { passive: true });
+    document.addEventListener("mouseleave", handleGlobalLeave);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousemove", moveCursor);
       document.removeEventListener("mouseover", handleMouseOver);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      cancelAnimationFrame(rafRef.current);
+      document.removeEventListener("mouseout", handleMouseLeave);
+      document.removeEventListener("mouseleave", handleGlobalLeave);
       clearTimeout(idleTimerRef.current);
-      isTickingRef.current = false;
     };
-  }, [ensureTicking]);
+  }, [cursorX, cursorY, isVisible, reduceMotion, state.variant, setCursor, resetCursor]);
+
+  if (reduceMotion) return null;
+
+  // Define variants
+  const variants = {
+    default: {
+      width: 8,
+      height: 8,
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      border: "0px solid rgba(255, 255, 255, 0)",
+      opacity: isVisible ? 1 : 0,
+    },
+    hover: {
+      width: 48,
+      height: 48,
+      backgroundColor: "rgba(255, 255, 255, 0)",
+      border: "1.5px solid rgba(255, 255, 255, 0.4)",
+      opacity: isVisible ? 1 : 0,
+    },
+    text: {
+      width: 100,
+      height: 100,
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      border: "0px solid rgba(255, 255, 255, 0)",
+      opacity: isVisible ? 1 : 0,
+    },
+    video: {
+      width: 90,
+      height: 90,
+      backgroundColor: "rgba(255, 123, 71, 1)", // brand orange
+      opacity: isVisible ? 1 : 0,
+    },
+    hidden: {
+      opacity: 0,
+      width: 14,
+      height: 14,
+    },
+  };
 
   return (
-    <div
+    <motion.div
+      className="pointer-events-none fixed top-0 left-0 z-[9999] flex items-center justify-center rounded-full overflow-hidden"
       style={{
-        position: "fixed",
-        inset: 0,
-        pointerEvents: "none",
-        zIndex: 9999,
-        mixBlendMode: "difference",
+        x: cursorX,
+        y: cursorY,
+        translateX: "-50%",
+        translateY: "-50%",
+      }}
+      variants={variants}
+      animate={state.variant}
+      transition={{
+        width: { type: "spring", mass: 0.5, stiffness: 400, damping: 25 },
+        height: { type: "spring", mass: 0.5, stiffness: 400, damping: 25 },
+        opacity: { duration: 0.2 },
       }}
     >
-      <div
-        ref={dotRef}
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: 10,
-          height: 10,
-          borderRadius: "50%",
-          background: "#fff",
-          opacity: 0,
-          transition: "opacity 0.3s ease-out",
-          willChange: "transform",
+      <motion.div
+        className="text-black font-semibold text-sm whitespace-nowrap"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{
+          opacity: state.variant === "text" || state.variant === "video" ? 1 : 0,
+          scale: state.variant === "text" || state.variant === "video" ? 1 : 0.8,
         }}
-      />
-      <div
-        ref={tailRef}
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: 4,
-          height: 4,
-          borderRadius: "50%",
-          background: "#fff",
-          opacity: 0,
-          transition: "opacity 0.3s ease-out",
-          willChange: "transform",
-        }}
-      />
-    </div>
+        transition={{ duration: 0.2 }}
+      >
+        {state.text && <span>{state.text}</span>}
+        {state.icon && !state.text && <span>{state.icon}</span>}
+      </motion.div>
+    </motion.div>
   );
 }

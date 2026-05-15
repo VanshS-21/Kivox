@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
+import { CursorTrigger } from "@/components/ui/CursorTrigger";
 
 interface ProjectCarouselProps {
   images: string[];
@@ -66,31 +67,33 @@ export function ProjectCarousel({
 
         {/* ── Image track ── */}
         <div className="carousel-frame-inner relative z-[4]">
-          <div
-            ref={trackRef}
-            className="carousel-track flex overflow-hidden rounded-md lg:rounded-lg"
-            style={{ scrollSnapType: "x mandatory" }}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {images.map((src, idx) => (
-              <div
-                key={idx}
-                className="carousel-slide relative w-full shrink-0"
-                style={{ aspectRatio: "16 / 10", scrollSnapAlign: "start" }}
-              >
-                <Image
-                  src={src}
-                  alt={`${alt}, slide ${idx + 1}`}
-                  fill
-                  className="carousel-image object-cover object-top"
-                  sizes="(max-width: 768px) 100vw, 85vw"
-                  priority={priority && idx === 0}
-                />
-              </div>
-            ))}
-          </div>
+          <CursorTrigger variant="text" text="Drag" className="block">
+            <div
+              ref={trackRef}
+              className="carousel-track flex overflow-hidden rounded-md lg:rounded-lg"
+              style={{ scrollSnapType: "x mandatory" }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              {images.map((src, idx) => (
+                <div
+                  key={idx}
+                  className="carousel-slide relative w-full shrink-0"
+                  style={{ aspectRatio: "16 / 10", scrollSnapAlign: "start" }}
+                >
+                  <Image
+                    src={src}
+                    alt={`${alt}, slide ${idx + 1}`}
+                    fill
+                    className="carousel-image object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 85vw"
+                    priority={priority && idx === 0}
+                  />
+                </div>
+              ))}
+            </div>
+          </CursorTrigger>
         </div>
 
         {/* ── Arrow buttons ── */}

@@ -192,15 +192,17 @@ export function Navigation() {
             {/* Right side — CTA, theme toggle, hamburger */}
             <div className="flex items-center gap-3 relative z-[60]">
               {/* Primary CTA */}
-              <Magnetic strength={0.15}>
-                <Link
-                  href="/contact"
-                  className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-200"
-                >
-                  Start a project
-                  <span className="text-base">→</span>
-                </Link>
-              </Magnetic>
+              {pathname !== "/contact" && (
+                <Magnetic strength={0.15}>
+                  <Link
+                    href="/contact"
+                    className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-200"
+                  >
+                    Start a project
+                    <span className="text-base">→</span>
+                  </Link>
+                </Magnetic>
+              )}
 
               {/* Theme toggle */}
               <ThemeToggle
@@ -212,7 +214,9 @@ export function Navigation() {
               <Magnetic strength={0.25}>
                 <button
                   ref={hamburgerRef}
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
                   className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-accent/10 transition-colors"
                   aria-label="Toggle menu"
                   aria-expanded={isOpen}
@@ -286,7 +290,9 @@ export function Navigation() {
                       >
                         <Link
                           href={item.href}
-                          onClick={() => setIsOpen(false)}
+                          onClick={() => {
+                            setIsOpen(false);
+                          }}
                           className="flex items-baseline gap-6 py-5 lg:py-6 group relative"
                           onMouseEnter={(e) => {
                             const line = e.currentTarget.querySelector<HTMLSpanElement>('[data-underline]');
@@ -353,7 +359,9 @@ export function Navigation() {
                         href={brand.socials.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
                         className="block text-base text-muted-foreground hover:text-foreground transition-colors"
                       >
                         LinkedIn ↗
@@ -364,7 +372,9 @@ export function Navigation() {
                         href={brand.socials.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
                         className="block text-base text-muted-foreground hover:text-foreground transition-colors"
                       >
                         Instagram ↗
@@ -382,7 +392,9 @@ export function Navigation() {
                     <Magnetic strength={0.1}>
                       <Link
                         href={`mailto:${brand.contact.email}`}
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
                         className="inline-block text-lg text-foreground hover:text-accent transition-colors font-medium"
                       >
                         {brand.contact.email}

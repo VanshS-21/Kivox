@@ -2,8 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useId, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { motion, AnimatePresence } from "motion/react";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 import { easeOutExpo } from "@/lib/motion";
 
 import { Button } from "@/components/ui/Button";
@@ -64,25 +65,7 @@ const inputStyle = [
   "disabled:opacity-50 disabled:pointer-events-none",
 ].join(" ");
 
-/** Select style — matching the input but with a subtle dropdown arrow */
-const selectStyle = [
-  "w-full h-12 px-0 py-3",
-  "bg-transparent",
-  "border-0 border-b border-border",
-  "text-base text-foreground",
-  "outline-none transition-colors duration-200",
-  "focus:border-accent focus:bg-accent-muted/50",
-  "disabled:opacity-50 disabled:pointer-events-none",
-  "appearance-none cursor-pointer",
-  // Custom dropdown arrow via background-image
-  "bg-no-repeat bg-[length:16px_16px]",
-  "bg-[position:right_0_center]",
-  "pr-6",
-].join(" ");
 
-const selectArrow = {
-  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E")`,
-};
 
 export function InquiryForm() {
   const [hp, setHp] = useState("");
@@ -206,21 +189,21 @@ export function InquiryForm() {
           />
         </FormField>
         <FormField label="Business type" error={errors.businessType?.message} id={fieldId("businessType")}>
-          <select
-            id={fieldId("businessType")}
-            className={selectStyle}
-            style={selectArrow}
-            disabled={isDisabled}
-            aria-invalid={!!errors.businessType}
-            aria-describedby={errors.businessType ? errorId("businessType") : undefined}
-            {...form.register("businessType")}
-          >
-            {businessTypeOptions.map((v) => (
-              <option key={v} value={v}>
-                {v}
-              </option>
-            ))}
-          </select>
+          <Controller
+            name="businessType"
+            control={form.control}
+            render={({ field }) => (
+              <CustomSelect
+                id={fieldId("businessType")}
+                value={field.value}
+                onChange={field.onChange}
+                options={businessTypeOptions}
+                disabled={isDisabled}
+                hasError={!!errors.businessType}
+                placeholder="Select business type"
+              />
+            )}
+          />
         </FormField>
       </motion.div>
 
@@ -232,39 +215,38 @@ export function InquiryForm() {
         className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8"
       >
         <FormField label="What you need" error={errors.whatYouNeed?.message} id={fieldId("whatYouNeed")}>
-          <select
-            id={fieldId("whatYouNeed")}
-            className={selectStyle}
-            style={selectArrow}
-            disabled={isDisabled}
-            aria-invalid={!!errors.whatYouNeed}
-            aria-describedby={errors.whatYouNeed ? errorId("whatYouNeed") : undefined}
-            {...form.register("whatYouNeed")}
-          >
-            {whatYouNeedOptions.map((v) => (
-              <option key={v} value={v}>
-                {v}
-              </option>
-            ))}
-          </select>
+          <Controller
+            name="whatYouNeed"
+            control={form.control}
+            render={({ field }) => (
+              <CustomSelect
+                id={fieldId("whatYouNeed")}
+                value={field.value}
+                onChange={field.onChange}
+                options={whatYouNeedOptions}
+                disabled={isDisabled}
+                hasError={!!errors.whatYouNeed}
+                placeholder="Select an option"
+              />
+            )}
+          />
         </FormField>
         <FormField label="Timeline (optional)" error={errors.timeline?.message} id={fieldId("timeline")}>
-          <select
-            id={fieldId("timeline")}
-            className={selectStyle}
-            style={selectArrow}
-            disabled={isDisabled}
-            aria-invalid={!!errors.timeline}
-            aria-describedby={errors.timeline ? errorId("timeline") : undefined}
-            {...form.register("timeline")}
-          >
-            <option value="">Choose a timeline</option>
-            {timelineOptions.map((v) => (
-              <option key={v} value={v}>
-                {v}
-              </option>
-            ))}
-          </select>
+          <Controller
+            name="timeline"
+            control={form.control}
+            render={({ field }) => (
+              <CustomSelect
+                id={fieldId("timeline")}
+                value={field.value}
+                onChange={field.onChange}
+                options={timelineOptions}
+                disabled={isDisabled}
+                hasError={!!errors.timeline}
+                placeholder="Choose a timeline"
+              />
+            )}
+          />
         </FormField>
       </motion.div>
 

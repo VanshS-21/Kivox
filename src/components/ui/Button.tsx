@@ -1,6 +1,7 @@
+"use client";
+
 import Link from "next/link";
 import type { ComponentProps, Ref } from "react";
-
 import { cn } from "@/lib/cn";
 
 type Variant = "primary" | "secondary" | "ghost";
@@ -27,10 +28,18 @@ export function Button({
   size = "md",
   variant = "primary",
   ref,
+  onMouseEnter,
+  onClick,
   ...props
 }: ComponentProps<"button"> & { variant?: Variant; size?: Size; ref?: Ref<HTMLButtonElement> }) {
   return (
-    <button className={cn(base, sizes[size], variants[variant], className)} ref={ref} {...props} />
+    <button
+      className={cn(base, sizes[size], variants[variant], className)}
+      ref={ref}
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
+      {...props}
+    />
   );
 }
 
@@ -39,7 +48,17 @@ export function ButtonLink({
   size = "md",
   variant = "primary",
   ref,
+  onMouseEnter,
+  onClick,
   ...props
 }: ComponentProps<typeof Link> & { variant?: Variant; size?: Size; ref?: Ref<HTMLAnchorElement> }) {
-  return <Link className={cn(base, sizes[size], variants[variant], className)} ref={ref} {...props} />;
+  return (
+    <Link
+      className={cn(base, sizes[size], variants[variant], className)}
+      ref={ref}
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
+      {...props}
+    />
+  );
 }
