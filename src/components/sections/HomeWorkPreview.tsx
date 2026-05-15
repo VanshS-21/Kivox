@@ -112,11 +112,13 @@ export function HomeWorkPreview() {
                   className="w-full shrink-0"
                   key={project.slug}
                 >
-                <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface shadow-2xl shadow-black/10 md:min-h-[620px] lg:grid-cols-[1.05fr_0.95fr]">
+                <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface shadow-2xl shadow-black/10 md:min-h-[540px] md:grid-cols-[0.92fr_1.08fr] lg:min-h-[620px] lg:grid-cols-[1.05fr_0.95fr]">
                   <Link
-                    aria-label={`View Case Study: ${project.title}`}
-                    className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-[420px] lg:h-auto"
-                    href={`/work/${project.slug}`}
+                    aria-label={`View live website: ${project.title}`}
+                    className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto"
+                    href={project.liveUrl || `/work/${project.slug}`}
+                    rel={project.liveUrl?.startsWith("/") ? undefined : "noopener noreferrer"}
+                    target={project.liveUrl?.startsWith("/") ? undefined : "_blank"}
                   >
                     <Image
                       alt={`${project.title} project showcase`}
@@ -137,7 +139,7 @@ export function HomeWorkPreview() {
                     </div>
                   </Link>
 
-                  <div className="flex min-h-[390px] flex-col justify-between p-6 sm:p-8 md:p-10 lg:min-h-0 lg:p-12">
+                  <div className="flex min-h-[390px] flex-col justify-between p-6 sm:p-8 md:min-h-0 md:p-8 lg:p-12">
                     <div>
                       <p
                         className="studio-eyebrow mb-5 font-bold"
@@ -146,7 +148,7 @@ export function HomeWorkPreview() {
                         Showcase - {project.title}
                       </p>
                       <h4
-                        className="max-w-[10ch] font-sans text-[3.1rem] font-bold leading-[0.96] text-foreground sm:text-6xl md:text-7xl lg:text-6xl"
+                        className="max-w-[10ch] font-sans text-[3.1rem] font-bold leading-[0.96] text-foreground sm:text-6xl md:text-5xl lg:text-6xl"
                         style={{ letterSpacing: "-0.025em" }}
                       >
                         {project.title.split(" ")[0]}{" "}
@@ -154,7 +156,7 @@ export function HomeWorkPreview() {
                           {project.title.split(" ").slice(1).join(" ") || "Project"}.
                         </span>
                       </h4>
-                      <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 lg:text-base lg:leading-7">
+                      <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 md:text-base md:leading-7 lg:text-base lg:leading-7">
                         {project.demonstrates}
                       </p>
                     </div>
@@ -170,6 +172,20 @@ export function HomeWorkPreview() {
                       </div>
 
                       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                        {project.liveUrl ? (
+                          <Link
+                            className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-background shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5"
+                            href={project.liveUrl}
+                            rel={project.liveUrl.startsWith("/") ? undefined : "noopener noreferrer"}
+                            style={{
+                              backgroundColor: projectColors[project.slug] || "var(--accent)",
+                            }}
+                            target={project.liveUrl.startsWith("/") ? undefined : "_blank"}
+                          >
+                            View Live Website
+                            <span className="ml-2">→</span>
+                          </Link>
+                        ) : null}
                         <Link
                           className="inline-flex min-h-12 items-center justify-center rounded-full border px-6 text-sm font-semibold transition-colors hover:bg-accent hover:text-background"
                           href={`/work/${project.slug}`}
@@ -178,16 +194,8 @@ export function HomeWorkPreview() {
                             color: projectColors[project.slug] || "var(--accent)",
                           }}
                         >
-                          View Case Study
+                          Case Study
                         </Link>
-                        {idx === featuredWork.length - 1 ? (
-                          <Link
-                            className="inline-flex min-h-12 items-center justify-center rounded-full bg-accent px-6 text-sm font-semibold text-background"
-                            href="/work"
-                          >
-                            Explore Our Work
-                          </Link>
-                        ) : null}
                       </div>
                     </div>
                   </div>
@@ -395,27 +403,28 @@ export function HomeWorkPreview() {
                         )}
                       </div>
 
-                      {/* Divider */}
-                      <div className="hidden sm:block w-px h-5 bg-border-strong work-preview-divider" />
-
-                      {/* CTA — only on last slide */}
-                      {idx === featuredWork.length - 1 && (
-                        <Magnetic strength={0.15}>
-                          <Link
-                            href="/work"
-                            className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-accent/40 text-accent text-sm font-semibold tracking-wide hover:bg-accent hover:text-background transition-all duration-300 group w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                          >
-                            Explore Our Work
-                            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-                          </Link>
-                        </Magnetic>
-                      )}
                     </motion.div>
                   </motion.div>
                 </div>
 
                 {/* Clickable showcase link — bottom right */}
                 <div className="absolute bottom-16 sm:bottom-12 left-6 sm:left-auto right-auto sm:right-8 lg:right-16 xl:right-24 z-30">
+                  <div className="flex flex-wrap items-center gap-3">
+                  {project.liveUrl ? (
+                    <Magnetic strength={0.2}>
+                      <Link
+                        href={project.liveUrl}
+                        rel={project.liveUrl.startsWith("/") ? undefined : "noopener noreferrer"}
+                        target={project.liveUrl.startsWith("/") ? undefined : "_blank"}
+                        aria-label={`View live website: ${project.title}`}
+                        className="inline-flex items-center gap-3 rounded-full px-5 py-2.5 text-sm font-semibold text-background shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                        style={{ backgroundColor: projectColors[project.slug] || "var(--accent)" }}
+                      >
+                        View Live Website
+                        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                      </Link>
+                    </Magnetic>
+                  ) : null}
                   <Magnetic strength={0.2}>
                     <Link
                       href={`/work/${project.slug}`}
@@ -429,14 +438,15 @@ export function HomeWorkPreview() {
                           borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 20%, transparent)`,
                         }}
                       >
-                        View Case Study →
+                        Case Study →
                       </span>
                     </Link>
                   </Magnetic>
+                  </div>
                 </div>
 
                 {/* ── Cinematic Staggered Media Grid ── */}
-                <ShowcaseMediaCluster images={project.images} href={`/work/${project.slug}`} title={project.title} />
+                <ShowcaseMediaCluster images={project.images} href={project.liveUrl || `/work/${project.slug}`} title={project.title} />
 
               </div>
             </div>
@@ -545,8 +555,8 @@ function ShowcaseMediaCluster({ images, href, title }: { images: string[], href:
   return (
     <Link 
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={href.startsWith("/") ? undefined : "_blank"}
+      rel={href.startsWith("/") ? undefined : "noopener noreferrer"}
       aria-label="View Live Showcase"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
