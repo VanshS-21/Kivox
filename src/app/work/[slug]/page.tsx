@@ -6,7 +6,6 @@ import {
   getAllProjects,
   getProjectBySlug,
   projectColors,
-  projectTags,
   type ProcessPhase,
   type DesignDecision,
   type ResultMetric,
@@ -55,7 +54,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   }
 
   const color = projectColors[project.slug] || "var(--accent)";
-  const tags = projectTags[project.slug] || ["DESIGN", "DEVELOPMENT"];
 
   const allProjects = getAllProjects();
   const currentIndex = allProjects.findIndex((p) => p.slug === project.slug);
@@ -66,8 +64,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     project.slug === "hospital" || project.slug === "hotel"
       ? "View Live Website"
       : "View Showcase";
-  const liveTarget = project.liveUrl?.startsWith("/") ? "_self" : "_blank";
-  const liveRel = project.liveUrl?.startsWith("/") ? undefined : "noopener noreferrer";
 
   return (
     <div className="bg-background min-h-screen pt-32 lg:pt-40">
@@ -114,13 +110,13 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             {/* Metadata Strip */}
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-8">
               {project.year && (
-                <MetaChip label="Year" value={project.year} color={color} />
+                <MetaChip label="Year" value={project.year} />
               )}
               {project.duration && (
-                <MetaChip label="Duration" value={project.duration} color={color} />
+                <MetaChip label="Duration" value={project.duration} />
               )}
               {project.clientType && (
-                <MetaChip label="Client" value={project.clientType} color={color} />
+                <MetaChip label="Client" value={project.clientType} />
               )}
             </div>
 
@@ -139,25 +135,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               </div>
             )}
 
-            {project.liveUrl && (
-              <div className="mt-8">
-                <Link
-                  className="group/live inline-flex min-h-12 items-center gap-3 rounded-full border px-4 py-2 text-sm font-semibold tracking-wide text-background shadow-[0_18px_50px_-28px_var(--accent)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-28px_var(--accent)] sm:min-h-14 sm:px-5"
-                  href={project.liveUrl}
-                  rel={liveRel}
-                  style={{
-                    background: `linear-gradient(135deg, ${color}, color-mix(in oklch, ${color}, black 18%))`,
-                    borderColor: `color-mix(in oklch, ${color}, white 30%)`,
-                  }}
-                  target={liveTarget}
-                >
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-[oklch(0.99_0.008_80/0.18)] text-background ring-1 ring-[oklch(0.99_0.008_80/0.28)] transition group-hover/live:translate-x-0.5">
-                    ↗
-                  </span>
-                  <span>{ctaLabel}</span>
-                </Link>
-              </div>
-            )}
           </div>
 
           {/* ═══════════════════════════════════════════════════
@@ -188,24 +165,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 {project.demonstrates}
               </p>
 
-              {project.liveUrl && (
-                <div className="mt-10">
-                  <Link
-                    href={project.liveUrl}
-                    target={project.liveUrl.startsWith("/") ? "_self" : "_blank"}
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full border text-sm font-semibold tracking-wide transition-all duration-300 hover:opacity-80 shrink-0 w-fit group/cta"
-                    style={{
-                      backgroundColor: color,
-                      borderColor: color,
-                      color: "var(--bg-primary)",
-                    }}
-                  >
-                    {ctaLabel}
-                    <span className="inline-block transition-transform duration-300 group-hover/cta:translate-x-1">→</span>
-                  </Link>
-                </div>
-              )}
             </div>
           </div>
 
@@ -237,12 +196,19 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               {/* Insight callout */}
               {project.insight && (
                 <div
-                  className="relative rounded-2xl p-8 lg:p-12 border-l-4"
+                  className="relative overflow-hidden rounded-2xl border p-8 lg:p-12"
                   style={{
-                    borderLeftColor: color,
+                    borderColor: `color-mix(in oklch, ${color}, transparent 68%)`,
                     background: `color-mix(in oklch, ${color}, transparent 94%)`,
                   }}
                 >
+                  <span
+                    aria-hidden="true"
+                    className="absolute -right-3 -top-8 font-serif text-[8rem] leading-none opacity-10 lg:-right-2 lg:-top-10 lg:text-[10rem]"
+                    style={{ color }}
+                  >
+                    &ldquo;
+                  </span>
                   <span className="studio-eyebrow block mb-5" style={{ color }}>
                     The Insight
                   </span>
@@ -472,7 +438,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
    ══════════════════════════════════════════════════════════ */
 
 /** Metadata chip (Year / Duration / Client) */
-function MetaChip({ label, value, color }: { label: string; value: string; color: string }) {
+function MetaChip({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center gap-2">
       <span className="text-xs font-mono uppercase tracking-wider text-subtle-foreground">{label}</span>

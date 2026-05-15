@@ -84,16 +84,11 @@ export function ProjectCarousel({
               onTouchEnd={handleTouchEnd}
             >
               {images.map((src, idx) => (
-                <Link
+                <div
                   key={idx}
-                  href={liveUrl || "#"}
-                  target={liveUrl ? liveTarget : undefined}
-                  rel={liveRel}
-                  aria-disabled={!liveUrl}
-                  aria-label={`${liveLabel}: ${alt}, slide ${idx + 1}`}
+                  aria-hidden={idx !== active}
                   className="carousel-slide relative w-full shrink-0"
                   style={{ aspectRatio: "16 / 10", scrollSnapAlign: "start" }}
-                  tabIndex={liveUrl ? 0 : -1}
                 >
                   <Image
                     src={src}
@@ -103,31 +98,11 @@ export function ProjectCarousel({
                     sizes="(max-width: 768px) 100vw, 85vw"
                     priority={priority && idx === 0}
                   />
-                </Link>
+                </div>
               ))}
             </div>
           </CursorTrigger>
         </div>
-
-        {/* ── Arrow buttons ── */}
-        {liveUrl && (
-          <Link
-            className="absolute left-4 top-4 z-20 inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-xs font-bold uppercase tracking-[0.12em] text-[oklch(0.99_0.008_80)] shadow-[0_16px_36px_-18px_rgba(0,0,0,0.55)] backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-18px_rgba(0,0,0,0.65)] md:left-6 md:top-6 md:px-5"
-            href={liveUrl}
-            rel={liveRel}
-            style={{
-              background: `linear-gradient(135deg, ${accentColor}, color-mix(in oklch, ${accentColor}, black 18%))`,
-              borderColor: `color-mix(in oklch, ${accentColor}, white 28%)`,
-            }}
-            target={liveTarget}
-          >
-            <span className="h-2 w-2 rounded-full bg-[oklch(0.99_0.008_80)] shadow-[0_0_18px_oklch(0.99_0.008_80/0.7)]" />
-            {liveLabel}
-            <span aria-hidden="true" className="text-sm leading-none transition group-hover/carousel:translate-x-0.5">
-              →
-            </span>
-          </Link>
-        )}
 
         {total > 1 && (
           <>
@@ -187,6 +162,26 @@ export function ProjectCarousel({
               />
             </button>
           ))}
+        </div>
+      )}
+
+      {liveUrl && (
+        <div className="mt-6 flex justify-center">
+          <Link
+            className="group/live inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full border px-5 py-3 text-sm font-semibold tracking-wide text-background shadow-[0_18px_50px_-28px_var(--accent)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-28px_var(--accent)] sm:min-h-14 sm:w-auto sm:px-7"
+            href={liveUrl}
+            rel={liveRel}
+            style={{
+              background: `linear-gradient(135deg, ${accentColor}, color-mix(in oklch, ${accentColor}, black 18%))`,
+              borderColor: `color-mix(in oklch, ${accentColor}, white 30%)`,
+            }}
+            target={liveTarget}
+          >
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-[oklch(0.99_0.008_80/0.18)] text-background ring-1 ring-[oklch(0.99_0.008_80/0.28)] transition group-hover/live:translate-x-0.5">
+              ↗
+            </span>
+            <span>{liveLabel}</span>
+          </Link>
         </div>
       )}
     </div>
