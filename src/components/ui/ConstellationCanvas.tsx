@@ -75,6 +75,7 @@ const DAMPING = 0.92;             // Velocity damping (spring settle)
 const MAX_CURSOR_VEL = 1.8;       // Clamp cursor-induced velocity
 
 class Node {
+  id: number;
   x: number;
   y: number;
   vx: number;
@@ -89,7 +90,8 @@ class Node {
   /** Proximity intensity to cursor: 0 = far, 1 = touching */
   cursorProximity: number;
 
-  constructor(w: number, h: number, init: boolean) {
+  constructor(id: number, w: number, h: number, init: boolean) {
+    this.id = id;
     this.x = Math.random() * w;
     this.y = init ? Math.random() * h : (Math.random() < 0.5 ? -5 : h + 5);
     this.vx = (Math.random() - 0.5) * 0.45;
@@ -209,28 +211,65 @@ function drawEdges(ctx: CanvasRenderingContext2D, nodes: Node[], maxDistSq: numb
   const neutralEdges: { x1: number; y1: number; x2: number; y2: number; alpha: number }[] = [];
   const amberEdges: { x1: number; y1: number; x2: number; y2: number; alpha: number }[] = [];
 
+  // Spatial Hashing Grid
+  const cellSize = maxDist;
+  const grid: Record<string, Node[]> = {};
+
+  // 1. Populate the grid
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    const cx = Math.floor(node.x / cellSize);
+    const cy = Math.floor(node.y / cellSize);
+    const key = `${cx},${cy}`;
+    if (!grid[key]) grid[key] = [];
+    grid[key].push(node);
+  }
+
+  // 2. Query the grid to find edges
   for (let i = 0; i < nodes.length; i++) {
     const ni = nodes[i];
-    for (let j = i + 1; j < nodes.length; j++) {
-      const nj = nodes[j];
-      const dx = ni.x - nj.x;
-      const dy = ni.y - nj.y;
-      const dSq = dx * dx + dy * dy;
+    const cx = Math.floor(ni.x / cellSize);
+    const cy = Math.floor(ni.y / cellSize);
 
-      // Squared-distance comparison — no sqrt needed
-      if (dSq < maxDistSq) {
-        const t = 1 - Math.sqrt(dSq) / maxDist;
-        const isAmber = ni.amber || nj.amber;
-        const proxBoost = 1 + (ni.cursorProximity + nj.cursorProximity) * 0.3;
-        const alpha = isAmber
-          ? t * t * p.edgeAmberMul * proxBoost
-          : t * t * p.edgeNeutralMul * proxBoost;
+    // Check this cell and the 4 "forward" neighboring cells to avoid duplicates
+    // Standard half-check for spatial grid: right, bottom-left, bottom, bottom-right
+    const neighborKeys = [
+      `${cx},${cy}`,         // current cell
+      `${cx + 1},${cy}`,     // right
+      `${cx - 1},${cy + 1}`, // bottom-left
+      `${cx},${cy + 1}`,     // bottom
+      `${cx + 1},${cy + 1}`, // bottom-right
+    ];
 
-        const edge = { x1: ni.x, y1: ni.y, x2: nj.x, y2: nj.y, alpha };
-        if (isAmber) {
-          amberEdges.push(edge);
-        } else {
-          neutralEdges.push(edge);
+    for (const key of neighborKeys) {
+      const cellNodes = grid[key];
+      if (!cellNodes) continue;
+
+      for (let j = 0; j < cellNodes.length; j++) {
+        const nj = cellNodes[j];
+        
+        // Skip self or already checked pairs (ensure we only do A->B, not B->A within the same cell)
+        if (key === `${cx},${cy}` && ni.id >= nj.id) continue;
+
+        const dx = ni.x - nj.x;
+        const dy = ni.y - nj.y;
+        const dSq = dx * dx + dy * dy;
+
+        // Squared-distance comparison — no sqrt needed
+        if (dSq < maxDistSq) {
+          const t = 1 - Math.sqrt(dSq) / maxDist;
+          const isAmber = ni.amber || nj.amber;
+          const proxBoost = 1 + (ni.cursorProximity + nj.cursorProximity) * 0.3;
+          const alpha = isAmber
+            ? t * t * p.edgeAmberMul * proxBoost
+            : t * t * p.edgeNeutralMul * proxBoost;
+
+          const edge = { x1: ni.x, y1: ni.y, x2: nj.x, y2: nj.y, alpha };
+          if (isAmber) {
+            amberEdges.push(edge);
+          } else {
+            neutralEdges.push(edge);
+          }
         }
       }
     }
@@ -298,7 +337,7 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
     const count = getNodeCount();
     const nodes: Node[] = [];
     for (let i = 0; i < count; i++) {
-      nodes.push(new Node(w, h, true));
+      nodes.push(new Node(i, w, h, true));
     }
     nodesRef.current = nodes;
   }, []);

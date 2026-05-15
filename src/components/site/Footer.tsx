@@ -149,14 +149,16 @@ export function Footer() {
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={viewportOnce}
           transition={{ duration: 1.2, ease: easeOutExpo, delay: 0.2 }}
-          className="w-full flex justify-center select-none pointer-events-none pb-4"
+          className="w-full flex justify-center select-none pb-4"
         >
-          <KivoxLogo 
-            variant="mono" 
-            hideSuffix={true} 
-            className="w-full h-auto text-foreground opacity-[0.03] dark:opacity-[0.05]" 
-            style={{ width: "100%", height: "auto" }}
-          />
+          <Link href="/" aria-label="Back to top" className="w-full block group cursor-pointer" data-cursor="logo">
+            <KivoxLogo 
+              variant="mono" 
+              hideSuffix={true} 
+              className="w-full h-auto text-foreground opacity-[0.03] dark:opacity-[0.05] transition-opacity duration-500 group-hover:opacity-10 dark:group-hover:opacity-[0.08]" 
+              style={{ width: "100%", height: "auto" }}
+            />
+          </Link>
         </motion.div>
       </div>
 

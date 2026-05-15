@@ -112,8 +112,10 @@ export function CursorGlow() {
 
     function handleMouseOver(e: MouseEvent) {
       const target = e.target as HTMLElement;
-      // Exclude massive full-width rows from massive scaling, keep it subtle
-      if (target.closest?.("a, button, [role='button'], input, textarea, select")) {
+      
+      if (target.closest?.("[data-cursor='logo']")) {
+        scaleRef.current = 2.5; // Larger pop for the brand logo
+      } else if (target.closest?.("a, button, [role='button'], input, textarea, select")) {
         scaleRef.current = 1.5; // Slight elegant pop
       } else {
         scaleRef.current = 1;

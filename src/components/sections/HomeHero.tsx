@@ -88,7 +88,6 @@ export function HomeHero() {
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const filter = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(12px)"]);
 
   return (
     <Section
@@ -127,8 +126,7 @@ export function HomeHero() {
           animate={reduce ? undefined : (isReady ? "show" : "hidden")}
           style={{ 
             scale: reduce ? 1 : scale, 
-            opacity: reduce ? 1 : opacity, 
-            filter: reduce ? "none" : filter 
+            opacity: reduce ? 1 : opacity
           }}
           className="max-w-6xl origin-left"
         >

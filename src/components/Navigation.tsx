@@ -174,6 +174,7 @@ export function Navigation() {
                   }
                 }}
                 className="flex items-center gap-2 group relative z-[60]"
+                data-cursor="logo"
               >
                 <motion.div
                   whileHover={{ scale: 1.03 }}
