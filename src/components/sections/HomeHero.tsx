@@ -92,7 +92,7 @@ export function HomeHero() {
   return (
     <Section
       ref={ref}
-      className="min-h-screen flex items-center relative overflow-hidden pt-20 pb-32 lg:pb-44"
+      className="min-h-screen flex items-center relative overflow-hidden pt-20 pb-32 md:pt-24 md:pb-40 lg:pb-44"
       style={{ background: "var(--hero-bg)" }}
     >
       {/* Constellation canvas — always dark */}
@@ -128,7 +128,7 @@ export function HomeHero() {
             scale: reduce ? 1 : scale, 
             opacity: reduce ? 1 : opacity
           }}
-          className="max-w-6xl origin-left"
+          className="max-w-6xl origin-left md:max-w-[760px] lg:max-w-6xl"
         >
           {/* Studio indicator */}
           <motion.div
@@ -166,10 +166,9 @@ export function HomeHero() {
 
           {/* Headline */}
           <h1
-            className="font-sans font-bold mb-10 lg:mb-12"
+            className="font-sans font-bold mb-10 text-[clamp(48px,13vw,72px)] md:text-[clamp(84px,9vw,112px)] lg:mb-12 lg:text-[clamp(64px,7vw,96px)]"
             aria-label="Make your business easier to trust online."
             style={{
-              fontSize: "clamp(48px, 7vw, 88px)",
               lineHeight: 1.0,
               color: "var(--hero-fg)",
               letterSpacing: "-0.02em",
@@ -207,9 +206,9 @@ export function HomeHero() {
                 transition: { duration: 0.6, ease: easeOutExpo, delay: 0.75 },
               },
             }}
-            className="max-w-[500px] mb-10 lg:mb-12"
+            className="max-w-[500px] mb-10 md:max-w-[620px] lg:mb-12"
             style={{
-              fontSize: "1.125rem",
+              fontSize: "clamp(1.125rem, 0.7vw + 0.95rem, 1.35rem)",
               fontWeight: 450,
               lineHeight: 1.7,
               color: "var(--hero-fg-muted)",
@@ -263,11 +262,21 @@ export function HomeHero() {
                 },
               }}
             >
-              <Magnetic strength={0.1}>
+              <Magnetic strength={0.1} className="block md:hidden">
+                <ButtonLink
+                  href="#live-examples"
+                  variant="secondary"
+                  className="w-full sm:w-auto text-[15px] px-7 py-[15px] font-normal tracking-[0.02em] rounded-full"
+                  style={{ color: "var(--hero-fg)", borderColor: "color-mix(in oklch, var(--hero-fg) 30%, transparent)" }}
+                >
+                  {home.hero.ctas.secondary}
+                </ButtonLink>
+              </Magnetic>
+              <Magnetic strength={0.1} className="hidden md:inline-block">
                 <ButtonLink
                   href="/work"
                   variant="secondary"
-                  className="w-full sm:w-auto text-[15px] px-7 py-[15px] font-normal tracking-[0.02em] rounded-full inline-block"
+                  className="text-[15px] px-7 py-[15px] font-normal tracking-[0.02em] rounded-full"
                   style={{ color: "var(--hero-fg)", borderColor: "color-mix(in oklch, var(--hero-fg) 30%, transparent)" }}
                 >
                   {home.hero.ctas.secondary}

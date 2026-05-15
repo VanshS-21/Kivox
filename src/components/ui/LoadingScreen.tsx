@@ -14,22 +14,30 @@ export function LoadingScreen() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // If the user has already seen the loader, unmount immediately
-    if (hasSeenLoader) {
-      setIsVisible(false);
-      return;
-    }
+    if (pathname.startsWith("/showcase")) return;
 
-    if (reduce) {
-      // Respect reduced motion: instantly jump to 100% and unmount
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
       sessionStorage.setItem("kivox_loaded", "true");
       setReady(true);
+      setProgress(100);
       setIsVisible(false);
-      return;
+    };
+
+    if (hasSeenLoader) return;
+
+    if (reduce) {
+      // Respect reduced motion: instantly jump to content.
+      const instantTimer = window.setTimeout(finish, 0);
+      return () => window.clearTimeout(instantTimer);
     }
 
+    const fallbackTimer = window.setTimeout(finish, 1500);
+
     // Sequence: Wait a beat, count up to 100 over ~1.2s, wait a beat, then hide
-    let controls: any;
+    let controls: ReturnType<typeof animate> | undefined;
     
     const sequence = async () => {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -44,23 +52,19 @@ export function LoadingScreen() {
 
       await controls;
       
-      // Mark as seen so we don't show it again on page loads
-      sessionStorage.setItem("kivox_loaded", "true");
-      
       // Wait a fraction of a second at 100% before lifting the curtain
       await new Promise((resolve) => setTimeout(resolve, 300));
       
-      // Start exit animation and tell the rest of the app it can animate
-      setIsVisible(false);
-      setReady(true);
+      finish();
     };
 
     sequence();
     
     return () => {
+      window.clearTimeout(fallbackTimer);
       if (controls) controls.stop();
     };
-  }, [hasSeenLoader, reduce, setReady]);
+  }, [hasSeenLoader, pathname, reduce, setReady]);
 
   if (pathname.startsWith("/showcase")) return null;
 

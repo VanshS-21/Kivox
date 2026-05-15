@@ -4,6 +4,7 @@ import { HomeHero } from "@/components/sections/HomeHero";
 import { HomeMarquee } from "@/components/sections/HomeMarquee";
 import { HomePOV } from "@/components/sections/HomePOV";
 import { HomeProcess } from "@/components/sections/HomeProcess";
+import { HomeProofBand } from "@/components/sections/HomeProofBand";
 import { HomeServices } from "@/components/sections/HomeServices";
 import { HomeTeam } from "@/components/sections/HomeTeam";
 import { HomeWorkPreview } from "@/components/sections/HomeWorkPreview";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <>
       <HomeHero />
+      <HomeProofBand />
       <HomeMarquee />
       <div className="cv-auto">
         <HomeWorkPreview />

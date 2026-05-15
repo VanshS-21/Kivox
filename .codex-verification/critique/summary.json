@@ -1,0 +1,890 @@
+[
+  {
+    "target": "local",
+    "viewport": "mobile",
+    "status": 200,
+    "title": "Kivox | Make Your Business Easier to Trust Online",
+    "h1": "Make your\nMake your \nbusiness\nbusiness \neasier to\neasier to trust online.",
+    "heroBox": {
+      "x": 24,
+      "y": 175.609375,
+      "width": 342,
+      "height": 194
+    },
+    "visibleLinks": [
+      {
+        "text": "Skip to content",
+        "aria": null,
+        "href": "http://localhost:3000/#main-content"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "http://localhost:3000/"
+      },
+      {
+        "text": "Start a project\n→",
+        "aria": null,
+        "href": "http://localhost:3000/contact"
+      },
+      {
+        "text": "Explore our showcase",
+        "aria": null,
+        "href": "http://localhost:3000/work"
+      },
+      {
+        "text": "LIVE SHOWCASE",
+        "aria": "View live website: The Roastery",
+        "href": "http://localhost:3000/showcase/cafe"
+      },
+      {
+        "text": "View Live Website\n→",
+        "aria": null,
+        "href": "http://localhost:3000/showcase/cafe"
+      },
+      {
+        "text": "Case Study",
+        "aria": null,
+        "href": "http://localhost:3000/work/cafe"
+      },
+      {
+        "text": "LIVE SHOWCASE",
+        "aria": "View live website: Aurelia Grand",
+        "href": "https://example.com/hotel"
+      },
+      {
+        "text": "View Live Website\n→",
+        "aria": null,
+        "href": "https://example.com/hotel"
+      },
+      {
+        "text": "Case Study",
+        "aria": null,
+        "href": "http://localhost:3000/work/hotel"
+      },
+      {
+        "text": "LIVE SHOWCASE",
+        "aria": "View live website: Greenfield Academy",
+        "href": "http://localhost:3000/showcase/school"
+      },
+      {
+        "text": "View Live Website\n→",
+        "aria": null,
+        "href": "http://localhost:3000/showcase/school"
+      },
+      {
+        "text": "Case Study",
+        "aria": null,
+        "href": "http://localhost:3000/work/school"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "http://localhost:3000/contact"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "mailto:hello@kivox.in"
+      },
+      {
+        "text": "hello@kivox.in",
+        "aria": null,
+        "href": "mailto:hello@kivox.in"
+      },
+      {
+        "text": "+91 80 0000 0000",
+        "aria": null,
+        "href": "tel:+918000000000"
+      },
+      {
+        "text": "Showcase",
+        "aria": null,
+        "href": "http://localhost:3000/work"
+      },
+      {
+        "text": "Blog",
+        "aria": null,
+        "href": "http://localhost:3000/blog"
+      },
+      {
+        "text": "Services",
+        "aria": null,
+        "href": "http://localhost:3000/#services"
+      },
+      {
+        "text": "Process",
+        "aria": null,
+        "href": "http://localhost:3000/#process"
+      },
+      {
+        "text": "Contact",
+        "aria": null,
+        "href": "http://localhost:3000/contact"
+      },
+      {
+        "text": "LinkedIn ↗",
+        "aria": null,
+        "href": "https://linkedin.com/company/kivox"
+      },
+      {
+        "text": "Instagram ↗",
+        "aria": null,
+        "href": "https://instagram.com/kivox"
+      },
+      {
+        "text": "",
+        "aria": "Back to top",
+        "href": "http://localhost:3000/"
+      },
+      {
+        "text": "Blog",
+        "aria": null,
+        "href": "http://localhost:3000/blog"
+      },
+      {
+        "text": "FAQ",
+        "aria": null,
+        "href": "http://localhost:3000/faq"
+      },
+      {
+        "text": "Privacy",
+        "aria": null,
+        "href": "http://localhost:3000/privacy"
+      },
+      {
+        "text": "Terms",
+        "aria": null,
+        "href": "http://localhost:3000/terms"
+      }
+    ],
+    "visibleButtons": [
+      "Theme: system. Click to change.",
+      "Toggle menu",
+      "Show The Roastery",
+      "Show Aurelia Grand",
+      "Show Greenfield Academy",
+      "Websites & Web Apps.\n\nHigh-craft websites and web apps that make your offer clear and your next step obvious.\n\nLANDING PAGES\nWEB APPLICATIONS\nE-COMMERCE\nCMS",
+      "UI/UX Redesign.\n\nFix what's unclear: structure, usability, design, performance, and conversion paths.\n\nWIREFRAMES\nPROTOTYPING\nUSABILITY AUDIT\nCONVERSION",
+      "SEO & AI Search Readiness.\n\nTechnical and content foundations that help you show up for real searches, and be understandable to AI answers.\n\nTECHNICAL SEO\nCONTENT STRATEGY\nSCHEMA\nAI READINESS",
+      "Brand Identity.\n\nNaming, messaging, and visual systems that make your business feel as good online as it is offline.\n\nLOGO DESIGN\nBRAND GUIDELINES\nMESSAGING\nVISUAL SYSTEMS",
+      "Backend-Enabled Systems.\n\nPortals, dashboards, catalogs, inquiry workflows, and internal tools. Built only when the business needs them.\n\nDASHBOARDS\nPORTALS\nWORKFLOWS\nAPI INTEGRATION",
+      "Android Apps.\n\nWhen mobile access is truly necessary (not as a default upsell).\n\nNATIVE APPS\nCROSS-PLATFORM\nAPP STORE OPTIMIZATION",
+      "Open Next.js Dev Tools",
+      "1\n2\nIssues",
+      "Collapse issues badge"
+    ],
+    "bodyStart": "Skip to content\nKIVOX STUDIO\nMake your\nMake your \nbusiness\nbusiness \neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.\n\nStart a project\n→\nExplore our showcase\nSCROLL\nDigital Craftsmanship\nClarity-First Design\nPremium Experiences\nStudio Excellence\nInnovation & Precision\nThoughtful Engineering\nDigital Craftsmanship\nClarity-First Design\nPremium Experiences\nStudio Excellence\nInnovation & Precision\nThoughtful Engineering\nDigital Craftsmanship\nClarity-First Design\nPremium Experiences\nStudio Excellence\nInnovation & Precision\nThoughtful Engineering\nDigital Craftsmanship\nClarity-First Design\nPremium Experiences\nStudio Excellence\nInnovation & Precision\nThoughtful Engineering\nFeatured Work Showcase\n\nSELECTED WORK\n\nBuilt as living product proof.\nLIVE SHOWCASE\n\nSHOWCASE - THE ROASTERY\n\nThe Roastery.\n\nA visit-intent website for an independent specialty cafe — where every pixel is optimized for the only question that matters: 'Should I go here right now?'\n\nBRANDING\n/\nDESIGN\n/\nDEVELOPMENT\nView Live Website\n→\nCase Study\nLIVE SHOWCASE\n\nSHOWCASE - AURELIA GRAND\n\nAurelia Grand.\n\nA digital presence for a boutique luxury hotel that treats the website as the first room the guest enters — where quiet confidence and transparent information replace the generic booking portal aesthetic.\n\nSTRATEGY\n/\nDESIGN\n/\nENGINEERING\nView Live Website\n→\nCase Study\nLIVE SHOWCASE\n\nSHOWCASE - GREENFIELD ACADEMY\n\nGreenfield Academy.\n\nAn admissions-first school website that inverts",
+    "theme": {
+      "html": null,
+      "stored": null,
+      "colorScheme": "dark"
+    },
+    "screenshot": "F:\\Kivox\\.codex-verification\\critique\\local-mobile.png",
+    "consoleErrors": [
+      "Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template).",
+      "Failed to load resource: the server responded with a status of 404 ()",
+      "Failed to load resource: the server responded with a status of 404 ()"
+    ],
+    "scrollProbe": [
+      {
+        "y": 0,
+        "topText": "Skip to content\nKIVOX STUDIO\nMake your\nMake your \nbusiness\nbusiness \neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.\n"
+      },
+      {
+        "y": 700,
+        "topText": "Skip to content\nKIVOX STUDIO\nMake your\nMake your \nbusiness\nbusiness \neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.\n"
+      },
+      {
+        "y": 1400,
+        "topText": "Skip to content\nKIVOX STUDIO\nMake your\nMake your \nbusiness\nbusiness \neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.\n"
+      },
+      {
+        "y": 2400,
+        "topText": "Skip to content\nKIVOX STUDIO\nMake your\nMake your \nbusiness\nbusiness \neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.\n"
+      },
+      {
+        "y": 3600,
+        "topText": "Skip to content\nKIVOX STUDIO\nMake your\nMake your \nbusiness\nbusiness \neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.\n"
+      },
+      {
+        "y": 5200,
+        "topText": "Skip to content\nKIVOX STUDIO\nMake your\nMake your \nbusiness\nbusiness \neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.\n"
+      }
+    ]
+  },
+  {
+    "target": "local",
+    "viewport": "desktop",
+    "status": 200,
+    "title": "Kivox | Make Your Business Easier to Trust Online",
+    "h1": "Make your\nMake your\n\nbusiness\nbusiness\n\neasier to\neasier to trust online.",
+    "heroBox": {
+      "x": 84,
+      "y": 266.40625,
+      "width": 1152,
+      "height": 267
+    },
+    "visibleLinks": [
+      {
+        "text": "Skip to content",
+        "aria": null,
+        "href": "http://localhost:3000/#main-content"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "http://localhost:3000/"
+      },
+      {
+        "text": "Start a project\n→",
+        "aria": null,
+        "href": "http://localhost:3000/contact"
+      },
+      {
+        "text": "Start a project\n→",
+        "aria": null,
+        "href": "http://localhost:3000/contact"
+      },
+      {
+        "text": "Explore our showcase",
+        "aria": null,
+        "href": "http://localhost:3000/work"
+      },
+      {
+        "text": "View Live Website\n→",
+        "aria": "View live website: The Roastery",
+        "href": "http://localhost:3000/showcase/cafe"
+      },
+      {
+        "text": "Case Study →",
+        "aria": "View Case Study: The Roastery",
+        "href": "http://localhost:3000/work/cafe"
+      },
+      {
+        "text": "",
+        "aria": "View Live Showcase",
+        "href": "http://localhost:3000/showcase/cafe"
+      },
+      {
+        "text": "View Live Website\n→",
+        "aria": "View live website: Aurelia Grand",
+        "href": "https://example.com/hotel"
+      },
+      {
+        "text": "Case Study →",
+        "aria": "View Case Study: Aurelia Grand",
+        "href": "http://localhost:3000/work/hotel"
+      },
+      {
+        "text": "",
+        "aria": "View Live Showcase",
+        "href": "https://example.com/hotel"
+      },
+      {
+        "text": "View Live Website\n→",
+        "aria": "View live website: Greenfield Academy",
+        "href": "http://localhost:3000/showcase/school"
+      },
+      {
+        "text": "Case Study →",
+        "aria": "View Case Study: Greenfield Academy",
+        "href": "http://localhost:3000/work/school"
+      },
+      {
+        "text": "",
+        "aria": "View Live Showcase",
+        "href": "http://localhost:3000/showcase/school"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "http://localhost:3000/contact"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "mailto:hello@kivox.in"
+      },
+      {
+        "text": "hello@kivox.in",
+        "aria": null,
+        "href": "mailto:hello@kivox.in"
+      },
+      {
+        "text": "+91 80 0000 0000",
+        "aria": null,
+        "href": "tel:+918000000000"
+      },
+      {
+        "text": "Showcase",
+        "aria": null,
+        "href": "http://localhost:3000/work"
+      },
+      {
+        "text": "Blog",
+        "aria": null,
+        "href": "http://localhost:3000/blog"
+      },
+      {
+        "text": "Services",
+        "aria": null,
+        "href": "http://localhost:3000/#services"
+      },
+      {
+        "text": "Process",
+        "aria": null,
+        "href": "http://localhost:3000/#process"
+      },
+      {
+        "text": "Contact",
+        "aria": null,
+        "href": "http://localhost:3000/contact"
+      },
+      {
+        "text": "LinkedIn ↗",
+        "aria": null,
+        "href": "https://linkedin.com/company/kivox"
+      },
+      {
+        "text": "Instagram ↗",
+        "aria": null,
+        "href": "https://instagram.com/kivox"
+      },
+      {
+        "text": "",
+        "aria": "Back to top",
+        "href": "http://localhost:3000/"
+      },
+      {
+        "text": "Blog",
+        "aria": null,
+        "href": "http://localhost:3000/blog"
+      },
+      {
+        "text": "FAQ",
+        "aria": null,
+        "href": "http://localhost:3000/faq"
+      },
+      {
+        "text": "Privacy",
+        "aria": null,
+        "href": "http://localhost:3000/privacy"
+      },
+      {
+        "text": "Terms",
+        "aria": null,
+        "href": "http://localhost:3000/terms"
+      }
+    ],
+    "visibleButtons": [
+      "Theme: system. Click to change.",
+      "Toggle menu",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Phase 2: Define",
+      "Phase 3: Design",
+      "Phase 4: Build",
+      "Phase 5: Launch & Evolve",
+      "Open Next.js Dev Tools",
+      "1\n2\nIssues",
+      "Collapse issues badge"
+    ],
+    "bodyStart": "Skip to content\nStart a project\n→\nKIVOX STUDIO\nMake your\nMake your\n\nbusiness\nbusiness\n\neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.\n\nStart a project\n→\nExplore our showcase\nSCROLL\nDigital Craftsmanship\nClarity-First Design\nPremium Experiences\nStudio Excellence\nInnovation & Precision\nThoughtful Engineering\nDigital Craftsmanship\nClarity-First Design\nPremium Experiences\nStudio Excellence\nInnovation & Precision\nThoughtful Engineering\nDigital Craftsmanship\nClarity-First Design\nPremium Experiences\nStudio Excellence\nInnovation & Precision\nThoughtful Engineering\nDigital Craftsmanship\nClarity-First Design\nPremium Experiences\nStudio Excellence\nInnovation & Precision\nThoughtful Engineering\nFeatured Work Showcase\nSHOWCASE · THE ROASTERY\nThe Roastery.\n\nA visit-intent website for an independent specialty cafe — where every pixel is optimized for the only question that matters: 'Should I go here right now?'\n\nBRANDING\n·\nDESIGN\n·\nDEVELOPMENT\nView Live Website\n→\nCase Study →\nSHOWCASE · AURELIA GRAND\nAurelia Grand.\n\nA digital presence for a boutique luxury hotel that treats the website as the first room the guest enters — where quiet confidence and transparent information replace the generic booking portal aesthetic.\n\nSTRATEGY\n·\nDESIGN\n·\nENGINEERING\nView Live Website\n→\nCase Study →\nSHOWCASE · GREENFIELD ACADEMY\nGreenfield Academy.\n\nAn admissions-first school website that inverts the typical educational institution hierarchy — leading with clarity, da",
+    "theme": {
+      "html": null,
+      "stored": null,
+      "colorScheme": "dark"
+    },
+    "screenshot": "F:\\Kivox\\.codex-verification\\critique\\local-desktop.png",
+    "consoleErrors": [
+      "Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template).",
+      "Failed to load resource: the server responded with a status of 404 ()",
+      "Failed to load resource: the server responded with a status of 404 ()",
+      "Failed to load resource: the server responded with a status of 401 ()"
+    ],
+    "scrollProbe": [
+      {
+        "y": 0,
+        "topText": "Skip to content\nStart a project\n→\nKIVOX STUDIO\nMake your\nMake your\n\nbusiness\nbusiness\n\neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step"
+      },
+      {
+        "y": 700,
+        "topText": "Skip to content\nStart a project\n→\nKIVOX STUDIO\nMake your\nMake your\n\nbusiness\nbusiness\n\neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step"
+      },
+      {
+        "y": 1400,
+        "topText": "Skip to content\nStart a project\n→\nKIVOX STUDIO\nMake your\nMake your\n\nbusiness\nbusiness\n\neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step"
+      },
+      {
+        "y": 2400,
+        "topText": "Skip to content\nStart a project\n→\nKIVOX STUDIO\nMake your\nMake your\n\nbusiness\nbusiness\n\neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step"
+      },
+      {
+        "y": 3600,
+        "topText": "Skip to content\nStart a project\n→\nKIVOX STUDIO\nMake your\nMake your\n\nbusiness\nbusiness\n\neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step"
+      },
+      {
+        "y": 5200,
+        "topText": "Skip to content\nStart a project\n→\nKIVOX STUDIO\nMake your\nMake your\n\nbusiness\nbusiness\n\neasier to\neasier to trust online.\n\nKivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step"
+      }
+    ]
+  },
+  {
+    "target": "compare",
+    "viewport": "mobile",
+    "status": 200,
+    "title": "Kivox.in — High-Performance Websites for Startups & Growing Businesses",
+    "h1": "We build websites\nthat turn visitors into\nreal customers",
+    "heroBox": {
+      "x": 24,
+      "y": 214,
+      "width": 348.78125,
+      "height": 136.78125
+    },
+    "visibleLinks": [
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/"
+      },
+      {
+        "text": "Explore Our Work",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#work"
+      },
+      {
+        "text": "LinkedIn",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "LinkedIn",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "LinkedIn",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "LinkedIn",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/"
+      },
+      {
+        "text": "",
+        "aria": "linkedin",
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": "instagram",
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": "twitter",
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "Home",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/"
+      },
+      {
+        "text": "Services",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#services"
+      },
+      {
+        "text": "Work",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#work"
+      },
+      {
+        "text": "About Us",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/about"
+      },
+      {
+        "text": "Blog",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#blog"
+      },
+      {
+        "text": "Contact",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#contact"
+      },
+      {
+        "text": "Custom Website Design",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "E-Commerce Development",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "Landing Page Design",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "SEO Optimization",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "Web Application Development",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "About Kivox.in",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/about"
+      },
+      {
+        "text": "Testimonials",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#testimonials"
+      },
+      {
+        "text": "Blog",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "Careers",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "labsnexoraa@gmail.com",
+        "aria": null,
+        "href": "mailto:labsnexoraa@gmail.com"
+      }
+    ],
+    "visibleButtons": [
+      "Toggle menu",
+      "Book a Free Strategy Call",
+      "Explore Our Work",
+      "Start Your Project",
+      "All Projects",
+      "Business",
+      "E-Commerce",
+      "SaaS",
+      "Portfolio",
+      "Healthcare",
+      "View All Projects",
+      "Previous testimonial",
+      "Next testimonial",
+      "Go to testimonial 1",
+      "Go to testimonial 2",
+      "Go to testimonial 3",
+      "How long does it take to build a website?",
+      "What is the cost of a website?",
+      "What platform do you use to build websites?",
+      "Will my website be mobile-friendly?",
+      "Will my website be SEO-friendly?",
+      "Send Message",
+      "Scroll to top"
+    ],
+    "bodyStart": "MODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn visitors into\nreal customers\n\nFrom speed and conversion to long-term growth, we design and develop digital experiences that scales.\n\nBook a Free Strategy Call\nExplore Our Work\nTRUSTED BY GROWING BUSINESSES\nTrusted by Startups and Growing Businesses Worldwide\n\n50+\n\nHappy Clients\n\n100+\n\nProjects Completed\n\n5+\n\nYears of Experience\n\n99%\n\nClient Satisfaction\n\nWHAT WE DO\nDigital Solutions That Drive Real Business Results\n\nWe provide end-to-end services tailored to help your brand stand out, attract more traffic, and convert visitors into loyal customers.\n\nWeb Design\n\nModern, user-centric designs that engage visitors and build trust.\n\nUI/UX Design\nLanding Pages\nCustom Website Design\nLearn More\n01\nWeb Development\n\nFast, secure, and scalable websites built with modern technologies.\n\nReact & Next.js\nWordPress Development\nCustom Web Applications\nLearn More\n02\nE-Commerce Solutions\n\nOnline stores that convert visitors into loyal customers.\n\nShopify Development\nWooCommerce\nStore Optimization\nLearn More\n03\nSEO & Performance Optimization\n\nRank higher, load faster, and deliver a better experience for your users.\n\nOn-Page SEO\nTechnical SEO\nSpeed Optimization\nLearn More\n04\nBranding & Identity\n\nBuild a strong brand identity that connects and leaves a lasting impression.\n\nBrand Strategy\nLogo Design\nVisual Identity\nLearn More\n05\nSupport & Maintenance\n\nWe keep your website secure, updated, and performing at its best.\n\nWebsite Maintenance\nSecurity Updates\n24/7 Support\nLearn More\n06\nWeb Design\n\nModern, user-centric designs that engage visi",
+    "theme": {
+      "html": null,
+      "stored": null,
+      "colorScheme": "normal"
+    },
+    "screenshot": "F:\\Kivox\\.codex-verification\\critique\\compare-mobile.png",
+    "consoleErrors": [],
+    "scrollProbe": [
+      {
+        "y": 0,
+        "topText": "MODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn visitors into\nreal customers\n\nFrom speed and conversion to long-term growth, we design and develop digital experiences that scales.\n\nBook a Free Strategy Call\nExplore Our Work\nTRUSTED BY GROWING BUSIN"
+      },
+      {
+        "y": 700,
+        "topText": "MODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn \nvisitors\nclicks into\n\nreal customers\nconversions\n\nFrom speed and conversion to long-term growth, we design and develop digital experiences that scales.\n\nBook a Free Strategy Call\nExplore Our Work\nTRU"
+      },
+      {
+        "y": 1400,
+        "topText": "MODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growth, we design and develop digital experiences that scales.\n\nBook a Free Strategy Call\nExplore Our Work\nTRUSTED BY GROWING BUSINESSES"
+      },
+      {
+        "y": 2400,
+        "topText": "MODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growth, we design and develop digital experiences that scales.\n\nBook a Free Strategy Call\nExplore Our Work\nTRUSTED BY GROWING BUSINESSES"
+      },
+      {
+        "y": 3600,
+        "topText": "MODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growth, we design and develop digital experiences that scales.\n\nBook a Free Strategy Call\nExplore Our Work\nTRUSTED BY GROWING BUSINESSES"
+      },
+      {
+        "y": 5200,
+        "topText": "MODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growth, we design and develop digital experiences that scales.\n\nBook a Free Strategy Call\nExplore Our Work\nTRUSTED BY GROWING BUSINESSES"
+      }
+    ]
+  },
+  {
+    "target": "compare",
+    "viewport": "desktop",
+    "status": 200,
+    "title": "Kivox.in — High-Performance Websites for Startups & Growing Businesses",
+    "h1": "We build websites\nthat turn visitors into\nreal customers",
+    "heroBox": {
+      "x": 144,
+      "y": 212.796875,
+      "width": 587.40625,
+      "height": 230.390625
+    },
+    "visibleLinks": [
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/"
+      },
+      {
+        "text": "H\no\nm\ne\nHome",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/"
+      },
+      {
+        "text": "S\ne\nr\nv\ni\nc\ne\ns\nServices",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#services"
+      },
+      {
+        "text": "W\no\nr\nk\nWork",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#work"
+      },
+      {
+        "text": "B\nl\no\ng\nBlog",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/blog"
+      },
+      {
+        "text": "A\nb\no\nu\nt\n \nU\ns\nAbout Us",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/about"
+      },
+      {
+        "text": "C\no\nn\nt\na\nc\nt\nContact",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#contact"
+      },
+      {
+        "text": "Explore Our Work",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#work"
+      },
+      {
+        "text": "LinkedIn",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "LinkedIn",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "LinkedIn",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "LinkedIn",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/"
+      },
+      {
+        "text": "",
+        "aria": "linkedin",
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": "instagram",
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "",
+        "aria": "twitter",
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "Home",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/"
+      },
+      {
+        "text": "Services",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#services"
+      },
+      {
+        "text": "Work",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#work"
+      },
+      {
+        "text": "About Us",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/about"
+      },
+      {
+        "text": "Blog",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#blog"
+      },
+      {
+        "text": "Contact",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#contact"
+      },
+      {
+        "text": "Custom Website Design",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "E-Commerce Development",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "Landing Page Design",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      },
+      {
+        "text": "SEO Optimization",
+        "aria": null,
+        "href": "https://nexora-lab-cst4.vercel.app/#"
+      }
+    ],
+    "visibleButtons": [
+      "Let's Start With Us",
+      "Book a Free Strategy Call",
+      "Explore Our Work",
+      "Start Your Project",
+      "All Projects",
+      "Business",
+      "E-Commerce",
+      "SaaS",
+      "Portfolio",
+      "Healthcare",
+      "View All Projects",
+      "Previous testimonial",
+      "Next testimonial",
+      "Go to testimonial 1",
+      "Go to testimonial 2",
+      "Go to testimonial 3",
+      "How long does it take to build a website?",
+      "What is the cost of a website?",
+      "What platform do you use to build websites?",
+      "Will my website be mobile-friendly?",
+      "Will my website be SEO-friendly?",
+      "Do you provide website maintenance?",
+      "Can you redesign my existing website?",
+      "What if I need changes after the website is live?",
+      "Do you offer content writing as well?",
+      "Do you work with businesses in my industry?",
+      "Send Message",
+      "Scroll to top"
+    ],
+    "bodyStart": "H\no\nm\ne\nHome\nS\ne\nr\nv\ni\nc\ne\ns\nServices\nW\no\nr\nk\nWork\nB\nl\no\ng\nBlog\nA\nb\no\nu\nt\n \nU\ns\nAbout Us\nC\no\nn\nt\na\nc\nt\nContact\nLet's Start With Us\nMODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn visitors into\nreal customers\n\nFrom speed and conversion to long-term growth, we design and develop digital experiences that scales.\n\nBook a Free Strategy Call\nExplore Our Work\nTRUSTED BY GROWING BUSINESSES\nTrusted by Startups and Growing Businesses Worldwide\n\n50+\n\nHappy Clients\n\n100+\n\nProjects Completed\n\n5+\n\nYears of Experience\n\n99%\n\nClient Satisfaction\n\nHOW WE HELP YOU GROW\nWhy Businesses Choose Kivox.in\n\nWe combine strategic thinking with technical excellence to build digital experiences that deliver measurable results.\n\nConversion Focused\n\nWe design interfaces and user journeys specifically optimized to turn visitors into paying customers and qualified leads.\n\nHigh Performance\n\nLightning-fast load times and optimized code architectures ensure a seamless experience that boosts both SEO and user retention.\n\nMobile Optimized\n\nFlawless responsive design guarantees your site looks and functions perfectly across all devices and screen sizes.\n\nSecure & Reliable\n\nBuilt with modern security practices and robust infrastructure to keep your business and customer data safe at all times.\n\nWHAT WE DO\nDigital Solutions That Drive Real Business Results\n\nWe provide end-to-end services tailored to help your brand stand out, attract more traffic, and convert visitors into loyal customers.\n\nWeb Design\n\nModern, user-centric designs that engage visitors and build trust.\n\nUI/UX Design\nLanding Pages\nCustom ",
+    "theme": {
+      "html": null,
+      "stored": null,
+      "colorScheme": "normal"
+    },
+    "screenshot": "F:\\Kivox\\.codex-verification\\critique\\compare-desktop.png",
+    "consoleErrors": [],
+    "scrollProbe": [
+      {
+        "y": 0,
+        "topText": "H\no\nm\ne\nHome\nS\ne\nr\nv\ni\nc\ne\ns\nServices\nW\no\nr\nk\nWork\nB\nl\no\ng\nBlog\nA\nb\no\nu\nt\n \nU\ns\nAbout Us\nC\no\nn\nt\na\nc\nt\nContact\nLet's Start With Us\nMODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn \nvisitors\nclicks into\n\nreal customers\nconversions\n\nFrom speed and con"
+      },
+      {
+        "y": 700,
+        "topText": "H\no\nm\ne\nHome\nS\ne\nr\nv\ni\nc\ne\ns\nServices\nW\no\nr\nk\nWork\nB\nl\no\ng\nBlog\nA\nb\no\nu\nt\n \nU\ns\nAbout Us\nC\no\nn\nt\na\nc\nt\nContact\nLet's Start With Us\nMODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growt"
+      },
+      {
+        "y": 1400,
+        "topText": "H\no\nm\ne\nHome\nS\ne\nr\nv\ni\nc\ne\ns\nServices\nW\no\nr\nk\nWork\nB\nl\no\ng\nBlog\nA\nb\no\nu\nt\n \nU\ns\nAbout Us\nC\no\nn\nt\na\nc\nt\nContact\nLet's Start With Us\nMODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growt"
+      },
+      {
+        "y": 2400,
+        "topText": "H\no\nm\ne\nHome\nS\ne\nr\nv\ni\nc\ne\ns\nServices\nW\no\nr\nk\nWork\nB\nl\no\ng\nBlog\nA\nb\no\nu\nt\n \nU\ns\nAbout Us\nC\no\nn\nt\na\nc\nt\nContact\nLet's Start With Us\nMODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growt"
+      },
+      {
+        "y": 3600,
+        "topText": "H\no\nm\ne\nHome\nS\ne\nr\nv\ni\nc\ne\ns\nServices\nW\no\nr\nk\nWork\nB\nl\no\ng\nBlog\nA\nb\no\nu\nt\n \nU\ns\nAbout Us\nC\no\nn\nt\na\nc\nt\nContact\nLet's Start With Us\nMODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growt"
+      },
+      {
+        "y": 5200,
+        "topText": "H\no\nm\ne\nHome\nS\ne\nr\nv\ni\nc\ne\ns\nServices\nW\no\nr\nk\nWork\nB\nl\no\ng\nBlog\nA\nb\no\nu\nt\n \nU\ns\nAbout Us\nC\no\nn\nt\na\nc\nt\nContact\nLet's Start With Us\nMODERN SOLUTIONS. REAL RESULTS.\nWe build websites\nthat turn clicks into\nconversions\n\nFrom speed and conversion to long-term growt"
+      }
+    ]
+  }
+]

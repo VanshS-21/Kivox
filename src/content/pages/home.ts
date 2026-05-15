@@ -5,7 +5,7 @@ export const home = {
       "Kivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.",
     ctas: {
       primary: "Start a project",
-      secondary: "Explore our showcase",
+      secondary: "See live examples",
     },
   },
   services: [
@@ -13,43 +13,49 @@ export const home = {
       id: "websites-web-apps",
       title: "Websites & Web Apps",
       summary:
-        "High-craft websites and web apps that make your offer clear and your next step obvious.",
+        "Clear pages, product flows, CMS, ecommerce, and conversion paths that make the next step obvious.",
       tags: ["LANDING PAGES", "WEB APPLICATIONS", "E-COMMERCE", "CMS"],
+      examples: ["Booking pages", "Service websites", "CMS editing"],
     },
     {
       id: "ui-ux-redesign",
       title: "UI/UX Redesign",
       summary:
-        "Fix what's unclear: structure, usability, design, performance, and conversion paths.",
+        "Fix confusing navigation, weak CTAs, slow pages, and broken mobile flows.",
       tags: ["WIREFRAMES", "PROTOTYPING", "USABILITY AUDIT", "CONVERSION"],
+      examples: ["Mobile flows", "CTA hierarchy", "Checkout friction"],
     },
     {
       id: "seo-ai-search-readiness",
       title: "SEO & AI Search Readiness",
       summary:
-        "Technical and content foundations that help you show up for real searches, and be understandable to AI answers.",
+        "Technical cleanup, structured content, schema, and pages search engines can understand.",
       tags: ["TECHNICAL SEO", "CONTENT STRATEGY", "SCHEMA", "AI READINESS"],
+      examples: ["Local search", "Service pages", "Answer-ready content"],
     },
     {
       id: "brand-identity",
       title: "Brand Identity",
       summary:
-        "Naming, messaging, and visual systems that make your business feel as good online as it is offline.",
+        "Naming, messaging, visual systems, and practical launch assets for a clearer public presence.",
       tags: ["LOGO DESIGN", "BRAND GUIDELINES", "MESSAGING", "VISUAL SYSTEMS"],
+      examples: ["Messaging", "Launch kits", "Visual systems"],
     },
     {
       id: "backend-enabled-systems",
       title: "Backend-Enabled Systems",
       summary:
-        "Portals, dashboards, catalogs, inquiry workflows, and internal tools. Built only when the business needs them.",
+        "Inquiry workflows, booking flows, dashboards, portals, catalogs, and API-connected tools.",
       tags: ["DASHBOARDS", "PORTALS", "WORKFLOWS", "API INTEGRATION"],
+      examples: ["Dashboards", "Portals", "Inquiry routing"],
     },
     {
       id: "android-apps",
       title: "Android Apps",
       summary:
-        "When mobile access is truly necessary (not as a default upsell).",
+        "Mobile apps only when customers or staff genuinely need app-level access.",
       tags: ["NATIVE APPS", "CROSS-PLATFORM", "APP STORE OPTIMIZATION"],
+      examples: ["Staff tools", "Customer accounts", "Field access"],
     },
   ],
   workPreview: {

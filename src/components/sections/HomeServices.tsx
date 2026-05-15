@@ -59,21 +59,16 @@ export function HomeServices() {
             const distance = hoveredIdx !== null ? Math.abs(idx - hoveredIdx) : 0;
 
             return (
-              <motion.button
-                type="button"
+              <motion.article
                 key={service.id}
                 initial={reduce ? false : "hidden"}
                 whileInView={reduce ? undefined : "show"}
                 viewport={viewportOnce}
                 variants={fadeUp}
                 transition={{ ...transitionDefault, delay: idx * 0.06 }}
-                className="group w-full text-left outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-8 focus-visible:ring-offset-[color:var(--bg-surface-alt)] rounded-2xl"
-                aria-expanded={isHovered}
-                onClick={() => setHoveredIdx(isHovered ? null : idx)}
+                className="group w-full text-left rounded-2xl"
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
-                onFocus={() => setHoveredIdx(idx)}
-                onBlur={() => setHoveredIdx(null)}
                 style={{
                   transformStyle: "preserve-3d",
                   transformOrigin: "center center",
@@ -160,19 +155,13 @@ export function HomeServices() {
                     </motion.h3>
                   </div>
 
-                  {/* Expandable summary */}
-                  <div
-                    className="overflow-hidden transition-all duration-500 pl-[4.25rem] sm:pl-[5.25rem] lg:pl-[6.5rem]"
-                    style={{
-                      display: "grid",
-                      gridTemplateRows: isHovered ? "1fr" : "0fr",
-                    }}
-                  >
-                    <div className="min-h-0 overflow-hidden">
-                      <p className="studio-body text-muted-foreground max-w-lg pb-2">
-                        {service.summary}
-                      </p>
-                    </div>
+                  <div className="pl-[4.25rem] sm:pl-[5.25rem] lg:pl-[6.5rem]">
+                    <p className="studio-body max-w-2xl text-muted-foreground">
+                      {service.summary}
+                    </p>
+                    <p className="mt-3 max-w-2xl text-sm leading-6 text-subtle-foreground sm:text-base">
+                      Good for: {service.examples.join(", ")}.
+                    </p>
                   </div>
 
                   {/* Sub-capability pill tags */}
@@ -194,7 +183,7 @@ export function HomeServices() {
 
                   {/* Bottom divider */}
                   <div className="h-px bg-border" />
-                </motion.button>
+                </motion.article>
               );
             })}
           </div>
