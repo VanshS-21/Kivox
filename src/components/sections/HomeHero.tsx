@@ -264,7 +264,7 @@ export function HomeHero() {
             >
               <Magnetic strength={0.1}>
                 <ButtonLink
-                  href="/work"
+                  href="#live-examples"
                   variant="secondary"
                   className="w-full sm:w-auto text-[15px] px-7 py-[15px] font-normal tracking-[0.02em] rounded-full"
                   style={{ color: "var(--hero-fg)", borderColor: "color-mix(in oklch, var(--hero-fg) 30%, transparent)" }}
