@@ -954,3 +954,8 @@ html {
     display: none;
   }
 }
+
+.bg-stripes-slate-100 {
+  background-image: repeating-linear-gradient(45deg, #F1F5F9 25%, transparent 25%, transparent 50%, #F1F5F9 50%, #F1F5F9 75%, transparent 75%, transparent);
+  background-size: 8px 8px;
+}

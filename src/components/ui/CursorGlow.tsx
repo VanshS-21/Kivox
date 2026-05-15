@@ -86,7 +86,7 @@ export function CursorGlow() {
     };
   }, [cursorX, cursorY, isVisible, reduceMotion, state.variant, setCursor, resetCursor]);
 
-  if (reduceMotion) return null;
+  if (reduceMotion || pathname?.startsWith("/showcase/medqueue")) return null;
 
   // Define variants
   const variants = {

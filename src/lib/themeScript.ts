@@ -3,6 +3,12 @@ export function themeInitScript(): string {
   // IMPORTANT: data-theme is ALWAYS set — the CSS has no @media fallback.
   return `
 (function () {
+  function systemTheme() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
   try {
     var key = "kivox-theme";
     var v = window.localStorage.getItem(key);
@@ -10,10 +16,10 @@ export function themeInitScript(): string {
     if (v === "light" || v === "dark") {
       root.dataset.theme = v;
     } else {
-      root.dataset.theme = "dark";
+      root.dataset.theme = systemTheme();
     }
   } catch (e) {
-    document.documentElement.dataset.theme = "dark";
+    document.documentElement.dataset.theme = systemTheme();
   }
 })();`.trim();
 }

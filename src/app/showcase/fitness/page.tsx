@@ -170,6 +170,85 @@ export default function FitnessShowcase() {
         </div>
       </section>
 
+      {/* CLASS SCHEDULE (Case Study Promise) */}
+      <section className="px-6 md:px-12 py-24 md:py-32 max-w-[1600px] mx-auto border-t border-white/10">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div>
+            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9]">
+              The <br/><span className="text-[#CCFF00]">Schedule</span>
+            </h2>
+          </div>
+          <p className="max-w-md text-white/60 font-medium text-lg">
+            Real-time class schedule. Drop in or book ahead to secure your spot in the trenches.
+          </p>
+        </div>
+
+        {/* Desktop Table (Hidden on Mobile) */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b-2 border-white/20">
+                <th className="py-6 px-4 text-sm font-bold uppercase tracking-widest text-white/50 w-[15%]">Time</th>
+                <th className="py-6 px-4 text-sm font-bold uppercase tracking-widest text-white/50 w-[30%]">Class</th>
+                <th className="py-6 px-4 text-sm font-bold uppercase tracking-widest text-white/50 w-[25%]">Trainer</th>
+                <th className="py-6 px-4 text-sm font-bold uppercase tracking-widest text-white/50 w-[15%]">Level</th>
+                <th className="py-6 px-4 text-sm font-bold uppercase tracking-widest text-white/50 w-[15%]">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              {[
+                { time: "06:00 AM", name: "Ironclad Hypertrophy", trainer: "Marcus Kane", level: "Advanced", color: "text-[#FF3333]", bg: "bg-[#FF3333]/10" },
+                { time: "07:30 AM", name: "Endurance Engine", trainer: "Elena Rostova", level: "All Levels", color: "text-[#CCFF00]", bg: "bg-[#CCFF00]/10" },
+                { time: "12:00 PM", name: "Lunchtime Power", trainer: "David Vance", level: "Intermediate", color: "text-[#FF9900]", bg: "bg-[#FF9900]/10" },
+                { time: "05:30 PM", name: "Ironclad Hypertrophy", trainer: "Marcus Kane", level: "Advanced", color: "text-[#FF3333]", bg: "bg-[#FF3333]/10" },
+                { time: "07:00 PM", name: "Mobility Flow", trainer: "Elena Rostova", level: "All Levels", color: "text-[#CCFF00]", bg: "bg-[#CCFF00]/10" },
+              ].map((row, i) => (
+                <tr key={i} className="hover:bg-white/5 transition-colors group">
+                  <td className="py-6 px-4 font-black text-xl italic tracking-tighter">{row.time}</td>
+                  <td className="py-6 px-4 font-black uppercase tracking-tight text-xl group-hover:text-[#CCFF00] transition-colors">{row.name}</td>
+                  <td className="py-6 px-4 font-medium text-white/70">{row.trainer}</td>
+                  <td className="py-6 px-4">
+                    <span className={`px-3 py-1 text-xs font-black uppercase tracking-widest ${row.color} ${row.bg}`}>
+                      {row.level}
+                    </span>
+                  </td>
+                  <td className="py-6 px-4">
+                    <button className="text-xs font-bold uppercase tracking-[0.1em] border-b border-white/30 pb-1 hover:border-[#CCFF00] hover:text-[#CCFF00] transition-all">Book Spot</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile List View (Hidden on Desktop) */}
+        <div className="md:hidden space-y-4">
+          {[
+            { time: "06:00 AM", name: "Ironclad Hypertrophy", trainer: "Marcus Kane", level: "Advanced", color: "text-[#FF3333]", bg: "bg-[#FF3333]/10" },
+            { time: "07:30 AM", name: "Endurance Engine", trainer: "Elena Rostova", level: "All Levels", color: "text-[#CCFF00]", bg: "bg-[#CCFF00]/10" },
+            { time: "12:00 PM", name: "Lunchtime Power", trainer: "David Vance", level: "Intermediate", color: "text-[#FF9900]", bg: "bg-[#FF9900]/10" },
+            { time: "05:30 PM", name: "Ironclad Hypertrophy", trainer: "Marcus Kane", level: "Advanced", color: "text-[#FF3333]", bg: "bg-[#FF3333]/10" },
+            { time: "07:00 PM", name: "Mobility Flow", trainer: "Elena Rostova", level: "All Levels", color: "text-[#CCFF00]", bg: "bg-[#CCFF00]/10" },
+          ].map((row, i) => (
+            <div key={i} className="bg-[#111] border border-white/10 p-5 flex flex-col gap-4">
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="font-black text-xl italic tracking-tighter text-[#CCFF00] mb-1">{row.time}</div>
+                  <h3 className="font-black uppercase tracking-tight text-xl">{row.name}</h3>
+                  <div className="text-sm font-medium text-white/60 mt-1">{row.trainer}</div>
+                </div>
+                <span className={`px-2 py-1 text-[10px] font-black uppercase tracking-widest ${row.color} ${row.bg}`}>
+                  {row.level}
+                </span>
+              </div>
+              <button className="w-full py-3 border border-white/20 text-xs font-bold uppercase tracking-[0.1em] hover:bg-white hover:text-black transition-colors skew-x-[-10deg]">
+                <span className="block skew-x-[10deg]">Book Spot</span>
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ELITE TRAINERS */}
       <section className="bg-[#111] border-y border-white/10 py-32 px-6 md:px-12 relative overflow-hidden">
         {/* Giant background text */}

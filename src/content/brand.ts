@@ -10,6 +10,5 @@ export const brand = {
   socials: {
     instagram: "https://instagram.com/kivox",
     linkedin: "https://linkedin.com/company/kivox",
-    github: "https://github.com/kivox",
   },
 };

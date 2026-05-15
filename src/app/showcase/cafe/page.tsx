@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
-import { ArrowRight, MapPin, Mail, Coffee, Truck, Leaf } from "lucide-react";
+import { ArrowRight, MapPin, Mail, Coffee, Truck, Leaf, Clock } from "lucide-react";
 
 export default function CafeShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -71,14 +71,32 @@ export default function CafeShowcase() {
               We source directly from independent farmers globally to roast small-batch, specialty coffee in the heart of Brooklyn. Uncompromising quality from seed to cup.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-12">
               <button className="px-8 py-4 bg-[#2C241B] text-[#F9F6F0] text-xs font-bold tracking-[0.2em] uppercase rounded-full hover:bg-[#D26E4B] transition-colors flex items-center justify-center gap-3 group">
-                Shop Whole Bean
+                View Menu
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="px-8 py-4 border border-[#2C241B]/20 text-[#2C241B] text-xs font-bold tracking-[0.2em] uppercase rounded-full hover:bg-[#2C241B]/5 transition-colors text-center">
-                Find a Cafe
-              </button>
+            </div>
+
+            {/* HIGH CRAFT: Hours and Location visible without scrolling (Case Study Promise) */}
+            <div className="bg-white/80 backdrop-blur-md border border-[#2C241B]/10 p-6 rounded-2xl flex flex-col sm:flex-row gap-8 w-full max-w-lg shadow-xl mt-auto">
+              <div className="flex gap-3">
+                <MapPin className="w-5 h-5 text-[#D26E4B] shrink-0" />
+                <div>
+                  <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#2C241B]/60 mb-1">Flagship Cafe</h4>
+                  <p className="text-sm font-semibold">123 Roaster Ave, Brooklyn</p>
+                  <a href="#" className="text-[#D26E4B] text-[10px] font-bold tracking-[0.1em] uppercase mt-2 inline-block hover:underline">Get Directions</a>
+                </div>
+              </div>
+              <div className="w-px bg-[#2C241B]/10 hidden sm:block"></div>
+              <div className="flex gap-3">
+                <Clock className="w-5 h-5 text-[#D26E4B] shrink-0" />
+                <div>
+                  <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#2C241B]/60 mb-1">Today's Hours</h4>
+                  <p className="text-sm font-semibold">Open • Closes at 7PM</p>
+                  <p className="text-[#2C241B]/60 text-[10px] mt-2">Mon-Sun, 7AM - 7PM</p>
+                </div>
+              </div>
             </div>
           </motion.div>
 
@@ -141,7 +159,7 @@ export default function CafeShowcase() {
               className="absolute -bottom-16 -right-8 md:-right-16 w-2/3 aspect-[4/3] border-8 border-[#F9F6F0] rounded-2xl overflow-hidden shadow-2xl hidden sm:block"
             >
               <Image 
-                src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?q=80&w=1000&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop" 
                 alt="Coffee beans sorting" 
                 fill
                 sizes="(max-width: 1024px) 100vw, 33vw"
@@ -176,90 +194,95 @@ export default function CafeShowcase() {
         </div>
       </section>
 
-      {/* FEATURED ROASTS (E-COMMERCE) */}
+      {/* PRINT-INSPIRED CAFE MENU (Case Study Promise: Menu is first-class) */}
       <section className="bg-[#2C241B] text-[#F9F6F0] py-24 md:py-32">
-        <div className="max-w-[1600px] mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <div>
-              <h2 className="text-[#D26E4B] text-[11px] font-bold tracking-[0.3em] uppercase mb-6">Freshly Roasted</h2>
-              <h3 className="text-4xl md:text-7xl font-serif tracking-tight">Current Offerings</h3>
-            </div>
-            <button className="text-[11px] font-bold tracking-[0.2em] uppercase hover:text-[#D26E4B] transition-colors flex items-center gap-2 border-b border-current pb-1">
-              Shop All Coffee
-              <ArrowRight className="w-4 h-4" />
-            </button>
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+          <div className="text-center mb-20">
+            <h2 className="text-[#D26E4B] text-[11px] font-bold tracking-[0.3em] uppercase mb-6">Our Offerings</h2>
+            <h3 className="text-4xl md:text-6xl font-serif tracking-tight">The Menu</h3>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                id: 1,
-                name: "Bedford Espresso",
-                origin: "Blend: Brazil & Colombia",
-                notes: "Dark Chocolate, Cherry, Hazelnut",
-                roast: "Medium-Dark",
-                price: "$19",
-                img: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?q=80&w=800&auto=format&fit=crop"
-              },
-              {
-                id: 2,
-                name: "Yirgacheffe Reserve",
-                origin: "Single Origin: Ethiopia",
-                notes: "Jasmine, Lemon Zest, Raw Honey",
-                roast: "Light",
-                price: "$24",
-                img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop"
-              },
-              {
-                id: 3,
-                name: "Antigua Estate",
-                origin: "Single Origin: Guatemala",
-                notes: "Caramel, Green Apple, Almond",
-                roast: "Medium",
-                price: "$21",
-                img: "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?q=80&w=800&auto=format&fit=crop"
-              },
-              {
-                id: 4,
-                name: "Night Owl Decaf",
-                origin: "Blend: Mexico (Swiss Water)",
-                notes: "Graham Cracker, Cocoa, Molasses",
-                roast: "Medium-Dark",
-                price: "$20",
-                img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=800&auto=format&fit=crop"
-              }
-            ].map((product) => (
-              <div key={product.id} className="group relative flex flex-col bg-[#1A1510] rounded-2xl overflow-hidden hover:bg-[#15100B] transition-colors">
-                <div className="aspect-[4/5] relative overflow-hidden bg-black/20">
-                  {/* Fake Coffee Bag Image placeholder */}
-                  <Image 
-                    src={product.img} 
-                    alt={product.name} 
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover opacity-70 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"
-                  />
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-[#D26E4B] text-white text-[9px] font-bold tracking-[0.2em] uppercase rounded-full">
-                    {product.roast}
+          <div className="grid md:grid-cols-2 gap-16 md:gap-24">
+            {/* Column 1 */}
+            <div>
+              <h4 className="text-2xl font-serif border-b border-[#F9F6F0]/20 pb-4 mb-8 text-[#D26E4B]">Espresso Bar</h4>
+              <ul className="space-y-8">
+                <li>
+                  <div className="flex justify-between items-baseline mb-2">
+                    <span className="text-xl font-medium tracking-wide">Espresso</span>
+                    <span className="text-lg text-[#F9F6F0]/60">3.5</span>
                   </div>
-                </div>
-                
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="text-[#D26E4B] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
-                    {product.origin}
+                  <p className="text-sm text-[#F9F6F0]/50 font-light leading-relaxed">Double shot of our seasonal Bedford blend.</p>
+                </li>
+                <li>
+                  <div className="flex justify-between items-baseline mb-2">
+                    <span className="text-xl font-medium tracking-wide">Cortado</span>
+                    <span className="text-lg text-[#F9F6F0]/60">4.0</span>
                   </div>
-                  <h4 className="text-2xl font-serif mb-2">{product.name}</h4>
-                  <p className="text-sm text-[#F9F6F0]/60 mb-6 flex-grow">{product.notes}</p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-[#F9F6F0]/10">
-                    <span className="text-lg font-serif">{product.price} <span className="text-xs font-sans opacity-50">/ 12oz</span></span>
-                    <button className="w-10 h-10 rounded-full bg-[#F9F6F0] text-[#2C241B] flex items-center justify-center hover:bg-[#D26E4B] hover:text-white transition-colors">
-                      +
-                    </button>
+                  <p className="text-sm text-[#F9F6F0]/50 font-light leading-relaxed">Equal parts espresso and steamed milk.</p>
+                </li>
+                <li>
+                  <div className="flex justify-between items-baseline mb-2">
+                    <span className="text-xl font-medium tracking-wide">Cappuccino</span>
+                    <span className="text-lg text-[#F9F6F0]/60">4.5</span>
                   </div>
-                </div>
-              </div>
-            ))}
+                  <p className="text-sm text-[#F9F6F0]/50 font-light leading-relaxed">Espresso with thick, velvety micro-foam.</p>
+                </li>
+                <li>
+                  <div className="flex justify-between items-baseline mb-2">
+                    <span className="text-xl font-medium tracking-wide">Latte</span>
+                    <span className="text-lg text-[#F9F6F0]/60">5.0</span>
+                  </div>
+                  <p className="text-sm text-[#F9F6F0]/50 font-light leading-relaxed">Espresso with lightly textured milk. Hot or iced.</p>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 2 */}
+            <div>
+              <h4 className="text-2xl font-serif border-b border-[#F9F6F0]/20 pb-4 mb-8 text-[#D26E4B]">Pour Over</h4>
+              <ul className="space-y-8 mb-16">
+                <li>
+                  <div className="flex justify-between items-baseline mb-2">
+                    <span className="text-xl font-medium tracking-wide">Yirgacheffe Reserve</span>
+                    <span className="text-lg text-[#F9F6F0]/60">6.0</span>
+                  </div>
+                  <p className="text-sm text-[#F9F6F0]/50 font-light leading-relaxed">Ethiopia • Jasmine, Lemon Zest, Raw Honey</p>
+                </li>
+                <li>
+                  <div className="flex justify-between items-baseline mb-2">
+                    <span className="text-xl font-medium tracking-wide">Antigua Estate</span>
+                    <span className="text-lg text-[#F9F6F0]/60">5.5</span>
+                  </div>
+                  <p className="text-sm text-[#F9F6F0]/50 font-light leading-relaxed">Guatemala • Caramel, Green Apple, Almond</p>
+                </li>
+              </ul>
+
+              <h4 className="text-2xl font-serif border-b border-[#F9F6F0]/20 pb-4 mb-8 text-[#D26E4B]">Not Coffee</h4>
+              <ul className="space-y-8">
+                <li>
+                  <div className="flex justify-between items-baseline mb-2">
+                    <span className="text-xl font-medium tracking-wide">Matcha Latte</span>
+                    <span className="text-lg text-[#F9F6F0]/60">5.5</span>
+                  </div>
+                  <p className="text-sm text-[#F9F6F0]/50 font-light leading-relaxed">Ceremonial grade matcha from Uji, Japan.</p>
+                </li>
+                <li>
+                  <div className="flex justify-between items-baseline mb-2">
+                    <span className="text-xl font-medium tracking-wide">Chai Tea Latte</span>
+                    <span className="text-lg text-[#F9F6F0]/60">5.0</span>
+                  </div>
+                  <p className="text-sm text-[#F9F6F0]/50 font-light leading-relaxed">House-made spicy chai concentrate with milk.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="mt-20 pt-10 border-t border-[#F9F6F0]/10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#F9F6F0]/40">Alternative milks available: Oat, Almond, Macadamia (+0.75)</p>
+            <button className="px-8 py-4 bg-[#D26E4B] text-[#F9F6F0] text-[10px] font-bold tracking-[0.2em] uppercase rounded-full hover:bg-[#F9F6F0] hover:text-[#2C241B] transition-colors">
+              Order Ahead
+            </button>
           </div>
         </div>
       </section>

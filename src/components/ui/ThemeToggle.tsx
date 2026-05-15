@@ -15,10 +15,10 @@ function getSystemTheme(): "dark" | "light" {
 }
 
 function getStoredTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "system";
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored === "dark" || stored === "light" || stored === "system") return stored;
-  return "dark";
+  return "system";
 }
 
 /**
