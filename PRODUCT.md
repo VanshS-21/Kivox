@@ -1,5 +1,9 @@
 # Product Strategy: Kivox Studio
 
+## Register
+
+brand
+
 ## Users
 
 **Primary Target**: SMB owners and operators (time-poor, want certainty, dislike jargon).
@@ -20,9 +24,15 @@ Kivox is a boutique studio website that converts qualified SMB owners/operators 
 
 **What it does**: Showcases Kivox's craft, clarity, and systems-thinking approach through bold design, editorial sophistication, and work-forward presentation.
 
+**Showcase role**: The showcase is not only a gallery of screenshots. It includes fully built sub-websites and product demos that behave like separate client-ready properties. Each sub-website is designed with its own business context, audience, interaction model, visual language, and conversion path. They may live inside Kivox during demonstration, or be launched separately when a business use case requires it.
+
+**Named sub-websites**: The current showcase properties are MedQueue, The Roastery, Aurelia Grand, Greenfield Academy, and Vortex Fitness. These names come from the case studies and are the canonical names for product, design, and implementation work.
+
+**Sub-website standard**: These sub-websites do not inherit Kivox's theme by default. Their typography, palette, layout, motion, navigation, and content structure can be completely separate from Kivox when the showcased business demands it. What they must inherit is the Kivox standard: intentional design, sharp information architecture, fast technical execution, accessibility, responsive polish, and a clear reason for every interaction.
+
 **Why it exists**: To establish premium trust through design quality itself - the site must feel premium, fast, and considered to prove Kivox can deliver the same for clients.
 
-**Success looks like**: Increased qualified project inquiries, visitors reaching Work and Contact sections at healthy rates, and form completion rates improving over iterations.
+**Success looks like**: Increased qualified project inquiries, visitors reaching Work and Contact sections at healthy rates, serious prospects exploring the live showcase experiences, and form completion rates improving over iterations.
 
 ## Brand Personality
 
@@ -68,6 +78,10 @@ Kivox is a boutique studio website that converts qualified SMB owners/operators 
 4. **Work-forward confidence**: Lead with work and capability, not defensive disclaimers or apologies. Studio demonstrations are clearly labeled but presented with full confidence.
 
 5. **Craft is the proof**: Typography, spacing, motion, and interaction quality demonstrate capability more effectively than any claim. The site's execution is the portfolio.
+
+6. **Separate worlds, same standard**: Showcase sub-websites may look and feel nothing like Kivox. MedQueue, The Roastery, Aurelia Grand, Greenfield Academy, and Vortex Fitness should each carry their own brand reality. The continuity is not visual sameness. The continuity is craft quality, technical depth, clarity, and intentionality.
+
+7. **Launchable by default**: A sub-website should be treated as something that could become a real standalone website when needed. Demo status is not permission for thin screens, dead-end journeys, weak responsiveness, or decorative-only UI. Each showcase should have a coherent purpose, working path, and enough depth to prove how Kivox would think through that client's world.
 
 ## Accessibility & Inclusion
 
