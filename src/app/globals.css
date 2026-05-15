@@ -416,6 +416,10 @@ p { text-wrap: pretty; }
   outline-offset: 3px;
 }
 
+.medqueue-scope :focus-visible {
+  outline: none;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Typography system                                                            */
 /*                                                                              */

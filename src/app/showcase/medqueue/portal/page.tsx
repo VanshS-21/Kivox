@@ -1,239 +1,187 @@
 "use client";
 
+import Link from "next/link";
+import {
+  Activity,
+  CalendarCheck2,
+  ClipboardList,
+  FileText,
+  HeartPulse,
+  Pill,
+  Plus,
+  ShieldCheck,
+  type LucideIcon,
+} from "lucide-react";
+
+import { MQButton, MQChip, MQPanel, MQSectionLabel } from "../components";
 import { useMedQueue } from "../context";
-import { useRouter } from "next/navigation";
-import { User, Calendar, Clock, MapPin, Search, ChevronRight, FileText } from "lucide-react";
-import Image from "next/image";
-import { motion } from "motion/react";
-import { c, font } from "../tokens";
+import { mq, routes } from "../tokens";
 
-export default function PatientPortal() {
-  const { appointments, doctors } = useMedQueue();
-  const router = useRouter();
-
-  const upcoming = appointments.filter((a) => a.status === "upcoming");
+export default function MedQueuePortalPage() {
+  const { appointments, records, prescriptions } = useMedQueue();
+  const upcoming = appointments.filter((appointment) => appointment.status === "upcoming");
+  const completed = appointments.filter((appointment) => appointment.status === "completed");
+  const quickActions: Array<[string, string, LucideIcon]> = [
+    ["Upload insurance card", "Keep coverage ready before the next visit.", ShieldCheck],
+    ["Add symptom note", "Capture context while it is fresh.", ClipboardList],
+    ["Schedule follow-up", completed.length ? "One previous visit is ready for follow-up." : "No prior visits yet.", Plus],
+  ];
 
   return (
-    <div className="flex-1 pb-20" style={{ backgroundColor: c.bg }}>
-      {/* Profile Header */}
-      <div className="px-6 pt-10 pb-20" style={{ backgroundColor: c.hero }}>
-        <div className="max-w-5xl mx-auto flex items-center gap-5">
-          <div
-            className="w-16 h-16 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: "oklch(0.25 0.03 240)", border: "1px solid oklch(0.35 0.03 240)" }}
-          >
-            <User className="w-8 h-8" style={{ color: c.heroMuted }} />
+    <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 md:px-6">
+      <section className="grid gap-6 lg:grid-cols-[0.68fr_0.32fr]">
+        <MQPanel tone="warm">
+          <MQSectionLabel icon={HeartPulse}>Patient portal</MQSectionLabel>
+          <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
+            <div>
+              <h1 className="text-5xl font-black leading-none md:text-6xl" style={{ fontFamily: mq.font.display }}>
+                Good afternoon, Aarya.
+              </h1>
+              <p className="mt-5 max-w-2xl text-lg leading-8" style={{ color: mq.color.muted }}>
+                Your appointments, prescriptions, results, and follow-up tasks stay in one calm care timeline.
+              </p>
+            </div>
+            <MQButton href={routes.search} icon="search">
+              Book care
+            </MQButton>
           </div>
-          <div>
-            <h1 style={{
-              fontFamily: font.display, fontWeight: 700, fontSize: "1.75rem",
-              letterSpacing: "-0.02em", color: c.heroFg,
-            }}>
-              Aarav Patel
-            </h1>
-            <p style={{
-              fontFamily: font.mono, fontSize: "0.6875rem", fontWeight: 500,
-              letterSpacing: "0.06em", color: c.heroMuted, marginTop: "2px",
-            }}>
-              ABHA ID: 91-8822-XXXX-XXXX
-            </p>
+
+          <div className="mt-8 grid gap-3 md:grid-cols-3">
+            {[
+              [upcoming.length, "upcoming"],
+              [records.length, "records"],
+              [prescriptions.length, "prescriptions"],
+            ].map(([value, label]) => (
+              <div className="rounded-2xl border bg-white p-4" key={label} style={{ borderColor: mq.color.rule }}>
+                <div className="text-3xl font-black" style={{ fontFamily: mq.font.display }}>
+                  {value}
+                </div>
+                <div className="mt-1 text-xs font-bold uppercase" style={{ color: mq.color.faint }}>
+                  {label}
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      </div>
+        </MQPanel>
 
-      <div className="max-w-5xl mx-auto px-6 -mt-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Main content */}
-          <div className="md:col-span-2 space-y-6">
-            {/* Upcoming */}
-            <section
-              className="rounded-lg overflow-hidden"
-              style={{ border: `1px solid ${c.subtle}`, backgroundColor: c.surface }}
-            >
-              <div className="px-5 py-3 flex items-center gap-2" style={{ borderBottom: `1px solid ${c.subtle}`, backgroundColor: c.bg }}>
-                <Calendar className="w-4 h-4" style={{ color: c.accent }} />
-                <h2 style={{
-                  fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 600,
-                  letterSpacing: "0.12em", textTransform: "uppercase" as const, color: c.muted,
-                }}>
-                  Upcoming Appointments
-                </h2>
+        <MQPanel tone="white">
+          <MQSectionLabel icon={Activity}>Vitals snapshot</MQSectionLabel>
+          <div className="space-y-4">
+            {[
+              ["Resting HR", "72", "bpm", "62%"],
+              ["Sleep", "7.4", "hrs", "78%"],
+              ["Stress", "Low", "today", "38%"],
+            ].map(([label, value, unit, width]) => (
+              <div key={label}>
+                <div className="flex items-end justify-between">
+                  <span className="text-sm font-black">{label}</span>
+                  <span className="text-sm" style={{ color: mq.color.muted }}>
+                    <strong style={{ color: mq.color.ink }}>{value}</strong> {unit}
+                  </span>
+                </div>
+                <div className="mt-2 h-2 rounded-full" style={{ backgroundColor: mq.color.paper }}>
+                  <div className="h-full rounded-full" style={{ backgroundColor: mq.color.recovery, width }} />
+                </div>
               </div>
+            ))}
+          </div>
+        </MQPanel>
+      </section>
 
-              {upcoming.length === 0 ? (
-                <div className="p-10 text-center">
-                  <Calendar className="w-8 h-8 mx-auto mb-3" style={{ color: c.subtle }} />
-                  <h3 style={{ fontFamily: font.display, fontWeight: 600, fontSize: "1rem", color: c.ink, marginBottom: "0.5rem" }}>
-                    No upcoming appointments
-                  </h3>
-                  <p style={{ color: c.muted, fontSize: "0.875rem", marginBottom: "1.5rem" }}>
-                    Need to see a doctor?
-                  </p>
-                  <button
-                    onClick={() => router.push("/showcase/medqueue/search")}
-                    className="px-5 py-2.5 rounded font-semibold text-sm transition-opacity hover:opacity-80"
-                    style={{ backgroundColor: c.accent, color: c.heroFg, fontFamily: font.body }}
-                  >
-                    Find a Doctor
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  {upcoming.map((appt, idx) => {
-                    const doc = doctors.find((d) => d.id === appt.doctorId);
-                    if (!doc) return null;
-                    return (
-                      <motion.div
-                        key={appt.id}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.08 }}
-                        className="p-5 flex flex-col sm:flex-row gap-4"
-                        style={{ borderBottom: `1px solid ${c.subtle}` }}
-                      >
-                        <div className="w-12 h-12 shrink-0 rounded overflow-hidden relative" style={{ backgroundColor: c.bg }}>
-                          <Image src={doc.imageUrl} alt={doc.name} fill className="object-cover object-top" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between mb-1">
-                            <div>
-                              <h3 style={{ fontFamily: font.display, fontWeight: 600, fontSize: "0.9375rem", color: c.ink }}>
-                                {doc.name}
-                              </h3>
-                              <p style={{ fontSize: "0.75rem", color: c.muted }}>{doc.specialty}</p>
-                            </div>
-                            <span style={{
-                              fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 600,
-                              letterSpacing: "0.1em", textTransform: "uppercase" as const,
-                              color: c.trust, padding: "2px 6px", borderRadius: "3px", backgroundColor: c.trustLt,
-                            }}>
-                              Confirmed
-                            </span>
-                          </div>
-                          <div className="mt-3 flex gap-4" style={{
-                            fontFamily: font.mono, fontSize: "0.6875rem", color: c.muted,
-                          }}>
-                            <span className="flex items-center gap-1.5">
-                              <Calendar className="w-3 h-3" />
-                              <span style={{ fontWeight: 500, color: c.ink }}>{appt.date}</span>
-                            </span>
-                            <span className="flex items-center gap-1.5">
-                              <Clock className="w-3 h-3" />
-                              <span style={{ fontWeight: 500, color: c.ink }}>{appt.time}</span>
-                            </span>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              )}
-            </section>
+      <section className="mt-6 grid gap-6 lg:grid-cols-[0.58fr_0.42fr]">
+        <MQPanel tone="white">
+          <div className="mb-5 flex items-center justify-between gap-4">
+            <div>
+              <MQSectionLabel icon={CalendarCheck2}>Appointments</MQSectionLabel>
+              <h2 className="text-3xl font-black" style={{ fontFamily: mq.font.display }}>
+                Care timeline
+              </h2>
+            </div>
+            <MQChip tone="trust">{appointments.length} visits</MQChip>
+          </div>
 
-            {/* Medical Records */}
-            <section
-              className="rounded-lg overflow-hidden"
-              style={{ border: `1px solid ${c.subtle}`, backgroundColor: c.surface }}
-            >
-              <div className="px-5 py-3 flex items-center justify-between" style={{ borderBottom: `1px solid ${c.subtle}`, backgroundColor: c.bg }}>
-                <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4" style={{ color: c.trust }} />
-                  <h2 style={{
-                    fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 600,
-                    letterSpacing: "0.12em", textTransform: "uppercase" as const, color: c.muted,
-                  }}>
-                    Medical Records
-                  </h2>
-                </div>
-                <button style={{
-                  fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 500,
-                  letterSpacing: "0.06em", textTransform: "uppercase" as const, color: c.accent,
-                }}>
-                  View All
-                </button>
-              </div>
-              {[
-                { name: "Blood Test Report", date: "12 Oct, 2023", doctor: "Dr. Ananya Sharma" },
-                { name: "Digital Prescription", date: "12 Oct, 2023", doctor: "Dr. Ananya Sharma" },
-                { name: "MRI Scan Analysis", date: "05 Aug, 2023", doctor: "Dr. Vikram Singh" },
-              ].map((record, i, arr) => (
-                <div
-                  key={i}
-                  className="px-5 py-3.5 flex items-center justify-between cursor-pointer transition-colors hover:bg-[oklch(0.96_0.004_240)]"
-                  style={{ borderBottom: i < arr.length - 1 ? `1px solid ${c.subtle}` : undefined }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded flex items-center justify-center" style={{ backgroundColor: c.bg }}>
-                      <FileText className="w-4 h-4" style={{ color: c.muted }} />
+          <div className="space-y-3">
+            {appointments.map((appointment) => (
+              <div
+                className="rounded-3xl border p-4"
+                key={appointment.id}
+                style={{
+                  backgroundColor: appointment.status === "upcoming" ? mq.color.careSoft : mq.color.panel,
+                  borderColor: mq.color.rule,
+                }}
+              >
+                <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-lg font-black">{appointment.doctorName}</h3>
+                      <MQChip tone={appointment.status === "upcoming" ? "care" : "neutral"}>
+                        {appointment.status}
+                      </MQChip>
                     </div>
-                    <div>
-                      <div style={{ fontSize: "0.8125rem", fontWeight: 500, color: c.ink }}>{record.name}</div>
-                      <div style={{ fontFamily: font.mono, fontSize: "0.625rem", color: c.muted }}>
-                        {record.date} · {record.doctor}
-                      </div>
-                    </div>
+                    <p className="mt-1 text-sm" style={{ color: mq.color.muted }}>
+                      {appointment.specialty} - {appointment.day} at {appointment.time}
+                    </p>
                   </div>
-                  <ChevronRight className="w-4 h-4" style={{ color: c.subtle }} />
+                  <Link
+                    className="text-sm font-black"
+                    href={appointment.status === "upcoming" ? routes.doctor(appointment.doctorId) : routes.search}
+                    style={{ color: mq.color.trust }}
+                  >
+                    {appointment.status === "upcoming" ? "Manage visit" : "Book follow-up"}
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </MQPanel>
+
+        <div className="space-y-6">
+          <MQPanel tone="white">
+            <MQSectionLabel icon={FileText}>Records</MQSectionLabel>
+            <div className="space-y-3">
+              {records.map((record) => (
+                <div className="rounded-2xl border p-4" key={record.id} style={{ borderColor: mq.color.rule }}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-sm font-black">{record.title}</h3>
+                      <p className="mt-1 text-sm" style={{ color: mq.color.muted }}>
+                        {record.doctorName} - {record.date}
+                      </p>
+                    </div>
+                    <MQChip tone="recovery">{record.status}</MQChip>
+                  </div>
                 </div>
               ))}
-            </section>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-4">
-            <div
-              className="rounded-lg p-5"
-              style={{ border: `1px solid ${c.subtle}`, backgroundColor: c.surface }}
-            >
-              <h3 style={{
-                fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 600,
-                letterSpacing: "0.12em", textTransform: "uppercase" as const,
-                color: c.muted, marginBottom: "12px",
-              }}>
-                Quick Actions
-              </h3>
-              <div className="space-y-2">
-                <button
-                  onClick={() => router.push("/showcase/medqueue/search")}
-                  className="w-full flex items-center gap-3 p-3 rounded transition-opacity hover:opacity-70 text-left"
-                  style={{ border: `1px solid ${c.subtle}`, color: c.ink }}
-                >
-                  <Search className="w-4 h-4" style={{ color: c.muted }} />
-                  <span style={{ fontSize: "0.8125rem", fontWeight: 500 }}>Book New Appointment</span>
-                </button>
-                <button
-                  className="w-full flex items-center gap-3 p-3 rounded transition-opacity hover:opacity-70 text-left"
-                  style={{ border: `1px solid ${c.subtle}`, color: c.ink }}
-                >
-                  <MapPin className="w-4 h-4" style={{ color: c.muted }} />
-                  <span style={{ fontSize: "0.8125rem", fontWeight: 500 }}>Find Nearby Labs</span>
-                </button>
-              </div>
             </div>
+          </MQPanel>
 
-            <div
-              className="rounded-lg p-5"
-              style={{ backgroundColor: c.accent }}
-            >
-              <h3 style={{
-                fontFamily: font.display, fontWeight: 600, fontSize: "1rem",
-                color: c.heroFg, marginBottom: "0.5rem",
-              }}>
-                MedQueue Plus
-              </h3>
-              <p style={{ fontSize: "0.8125rem", color: "oklch(0.85 0.03 240)", lineHeight: 1.5, marginBottom: "1rem" }}>
-                Zero wait times, free follow-ups, and priority access to top specialists.
-              </p>
-              <button
-                className="w-full py-2 rounded font-semibold text-sm transition-opacity hover:opacity-90"
-                style={{ backgroundColor: c.heroFg, color: c.accent, fontFamily: font.body }}
-              >
-                Upgrade
-              </button>
+          <MQPanel tone="trust">
+            <MQSectionLabel icon={Pill}>Prescriptions</MQSectionLabel>
+            <div className="space-y-3">
+              {prescriptions.map((item) => (
+                <div className="rounded-2xl border bg-white p-4" key={item.id} style={{ borderColor: mq.color.rule }}>
+                  <h3 className="text-sm font-black">{item.name}</h3>
+                  <p className="mt-1 text-sm" style={{ color: mq.color.muted }}>
+                    {item.dose} - {item.schedule}
+                  </p>
+                </div>
+              ))}
             </div>
-          </div>
+          </MQPanel>
         </div>
-      </div>
+      </section>
+
+      <section className="mt-6 grid gap-6 lg:grid-cols-3">
+        {quickActions.map(([title, body, Icon]) => (
+          <MQPanel className="p-5" key={String(title)} tone="white">
+            <Icon aria-hidden="true" className="h-5 w-5" style={{ color: mq.color.trust }} />
+            <h3 className="mt-4 text-base font-black">{String(title)}</h3>
+            <p className="mt-2 text-sm leading-6" style={{ color: mq.color.muted }}>
+              {String(body)}
+            </p>
+          </MQPanel>
+        ))}
+      </section>
     </div>
   );
 }

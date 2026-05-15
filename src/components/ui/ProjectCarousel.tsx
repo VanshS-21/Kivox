@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { CursorTrigger } from "@/components/ui/CursorTrigger";
 
 interface ProjectCarouselProps {
@@ -9,6 +10,8 @@ interface ProjectCarouselProps {
   alt: string;
   accentColor: string;
   priority?: boolean;
+  liveUrl?: string;
+  liveLabel?: string;
 }
 
 export function ProjectCarousel({
@@ -16,6 +19,8 @@ export function ProjectCarousel({
   alt,
   accentColor,
   priority = false,
+  liveUrl,
+  liveLabel = "View Live Website",
 }: ProjectCarouselProps) {
   const [active, setActive] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -56,6 +61,8 @@ export function ProjectCarousel({
     () => setActive((p) => Math.min(total - 1, p + 1)),
     [total]
   );
+  const liveTarget = liveUrl?.startsWith("/") ? "_self" : "_blank";
+  const liveRel = liveUrl?.startsWith("/") ? undefined : "noopener noreferrer";
 
   return (
     <div className="relative group/carousel">
@@ -77,10 +84,16 @@ export function ProjectCarousel({
               onTouchEnd={handleTouchEnd}
             >
               {images.map((src, idx) => (
-                <div
+                <Link
                   key={idx}
+                  href={liveUrl || "#"}
+                  target={liveUrl ? liveTarget : undefined}
+                  rel={liveRel}
+                  aria-disabled={!liveUrl}
+                  aria-label={`${liveLabel}: ${alt}, slide ${idx + 1}`}
                   className="carousel-slide relative w-full shrink-0"
                   style={{ aspectRatio: "16 / 10", scrollSnapAlign: "start" }}
+                  tabIndex={liveUrl ? 0 : -1}
                 >
                   <Image
                     src={src}
@@ -90,13 +103,32 @@ export function ProjectCarousel({
                     sizes="(max-width: 768px) 100vw, 85vw"
                     priority={priority && idx === 0}
                   />
-                </div>
+                </Link>
               ))}
             </div>
           </CursorTrigger>
         </div>
 
         {/* ── Arrow buttons ── */}
+        {liveUrl && (
+          <Link
+            className="absolute left-4 top-4 z-20 inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-xs font-bold uppercase tracking-[0.12em] text-[oklch(0.99_0.008_80)] shadow-[0_16px_36px_-18px_rgba(0,0,0,0.55)] backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-18px_rgba(0,0,0,0.65)] md:left-6 md:top-6 md:px-5"
+            href={liveUrl}
+            rel={liveRel}
+            style={{
+              background: `linear-gradient(135deg, ${accentColor}, color-mix(in oklch, ${accentColor}, black 18%))`,
+              borderColor: `color-mix(in oklch, ${accentColor}, white 28%)`,
+            }}
+            target={liveTarget}
+          >
+            <span className="h-2 w-2 rounded-full bg-[oklch(0.99_0.008_80)] shadow-[0_0_18px_oklch(0.99_0.008_80/0.7)]" />
+            {liveLabel}
+            <span aria-hidden="true" className="text-sm leading-none transition group-hover/carousel:translate-x-0.5">
+              →
+            </span>
+          </Link>
+        )}
+
         {total > 1 && (
           <>
             <button

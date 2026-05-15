@@ -1,359 +1,169 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
-import { useMedQueue } from "../../context";
-import { ArrowLeft, MapPin, Clock, Info } from "lucide-react";
 import Image from "next/image";
-import { motion } from "motion/react";
-import { useState, useMemo } from "react";
-import { c, font } from "../../tokens";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import {
+  BadgeCheck,
+  Building2,
+  CalendarCheck2,
+  ClipboardList,
+  GraduationCap,
+  HeartPulse,
+  ShieldCheck,
+  Stethoscope,
+  type LucideIcon,
+} from "lucide-react";
 
-const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const times = ["09:00", "10:30", "12:00", "14:30", "16:00", "17:30"];
+import { CarePath, MQButton, MQChip, MQPanel, MQSectionLabel, SlotGrid } from "../../components";
+import { Slot, useMedQueue } from "../../context";
+import { mq, routes } from "../../tokens";
 
-const generateGrid = () =>
-  Array.from({ length: 7 }, () =>
-    Array.from({ length: 6 }, () => Math.random() > 0.3)
-  );
-
-export default function DoctorProfile() {
-  const { id } = useParams();
+export default function MedQueueDoctorPage() {
+  const params = useParams<{ id: string }>();
   const router = useRouter();
   const { doctors } = useMedQueue();
-  const [selectedSlot, setSelectedSlot] = useState<{ day: string; time: string } | null>(null);
-
-  const doctor = doctors.find((d) => d.id === id);
-  const grid = useMemo(() => generateGrid(), [id]);
+  const doctor = doctors.find((item) => item.id === params.id);
 
   if (!doctor) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center p-8" style={{ backgroundColor: c.bg }}>
-        <h2 style={{ fontFamily: font.display, fontWeight: 600, fontSize: "1.25rem", color: c.ink, marginBottom: "1rem" }}>
-          Doctor not found
-        </h2>
-        <button onClick={() => router.back()} className="hover:opacity-60 transition-opacity" style={{ fontFamily: font.mono, fontSize: "0.75rem", color: c.accent, letterSpacing: "0.06em" }}>
-          Go back
-        </button>
+      <div className="mx-auto max-w-3xl px-4 py-16">
+        <MQPanel tone="warm">
+          <h1 className="text-3xl font-black" style={{ fontFamily: mq.font.display }}>
+            Doctor not found
+          </h1>
+          <p className="mt-3 text-sm" style={{ color: mq.color.muted }}>
+            This demo clinician may have moved. Return to search to choose another profile.
+          </p>
+          <div className="mt-5">
+            <MQButton href={routes.search}>Back to search</MQButton>
+          </div>
+        </MQPanel>
       </div>
     );
   }
 
-  const handleBook = () => {
-    if (selectedSlot) {
-      router.push(`/showcase/medqueue/book/${doctor.id}?day=${selectedSlot.day}&time=${selectedSlot.time}`);
-    }
-  };
+  const activeDoctor = doctor;
+
+  function bookSlot(slot: Slot) {
+    router.push(routes.book(activeDoctor.id, slot));
+  }
 
   return (
-    <div className="flex-1 pb-20" style={{ backgroundColor: c.bg }}>
-      {/* Breadcrumb */}
-      <div className="px-6 py-3" style={{ borderBottom: `1px solid ${c.subtle}` }}>
-        <div className="max-w-5xl mx-auto">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center gap-1.5 transition-opacity hover:opacity-60"
-            style={{ fontFamily: font.mono, fontSize: "0.6875rem", fontWeight: 500, letterSpacing: "0.06em", color: c.muted }}
-          >
-            <ArrowLeft className="w-3.5 h-3.5" /> Back to results
-          </button>
-        </div>
-      </div>
+    <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 md:px-6">
+      <Link className="mb-5 inline-flex text-sm font-bold" href={routes.search} style={{ color: mq.color.trust }}>
+        Back to search
+      </Link>
 
-      <div className="max-w-5xl mx-auto px-6 pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Column: Profile */}
-        <div className="lg:col-span-7 space-y-6">
-          {/* Profile Header */}
-          <section className="flex gap-6">
-            <div
-              className="relative w-28 h-28 md:w-36 md:h-36 shrink-0 rounded-lg overflow-hidden"
-              style={{ backgroundColor: c.subtle }}
-            >
-              <Image src={doctor.imageUrl} alt={doctor.name} fill className="object-cover object-top" />
-            </div>
-            <div className="flex flex-col justify-center">
-              <div className="flex items-center gap-2.5 mb-2">
-                <span style={{
-                  fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 600,
-                  letterSpacing: "0.1em", textTransform: "uppercase" as const,
-                  color: c.accent, padding: "2px 8px", borderRadius: "3px", backgroundColor: c.accentLt,
-                }}>
-                  {doctor.specialty}
-                </span>
-                <span style={{
-                  fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 500,
-                  letterSpacing: "0.06em", textTransform: "uppercase" as const, color: c.trust,
-                }}>
-                  NMC Verified
-                </span>
-              </div>
-              <h1 style={{
-                fontFamily: font.display, fontWeight: 700,
-                fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
-                letterSpacing: "-0.02em", color: c.ink, marginBottom: "0.25rem",
-              }}>
-                {doctor.name}
-              </h1>
-              <p className="flex items-center gap-1.5" style={{ color: c.muted, fontSize: "0.875rem" }}>
-                <MapPin className="w-3.5 h-3.5" /> {doctor.location}
-              </p>
-            </div>
-          </section>
-
-          {/* Credentials Table */}
-          <section
-            className="rounded-lg overflow-hidden"
-            style={{ border: `1px solid ${c.subtle}`, backgroundColor: c.surface }}
-          >
-            <div className="px-5 py-3" style={{ borderBottom: `1px solid ${c.subtle}`, backgroundColor: c.bg }}>
-              <h2 style={{
-                fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 600,
-                letterSpacing: "0.12em", textTransform: "uppercase" as const, color: c.muted,
-              }}>
-                Credentials & Outcomes
-              </h2>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4">
-              {[
-                { label: "Experience", value: `${doctor.experience} yrs` },
-                { label: "Success Rate", value: `${doctor.successRate}%` },
-                { label: "Patients", value: `${(doctor.consultations / 1000).toFixed(1)}k` },
-                { label: "Consult Fee", value: `₹${doctor.fee}` },
-              ].map((item, i) => (
-                <div
-                  key={item.label}
-                  className="p-5"
-                  style={{
-                    borderRight: i < 3 ? `1px solid ${c.subtle}` : undefined,
-                    borderBottom: `1px solid ${c.subtle}`,
-                  }}
-                >
-                  <div style={{
-                    fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 600,
-                    letterSpacing: "0.12em", textTransform: "uppercase" as const,
-                    color: c.muted, marginBottom: "6px",
-                  }}>
-                    {item.label}
-                  </div>
-                  <div style={{
-                    fontFamily: font.mono, fontSize: "1.25rem", fontWeight: 600,
-                    color: c.ink, fontVariantNumeric: "tabular-nums",
-                  }}>
-                    {item.value}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Education & Registration */}
-            <div className="grid grid-cols-1 md:grid-cols-2">
-              <div className="p-5" style={{ borderRight: `1px solid ${c.subtle}` }}>
-                <div style={{
-                  fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 600,
-                  letterSpacing: "0.12em", textTransform: "uppercase" as const,
-                  color: c.muted, marginBottom: "6px",
-                }}>
-                  Education
-                </div>
-                <div style={{ fontSize: "0.875rem", fontWeight: 500, color: c.ink }}>M.D. (Gold Medal)</div>
-                <div style={{ fontSize: "0.75rem", color: c.muted, marginTop: "2px" }}>
-                  AIIMS Delhi, 2008 · Fellowship, Johns Hopkins, 2012
-                </div>
-              </div>
-              <div className="p-5">
-                <div style={{
-                  fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 600,
-                  letterSpacing: "0.12em", textTransform: "uppercase" as const,
-                  color: c.muted, marginBottom: "6px",
-                }}>
-                  Registration
-                </div>
-                <div style={{ fontSize: "0.875rem", fontWeight: 500, color: c.ink }}>NMC #MH-28491</div>
-                <div style={{ fontSize: "0.75rem", color: c.muted, marginTop: "2px" }}>
-                  Maharashtra Medical Council · Active
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Patient Experience */}
-          <section
-            className="rounded-lg overflow-hidden"
-            style={{ border: `1px solid ${c.subtle}`, backgroundColor: c.surface }}
-          >
-            <div className="px-5 py-3" style={{ borderBottom: `1px solid ${c.subtle}`, backgroundColor: c.bg }}>
-              <h2 style={{
-                fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 600,
-                letterSpacing: "0.12em", textTransform: "uppercase" as const, color: c.muted,
-              }}>
-                Patient Experience
-              </h2>
-            </div>
-            <div className="p-5 space-y-4">
-              {[
-                { label: "Diagnosis Accuracy", score: 98 },
-                { label: "Wait Time Punctuality", score: 92 },
-                { label: "Treatment Explanation", score: 95 },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-4">
-                  <div style={{ fontSize: "0.8125rem", color: c.ink, minWidth: "160px" }}>{item.label}</div>
-                  <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: c.bg }}>
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${item.score}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8 }}
-                      className="h-full rounded-full"
-                      style={{ backgroundColor: c.accent }}
-                    />
-                  </div>
-                  <div style={{
-                    fontFamily: font.mono, fontSize: "0.75rem", fontWeight: 600,
-                    color: c.ink, fontVariantNumeric: "tabular-nums", minWidth: "32px", textAlign: "right" as const,
-                  }}>
-                    {item.score}%
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
-
-        {/* Right Column: Booking Sidebar */}
-        <div className="lg:col-span-5">
-          <div
-            className="sticky top-28 rounded-lg overflow-hidden"
-            style={{ border: `1px solid ${c.subtle}`, backgroundColor: c.surface }}
-          >
-            {/* Fee Header */}
-            <div className="p-5 flex justify-between items-center" style={{ backgroundColor: c.hero }}>
-              <div>
-                <div style={{
-                  fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 500,
-                  letterSpacing: "0.1em", textTransform: "uppercase" as const, color: c.heroMuted,
-                }}>
-                  In-Clinic Consultation
-                </div>
-                <div style={{
-                  fontFamily: font.mono, fontSize: "1.5rem", fontWeight: 700,
-                  color: c.heroFg, fontVariantNumeric: "tabular-nums", marginTop: "4px",
-                }}>
-                  ₹{doctor.fee}
-                </div>
-              </div>
-              {doctor.availableToday && (
-                <div className="flex items-center gap-1.5" style={{
-                  fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 500,
-                  letterSpacing: "0.06em", textTransform: "uppercase" as const, color: c.trust,
-                }}>
-                  <Clock className="w-3 h-3" /> Today
-                </div>
-              )}
-            </div>
-
-            {/* Availability Grid */}
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h3 style={{
-                  fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 600,
-                  letterSpacing: "0.1em", textTransform: "uppercase" as const, color: c.muted,
-                }}>
-                  Select a slot
-                </h3>
-                <div style={{
-                  fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 500,
-                  letterSpacing: "0.06em", textTransform: "uppercase" as const,
-                  color: c.trust, padding: "2px 6px", borderRadius: "3px", backgroundColor: c.trustLt,
-                }}>
-                  Live
-                </div>
-              </div>
-
-              {/* Grid */}
-              <div className="rounded overflow-hidden mb-4" style={{ border: `1px solid ${c.subtle}` }}>
-                <div className="flex" style={{ backgroundColor: c.bg, borderBottom: `1px solid ${c.subtle}` }}>
-                  <div className="w-14 shrink-0" style={{ borderRight: `1px solid ${c.subtle}` }} />
-                  {days.map((day) => (
-                    <div
-                      key={day}
-                      className="flex-1 text-center py-2"
-                      style={{
-                        fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 600,
-                        letterSpacing: "0.06em", color: c.muted,
-                        borderRight: `1px solid ${c.subtle}`,
-                      }}
-                    >
-                      {day}
-                    </div>
-                  ))}
-                </div>
-                {times.map((time, tIdx) => (
-                  <div key={time} className="flex" style={{ borderBottom: `1px solid ${c.subtle}` }}>
-                    <div
-                      className="w-14 shrink-0 py-2 text-center"
-                      style={{
-                        fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 500,
-                        color: c.muted, backgroundColor: c.bg,
-                        borderRight: `1px solid ${c.subtle}`,
-                      }}
-                    >
-                      {time}
-                    </div>
-                    {days.map((day, dIdx) => {
-                      const avail = grid[dIdx]?.[tIdx];
-                      const sel = selectedSlot?.day === day && selectedSlot?.time === time;
-                      return (
-                        <button
-                          key={`${day}-${time}`}
-                          disabled={!avail}
-                          onClick={() => setSelectedSlot({ day, time })}
-                          className="flex-1 min-h-[32px] transition-colors flex items-center justify-center"
-                          style={{
-                            borderRight: `1px solid ${c.subtle}`,
-                            backgroundColor: !avail ? c.bg : sel ? c.accent : c.surface,
-                            opacity: !avail ? 0.3 : 1,
-                            cursor: !avail ? "not-allowed" : "pointer",
-                          }}
-                        >
-                          {sel && (
-                            <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c.heroFg }} />
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
-
-              <div
-                className="flex items-start gap-2 mb-5 p-3 rounded text-xs"
-                style={{ backgroundColor: c.trustLt, color: c.trust, fontFamily: font.body }}
-              >
-                <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                <p style={{ fontSize: "0.75rem", lineHeight: 1.5 }}>
-                  Slots are real-time. Booking confirms your appointment instantly.
-                </p>
-              </div>
-
-              <button
-                disabled={!selectedSlot}
-                onClick={handleBook}
-                className="w-full py-3.5 rounded font-semibold transition-all"
-                style={{
-                  backgroundColor: selectedSlot ? c.accent : c.bg,
-                  color: selectedSlot ? c.heroFg : c.muted,
-                  cursor: selectedSlot ? "pointer" : "not-allowed",
-                  fontFamily: font.body,
-                  fontSize: "0.9375rem",
-                }}
-              >
-                {selectedSlot
-                  ? `Book for ${selectedSlot.day}, ${selectedSlot.time}`
-                  : "Select a slot to continue"}
-              </button>
+      <section className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+        <MQPanel className="overflow-hidden p-0" tone="white">
+          <div className="relative min-h-[420px]">
+            <Image
+              alt={`${doctor.name}, ${doctor.specialty}`}
+              className="object-cover"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              src={doctor.image}
+            />
+            <div className="absolute inset-x-5 bottom-5 flex flex-wrap gap-2">
+              <MQChip tone="care">{doctor.nextAvailable}</MQChip>
+              <MQChip tone="trust">{doctor.waitTime}</MQChip>
+              <MQChip tone="insurance">{doctor.insurance.slice(0, 2).join(" + ")}</MQChip>
             </div>
           </div>
+        </MQPanel>
+
+        <div className="space-y-5">
+          <MQPanel tone="warm">
+            <MQSectionLabel icon={Stethoscope}>Verified specialist</MQSectionLabel>
+            <h1 className="text-5xl font-black leading-none md:text-6xl" style={{ fontFamily: mq.font.display }}>
+              {doctor.name}
+            </h1>
+            <p className="mt-4 text-xl font-bold" style={{ color: mq.color.trust }}>
+              {doctor.specialty} - {doctor.city}
+            </p>
+            <p className="mt-5 text-base leading-7" style={{ color: mq.color.muted }}>
+              {doctor.bio}
+            </p>
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              {[
+                [doctor.experience, "experience"],
+                [doctor.consults, "consults"],
+                [doctor.fee, "demo fee"],
+              ].map(([value, label]) => (
+                <div
+                  className="rounded-2xl border p-4"
+                  key={label}
+                  style={{ backgroundColor: mq.color.white, borderColor: mq.color.rule }}
+                >
+                  <div className="text-xl font-black" style={{ color: mq.color.ink }}>
+                    {value}
+                  </div>
+                  <div className="mt-1 text-[11px] font-bold uppercase" style={{ color: mq.color.faint }}>
+                    {label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MQPanel>
+
+          <MQPanel tone="white">
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-black" style={{ fontFamily: mq.font.display }}>
+                  Choose a slot
+                </h2>
+                <p className="mt-1 text-sm" style={{ color: mq.color.muted }}>
+                  Booked demo slots become unavailable everywhere.
+                </p>
+              </div>
+              <CalendarCheck2 aria-hidden="true" className="h-6 w-6" style={{ color: mq.color.trust }} />
+            </div>
+            <SlotGrid doctor={doctor} onSelect={bookSlot} />
+          </MQPanel>
         </div>
-      </div>
+      </section>
+
+      <section className="mt-6 grid gap-6 lg:grid-cols-[0.72fr_0.28fr]">
+        <MQPanel tone="white">
+          <MQSectionLabel icon={ShieldCheck}>Trust record</MQSectionLabel>
+          <div className="grid gap-4 md:grid-cols-2">
+            {([
+              [BadgeCheck, "License visibility", doctor.license],
+              [Building2, "Hospital affiliation", doctor.hospital],
+              [GraduationCap, "Clinical focus", doctor.conditions.join(", ")],
+              [ClipboardList, "Patient preparation", doctor.prep.join(", ")],
+            ] as Array<[LucideIcon, string, string]>).map(([Icon, title, body]) => (
+              <div className="rounded-2xl border p-4" key={String(title)} style={{ borderColor: mq.color.rule }}>
+                <Icon aria-hidden="true" className="h-5 w-5" style={{ color: mq.color.trust }} />
+                <h3 className="mt-4 text-base font-black" style={{ color: mq.color.ink }}>
+                  {String(title)}
+                </h3>
+                <p className="mt-2 text-sm leading-6" style={{ color: mq.color.muted }}>
+                  {String(body)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </MQPanel>
+
+        <MQPanel tone="trust">
+          <HeartPulse aria-hidden="true" className="h-6 w-6" style={{ color: mq.color.trust }} />
+          <h2 className="mt-5 text-2xl font-black" style={{ fontFamily: mq.font.display }}>
+            Care path
+          </h2>
+          <p className="mt-2 text-sm leading-6" style={{ color: mq.color.muted }}>
+            A clear booking path keeps the appointment decision understandable.
+          </p>
+          <div className="mt-5">
+            <CarePath active={2} />
+          </div>
+          <div className="mt-6">
+            <MQButton href={routes.book(doctor.id, doctor.slots[0])}>Start booking</MQButton>
+          </div>
+        </MQPanel>
+      </section>
     </div>
   );
 }

@@ -1,18 +1,20 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { type MotionValue, motion, useScroll, useTransform, useSpring, useReducedMotion, useMotionValue } from "motion/react";
 import { Magnetic } from "@/components/ui/Magnetic";
 
 import { work } from "@/content/pages/work";
-import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/motion";
+import { easeOutExpo } from "@/lib/motion";
 
 export function HomeWorkPreview() {
   const reduce = useReducedMotion();
   const featuredWork = work.featured;
   const containerRef = useRef<HTMLDivElement>(null);
+  const isCompact = useMediaQuery("(max-width: 1439px)");
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -69,6 +71,156 @@ export function HomeWorkPreview() {
     school: "var(--project-school)",
     fitness: "var(--project-fitness)",
   };
+
+  useEffect(() => {
+    if (!isCompact || reduce) return;
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % featuredWork.length);
+    }, 4200);
+
+    return () => window.clearInterval(timer);
+  }, [featuredWork.length, isCompact, reduce]);
+
+  if (isCompact) {
+    return (
+      <section className="relative overflow-hidden bg-background py-14 work-showcase md:py-18 lg:py-20">
+        <h2 className="sr-only">Featured Work Showcase</h2>
+
+        <div className="mx-auto mb-7 flex max-w-6xl items-end justify-between gap-6 px-5 sm:px-6 md:px-10 lg:px-12">
+          <div>
+            <p className="studio-eyebrow mb-3 text-accent">Selected work</p>
+            <h3 className="max-w-3xl font-sans text-[2.45rem] font-bold leading-[1.02] text-foreground sm:text-5xl lg:text-6xl">
+              Built as living product proof.
+            </h3>
+          </div>
+          <div className="hidden shrink-0 font-mono text-sm text-subtle-foreground md:block">
+            {String(activeIndex + 1).padStart(2, "0")} / {String(totalPanels).padStart(2, "0")}
+          </div>
+        </div>
+
+        <div className="relative mx-auto max-w-6xl px-5 sm:px-6 md:px-10 lg:px-12">
+          <div className="overflow-hidden rounded-[2rem]">
+            <motion.div
+              animate={{ x: `-${activeIndex * 100}%` }}
+              className="flex"
+              transition={reduce ? { duration: 0 } : { duration: 0.75, ease: easeOutExpo }}
+            >
+              {featuredWork.map((project, idx) => (
+                <article
+                  aria-hidden={idx !== activeIndex}
+                  className="w-full shrink-0"
+                  key={project.slug}
+                >
+                <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface shadow-2xl shadow-black/10 md:min-h-[620px] lg:grid-cols-[1.05fr_0.95fr]">
+                  <Link
+                    aria-label={`View Case Study: ${project.title}`}
+                    className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-[420px] lg:h-auto"
+                    href={`/work/${project.slug}`}
+                  >
+                    <Image
+                      alt={`${project.title} project showcase`}
+                      className="object-cover object-left-top transition duration-700 group-hover:scale-[1.035]"
+                      fill
+                      priority={idx === 0}
+                      sizes="(max-width: 767px) 100vw, (max-width: 1439px) 58vw, 50vw"
+                      src={project.images?.[0] ?? project.image}
+                    />
+                    <div
+                      className="absolute inset-0 opacity-35"
+                      style={{
+                        background: `linear-gradient(180deg, transparent 48%, var(--bg-primary) 112%), radial-gradient(ellipse at 30% 18%, ${projectColors[project.slug] || "var(--accent)"} 0%, transparent 54%)`,
+                      }}
+                    />
+                    <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-white backdrop-blur-sm md:bottom-6 md:left-6">
+                      Live showcase
+                    </div>
+                  </Link>
+
+                  <div className="flex min-h-[390px] flex-col justify-between p-6 sm:p-8 md:p-10 lg:min-h-0 lg:p-12">
+                    <div>
+                      <p
+                        className="studio-eyebrow mb-5 font-bold"
+                        style={{ color: projectColors[project.slug] || "var(--accent)" }}
+                      >
+                        Showcase - {project.title}
+                      </p>
+                      <h4
+                        className="max-w-[10ch] font-sans text-[3.1rem] font-bold leading-[0.96] text-foreground sm:text-6xl md:text-7xl lg:text-6xl"
+                        style={{ letterSpacing: "-0.025em" }}
+                      >
+                        {project.title.split(" ")[0]}{" "}
+                        <span className="font-serif font-normal italic text-accent">
+                          {project.title.split(" ").slice(1).join(" ") || "Project"}.
+                        </span>
+                      </h4>
+                      <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 lg:text-base lg:leading-7">
+                        {project.demonstrates}
+                      </p>
+                    </div>
+
+                    <div className="mt-9 space-y-6">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.68rem] font-mono uppercase tracking-[0.15em] text-subtle-foreground sm:text-xs">
+                        {(projectTags[project.slug] || ["DESIGN", "DEVELOPMENT"]).map((tag, tagIdx) => (
+                          <span className="inline-flex items-center gap-4" key={tag}>
+                            {tagIdx > 0 ? <span className="opacity-35">/</span> : null}
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                        <Link
+                          className="inline-flex min-h-12 items-center justify-center rounded-full border px-6 text-sm font-semibold transition-colors hover:bg-accent hover:text-background"
+                          href={`/work/${project.slug}`}
+                          style={{
+                            borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 34%, transparent)`,
+                            color: projectColors[project.slug] || "var(--accent)",
+                          }}
+                        >
+                          View Case Study
+                        </Link>
+                        {idx === featuredWork.length - 1 ? (
+                          <Link
+                            className="inline-flex min-h-12 items-center justify-center rounded-full bg-accent px-6 text-sm font-semibold text-background"
+                            href="/work"
+                          >
+                            Explore Our Work
+                          </Link>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </article>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-6 flex max-w-6xl items-center justify-between px-5 sm:px-6 md:px-10 lg:px-12">
+          <div className="flex items-center gap-2">
+            {featuredWork.map((project, idx) => (
+              <button
+                aria-label={`Show ${project.title}`}
+                className="h-2.5 rounded-full transition-all"
+                key={project.slug}
+                onClick={() => setActiveIndex(idx)}
+                style={{
+                  width: idx === activeIndex ? "2rem" : "0.625rem",
+                  backgroundColor: idx === activeIndex ? projectColors[project.slug] || "var(--accent)" : "var(--border-strong)",
+                }}
+                type="button"
+              />
+            ))}
+          </div>
+          <div className="font-mono text-xs text-subtle-foreground md:hidden">
+            {String(activeIndex + 1).padStart(2, "0")} / {String(totalPanels).padStart(2, "0")}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <div
@@ -323,6 +475,22 @@ export function HomeWorkPreview() {
       </motion.div>
     </div>
   );
+}
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+
+    return () => media.removeEventListener("change", update);
+  }, [query]);
+
+  return matches;
 }
 
 /** Animated counter that displays the current panel number */

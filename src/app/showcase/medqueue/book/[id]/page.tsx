@@ -1,277 +1,252 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useMedQueue } from "../../context";
-import { ArrowLeft, CreditCard, User, Clock, MapPin, Check } from "lucide-react";
-import Image from "next/image";
-import { motion } from "motion/react";
-import { c, font } from "../../tokens";
+import Link from "next/link";
+import { useParams, useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
+import {
+  CalendarCheck2,
+  CheckCircle2,
+  ClipboardCheck,
+  CreditCard,
+  FileCheck2,
+  IndianRupee,
+  ShieldCheck,
+  type LucideIcon,
+} from "lucide-react";
 
-export default function BookingFlow() {
-  const { id } = useParams();
-  const router = useRouter();
+import { CarePath, MQButton, MQChip, MQPanel, MQSectionLabel, SlotGrid } from "../../components";
+import { Appointment, Slot, useMedQueue } from "../../context";
+import { mq, routes } from "../../tokens";
+
+const coverageChecks: Array<[string, string, LucideIcon]> = [
+  ["Policy check", "Matched to Care Shield outpatient coverage", ShieldCheck],
+  ["Clinic fee", "shown before confirmation", IndianRupee],
+  ["Identity ready", "Patient profile data is pre-filled in this demo", FileCheck2],
+  ["No charge taken", "Payment screen is visual only", CreditCard],
+];
+
+export default function MedQueueBookPage() {
+  const params = useParams<{ id: string }>();
   const searchParams = useSearchParams();
-  const { doctors, bookAppointment } = useMedQueue();
+  const { doctors, bookAppointment, isSlotBooked } = useMedQueue();
+  const doctor = doctors.find((item) => item.id === params.id);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [confirmed, setConfirmed] = useState<Appointment | null>(null);
 
-  const doctor = doctors.find((d) => d.id === id);
-  const day = searchParams.get("day");
-  const time = searchParams.get("time");
+  const requestedSlot = useMemo<Slot | undefined>(() => {
+    const day = searchParams.get("day");
+    const time = searchParams.get("time");
+    if (!day || !time || !doctor) return doctor?.slots[0];
+    return doctor.slots.find((slot) => slot.day === day && slot.time === time) ?? doctor.slots[0];
+  }, [doctor, searchParams]);
 
-  const [step, setStep] = useState(1);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState<Slot | undefined>(requestedSlot);
 
-  useEffect(() => {
-    if (!doctor || !day || !time) {
-      router.push("/showcase/medqueue/search");
-    }
-  }, [doctor, day, time, router]);
+  if (!doctor) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-16">
+        <MQPanel tone="warm">
+          <h1 className="text-3xl font-black" style={{ fontFamily: mq.font.display }}>
+            Doctor not found
+          </h1>
+          <p className="mt-3 text-sm" style={{ color: mq.color.muted }}>
+            This demo clinician may have moved. Return to search to choose another profile.
+          </p>
+          <div className="mt-5">
+            <MQButton href={routes.search}>Back to search</MQButton>
+          </div>
+        </MQPanel>
+      </div>
+    );
+  }
 
-  if (!doctor || !day || !time) return null;
+  const activeDoctor = doctor;
+  const slotAlreadyBooked = selectedSlot ? isSlotBooked(doctor.id, selectedSlot) : true;
 
-  const handleConfirm = () => {
-    setIsProcessing(true);
-    setTimeout(() => {
-      bookAppointment({
-        id: `appt-${Math.random().toString(36).substring(2, 9)}`,
-        doctorId: doctor.id,
-        date: day,
-        time: time,
-        status: "upcoming",
-      });
-      setStep(3);
-      setIsProcessing(false);
-    }, 1500);
-  };
+  function confirmBooking() {
+    if (!selectedSlot || slotAlreadyBooked) return;
+    setConfirmed(bookAppointment(activeDoctor, selectedSlot));
+  }
+
+  if (confirmed) {
+    return (
+      <div className="mx-auto max-w-5xl px-4 pb-16 pt-10 md:px-6">
+        <MQPanel className="overflow-hidden" tone="warm">
+          <div className="grid gap-8 lg:grid-cols-[0.75fr_0.25fr] lg:items-center">
+            <div>
+              <MQSectionLabel icon={CheckCircle2}>Booking confirmed</MQSectionLabel>
+              <h1 className="text-5xl font-black leading-none md:text-6xl" style={{ fontFamily: mq.font.display }}>
+                Your visit with {confirmed.doctorName} is ready.
+              </h1>
+              <p className="mt-5 text-lg leading-8" style={{ color: mq.color.muted }}>
+                The appointment was added to the patient portal, and this slot is now locked across MedQueue search and
+                profile views.
+              </p>
+              <div className="mt-6 grid gap-3 md:grid-cols-3">
+                {[
+                  [confirmed.day, "day"],
+                  [confirmed.time, "time"],
+                  [confirmed.coverage, "coverage"],
+                ].map(([value, label]) => (
+                  <div className="rounded-2xl border bg-white p-4" key={label} style={{ borderColor: mq.color.rule }}>
+                    <div className="text-lg font-black">{value}</div>
+                    <div className="mt-1 text-xs font-bold uppercase" style={{ color: mq.color.faint }}>
+                      {label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <MQButton href={routes.portal} icon="check">
+                  Open patient portal
+                </MQButton>
+                <MQButton href={routes.search} variant="ghost">
+                  Keep browsing
+                </MQButton>
+              </div>
+            </div>
+            <div
+              className="grid aspect-square place-items-center rounded-[36px]"
+              style={{ backgroundColor: mq.color.trust, color: mq.color.white }}
+            >
+              <CalendarCheck2 aria-hidden="true" className="h-20 w-20" />
+            </div>
+          </div>
+        </MQPanel>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex-1 flex flex-col" style={{ backgroundColor: c.surface }}>
-      {/* Minimal header */}
-      <div className="px-6 py-3" style={{ borderBottom: `1px solid ${c.subtle}` }}>
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center gap-1.5 transition-opacity hover:opacity-60"
-            style={{ fontFamily: font.mono, fontSize: "0.6875rem", fontWeight: 500, letterSpacing: "0.06em", color: c.muted }}
-          >
-            <ArrowLeft className="w-3.5 h-3.5" /> Cancel
-          </button>
-          <span style={{
-            fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 500,
-            letterSpacing: "0.1em", textTransform: "uppercase" as const, color: c.trust,
-          }}>
-            Secure Checkout
-          </span>
-        </div>
+    <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 md:px-6">
+      <div className="mb-6">
+        <Link className="text-sm font-bold" href={routes.doctor(doctor.id)} style={{ color: mq.color.trust }}>
+          Back to profile
+        </Link>
       </div>
 
-      <div className="max-w-3xl mx-auto w-full px-6 py-10 flex-1 flex flex-col">
-        {step === 3 ? (
-          /* ─── Success ─── */
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex-1 flex flex-col items-center justify-center text-center"
-          >
-            <div
-              className="w-14 h-14 rounded-full flex items-center justify-center mb-6"
-              style={{ backgroundColor: c.trustLt }}
-            >
-              <Check className="w-7 h-7" style={{ color: c.trust }} />
-            </div>
-            <h1 style={{
-              fontFamily: font.display, fontWeight: 700, fontSize: "1.75rem",
-              letterSpacing: "-0.02em", color: c.ink, marginBottom: "0.75rem",
-            }}>
-              Booking confirmed
-            </h1>
-            <p style={{ color: c.muted, fontSize: "0.9375rem", maxWidth: "40ch", marginBottom: "2rem" }}>
-              Your appointment with {doctor.name} on {day} at {time} is confirmed. A summary has been sent to your phone.
-            </p>
+      <section className="grid gap-6 lg:grid-cols-[0.66fr_0.34fr]">
+        <MQPanel tone="white">
+          <MQSectionLabel icon={ClipboardCheck}>Three-step booking</MQSectionLabel>
+          <h1 className="text-5xl font-black leading-none" style={{ fontFamily: mq.font.display }}>
+            Confirm care without hidden friction.
+          </h1>
+          <p className="mt-4 text-base leading-7" style={{ color: mq.color.muted }}>
+            This flow simulates appointment review, insurance verification, and payment readiness. No real payment or
+            medical data is processed.
+          </p>
 
-            <div
-              className="rounded-lg p-5 w-full max-w-sm text-left"
-              style={{ backgroundColor: c.bg, border: `1px solid ${c.subtle}` }}
-            >
-              <div style={{
-                fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 600,
-                letterSpacing: "0.12em", textTransform: "uppercase" as const, color: c.muted, marginBottom: "8px",
-              }}>
-                Location
+          <div className="mt-8">
+            <CarePath active={step + 1 === 4 ? 4 : ((step + 1) as 2 | 3 | 4)} />
+          </div>
+
+          <div className="mt-8">
+            {step === 1 ? (
+              <div>
+                <h2 className="text-2xl font-black" style={{ fontFamily: mq.font.display }}>
+                  1. Select your visit time
+                </h2>
+                <p className="mt-2 text-sm" style={{ color: mq.color.muted }}>
+                  Slot state is shared with search, profile, and the portal.
+                </p>
+                <div className="mt-5">
+                  <SlotGrid doctor={doctor} selected={selectedSlot} onSelect={setSelectedSlot} />
+                </div>
               </div>
-              <div style={{ fontSize: "0.875rem", fontWeight: 500, color: c.ink }}>{doctor.location}</div>
-              <div style={{ fontSize: "0.75rem", color: c.muted, marginTop: "4px" }}>Please arrive 10 minutes early</div>
-            </div>
-
-            <button
-              onClick={() => router.push("/showcase/medqueue/portal")}
-              className="mt-8 px-8 py-3 rounded font-semibold transition-opacity hover:opacity-80"
-              style={{ backgroundColor: c.ink, color: c.heroFg, fontFamily: font.body }}
-            >
-              Go to My Appointments
-            </button>
-          </motion.div>
-        ) : (
-          <>
-            {/* Progress */}
-            <div className="flex items-center gap-3 mb-10">
-              <div className="flex-1 h-1 rounded-full" style={{ backgroundColor: step >= 1 ? c.accent : c.subtle }} />
-              <div className="flex-1 h-1 rounded-full" style={{ backgroundColor: step >= 2 ? c.accent : c.subtle }} />
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-10">
-              {/* Steps */}
-              <div className="flex-1">
-                {step === 1 && (
-                  <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}>
-                    <h1 style={{
-                      fontFamily: font.display, fontWeight: 600, fontSize: "1.375rem",
-                      letterSpacing: "-0.01em", color: c.ink, marginBottom: "1.5rem",
-                    }}>
-                      Confirm your details
-                    </h1>
-
-                    <div
-                      className="rounded-lg p-5 mb-6"
-                      style={{ backgroundColor: c.bg, border: `1px solid ${c.subtle}` }}
-                    >
-                      <div className="flex items-center gap-4 mb-3">
-                        <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center"
-                          style={{ backgroundColor: c.subtle }}
-                        >
-                          <User className="w-5 h-5" style={{ color: c.muted }} />
-                        </div>
-                        <div>
-                          <div style={{ fontWeight: 600, color: c.ink, fontSize: "0.9375rem" }}>Aarav Patel</div>
-                          <div style={{ color: c.muted, fontSize: "0.8125rem" }}>+91 98765 43210 · Male, 32</div>
-                        </div>
-                      </div>
-                      <div style={{
-                        fontFamily: font.mono, fontSize: "0.5625rem", fontWeight: 500,
-                        letterSpacing: "0.06em", textTransform: "uppercase" as const, color: c.trust,
-                      }}>
-                        Verified via ABHA
-                      </div>
+            ) : step === 2 ? (
+              <div>
+                <h2 className="text-2xl font-black" style={{ fontFamily: mq.font.display }}>
+                  2. Verify coverage
+                </h2>
+                <div className="mt-5 grid gap-3 md:grid-cols-2">
+                  {coverageChecks.map(([title, body, Icon]) => (
+                    <div className="rounded-2xl border p-4" key={String(title)} style={{ borderColor: mq.color.rule }}>
+                      <Icon aria-hidden="true" className="h-5 w-5" style={{ color: mq.color.trust }} />
+                      <h3 className="mt-4 text-base font-black">{String(title)}</h3>
+                      <p className="mt-2 text-sm leading-6" style={{ color: mq.color.muted }}>
+                        {title === "Clinic fee" ? `${doctor.fee} ${body}` : body}
+                      </p>
                     </div>
-
-                    <button
-                      onClick={() => setStep(2)}
-                      className="w-full py-3.5 rounded font-semibold transition-opacity hover:opacity-80"
-                      style={{ backgroundColor: c.accent, color: c.heroFg, fontFamily: font.body }}
-                    >
-                      Continue to Payment
-                    </button>
-                  </motion.div>
-                )}
-
-                {step === 2 && (
-                  <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}>
-                    <h1 style={{
-                      fontFamily: font.display, fontWeight: 600, fontSize: "1.375rem",
-                      letterSpacing: "-0.01em", color: c.ink, marginBottom: "1.5rem",
-                    }}>
-                      Payment
-                    </h1>
-
-                    <div
-                      className="rounded-lg p-5 mb-6"
-                      style={{ backgroundColor: c.accentLt, border: `1px solid ${c.accent}` }}
-                    >
-                      <div className="flex items-center gap-3 mb-3">
-                        <CreditCard className="w-4 h-4" style={{ color: c.accent }} />
-                        <span style={{ fontWeight: 600, fontSize: "0.875rem", color: c.ink }}>Saved Card</span>
-                      </div>
-                      <div style={{ fontFamily: font.mono, fontSize: "0.875rem", color: c.ink, fontVariantNumeric: "tabular-nums" }}>
-                        •••• •••• •••• 4242
-                      </div>
-                      <div style={{ fontSize: "0.75rem", color: c.muted, marginTop: "4px" }}>Expires 12/26</div>
-                    </div>
-
-                    <button
-                      onClick={handleConfirm}
-                      disabled={isProcessing}
-                      className="w-full py-3.5 rounded font-semibold transition-opacity hover:opacity-80 flex items-center justify-center gap-2"
-                      style={{ backgroundColor: c.ink, color: c.heroFg, fontFamily: font.body }}
-                    >
-                      {isProcessing ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Processing...
-                        </>
-                      ) : (
-                        `Pay ₹${doctor.fee} & Confirm`
-                      )}
-                    </button>
-                    <button
-                      onClick={() => setStep(1)}
-                      className="w-full mt-3 py-3 transition-opacity hover:opacity-60"
-                      style={{ color: c.muted, fontSize: "0.875rem" }}
-                    >
-                      Back
-                    </button>
-                  </motion.div>
-                )}
+                  ))}
+                </div>
               </div>
-
-              {/* Summary Sidebar */}
-              <div className="w-full md:w-64 shrink-0">
-                <div
-                  className="rounded-lg p-5 sticky top-28"
-                  style={{ backgroundColor: c.bg, border: `1px solid ${c.subtle}` }}
-                >
-                  <div style={{
-                    fontFamily: font.mono, fontSize: "0.5rem", fontWeight: 600,
-                    letterSpacing: "0.12em", textTransform: "uppercase" as const,
-                    color: c.muted, marginBottom: "12px",
-                  }}>
-                    Appointment
-                  </div>
-
-                  <div className="flex gap-3 mb-5">
-                    <div className="relative w-10 h-10 shrink-0 rounded overflow-hidden" style={{ backgroundColor: c.surface }}>
-                      <Image src={doctor.imageUrl} alt={doctor.name} fill className="object-cover object-top" />
-                    </div>
+            ) : (
+              <div>
+                <h2 className="text-2xl font-black" style={{ fontFamily: mq.font.display }}>
+                  3. Review and confirm
+                </h2>
+                <MQPanel className="mt-5" tone="warm">
+                  <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: "0.8125rem", color: c.ink }}>{doctor.name}</div>
-                      <div style={{ fontSize: "0.75rem", color: c.muted }}>{doctor.specialty}</div>
+                      <p className="text-lg font-black">{doctor.name}</p>
+                      <p className="mt-1 text-sm" style={{ color: mq.color.muted }}>
+                        {doctor.specialty} in {doctor.city}
+                      </p>
                     </div>
+                    <MQChip tone="care">
+                      {selectedSlot?.day} at {selectedSlot?.time}
+                    </MQChip>
                   </div>
+                </MQPanel>
+              </div>
+            )}
+          </div>
 
-                  <div className="space-y-3 mb-5">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-3.5 h-3.5" style={{ color: c.muted }} />
-                      <div>
-                        <div style={{ fontSize: "0.8125rem", fontWeight: 500, color: c.ink }}>{day}</div>
-                        <div style={{ fontSize: "0.6875rem", color: c.muted }}>{time}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5" style={{ color: c.muted }} />
-                      <div style={{ fontSize: "0.8125rem", fontWeight: 500, color: c.ink }}>{doctor.location}</div>
-                    </div>
-                  </div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {step > 1 ? (
+              <MQButton icon="none" onClick={() => setStep((current) => (current - 1) as 1 | 2)} variant="soft">
+                Back
+              </MQButton>
+            ) : null}
+            {step < 3 ? (
+              <MQButton disabled={!selectedSlot || slotAlreadyBooked} onClick={() => setStep((current) => (current + 1) as 2 | 3)}>
+                Continue
+              </MQButton>
+            ) : (
+              <MQButton disabled={!selectedSlot || slotAlreadyBooked} icon="check" onClick={confirmBooking}>
+                Confirm booking
+              </MQButton>
+            )}
+          </div>
+        </MQPanel>
 
-                  <div className="w-full h-px mb-4" style={{ backgroundColor: c.subtle }} />
-
-                  <div className="flex justify-between mb-1.5">
-                    <span style={{ fontSize: "0.8125rem", color: c.muted }}>Consultation</span>
-                    <span style={{ fontFamily: font.mono, fontSize: "0.8125rem", fontWeight: 600, color: c.ink, fontVariantNumeric: "tabular-nums" }}>₹{doctor.fee}</span>
-                  </div>
-                  <div className="flex justify-between mb-4">
-                    <span style={{ fontSize: "0.8125rem", color: c.muted }}>Platform fee</span>
-                    <span style={{ fontFamily: font.mono, fontSize: "0.8125rem", fontWeight: 600, color: c.trust }}>Free</span>
-                  </div>
-                  <div className="flex justify-between pt-4" style={{ borderTop: `1px solid ${c.subtle}` }}>
-                    <span style={{ fontWeight: 600, color: c.ink }}>Total</span>
-                    <span style={{ fontFamily: font.mono, fontSize: "1.125rem", fontWeight: 700, color: c.ink, fontVariantNumeric: "tabular-nums" }}>₹{doctor.fee}</span>
-                  </div>
+        <aside className="space-y-5">
+          <MQPanel tone="warm">
+            <MQChip tone="trust">{doctor.specialty}</MQChip>
+            <h2 className="mt-4 text-3xl font-black" style={{ fontFamily: mq.font.display }}>
+              {doctor.name}
+            </h2>
+            <p className="mt-3 text-sm leading-6" style={{ color: mq.color.muted }}>
+              {doctor.hospital}. License shown: {doctor.license}.
+            </p>
+            <div className="mt-5 space-y-3">
+              <div className="rounded-2xl border bg-white p-4" style={{ borderColor: mq.color.rule }}>
+                <div className="text-sm font-black">Selected slot</div>
+                <div className="mt-1 text-sm" style={{ color: mq.color.muted }}>
+                  {selectedSlot ? `${selectedSlot.day}, ${selectedSlot.time}` : "Choose a slot"}
+                </div>
+              </div>
+              <div className="rounded-2xl border bg-white p-4" style={{ borderColor: mq.color.rule }}>
+                <div className="text-sm font-black">Coverage estimate</div>
+                <div className="mt-1 text-sm" style={{ color: mq.color.muted }}>
+                  Care Shield outpatient eligible
                 </div>
               </div>
             </div>
-          </>
-        )}
-      </div>
+          </MQPanel>
+
+          {slotAlreadyBooked ? (
+            <MQPanel tone="trust">
+              <h3 className="text-lg font-black" style={{ fontFamily: mq.font.display }}>
+                This slot was already booked
+              </h3>
+              <p className="mt-2 text-sm leading-6" style={{ color: mq.color.muted }}>
+                Pick another time to continue. This is the persistent state working across the demo.
+              </p>
+            </MQPanel>
+          ) : null}
+        </aside>
+      </section>
     </div>
   );
 }

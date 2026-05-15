@@ -66,6 +66,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     project.slug === "hospital" || project.slug === "hotel"
       ? "View Live Website"
       : "View Showcase";
+  const liveTarget = project.liveUrl?.startsWith("/") ? "_self" : "_blank";
+  const liveRel = project.liveUrl?.startsWith("/") ? undefined : "noopener noreferrer";
 
   return (
     <div className="bg-background min-h-screen pt-32 lg:pt-40">
@@ -136,6 +138,26 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 ))}
               </div>
             )}
+
+            {project.liveUrl && (
+              <div className="mt-8">
+                <Link
+                  className="group/live inline-flex min-h-12 items-center gap-3 rounded-full border px-4 py-2 text-sm font-semibold tracking-wide text-background shadow-[0_18px_50px_-28px_var(--accent)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-28px_var(--accent)] sm:min-h-14 sm:px-5"
+                  href={project.liveUrl}
+                  rel={liveRel}
+                  style={{
+                    background: `linear-gradient(135deg, ${color}, color-mix(in oklch, ${color}, black 18%))`,
+                    borderColor: `color-mix(in oklch, ${color}, white 30%)`,
+                  }}
+                  target={liveTarget}
+                >
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-[oklch(0.99_0.008_80/0.18)] text-background ring-1 ring-[oklch(0.99_0.008_80/0.28)] transition group-hover/live:translate-x-0.5">
+                    ↗
+                  </span>
+                  <span>{ctaLabel}</span>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* ═══════════════════════════════════════════════════
@@ -146,6 +168,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               images={project.images || [project.image]}
               alt={`${project.title} Case Study`}
               accentColor={color}
+              liveLabel={ctaLabel}
+              liveUrl={project.liveUrl}
               priority
             />
           </div>
