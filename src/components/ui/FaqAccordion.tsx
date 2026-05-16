@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { motion, useReducedMotion, useInView } from "motion/react";
 
 import { easeOutExpo, viewportOnce, fadeUp } from "@/lib/motion";
 
@@ -63,7 +63,7 @@ function AccordionItem({
 
         {/* Question text */}
         <span
-          className="flex-1 font-sans font-semibold text-foreground text-base sm:text-lg leading-snug"
+          className="flex-1 studio-h4-sans text-foreground leading-snug"
           style={{
             color: isOpen ? "var(--accent)" : undefined,
             transition: reduce
@@ -113,9 +113,9 @@ function AccordionItem({
             : "grid-template-rows 500ms cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <div className="overflow-hidden">
+        <div className="overflow-hidden min-h-0">
           <div
-            className="pb-6 pl-10 pr-9 font-body text-muted-foreground text-base leading-relaxed max-w-[60ch]"
+            className="pb-6 pl-10 pr-9 studio-body text-muted-foreground max-w-[60ch]"
             style={{
               opacity: isOpen ? 1 : 0,
               transform: isOpen ? "translateY(0)" : "translateY(-4px)",
@@ -144,6 +144,14 @@ function CategoryGroup({
 }) {
   const reduce = useReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
+
+  useEffect(() => {
+    if (!isInView) {
+      setOpenIndex(null);
+    }
+  }, [isInView]);
 
   const handleToggle = useCallback((idx: number) => {
     setOpenIndex((prev) => (prev === idx ? null : idx));
@@ -151,6 +159,7 @@ function CategoryGroup({
 
   return (
     <motion.div
+      ref={containerRef}
       initial={reduce ? false : "hidden"}
       whileInView={reduce ? undefined : "show"}
       viewport={viewportOnce}
@@ -170,7 +179,7 @@ function CategoryGroup({
         transition={{ duration: 0.5, ease: easeOutExpo }}
         className="flex items-baseline gap-3 mb-4 mt-2"
       >
-        <h2 className="font-sans text-xl font-semibold tracking-tight text-foreground">
+        <h2 className="studio-h3-sans text-foreground">
           {category.label}
         </h2>
         <span

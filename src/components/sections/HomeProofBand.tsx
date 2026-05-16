@@ -48,10 +48,11 @@ export function HomeProofBand() {
       <Container className="relative z-10">
         <div className="space-y-8 sm:space-y-10">
           <div>
+            <p className="studio-eyebrow mb-5" style={{ color: "var(--proof-muted)" }}>[ Work ]</p>
             <h2
               id="home-proof-band-title"
-              className="max-w-5xl font-sans text-[2.45rem] font-bold leading-[1.03] sm:text-5xl lg:text-6xl xl:text-7xl"
-              style={{ color: "var(--proof-ink)", letterSpacing: "-0.025em" }}
+              className="max-w-5xl studio-h2-editorial"
+              style={{ color: "var(--proof-ink)" }}
             >
               See what Kivox can actually build.
             </h2>
@@ -110,16 +111,15 @@ export function HomeProofBand() {
                         {project.clientType}
                       </p>
                       <h3
-                        className="font-sans text-3xl font-bold leading-tight sm:text-[2.25rem]"
+                        className="studio-h3-sans"
                         style={{
                           color: "var(--proof-ink)",
-                          letterSpacing: "-0.018em",
                         }}
                       >
                         {project.title}
                       </h3>
                       <p
-                        className="mt-4 text-base leading-7"
+                        className="mt-4 studio-body"
                         style={{ color: "var(--proof-muted)" }}
                       >
                         {outcomes[project.slug] ?? project.demonstrates}

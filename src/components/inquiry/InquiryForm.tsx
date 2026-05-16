@@ -55,10 +55,10 @@ function FormField({
 
 /** Clean input style — bottom border only, transparent background */
 const inputStyle = [
-  "w-full h-12 px-0 py-3",
+  "w-full px-0 py-4",
   "bg-transparent",
   "border-0 border-b border-border",
-  "text-base text-foreground",
+  "studio-h4-sans text-foreground",
   "outline-none transition-colors duration-200",
   "focus:border-accent focus:bg-accent-muted/50",
   "placeholder:text-muted-foreground/40",

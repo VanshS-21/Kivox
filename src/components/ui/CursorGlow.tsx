@@ -88,33 +88,32 @@ export function CursorGlow() {
 
   if (reduceMotion || pathname?.startsWith("/showcase/medqueue")) return null;
 
-  // Define variants
   const variants = {
     default: {
       width: 8,
       height: 8,
-      backgroundColor: "rgba(255, 255, 255, 1)",
-      border: "0px solid rgba(255, 255, 255, 0)",
+      backgroundColor: "var(--cursor-dot)",
+      border: "0px solid transparent",
       opacity: isVisible ? 1 : 0,
     },
     hover: {
       width: 48,
       height: 48,
-      backgroundColor: "rgba(255, 255, 255, 0)",
-      border: "1.5px solid rgba(255, 255, 255, 0.4)",
+      backgroundColor: "transparent",
+      border: "1.5px solid var(--accent)",
       opacity: isVisible ? 1 : 0,
     },
     text: {
       width: 100,
       height: 100,
-      backgroundColor: "rgba(255, 255, 255, 1)",
-      border: "0px solid rgba(255, 255, 255, 0)",
+      backgroundColor: "var(--fg-primary)",
+      border: "0px solid transparent",
       opacity: isVisible ? 1 : 0,
     },
     video: {
       width: 90,
       height: 90,
-      backgroundColor: "rgba(255, 123, 71, 1)", // brand orange
+      backgroundColor: "var(--accent)", // brand orange
       opacity: isVisible ? 1 : 0,
     },
     hidden: {
@@ -142,7 +141,7 @@ export function CursorGlow() {
       }}
     >
       <motion.div
-        className="text-black font-semibold text-sm whitespace-nowrap"
+        className="text-[var(--bg-primary)] font-semibold text-sm whitespace-nowrap"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
           opacity: state.variant === "text" || state.variant === "video" ? 1 : 0,

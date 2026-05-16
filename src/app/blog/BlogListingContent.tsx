@@ -64,7 +64,7 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
 
         {/* Title — large, editorial */}
         <h2
-          className="studio-h2 font-sans font-bold text-foreground group-hover:text-accent transition-colors duration-300 max-w-4xl"
+          className="studio-h1-headline text-foreground group-hover:text-accent transition-colors duration-300 max-w-4xl"
           style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
           {post.title}
@@ -75,7 +75,7 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
 
         {/* Read more + reading time */}
         <div className="mt-6 flex items-center gap-4">
-          <span className="font-sans font-semibold text-accent text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
+          <span className="font-semibold text-accent text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
             Read article
             <svg
               width="14"
@@ -134,10 +134,10 @@ function PostListItem({ post, index }: { post: BlogPostMeta; index: number }) {
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <h2 className="font-sans font-semibold text-foreground text-base sm:text-lg leading-snug group-hover:text-accent transition-colors duration-200">
+          <h2 className="studio-h4-sans text-foreground leading-snug group-hover:text-accent transition-colors duration-200">
             {post.title}
           </h2>
-          <p className="mt-1.5 font-body text-muted-foreground text-sm leading-relaxed line-clamp-2 max-w-2xl">
+          <p className="mt-1.5 studio-body text-muted-foreground line-clamp-2 max-w-2xl">
             {post.description}
           </p>
         </div>
@@ -176,7 +176,7 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
     return (
       <div className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <Container size="default">
-          <h1 className="studio-h2 font-sans font-bold text-foreground">
+          <h1 className="studio-h1-headline text-foreground">
             Thinking, out loud
           </h1>
           <p className="mt-6 studio-lede">No articles published yet.</p>
@@ -194,7 +194,7 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
             reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
           }
           transition={{ duration: 0.8, ease: easeOutQuint }}
-          className="studio-h2 font-sans font-bold text-foreground"
+          className="studio-h1-headline text-foreground"
         >
           Thinking, out loud
         </motion.h1>
@@ -244,7 +244,7 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
               transition={{ duration: 0.5, ease: easeOutExpo }}
               className="mb-4 mt-10 flex items-baseline gap-3"
             >
-              <h2 className="font-sans text-xl font-semibold tracking-tight text-foreground">
+              <h2 className="studio-h3-sans text-foreground">
                 More articles
               </h2>
               <span

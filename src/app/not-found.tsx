@@ -26,16 +26,14 @@ export default function NotFound() {
       <Container className="text-center py-32 relative z-10">
         {/* Number */}
         <p
-          className="font-mono text-accent mb-6"
-          style={{ fontSize: "clamp(5rem, 10vw, 10rem)", lineHeight: 1, letterSpacing: "-0.04em" }}
+          className="font-mono text-accent mb-6 text-7xl md:text-[10rem] leading-none tracking-tighter"
         >
           404
         </p>
 
         {/* Heading */}
         <h1
-          className="font-sans font-bold text-foreground mb-4"
-          style={{ fontSize: "clamp(1.5rem, 2vw + 1rem, 2.5rem)", lineHeight: 1.2, letterSpacing: "-0.02em" }}
+          className="font-sans font-bold text-foreground mb-4 text-3xl md:text-4xl leading-tight tracking-tight"
         >
           Page not found.
         </h1>

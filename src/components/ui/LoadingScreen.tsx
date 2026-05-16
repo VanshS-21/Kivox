@@ -100,11 +100,10 @@ export function LoadingScreen() {
           >
             {/* Percentage Counter */}
             <motion.span
-              className="studio-tabular block mb-6"
+              className="studio-tabular block mb-6 text-6xl sm:text-7xl lg:text-[5rem]"
               style={{
                 color: "var(--hero-fg)",
                 fontFamily: "var(--font-mono)",
-                fontSize: "clamp(3rem, 6vw + 1rem, 5rem)",
                 fontWeight: 500,
                 lineHeight: 1,
               }}

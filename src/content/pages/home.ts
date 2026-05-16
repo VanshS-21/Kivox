@@ -67,31 +67,31 @@ export const home = {
       title: "Discover",
       subtitle: "Understand the landscape",
       description:
-        "Understand the business and the customer decision.",
+        "We begin with a structured intake session to understand the business, the customer decision, and what success looks like in 90 days. This phase produces a concise brief and a content map that we both sign off on before any design work begins — so there are no surprises mid-project.",
     },
     {
       title: "Define",
       subtitle: "Set the strategic foundation",
       description:
-        "Fix the structure: pages, content order, and calls to action.",
+        "We fix the information architecture first: which pages are needed, in what order content should appear, where calls to action belong, and what the primary action on each page is. You receive a sitemap and a content outline you can review and edit before a single pixel is placed.",
     },
     {
       title: "Design",
       subtitle: "Craft the experience",
       description:
-        "Design the interface with craft and clarity.",
+        "We design from wireframes through to high-fidelity, production-ready components — tested at every breakpoint, every state, and every edge case. This phase produces a full design file, a component library, and a clickable prototype for stakeholder review before we write any code.",
     },
     {
       title: "Build",
       subtitle: "Engineer with precision",
       description:
-        "Build it fast, responsive, and maintainable.",
+        "We engineer the frontend and any backend systems with performance, accessibility, and maintainability as first-class requirements — not afterthoughts. Every page ships with semantic HTML, WCAG AA compliance, and a Lighthouse performance score of 90+.",
     },
     {
       title: "Launch & Evolve",
-      subtitle: "Grow & optimize continuously",
+      subtitle: "Grow & optimise continuously",
       description:
-        "Launch, measure, and iterate.",
+        "We deploy, monitor, and hand over. Every project includes a dedicated handover session so your team understands what was built, how to update it, and how to measure it. After launch, we track real behaviour and iterate — because the best version of any product ships after its first users arrive.",
     },
   ],
   philosophy: {

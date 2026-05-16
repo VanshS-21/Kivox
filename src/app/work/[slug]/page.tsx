@@ -98,14 +98,7 @@ export default async function CaseStudyPage({
             </div>
 
             {/* Title */}
-            <h1
-              className="font-sans font-bold text-foreground mb-6"
-              style={{
-                fontSize: "clamp(2.5rem, 5vw + 1rem, 5rem)",
-                lineHeight: 1.05,
-                letterSpacing: "-0.02em",
-              }}
-            >
+            <h1 className="studio-h1-headline text-foreground mb-6">
               {project.title}
               <span style={{ color }}>.</span>
             </h1>
@@ -113,8 +106,7 @@ export default async function CaseStudyPage({
             {/* Subtitle */}
             {project.subtitle && (
               <p
-                className="studio-body-serif text-muted-foreground max-w-3xl mb-10"
-                style={{ fontSize: "clamp(1.15rem, 1.5vw + 0.5rem, 1.5rem)" }}
+                className="studio-body-serif text-xl sm:text-2xl text-muted-foreground max-w-3xl mb-10"
               >
                 {project.subtitle}
               </p>
@@ -169,14 +161,13 @@ export default async function CaseStudyPage({
           ═══════════════════════════════════════════════════ */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
             <div className="lg:col-span-4">
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              <h2 className="studio-h3-sans text-foreground">
                 Project Overview
               </h2>
             </div>
             <div className="lg:col-span-8">
               <p
-                className="studio-body-serif text-muted-foreground"
-                style={{ fontSize: "clamp(1.25rem, 2vw + 0.5rem, 1.75rem)" }}
+                className="studio-body-serif text-2xl sm:text-3xl leading-snug text-muted-foreground"
               >
                 {project.demonstrates}
               </p>
@@ -194,7 +185,7 @@ export default async function CaseStudyPage({
               {project.challenge && (
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16 lg:mb-20">
                   <div className="lg:col-span-4">
-                    <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                    <h2 className="studio-h3-sans text-foreground">
                       The Challenge
                     </h2>
                   </div>
@@ -227,15 +218,10 @@ export default async function CaseStudyPage({
                   >
                     &ldquo;
                   </span>
-                  <h2 className="mb-5 text-2xl font-bold tracking-tight text-foreground">
+                  <h2 className="studio-h3-sans text-foreground mb-5">
                     The Insight
                   </h2>
-                  <p
-                    className="font-serif text-foreground leading-[1.7] italic"
-                    style={{
-                      fontSize: "clamp(1.1rem, 1.5vw + 0.5rem, 1.4rem)",
-                    }}
-                  >
+                  <p className="studio-body-serif text-foreground italic">
                     &ldquo;{project.insight}&rdquo;
                   </p>
                 </div>
@@ -247,7 +233,7 @@ export default async function CaseStudyPage({
           {project.approach && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
               <div className="lg:col-span-4">
-                <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                <h2 className="studio-h3-sans text-foreground">
                   Our Approach
                 </h2>
               </div>
@@ -267,7 +253,7 @@ export default async function CaseStudyPage({
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
                 <div className="lg:col-span-4">
-                  <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                  <h2 className="studio-h3-sans text-foreground">
                     Our Process
                   </h2>
                 </div>
@@ -300,13 +286,10 @@ export default async function CaseStudyPage({
             <div className="mb-20 lg:mb-32">
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
+                <h2 className="studio-h3-sans text-foreground mb-8">
                   Design Philosophy
                 </h2>
-                <blockquote
-                  className="font-serif text-foreground leading-[1.8] italic"
-                  style={{ fontSize: "clamp(1.15rem, 1.5vw + 0.5rem, 1.5rem)" }}
-                >
+                <blockquote className="studio-body-serif text-foreground italic">
                   {project.designPhilosophy}
                 </blockquote>
               </div>
@@ -322,7 +305,7 @@ export default async function CaseStudyPage({
                 <div className="h-px bg-border w-full mb-16 lg:mb-24" />
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
                   <div className="lg:col-span-4">
-                    <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                    <h2 className="studio-h3-sans text-foreground">
                       Key Design Decisions
                     </h2>
                   </div>
@@ -355,7 +338,7 @@ export default async function CaseStudyPage({
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
                 <div className="lg:col-span-4">
-                  <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                  <h2 className="studio-h3-sans text-foreground">
                     Results & Impact
                   </h2>
                 </div>
@@ -382,7 +365,7 @@ export default async function CaseStudyPage({
             <div className="mb-20 lg:mb-32">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
                 <div className="lg:col-span-4">
-                  <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                  <h2 className="studio-h3-sans text-foreground">
                     Tech Stack
                   </h2>
                 </div>
@@ -465,14 +448,7 @@ export default async function CaseStudyPage({
             href={`/work/${nextProject.slug}`}
             className="group inline-block"
           >
-            <h2
-              className="font-sans font-bold text-foreground mb-4 group-hover:text-accent transition-colors duration-500"
-              style={{
-                fontSize: "clamp(2rem, 4vw + 1rem, 4rem)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.02em",
-              }}
-            >
+            <h2 className="studio-h1-headline text-foreground mb-4 group-hover:text-accent transition-colors duration-500">
               {nextProject.title}
             </h2>
             <div className="flex items-center justify-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors duration-500">
@@ -622,12 +598,8 @@ function ResultCard({
   return (
     <div className="p-6 lg:p-8 rounded-2xl bg-card/20 border border-border/50">
       <span
-        className="block font-sans font-bold mb-2"
-        style={{
-          fontSize: "clamp(2rem, 3vw + 0.5rem, 3rem)",
-          color,
-          lineHeight: 1.1,
-        }}
+        className="block studio-h1-headline mb-2"
+        style={{ color }}
       >
         {metric.value}
       </span>
@@ -653,23 +625,20 @@ function TestimonialBlock({
 }) {
   return (
     <div className="max-w-4xl mx-auto text-center">
-      <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
+      <h2 className="studio-h3-sans text-foreground mb-8">
         Client Testimonial
       </h2>
 
       {/* Large quote mark */}
       <span
-        className="block font-serif leading-none mb-6 opacity-20 select-none"
-        style={{ fontSize: "clamp(4rem, 6vw, 8rem)", color }}
+        className="block studio-h1-headline font-serif leading-none mb-6 opacity-20 select-none"
+        style={{ color }}
         aria-hidden="true"
       >
         &ldquo;
       </span>
 
-      <blockquote
-        className="font-serif text-foreground leading-[1.8] italic -mt-16 lg:-mt-20 mb-10"
-        style={{ fontSize: "clamp(1.1rem, 1.5vw + 0.5rem, 1.4rem)" }}
-      >
+      <blockquote className="studio-body-serif text-foreground italic -mt-16 lg:-mt-20 mb-10">
         {testimonial.quote}
       </blockquote>
 
@@ -697,7 +666,7 @@ function DataBlock({
 }) {
   return (
     <div>
-      <h3 className="mb-5 text-lg font-bold tracking-tight text-foreground">
+      <h3 className="studio-h4-sans text-foreground mb-5">
         {label}
       </h3>
       <ul className="space-y-3">

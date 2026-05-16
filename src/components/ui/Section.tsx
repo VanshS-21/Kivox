@@ -15,9 +15,9 @@ export const Section = forwardRef<HTMLElement, {
   spacing = "default",
 }, ref) => {
   const spacingClasses = {
-    default: "py-20 md:py-32",
-    tight: "py-12 md:py-20",
-    loose: "py-32 md:py-48",
+    default: "py-[var(--space-section)]",
+    tight: "py-[var(--space-section-small)]",
+    loose: "py-[var(--space-section-large)]",
     none: "py-0",
   };
 

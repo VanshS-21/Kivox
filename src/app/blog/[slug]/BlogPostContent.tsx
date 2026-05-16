@@ -105,7 +105,7 @@ export function BlogPostContent({
               reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
             }
             transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
-            className="studio-h2 font-sans font-bold text-foreground"
+            className="studio-h1-headline text-foreground"
           >
             {post.title}
           </motion.h1>
@@ -195,14 +195,14 @@ export function BlogPostContent({
             transition={{ duration: 0.6, ease: easeOutExpo }}
             className="mt-16 sm:mt-20 pt-8 border-t border-border"
           >
-            <p className="font-body text-muted-foreground text-base leading-relaxed max-w-xl">
+            <p className="studio-body text-muted-foreground max-w-xl">
               If this resonated, we should talk. We build websites that earn
               trust from the first visit.
             </p>
             <div className="mt-4 flex flex-col sm:flex-row gap-4">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 font-sans font-semibold text-accent hover:text-accent-hover transition-colors duration-200 text-base"
+                className="group inline-flex items-center gap-2 font-semibold text-accent hover:text-accent-hover transition-colors duration-200 text-base"
               >
                 Start a project
                 <svg
@@ -225,7 +225,7 @@ export function BlogPostContent({
               </Link>
               <Link
                 href="/blog"
-                className="group inline-flex items-center gap-2 font-sans font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm"
+                className="group inline-flex items-center gap-2 font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm"
               >
                 <svg
                   width="14"

@@ -1,7 +1,5 @@
-import { CinematicBreak } from "@/components/sections/CinematicBreak";
 import { HomeContact } from "@/components/sections/HomeContact";
 import { HomeHero } from "@/components/sections/HomeHero";
-import { HomeMarquee } from "@/components/sections/HomeMarquee";
 import { HomePOV } from "@/components/sections/HomePOV";
 import { HomeProcess } from "@/components/sections/HomeProcess";
 import { HomeProofBand } from "@/components/sections/HomeProofBand";
@@ -21,7 +19,6 @@ export default function Home() {
           <HomeWorkPreview />
         </div>
       </div>
-      <HomeMarquee />
       <div className="cv-auto">
         <HomeServices />
       </div>
@@ -30,9 +27,6 @@ export default function Home() {
       </div>
       <div className="cv-auto">
         <HomeProcess />
-      </div>
-      <div className="cv-auto">
-        <CinematicBreak />
       </div>
       <div className="cv-auto">
         <HomeTeam />

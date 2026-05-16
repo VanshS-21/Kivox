@@ -18,7 +18,7 @@ export function ShowcaseFrame() {
   const caseStudySlug = showcaseToCaseStudy[showcaseName] || showcaseName;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-black text-white border-b border-white/10 font-sans text-sm">
+    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-[var(--bg-primary)] text-[var(--fg-primary)] border-b border-[var(--border)] font-sans text-sm">
       <div className="flex items-center gap-4">
         <Link
           href={`/work/${caseStudySlug}`}

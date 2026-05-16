@@ -78,11 +78,11 @@ export function Footer() {
             {/* Left: Let's Talk & Contact */}
             <div className="flex flex-col gap-8 max-w-xl">
               <motion.div variants={fadeUp}>
-                <h2 className="font-display text-4xl lg:text-5xl text-foreground tracking-tight leading-tight mb-4">
-                  Ready to build something{" "}
-                  <span className="text-muted-foreground italic">
-                    extraordinary?
-                  </span>
+                <h2 className="studio-h2-editorial text-foreground mb-4">
+                  Let's start a{" "}
+                  <em className="font-serif italic text-muted-foreground" style={{ fontStyle: "italic" }}>
+                    conversation.
+                  </em>
                 </h2>
               </motion.div>
 
@@ -120,9 +120,9 @@ export function Footer() {
             <div className="flex flex-wrap sm:flex-nowrap gap-16 lg:gap-24">
               {/* Navigate */}
               <motion.div variants={fadeUp}>
-                <h2 className="mb-6 text-base font-semibold text-foreground">
+                <h3 className="studio-eyebrow text-foreground mb-6 opacity-60">
                   Navigate
-                </h2>
+                </h3>
                 <nav
                   aria-label="Footer navigation"
                   className="flex flex-col gap-4 items-start"
@@ -149,9 +149,9 @@ export function Footer() {
 
               {/* Connect */}
               <motion.div variants={fadeUp}>
-                <h2 className="mb-6 text-base font-semibold text-foreground">
+                <h3 className="studio-eyebrow text-foreground mb-6 opacity-60">
                   Connect
-                </h2>
+                </h3>
                 <nav
                   aria-label="Social connections"
                   className="flex flex-col gap-4 items-start"
@@ -199,7 +199,7 @@ export function Footer() {
             <KivoxLogo
               variant="mono"
               hideSuffix={true}
-              className="w-full h-auto text-foreground opacity-[0.03] dark:opacity-[0.05] transition-opacity duration-500 group-hover:opacity-10 dark:group-hover:opacity-[0.08]"
+              className="w-full h-auto text-foreground opacity-15 dark:opacity-20 transition-opacity duration-500 group-hover:opacity-30 dark:group-hover:opacity-30"
               style={{ width: "100%", height: "auto" }}
             />
           </Link>

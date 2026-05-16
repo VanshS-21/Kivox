@@ -29,6 +29,8 @@ export function HomeWorkPreview() {
     offset: ["start start", "end end"],
   });
 
+  const smoothScrollYProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
   // Spring-based horizontal translation for momentum overshoot + settle
   const rawX = useTransform(
     scrollYProgress,
@@ -46,12 +48,12 @@ export function HomeWorkPreview() {
 
   // For the x style, we need vw units
   const x = useTransform(springX, (v: number) => `${v}vw`);
-  const progressOpacity = useTransform(scrollYProgress, [0, 0.88, 1], [1, 1, 0]);
+  const progressOpacity = useTransform(smoothScrollYProgress, [0, 0.88, 1], [1, 1, 0]);
 
   // Track current project index for the counter
   const totalPanels = featuredWork.length;
   const desktopRunwayVh = Math.max(totalPanels * 124, 340);
-  const progressNum = useTransform(scrollYProgress, [0, 1], [1, totalPanels]);
+  const progressNum = useTransform(smoothScrollYProgress, [0, 1], [1, totalPanels]);
 
   // Entrance 3D tilt animation
   const { scrollYProgress: enterProgress } = useScroll({
@@ -59,9 +61,11 @@ export function HomeWorkPreview() {
     offset: ["start end", "start start"],
   });
 
-  const sectionScale = useTransform(enterProgress, [0, 1], [0.92, 1]);
-  const sectionRotateX = useTransform(enterProgress, [0, 1], [15, 0]);
-  const sectionOpacity = useTransform(enterProgress, [0, 0.6], [0, 1]);
+  const smoothEnterProgress = useSpring(enterProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  const sectionScale = useTransform(smoothEnterProgress, [0, 1], [0.92, 1]);
+  const sectionRotateX = useTransform(smoothEnterProgress, [0, 1], [15, 0]);
+  const sectionOpacity = useTransform(smoothEnterProgress, [0, 0.6], [0, 1]);
 
   // Service tags per project type
   const projectTags: Record<string, string[]> = {
@@ -93,10 +97,10 @@ export function HomeWorkPreview() {
 
   if (isCompact) {
     return (
-      <section className="relative overflow-hidden bg-background py-14 work-showcase md:py-18 lg:py-20">
+      <section className="relative overflow-hidden bg-background py-[var(--space-section)] work-showcase">
         <div className="mx-auto mb-7 flex max-w-6xl items-end justify-between gap-6 px-5 sm:px-6 md:px-10 lg:px-12">
           <div>
-            <h2 className="max-w-3xl font-sans text-[2.45rem] font-bold leading-[1.02] text-foreground sm:text-5xl lg:text-6xl">
+            <h2 className="max-w-3xl studio-h2-editorial text-foreground">
               Built as living product proof.
             </h2>
           </div>
@@ -124,7 +128,7 @@ export function HomeWorkPreview() {
                   <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface shadow-2xl shadow-black/10 md:min-h-[540px] md:grid-cols-[0.92fr_1.08fr] lg:min-h-[620px] lg:grid-cols-[1.05fr_0.95fr]">
                     <Link
                       aria-label={`View live website: ${project.title}`}
-                      className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto"
+                      className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto transition-transform duration-300 active:scale-[0.98]"
                       href={project.liveUrl || `/work/${project.slug}`}
                       rel={
                         project.liveUrl?.startsWith("/")
@@ -165,18 +169,15 @@ export function HomeWorkPreview() {
                         >
                           Showcase - {project.title}
                         </p>
-                        <h4
-                          className="max-w-[10ch] font-sans text-[3.1rem] font-bold leading-[0.96] text-foreground sm:text-6xl md:text-5xl lg:text-6xl"
-                          style={{ letterSpacing: "-0.025em" }}
-                        >
+                        <h4 className="max-w-[10ch] studio-h2-editorial text-foreground">
                           {project.title.split(" ")[0]}{" "}
-                          <span className="font-serif font-normal italic text-accent">
+                          <span className="font-serif italic text-accent">
                             {project.title.split(" ").slice(1).join(" ") ||
                               "Project"}
                             .
                           </span>
                         </h4>
-                        <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 md:text-base md:leading-7 lg:text-base lg:leading-7">
+                        <p className="mt-5 max-w-xl studio-body text-muted-foreground">
                           {project.demonstrates}
                         </p>
                       </div>
@@ -204,7 +205,7 @@ export function HomeWorkPreview() {
                         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                           {project.liveUrl ? (
                             <Link
-                              className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5"
+                              className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 active:scale-95"
                               href={project.liveUrl}
                               rel={
                                 project.liveUrl.startsWith("/")
@@ -227,7 +228,7 @@ export function HomeWorkPreview() {
                             </Link>
                           ) : null}
                           <Link
-                            className="inline-flex min-h-12 items-center justify-center rounded-full border bg-[var(--work-secondary-cta-bg)] px-6 text-sm font-semibold transition-colors hover:bg-accent hover:text-[var(--work-primary-cta-fg)]"
+                            className="inline-flex min-h-12 items-center justify-center rounded-full border bg-[var(--work-secondary-cta-bg)] px-6 text-sm font-semibold transition-all hover:bg-accent hover:text-[var(--work-primary-cta-fg)] active:scale-95"
                             href={`/work/${project.slug}`}
                             style={{
                               borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 34%, transparent)`,
@@ -286,7 +287,7 @@ export function HomeWorkPreview() {
       {/* Sticky viewport container */}
       <motion.div
         className={
-          reduce ? "flex flex-col" : "sticky top-0 h-screen overflow-hidden"
+          reduce ? "flex flex-col" : "sticky top-0 h-screen overflow-hidden flex flex-col"
         }
         style={
           reduce
@@ -300,25 +301,23 @@ export function HomeWorkPreview() {
               }
         }
       >
-        {/* No section label — counter provides wayfinding visually, h2 for screen readers */}
+        {/* Section Heading positioned at top of sticky container */}
+        <div className={reduce ? "hidden" : "shrink-0 px-6 pt-20 md:px-12 lg:px-16 2xl:pt-24 z-20 relative"}>
+          <h2 className="studio-h2-editorial text-foreground">
+            See what Kivox can actually build.
+          </h2>
+        </div>
+        
         <h2
           aria-hidden={reduce ? undefined : true}
           className={
             reduce
-              ? "mx-auto w-full max-w-[1400px] px-6 pb-8 pt-14 font-sans text-5xl font-bold leading-[1.03] tracking-[-0.025em] text-foreground md:px-12 lg:px-16"
+              ? "mx-auto w-full max-w-[1400px] px-6 pb-8 pt-14 studio-h2-editorial text-foreground md:px-12 lg:px-16"
               : "sr-only"
           }
         >
           See what Kivox can actually build.
         </h2>
-
-        {!reduce && (
-          <div className="pointer-events-none absolute left-6 top-20 z-20 hidden max-w-[660px] md:left-12 lg:left-16 xl:block 2xl:top-24">
-            <h2 className="font-sans text-3xl font-bold leading-[1.04] tracking-[-0.02em] text-foreground 2xl:text-4xl">
-              See what Kivox can actually build.
-            </h2>
-          </div>
-        )}
 
         {/* Counter — top right with rolling animation */}
         {!reduce && (
@@ -339,7 +338,7 @@ export function HomeWorkPreview() {
         {/* Horizontal track — or vertical stack in reduced motion */}
         <motion.div
           style={reduce ? {} : { x, willChange: "transform" }}
-          className={reduce ? "flex flex-col w-full" : "flex h-full"}
+          className={reduce ? "flex flex-col w-full" : "flex flex-1"}
         >
           {featuredWork.map((project, idx) => (
             <div
@@ -427,23 +426,18 @@ export function HomeWorkPreview() {
                     </motion.div>
 
                     {/* Project headline — BIG */}
-                    <motion.h3
-                      variants={{
-                        hidden: {},
-                        show: {
-                          transition: {
-                            staggerChildren: 0.1,
-                            delayChildren: 0.2,
+                      <motion.h3
+                        variants={{
+                          hidden: {},
+                          show: {
+                            transition: {
+                              staggerChildren: 0.1,
+                              delayChildren: 0.2,
+                            },
                           },
-                        },
-                      }}
-                      className="font-sans font-bold text-foreground"
-                      style={{
-                        fontSize: "clamp(2.75rem, 5vw + 1rem, 5.5rem)",
-                        lineHeight: 1.05,
-                        letterSpacing: "-0.025em",
-                      }}
-                    >
+                        }}
+                        className="studio-h1-headline text-foreground"
+                      >
                       <motion.span
                         variants={{
                           hidden: { opacity: 0, y: 24, rotateX: -15 },
@@ -489,22 +483,17 @@ export function HomeWorkPreview() {
                         ))}
                     </motion.h3>
 
-                    {/* Description — larger */}
-                    <motion.p
-                      variants={{
-                        hidden: { opacity: 0, y: 12 },
-                        show: {
-                          opacity: 1,
-                          y: 0,
-                          transition: { duration: 0.5, ease: easeOutExpo },
-                        },
-                      }}
-                      className="work-preview-description max-w-xl text-muted-foreground work-preview-content"
-                      style={{
-                        fontSize: "clamp(1rem, 1.1vw + 0.5rem, 1.25rem)",
-                        lineHeight: 1.65,
-                      }}
-                    >
+                      <motion.p
+                        variants={{
+                          hidden: { opacity: 0, y: 12 },
+                          show: {
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 0.5, ease: easeOutExpo },
+                          },
+                        }}
+                        className="work-preview-description max-w-xl text-muted-foreground work-preview-content studio-body-large"
+                      >
                       {project.demonstrates}
                     </motion.p>
 
@@ -624,7 +613,7 @@ export function HomeWorkPreview() {
             {/* Full-width track */}
             <div className="flex-1 h-[2px] bg-border-soft rounded-full overflow-hidden">
               <motion.div
-                style={{ scaleX: scrollYProgress }}
+                style={{ scaleX: smoothScrollYProgress }}
                 className="h-full bg-accent origin-left"
               />
             </div>
@@ -634,17 +623,11 @@ export function HomeWorkPreview() {
               className="text-xs font-mono text-subtle-foreground studio-tabular shrink-0"
               aria-hidden="true"
             >
-              {reduce ? "100%" : <Percentage value={scrollYProgress} />}
+              {reduce ? "100%" : <Percentage value={smoothScrollYProgress} />}
             </motion.span>
           </div>
         </motion.div>
       </motion.div>
-      {!reduce && (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[58vh] max-h-[640px] bg-gradient-to-b from-transparent from-30% via-surface-alt/80 to-surface-alt"
-        />
-      )}
     </div>
   );
 }

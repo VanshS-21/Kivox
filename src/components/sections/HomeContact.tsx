@@ -76,6 +76,8 @@ function MagneticCTA({
       onMouseEnter={() => setIsHovered(true)}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleMouseUp}
       className="inline-flex items-center gap-3 px-10 py-5 bg-accent text-accent-ink rounded-full text-base font-semibold tracking-tight transition-all duration-300"
       style={{
         transitionProperty: "background-color, color, border-color, scale",
@@ -169,99 +171,90 @@ export function HomeContact() {
   return (
     <div ref={sectionRef}>
       <Section id="contact" className="relative pt-[80px] md:pt-[120px] lg:pt-[200px] pb-[60px] md:pb-[100px] lg:pb-[160px] overflow-hidden bg-background">
-        {/* Ambient amber glow — organic, no grid */}
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 40, 0],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[15%] left-[15%] w-[200px] md:w-[300px] lg:w-[600px] h-[200px] md:h-[300px] lg:h-[600px] rounded-full blur-[60px] md:blur-[80px] lg:blur-[180px] pointer-events-none"
-          style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.7)' }}
+        {/* Ambient amber glow — static radial, no looping animation */}
+        <div
+          className="absolute top-[15%] left-[15%] w-[180px] md:w-[280px] lg:w-[520px] h-[180px] md:h-[280px] lg:h-[520px] rounded-full blur-[60px] md:blur-[80px] lg:blur-[150px] pointer-events-none"
+          style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.65)' }}
         />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            rotate: [0, -30, 0],
-          }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[20%] right-[15%] w-[150px] md:w-[250px] lg:w-[500px] h-[150px] md:h-[250px] lg:h-[500px] rounded-full blur-[50px] md:blur-[80px] lg:blur-[160px] pointer-events-none"
-          style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.4)' }}
+        {/* Rose counterpoint — off-axis, lower opacity to avoid duplicating POV treatment */}
+        <div
+          className="absolute bottom-[20%] right-[15%] w-[120px] md:w-[200px] lg:w-[380px] h-[120px] md:h-[200px] lg:h-[380px] rounded-full blur-[50px] md:blur-[70px] lg:blur-[120px] pointer-events-none"
+          style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.28)' }}
         />
 
         <Container className="relative z-10">
           {/* Content with magnetic drift */}
           <div
             ref={contentRef}
-            className="max-w-4xl mx-auto text-center"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center"
             style={{
               transition: "transform 0.1s linear",
             }}
           >
-            {/* Headline — large, centered, clear */}
-            <motion.h2
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={viewportOnce}
-              transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
-              className="font-sans font-bold text-foreground mb-8"
-              style={{ fontSize: 'clamp(2.5rem, 4vw + 1rem, 5rem)', lineHeight: 1.06, letterSpacing: '-0.025em' }}
-            >
-              Ready to build
-              <br />
-              something{" "}
-              <em className="font-serif font-normal text-accent" style={{ fontStyle: "italic" }}>
-                exceptional?
-              </em>
-            </motion.h2>
-
-            {/* Body text */}
-            <motion.p
-              initial={reduce ? false : { opacity: 0, y: 14 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={viewportOnce}
-              transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.15 }}
-              className="studio-body-serif text-muted-foreground max-w-xl mx-auto mb-12"
-            >
-              {home.contact.line}
-            </motion.p>
-
-            {/* Primary CTA — direct to contact form */}
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={viewportOnce}
-              transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.25 }}
-              className="mb-8"
-            >
-              <MagneticCTA href="/contact" reduce={reduce}>
-                Start a project
-                <motion.span
-                  className="text-base inline-block"
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-                >
-                  →
-                </motion.span>
-              </MagneticCTA>
-            </motion.div>
-
-            {/* Direct contact — quick path */}
-            <motion.div
-              initial={reduce ? false : { opacity: 0 }}
-              whileInView={reduce ? undefined : { opacity: 1 }}
-              viewport={viewportOnce}
-              transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.4 }}
-              className="mb-16"
-            >
-              <span className="text-base text-muted-foreground">or reach us directly at </span>
-              <a
-                href={`mailto:${brand.contact.email}`}
-                className="text-base text-accent hover:underline underline-offset-4 transition-colors"
+            {/* Left side: Heading and body */}
+            <div className="flex flex-col items-start text-left">
+              <motion.h2
+                initial={reduce ? false : { opacity: 0, y: 20 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
+                className="studio-h1-headline text-foreground mb-6"
               >
-                {brand.contact.email}
-              </a>
-            </motion.div>
+                Ready to build
+                <br />
+                something{" "}
+                <em className="font-serif italic text-accent" style={{ fontStyle: "italic" }}>
+                  exceptional?
+                </em>
+              </motion.h2>
+
+              <motion.p
+                initial={reduce ? false : { opacity: 0, y: 14 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.15 }}
+                className="studio-body-serif text-muted-foreground max-w-md mb-8 lg:mb-12"
+              >
+                {home.contact.line}
+              </motion.p>
+            </div>
+
+            {/* Right side: Magnetic CTA and link */}
+            <div className="flex flex-col items-start lg:items-end text-left lg:text-right">
+              <motion.div
+                initial={reduce ? false : { opacity: 0, y: 16 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.25 }}
+                className="mb-8"
+              >
+                <MagneticCTA href="/contact" reduce={reduce}>
+                  Start a project
+                  <motion.span
+                    className="text-base inline-block"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+                  >
+                    →
+                  </motion.span>
+                </MagneticCTA>
+              </motion.div>
+
+              <motion.div
+                initial={reduce ? false : { opacity: 0 }}
+                whileInView={reduce ? undefined : { opacity: 1 }}
+                viewport={viewportOnce}
+                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.4 }}
+              >
+                <span className="block text-base text-muted-foreground mb-1">or reach us directly at</span>
+                <a
+                  href={`mailto:${brand.contact.email}`}
+                  className="text-lg md:text-xl text-accent hover:underline underline-offset-4 transition-colors font-medium"
+                >
+                  {brand.contact.email}
+                </a>
+              </motion.div>
+            </div>
           </div>
         </Container>
       </Section>

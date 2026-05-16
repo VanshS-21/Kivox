@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { useRef, useEffect, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
+import { ChevronDown } from "lucide-react";
 
 import { home } from "@/content/pages/home";
 import { Container } from "@/components/ui/Container";
@@ -10,190 +11,164 @@ import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/moti
 
 export function HomeProcess() {
   const reduce = useReducedMotion();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState<number | null>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: "-10% 0px -10% 0px" });
+
+  // Removed isInView effect to ensure the first step is always visible by default.
 
   const steps = home.process;
 
-  // Subtle hue gradient: warmer amber → amber-gold across phases
-  const stepColors = [
-    "oklch(0.72 0.18 55)",
-    "oklch(0.72 0.18 60)",
-    "oklch(0.72 0.18 65)",
-    "oklch(0.72 0.18 72)",
-  ];
+  // Allow desktop step to be null to support closing
+  const desktopActiveStep = activeStep;
 
   return (
     <Section id="process" spacing="default" className="relative overflow-hidden bg-surface-alt">
-      <Container className="relative z-10">
-        {/* Section label */}
-        <motion.div initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={transitionDefault} className="inline-flex items-center gap-3 mb-8 md:mb-14 lg:mb-20">
-          <span className="studio-eyebrow text-accent">Our Methodology</span>
-        </motion.div>
+      <Container className="relative z-10" ref={containerRef}>
 
         {/* Heading + intro */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 mb-10 md:mb-16 lg:mb-28">
-          <motion.h2 initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: 0.05 }} className="lg:col-span-7 studio-h2 font-sans font-bold text-foreground">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 mb-10 md:mb-16 lg:mb-20">
+          <motion.h2 initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: 0.05 }} className="lg:col-span-7 studio-h2-editorial text-foreground">
             A proven process<br />
-            <em className="font-serif font-normal text-accent" style={{ fontStyle: "italic" }}>for exceptional results.</em>
+            <em className="text-accent" style={{ fontStyle: "italic" }}>for exceptional results.</em>
           </motion.h2>
           <motion.p initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: 0.1 }} className="lg:col-span-5 studio-body-serif text-muted-foreground self-end">
             Every project follows the same disciplined arc, from understanding the problem to crafting a solution that endures.
           </motion.p>
         </div>
 
-        {/* ── Desktop: Horizontal number ticker ── */}
-        <div className="hidden lg:block">
-          {/* Number row */}
-          <motion.div
-            initial={reduce ? false : "hidden"}
-            whileInView={reduce ? undefined : "show"}
-            viewport={viewportOnce}
-            variants={fadeUp}
-            transition={{ ...transitionDefault, delay: 0.15 }}
-            className="flex items-end justify-between mb-0"
-          >
+        {/* ── Desktop: Horizontal Stepper (Inside Floating Card) ── */}
+        <motion.div 
+          initial={reduce ? false : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={viewportOnce}
+          variants={fadeUp}
+          transition={{ ...transitionDefault, delay: 0.15 }}
+          className="hidden lg:flex w-full flex-col studio-surface rounded-2xl p-10 lg:p-14 relative overflow-hidden shadow-[0_20px_60px_oklch(0_0_0_/_0.05)] dark:shadow-[0_20px_60px_oklch(0_0_0_/_0.3)]"
+        >
+          {/* Stepper Track */}
+          <div className="flex w-full mb-16 relative">
+            {/* Base track line */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-border/40" />
+            
             {steps.map((step, idx) => {
-              const isActive = activeStep === idx;
-              const num = String(idx + 1).padStart(2, "0");
-
+              const isActive = desktopActiveStep === idx;
+              const isPast = desktopActiveStep !== null && idx < desktopActiveStep;
+              
               return (
-                <button
+                <button 
                   key={idx}
-                  onMouseEnter={() => setActiveStep(idx)}
-                  onFocus={() => setActiveStep(idx)}
-                  className="group relative outline-none cursor-pointer flex-1 text-center pb-6"
+                  onClick={() => setActiveStep(isActive ? null : idx)}
+                  className="flex-1 relative text-left group pt-6 outline-none pr-4"
                   aria-label={`Phase ${idx + 1}: ${step.title}`}
                 >
-                  {/* Number */}
-                  <motion.span
-                    animate={{
-                      opacity: isActive ? 1 : 0.15,
-                      scale: isActive ? 1 : 0.9,
+                  {/* Animated Active/Past line */}
+                  <motion.div 
+                    className="absolute top-0 left-0 h-[2px] origin-left"
+                    initial={false}
+                    animate={{ 
+                      scaleX: isActive || isPast ? 1 : 0, 
+                      backgroundColor: isActive ? "var(--accent)" : "var(--foreground)" 
+                    }}
+                    style={{ 
+                      width: "100%",
+                      opacity: isPast && !isActive ? 0.3 : 1 
                     }}
                     transition={{ duration: 0.4, ease: easeOutExpo }}
-                    className="block font-mono studio-tabular select-none"
-                    style={{
-                      fontSize: "clamp(3.5rem, 5vw, 6rem)",
-                      fontWeight: 700,
-                      lineHeight: 1,
-                      color: isActive ? stepColors[idx] : undefined,
-                    }}
-                  >
-                    {num}
-                  </motion.span>
-
-                  {/* Step title preview under number */}
-                  <motion.span
-                    animate={{ opacity: isActive ? 1 : 0.3 }}
-                    transition={{ duration: 0.3 }}
-                    className="block text-xs uppercase tracking-[0.12em] mt-3 font-mono"
-                    style={{
-                      color: isActive ? "var(--accent)" : "var(--fg-muted)",
-                      transition: "color 0.3s",
-                    }}
-                  >
-                    {step.title}
-                  </motion.span>
-
-                  {/* Active indicator line */}
-                  <motion.div
-                    className="absolute bottom-0 left-[10%] right-[10%] h-[2px] bg-accent origin-center"
-                    initial={false}
-                    animate={{ scaleX: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
-                    transition={{ duration: 0.35, ease: easeOutExpo }}
                   />
+                  
+                  {/* Step Info */}
+                  <div className="flex flex-col gap-2 transition-opacity duration-300" style={{ opacity: isActive ? 1 : 0.5 }}>
+                    <span className="font-mono text-xs studio-tabular tracking-widest text-accent">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <span className="font-serif tracking-wide text-xl text-foreground">
+                      {step.title}
+                    </span>
+                  </div>
                 </button>
               );
             })}
-          </motion.div>
-
-          {/* Thin rule */}
-          <motion.div
-            initial={reduce ? false : { scaleX: 0 }}
-            whileInView={reduce ? undefined : { scaleX: 1 }}
-            viewport={viewportOnce}
-            transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.2 }}
-            className="border-t border-border/50 origin-left"
-          />
-
-          {/* Detail area — crossfades between steps */}
-          <div className="pt-10 pb-4 min-h-[140px]">
+          </div>
+          
+          {/* Detail Area */}
+          <div className="relative min-h-[140px] flex flex-col justify-center">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={activeStep}
-                initial={reduce ? false : { opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.35, ease: easeOutExpo }}
-                className="max-w-xl"
-              >
-                <h3
-                  className="font-serif text-foreground mb-2"
-                  style={{
-                    fontSize: "clamp(1.6rem, 1.5vw + 0.6rem, 2.2rem)",
-                    fontWeight: 400,
-                    lineHeight: 1.2,
-                    letterSpacing: "-0.01em",
-                  }}
+              {desktopActiveStep !== null && (
+                <motion.div
+                  key={desktopActiveStep}
+                  initial={reduce ? false : { opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.35, ease: easeOutExpo }}
+                  className="max-w-3xl"
                 >
-                  {steps[activeStep].title}
-                </h3>
-                <span
-                  className="block studio-eyebrow text-accent mb-3"
-                >
-                  {steps[activeStep].subtitle}
-                </span>
-                <p
-                  className="text-muted-foreground studio-body"
-                >
-                  {steps[activeStep].description}
-                </p>
-              </motion.div>
+                  <h3 className="studio-h3-sans mb-3 text-foreground">
+                    {steps[desktopActiveStep].subtitle}
+                  </h3>
+                  <p className="studio-body text-muted-foreground text-lg leading-relaxed">
+                    {steps[desktopActiveStep].description}
+                  </p>
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
 
-        {/* ── Mobile: Stacked list fallback ── */}
-        <div className="lg:hidden">
+        {/* ── Mobile: Accordion ── */}
+        <div className="lg:hidden flex flex-col gap-4">
           {steps.map((step, idx) => {
+            const isActive = activeStep === idx;
             const num = String(idx + 1).padStart(2, "0");
+            
             return (
-              <motion.div
+              <motion.div 
                 key={idx}
                 initial={reduce ? false : "hidden"}
                 whileInView={reduce ? undefined : "show"}
                 viewport={viewportOnce}
                 variants={fadeUp}
-                transition={{ ...transitionDefault, delay: idx * 0.06 }}
-                className="border-t border-border/50 py-5"
-                style={idx === steps.length - 1 ? { borderBottom: "0.5px solid var(--border)" } : undefined}
+                transition={{ ...transitionDefault, delay: idx * 0.05 }}
+                className="studio-surface rounded-xl overflow-hidden shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border border-border/50"
               >
-                <span
-                  className="block font-serif text-sm mb-2 studio-tabular"
-                  style={{ fontStyle: "italic", color: stepColors[idx] }}
+                <button 
+                  onClick={() => setActiveStep(isActive ? null : idx)}
+                  className="w-full flex items-center justify-between p-5 md:p-6 text-left outline-none"
+                  aria-expanded={isActive}
                 >
-                  {num}
-                </span>
-                <h3
-                  className="font-serif text-foreground mb-1"
-                  style={{
-                    fontSize: "1.5rem",
-                    fontWeight: 400,
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {step.title}
-                </h3>
-                <span
-                  className="block studio-eyebrow text-accent mb-2"
-                >
-                  {step.subtitle}
-                </span>
-                <p
-                  className="text-muted-foreground studio-body"
-                >
-                  {step.description}
-                </p>
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-sm text-accent studio-tabular">{num}</span>
+                    <span className="font-serif text-xl text-foreground">{step.title}</span>
+                  </div>
+                  <motion.div 
+                    animate={{ rotate: isActive ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: easeOutExpo }}
+                    className="text-muted-foreground"
+                  >
+                    <ChevronDown size={20} />
+                  </motion.div>
+                </button>
+                
+                <AnimatePresence initial={false}>
+                  {isActive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: easeOutExpo }}
+                      style={{ overflow: "hidden" }}
+                    >
+                      <div className="px-5 pb-6 md:px-6 md:pb-7">
+                        <div className="pt-4 border-t border-border/40">
+                          <h4 className="studio-eyebrow text-foreground mb-2 block">{step.subtitle}</h4>
+                          <p className="studio-body text-muted-foreground">
+                            {step.description}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}

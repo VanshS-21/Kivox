@@ -113,94 +113,80 @@ export function HomePOV() {
   });
 
   const glowY1 = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const glowY2 = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <div ref={sectionRef} className="relative">
     <Section
-      className="relative py-[100px] md:py-[160px] lg:py-[300px] overflow-hidden"
+      className="relative py-[100px] md:py-[140px] lg:py-[200px] overflow-hidden"
       style={{ background: 'var(--bg-primary)' }}
     >
-      {/* Committed amber glow — with parallax */}
+      {/* Committed amber glow — restrained size so it doesn't bleed into adjacent sections */}
       <motion.div
         style={{ y: reduce ? 0 : glowY1 }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] lg:w-[1100px] h-[300px] md:h-[600px] lg:h-[1100px] rounded-full blur-[60px] md:blur-[80px] lg:blur-[200px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] md:w-[500px] lg:w-[800px] h-[240px] md:h-[500px] lg:h-[800px] rounded-full blur-[50px] md:blur-[70px] lg:blur-[120px] pointer-events-none"
         data-glow="primary"
       >
         <div
           className="w-full h-full rounded-full"
-          style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.7)' }}
-        />
-      </motion.div>
-
-      {/* Secondary rose depth — with parallax */}
-      <motion.div
-        style={{ y: reduce ? 0 : glowY2 }}
-        className="absolute top-[30%] right-[15%] w-[150px] md:w-[300px] lg:w-[600px] h-[150px] md:h-[300px] lg:h-[600px] rounded-full blur-[40px] md:blur-[80px] lg:blur-[160px] pointer-events-none"
-        data-glow="secondary"
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.35)' }}
+          style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.65)' }}
         />
       </motion.div>
 
       <Container className="relative z-10">
-        {/* No section label — the quote speaks for itself */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end">
+          {/* Large left-aligned quote — word-by-word reveal */}
+          <blockquote className="lg:col-span-8">
+            <span className="sr-only">We believe great digital platforms are not built; they are crafted.</span>
+            <p aria-hidden="true" className="studio-h1-headline text-foreground">
+              <WordByWordReveal reduce={reduce}>
+                We believe great digital platforms
+              </WordByWordReveal>
+              {" "}
+              <br className="hidden lg:block" />
+              <WordByWordReveal reduce={reduce}>
+                are not built; they are
+              </WordByWordReveal>{" "}
+              {/* Special emphasis on "crafted." with hand-drawn underline */}
+              <motion.em
+                aria-hidden="true"
+                initial={reduce ? false : { opacity: 0, scale: 0.92 }}
+                whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.9 }}
+                className="text-accent inline-block relative not-italic studio-h1-headline font-serif"
+                style={{
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                }}
+              >
+                crafted.
+                <HandDrawnUnderline reduce={reduce} />
+              </motion.em>
+            </p>
+          </blockquote>
 
-        {/* Large centered quote — word-by-word reveal */}
-        <blockquote className="text-center max-w-6xl mx-auto">
-          <span className="sr-only">We believe great digital platforms are not built; they are crafted.</span>
-          <p aria-hidden="true" className="font-sans font-bold text-foreground" style={{ fontSize: 'clamp(2.5rem, 5vw + 1rem, 6rem)', lineHeight: 1.06, letterSpacing: '-0.02em' }}>
-            <WordByWordReveal reduce={reduce}>
-              We believe great digital platforms
-            </WordByWordReveal>
-            {" "}
-            <br className="hidden lg:block" />
-            <WordByWordReveal reduce={reduce}>
-              are not built; they are
-            </WordByWordReveal>{" "}
-            {/* Special emphasis on "crafted." with hand-drawn underline */}
-            <motion.em
-              aria-hidden="true"
-              initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-              whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.9 }}
-              className="text-accent inline-block relative not-italic"
-              style={{
-                fontFamily: "var(--font-handwritten)",
-                fontWeight: 700,
-                fontSize: "1.25em",
-                lineHeight: 1,
-              }}
+          <div className="lg:col-span-4 flex flex-col items-start lg:items-end">
+            {/* Decorative expanding lines — aligned left or right */}
+            <motion.div
+              initial={reduce ? false : { scaleX: 0, opacity: 0 }}
+              whileInView={reduce ? undefined : { scaleX: 1, opacity: 1 }}
+              viewport={viewportOnce}
+              transition={{ duration: 1, ease: easeOutExpo, delay: 0.4 }}
+              className="w-24 md:w-32 h-px bg-accent/30 origin-left lg:origin-right mb-6 lg:mb-8"
+            />
+            {/* Supporting body text — aligned left or right */}
+            <motion.p
+              initial={reduce ? false : "hidden"}
+              whileInView={reduce ? undefined : "show"}
+              viewport={viewportOnce}
+              variants={fadeUp}
+              transition={{ ...transitionDefault, delay: 0.2 }}
+              className="studio-body-serif text-muted-foreground lg:text-right max-w-md"
             >
-              crafted.
-              <HandDrawnUnderline reduce={reduce} />
-            </motion.em>
-          </p>
-        </blockquote>
-
-        {/* Supporting body text — generous spacing from the quote */}
-        <motion.p
-          initial={reduce ? false : "hidden"}
-          whileInView={reduce ? undefined : "show"}
-          viewport={viewportOnce}
-          variants={fadeUp}
-          transition={{ ...transitionDefault, delay: 0.2 }}
-          className="text-center studio-body-serif text-muted-foreground max-w-2xl mx-auto mt-8 md:mt-12 lg:mt-16"
-        >
-          {home.philosophy.body}
-        </motion.p>
-
-        {/* Decorative expanding lines — centered below quote */}
-        <motion.div
-          initial={reduce ? false : { scaleX: 0, opacity: 0 }}
-          whileInView={reduce ? undefined : { scaleX: 1, opacity: 1 }}
-          viewport={viewportOnce}
-          transition={{ duration: 1, ease: easeOutExpo, delay: 0.4 }}
-          className="mx-auto mt-10 md:mt-16 lg:mt-20 w-48 h-px bg-accent/30 origin-center"
-        />
+              {home.philosophy.body}
+            </motion.p>
+          </div>
+        </div>
       </Container>
     </Section>
     </div>

@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "motion/react";
 
 import { Container } from "@/components/ui/Container";
-import { Prose } from "@/components/ui/Prose";
 import { easeOutExpo, easeOutQuint, viewportOnce } from "@/lib/motion";
 
 interface LegalSection {
@@ -37,7 +36,7 @@ export function LegalPageLayout({
             reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
           }
           transition={{ duration: 0.7, ease: easeOutQuint }}
-          className="studio-h2 font-sans font-bold text-foreground"
+          className="studio-h1-headline text-foreground"
         >
           {title}
         </motion.h1>
@@ -60,7 +59,7 @@ export function LegalPageLayout({
         />
 
         {/* Prose sections — staggered scroll reveals */}
-        <Prose className="mt-10">
+        <div className="mt-10 space-y-12">
           {sections.map((section, idx) => (
             <motion.div
               key={section.title}
@@ -73,21 +72,21 @@ export function LegalPageLayout({
                 delay: idx < 3 ? idx * 0.08 : 0,
               }}
             >
-              <h2>{section.title}</h2>
-              {section.lead ? <p>{section.lead}</p> : null}
+              <h2 className="studio-h3-sans text-foreground mb-4">{section.title}</h2>
+              {section.lead ? <p className="studio-body text-foreground font-medium mb-4">{section.lead}</p> : null}
               {section.paragraphs?.map((p) => (
-                <p key={p}>{p}</p>
+                <p key={p} className="studio-body text-muted-foreground mb-4">{p}</p>
               ))}
               {section.bullets ? (
-                <ul>
+                <ul className="list-disc pl-5 space-y-2 mb-4">
                   {section.bullets.map((b) => (
-                    <li key={b}>{b}</li>
+                    <li key={b} className="studio-body text-muted-foreground">{b}</li>
                   ))}
                 </ul>
               ) : null}
             </motion.div>
           ))}
-        </Prose>
+        </div>
       </Container>
     </div>
   );

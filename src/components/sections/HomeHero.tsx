@@ -221,11 +221,10 @@ export function HomeHero() {
         >
           <div className="max-w-[38rem] lg:max-w-[45rem] xl:max-w-[47rem]">
             <h1
-              className="mb-6 max-w-[13ch] font-sans text-[3.35rem] font-bold leading-[0.98] tracking-normal sm:mb-7 sm:text-[4.65rem] md:text-[clamp(5.9rem,10.8vw,6.8rem)] lg:mb-6 lg:text-[clamp(5.85rem,6.1vw,6.45rem)] xl:text-[6.75rem]"
+              className="mb-6 max-w-[13ch] studio-h1-headline sm:mb-7 lg:mb-6"
               aria-label={home.hero.headline}
               style={{
                 color: "var(--hero-fg)",
-                letterSpacing: 0,
               }}
             >
               <SplitWords delay={0.18} reduce={reduce} isReady={isReady}>
@@ -250,7 +249,6 @@ export function HomeHero() {
                   color: heroAccent,
                   fontStyle: "italic",
                   fontWeight: 300,
-                  letterSpacing: 0,
                 }}
               >
                 trust online.
@@ -266,10 +264,9 @@ export function HomeHero() {
                   transition: { duration: 0.6, ease: easeOutExpo, delay: 0.78 },
                 },
               }}
-              className="mb-7 max-w-[34rem] text-base font-[450] leading-[1.62] sm:mb-8 sm:text-lg md:max-w-[40rem] md:text-xl md:leading-[1.68] lg:mb-7 lg:max-w-[33rem] lg:leading-[1.58] xl:max-w-[34rem]"
+              className="mb-7 max-w-[34rem] studio-body sm:mb-8 md:max-w-[40rem] lg:mb-7 lg:max-w-[33rem] xl:max-w-[34rem]"
               style={{
                 color: "var(--hero-fg-muted)",
-                letterSpacing: 0,
               }}
             >
               {home.hero.subhead}

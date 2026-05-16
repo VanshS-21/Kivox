@@ -30,16 +30,10 @@ export function HomeTeam() {
           transition={{ duration: 0.7, ease: easeOutExpo }}
           className="mb-10 md:mb-16 lg:mb-24"
         >
-          <h2
-            className="font-sans font-bold text-foreground mb-5"
-            style={{
-              fontSize: "clamp(2rem, 3vw + 0.5rem, 3.5rem)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.015em",
-            }}
-          >
+          <p className="studio-eyebrow text-accent mb-5">[ Team ]</p>
+          <h2 className="studio-h2-editorial text-foreground mb-5">
             Built by{" "}
-            <em className="font-serif font-medium text-accent" style={{ fontStyle: "italic" }}>
+            <em className="font-serif italic text-accent" style={{ fontStyle: "italic" }}>
               People.
             </em>
           </h2>
@@ -86,14 +80,7 @@ export function HomeTeam() {
                   {member.role}
                 </span>
 
-                <h3
-                  className="font-sans font-bold text-foreground mb-2 transition-colors duration-300 group-hover:text-accent"
-                  style={{
-                    fontSize: "clamp(1.25rem, 1vw + 0.75rem, 1.5rem)",
-                    lineHeight: 1.2,
-                    letterSpacing: "-0.01em",
-                  }}
-                >
+                <h3 className="studio-h3-sans text-foreground mb-2 transition-colors duration-300 group-hover:text-accent">
                   {member.name}
                 </h3>
 
@@ -136,13 +123,7 @@ export function HomeTeam() {
 
               {/* Compact info — name + role only */}
               <div>
-                <h3
-                  className="font-sans font-semibold text-foreground mb-1 transition-colors duration-300 group-hover:text-accent"
-                  style={{
-                    fontSize: "clamp(0.9rem, 0.8vw + 0.5rem, 1.1rem)",
-                    lineHeight: 1.3,
-                  }}
-                >
+                <h3 className="studio-h4-sans text-foreground mb-1 transition-colors duration-300 group-hover:text-accent">
                   {member.name}
                 </h3>
                 <span className="studio-eyebrow text-muted-foreground">

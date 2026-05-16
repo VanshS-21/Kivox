@@ -46,7 +46,7 @@ export function CustomSelect({
         id={id}
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full h-12 px-0 py-3 bg-transparent border-0 border-b text-left text-base outline-none transition-colors duration-200 flex items-center justify-between disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${
+        className={`w-full px-0 py-4 bg-transparent border-0 border-b text-left studio-h4-sans outline-none transition-colors duration-200 flex items-center justify-between disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${
           hasError ? "border-error text-error" : "border-border text-foreground hover:border-accent focus:border-accent focus:bg-accent-muted/50"
         } ${!value ? "text-muted-foreground/40" : ""}`}
         aria-haspopup="listbox"
@@ -82,7 +82,7 @@ export function CustomSelect({
                    onChange(undefined);
                    setIsOpen(false);
                  }}
-                 className={`px-4 py-3 text-sm cursor-pointer transition-colors duration-200 flex items-center justify-between ${
+                 className={`px-4 py-4 studio-body cursor-pointer transition-colors duration-200 flex items-center justify-between ${
                    !value ? "bg-accent/10 text-accent font-medium" : "text-muted-foreground hover:text-foreground hover:bg-muted"
                  }`}
                >
@@ -106,7 +106,7 @@ export function CustomSelect({
                     onChange(option);
                     setIsOpen(false);
                   }}
-                  className={`px-4 py-3 text-sm cursor-pointer transition-colors duration-200 flex items-center justify-between ${
+                  className={`px-4 py-4 studio-body cursor-pointer transition-colors duration-200 flex items-center justify-between ${
                     isSelected ? "bg-accent/10 text-accent font-medium" : "text-foreground hover:bg-muted"
                   }`}
                 >

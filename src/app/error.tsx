@@ -15,12 +15,7 @@ export default function Error({
       <Container className="text-center py-32">
         {/* Heading */}
         <h1
-          className="font-sans font-bold text-foreground mb-4"
-          style={{
-            fontSize: "clamp(1.5rem, 2vw + 1rem, 2.5rem)",
-            lineHeight: 1.2,
-            letterSpacing: "-0.02em",
-          }}
+          className="font-sans font-bold text-foreground mb-4 text-3xl md:text-4xl leading-tight tracking-tight"
         >
           Something went wrong.
         </h1>

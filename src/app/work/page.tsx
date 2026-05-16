@@ -41,17 +41,10 @@ export default function WorkPage() {
             transition={{ duration: 0.7, ease: easeOutQuint }}
             className="max-w-3xl"
           >
-            <h1
-              className="font-sans font-bold text-foreground mb-6"
-              style={{
-                fontSize: "clamp(2.5rem, 4vw + 1rem, 5rem)",
-                lineHeight: 1.06,
-                letterSpacing: "-0.025em",
-              }}
-            >
+            <h1 className="studio-h1-headline text-foreground mb-6">
               Our{" "}
               <em
-                className="font-serif font-normal text-accent"
+                className="font-serif italic text-accent"
                 style={{ fontStyle: "italic" }}
               >
                 Showcase.
@@ -130,17 +123,17 @@ export default function WorkPage() {
                       </span>
                     </div>
 
-                    <h2 className="text-2xl sm:text-3xl font-bold font-sans text-foreground mb-4 line-clamp-2">
+                    <h2 className="studio-h3-sans text-foreground mb-4 line-clamp-2">
                       {project.title.split(" ").slice(0, -1).join(" ")}{" "}
                       <em
-                        className="font-serif font-normal"
+                        className="font-serif italic"
                         style={{ fontStyle: "italic", color }}
                       >
                         {project.title.split(" ").slice(-1)[0]}.
                       </em>
                     </h2>
 
-                    <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-8 line-clamp-2 flex-1">
+                    <p className="studio-body text-muted-foreground mb-8 line-clamp-2 flex-1">
                       {project.demonstrates}
                     </p>
 

@@ -6,20 +6,19 @@ export function getMdxComponents() {
   return {
     h2: (props: { children?: ReactNode }) => (
       <h2
-        className="mt-12 mb-4 studio-h3 font-sans font-bold text-foreground"
+        className="mt-12 mb-4 studio-h3-sans text-foreground"
         {...props}
       />
     ),
     h3: (props: { children?: ReactNode }) => (
       <h3
-        className="mt-8 mb-3 studio-h4 font-sans font-semibold text-foreground"
+        className="mt-8 mb-3 studio-h4-sans text-foreground"
         {...props}
       />
     ),
     p: (props: { children?: ReactNode }) => (
       <p
-        className="mb-5 font-body text-foreground leading-relaxed"
-        style={{ fontSize: "clamp(1rem, 0.3vw + 0.85rem, 1.125rem)", lineHeight: 1.75, maxWidth: "65ch" }}
+        className="mb-5 studio-body text-foreground max-w-[65ch]"
         {...props}
       />
     ),
@@ -31,8 +30,7 @@ export function getMdxComponents() {
     ),
     li: (props: { children?: ReactNode }) => (
       <li
-        className="font-body text-foreground leading-relaxed marker:text-accent"
-        style={{ fontSize: "clamp(1rem, 0.3vw + 0.85rem, 1.125rem)", lineHeight: 1.75 }}
+        className="studio-body text-foreground marker:text-accent"
         {...props}
       />
     ),
@@ -52,8 +50,7 @@ export function getMdxComponents() {
     ),
     blockquote: (props: { children?: ReactNode }) => (
       <blockquote
-        className="my-8 pl-6 py-1 border-l-2 border-accent/30 font-serif text-muted-foreground italic"
-        style={{ fontSize: "clamp(1.0625rem, 0.4vw + 0.85rem, 1.1875rem)" }}
+        className="my-8 pl-6 py-1 border-l-2 border-accent/30 studio-body-serif text-muted-foreground italic"
         {...props}
       />
     ),

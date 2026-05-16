@@ -21,7 +21,7 @@ export function FaqPageContent() {
             reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
           }
           transition={{ duration: 0.8, ease: easeOutQuint }}
-          className="studio-h2 font-sans font-bold text-foreground"
+          className="studio-h1-headline text-foreground"
         >
           {faq.title}
         </motion.h1>
@@ -78,7 +78,7 @@ export function FaqPageContent() {
           transition={{ duration: 0.6, ease: easeOutExpo }}
           className="mt-16 sm:mt-20 pt-8 border-t border-border"
         >
-          <p className="font-body text-muted-foreground text-base leading-relaxed">
+          <p className="studio-body text-muted-foreground">
             Didn&apos;t find what you&apos;re looking for?
           </p>
           <Link

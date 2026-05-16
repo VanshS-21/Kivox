@@ -42,14 +42,7 @@ export default function ContactPage() {
           transition={{ duration: 0.7, ease: easeOutQuint }}
           className="mb-14 lg:mb-20"
         >
-          <h1
-            className="font-sans font-bold text-foreground mb-5"
-            style={{
-              fontSize: "clamp(2.5rem, 4vw + 1rem, 4.5rem)",
-              lineHeight: 1.06,
-              letterSpacing: "-0.025em",
-            }}
-          >
+          <h1 className="studio-h1-headline text-foreground mb-5">
             Tell us what
             <br />
             you&apos;re{" "}
@@ -90,7 +83,7 @@ export default function ContactPage() {
             transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.35 }}
             className="h-px bg-border mb-10 origin-left"
           />
-          <h2 className="text-base font-semibold text-foreground tracking-tight mb-8 font-body">
+          <h2 className="studio-h3-sans text-foreground mb-8">
             What happens next
           </h2>
 
@@ -120,7 +113,7 @@ export default function ContactPage() {
                 <span className="studio-eyebrow text-accent studio-tabular">
                   {item.step}
                 </span>
-                <p className="text-base text-muted-foreground leading-relaxed">
+                <p className="studio-body text-muted-foreground">
                   {item.text}
                 </p>
               </motion.div>
