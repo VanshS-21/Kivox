@@ -5,7 +5,6 @@ export const home = {
       "Kivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.",
     ctas: {
       primary: "Start a project",
-      secondary: "See live examples",
     },
   },
   services: [

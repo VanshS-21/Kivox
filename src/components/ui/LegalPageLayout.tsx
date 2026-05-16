@@ -1,10 +1,8 @@
 "use client";
 
-import { Fragment, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Prose } from "@/components/ui/Prose";
 import { easeOutExpo, easeOutQuint, viewportOnce } from "@/lib/motion";
 
@@ -22,26 +20,24 @@ interface LegalPageLayoutProps {
   sections: LegalSection[];
 }
 
-export function LegalPageLayout({ eyebrow, title, intro, sections }: LegalPageLayoutProps) {
+export function LegalPageLayout({
+  title,
+  intro,
+  sections,
+}: LegalPageLayoutProps) {
   const reduce = useReducedMotion();
 
   return (
     <div className="pt-28 sm:pt-32 pb-16 sm:pb-20">
       <Container size="narrow">
         {/* Header — staggered entrance */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={reduce ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: easeOutQuint }}
-        >
-          <Eyebrow>{eyebrow}</Eyebrow>
-        </motion.div>
-
         <motion.h1
           initial={reduce ? false : { opacity: 0, y: 16, filter: "blur(6px)" }}
-          animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, ease: easeOutQuint, delay: 0.1 }}
-          className="mt-3 studio-h2 font-sans font-bold text-foreground"
+          animate={
+            reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
+          }
+          transition={{ duration: 0.7, ease: easeOutQuint }}
+          className="studio-h2 font-sans font-bold text-foreground"
         >
           {title}
         </motion.h1>
@@ -71,11 +67,17 @@ export function LegalPageLayout({ eyebrow, title, intro, sections }: LegalPageLa
               initial={reduce ? false : { opacity: 0, y: 14 }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={viewportOnce}
-              transition={{ duration: 0.6, ease: easeOutExpo, delay: idx < 3 ? idx * 0.08 : 0 }}
+              transition={{
+                duration: 0.6,
+                ease: easeOutExpo,
+                delay: idx < 3 ? idx * 0.08 : 0,
+              }}
             >
               <h2>{section.title}</h2>
               {section.lead ? <p>{section.lead}</p> : null}
-              {section.paragraphs?.map((p) => <p key={p}>{p}</p>)}
+              {section.paragraphs?.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
               {section.bullets ? (
                 <ul>
                   {section.bullets.map((b) => (

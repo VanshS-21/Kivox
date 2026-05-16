@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
@@ -16,6 +16,10 @@ const navItems = [
   { href: "/#services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
+
+const heroAccent = "var(--hero-accent, oklch(0.72 0.18 65))";
+const heroAccentInk = "var(--hero-accent-ink, oklch(0.99 0.008 80))";
+const heroForeground = "var(--hero-fg, oklch(0.95 0.012 72))";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +66,7 @@ export function Navigation() {
             setActiveSection(id);
           }
         },
-        { threshold: 0.3 }
+        { threshold: 0.3 },
       );
       observer.observe(el);
       observers.push(observer);
@@ -86,6 +90,7 @@ export function Navigation() {
   // Focus trap + Escape key for overlay
   useEffect(() => {
     if (!isOpen) return;
+    const hamburger = hamburgerRef.current;
 
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -96,7 +101,7 @@ export function Navigation() {
       // Focus trap: cycle through focusable elements inside the overlay + hamburger
       if (e.key === "Tab" && overlayRef.current) {
         const focusable = overlayRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
         );
         if (focusable.length === 0) return;
         const first = focusable[0];
@@ -114,7 +119,8 @@ export function Navigation() {
 
     // Move focus into the overlay after entrance animation settles
     const timer = setTimeout(() => {
-      const firstLink = overlayRef.current?.querySelector<HTMLElement>('a[href]');
+      const firstLink =
+        overlayRef.current?.querySelector<HTMLElement>("a[href]");
       firstLink?.focus();
     }, 100);
 
@@ -123,7 +129,7 @@ export function Navigation() {
       document.removeEventListener("keydown", handleKeyDown);
       clearTimeout(timer);
       // Restore focus to hamburger on close
-      hamburgerRef.current?.focus();
+      hamburger?.focus();
     };
   }, [isOpen]);
 
@@ -185,9 +191,14 @@ export function Navigation() {
                   className={`transition-colors duration-500 group-hover:text-accent ${
                     !useHeroColors ? "text-foreground" : ""
                   }`}
-                  style={useHeroColors ? { color: "var(--hero-fg)" } : undefined}
+                  style={
+                    useHeroColors ? { color: heroForeground } : undefined
+                  }
                 >
-                  <KivoxLogo height={24} variant="mono" />
+                  <KivoxLogo
+                    height={24}
+                    variant={useHeroColors ? "brand" : "mono"}
+                  />
                 </motion.div>
               </Link>
             </Magnetic>
@@ -200,6 +211,15 @@ export function Navigation() {
                   <Link
                     href="/contact"
                     className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-200"
+                    style={
+                      useHeroColors
+                        ? {
+                            backgroundColor: heroAccent,
+                            color: heroAccentInk,
+                            boxShadow: `0 16px 42px -28px color-mix(in oklch, ${heroAccent} 72%, transparent)`,
+                          }
+                        : undefined
+                    }
                   >
                     Start a project
                     <span className="text-base">→</span>
@@ -210,7 +230,7 @@ export function Navigation() {
               {/* Theme toggle */}
               <ThemeToggle
                 className={!useHeroColors ? "text-foreground" : ""}
-                style={useHeroColors ? { color: "var(--hero-fg)" } : undefined}
+                style={useHeroColors ? { color: heroForeground } : undefined}
               />
 
               {/* Hamburger button */}
@@ -225,22 +245,42 @@ export function Navigation() {
                   aria-expanded={isOpen}
                 >
                   <motion.span
-                    animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                    animate={
+                      isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }
+                    }
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className="w-6 h-0.5 transition-colors duration-500"
-                    style={{ background: useHeroColors ? "var(--hero-fg)" : "var(--fg-primary)" }}
+                    style={{
+                      background: useHeroColors
+                        ? heroAccent
+                        : "var(--fg-primary)",
+                    }}
                   />
                   <motion.span
-                    animate={isOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+                    animate={
+                      isOpen
+                        ? { opacity: 0, scaleX: 0 }
+                        : { opacity: 1, scaleX: 1 }
+                    }
                     transition={{ duration: 0.3 }}
                     className="w-6 h-0.5 origin-center transition-colors duration-500"
-                    style={{ background: useHeroColors ? "var(--hero-fg)" : "var(--fg-primary)" }}
+                    style={{
+                      background: useHeroColors
+                        ? heroForeground
+                        : "var(--fg-primary)",
+                    }}
                   />
                   <motion.span
-                    animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                    animate={
+                      isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
+                    }
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className="w-6 h-0.5 transition-colors duration-500"
-                    style={{ background: useHeroColors ? "var(--hero-fg)" : "var(--fg-primary)" }}
+                    style={{
+                      background: useHeroColors
+                        ? heroForeground
+                        : "var(--fg-primary)",
+                    }}
                   />
                 </button>
               </Magnetic>
@@ -268,7 +308,7 @@ export function Navigation() {
               className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-soft-light"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E")`,
-                backgroundSize: '240px 240px',
+                backgroundSize: "240px 240px",
               }}
             />
 
@@ -298,24 +338,35 @@ export function Navigation() {
                           }}
                           className="flex items-baseline gap-6 py-5 lg:py-6 group relative"
                           onMouseEnter={(e) => {
-                            const line = e.currentTarget.querySelector<HTMLSpanElement>('[data-underline]');
-                            if (line) line.style.width = '100%';
+                            const line =
+                              e.currentTarget.querySelector<HTMLSpanElement>(
+                                "[data-underline]",
+                              );
+                            if (line) line.style.width = "100%";
                           }}
                           onMouseLeave={(e) => {
-                            const line = e.currentTarget.querySelector<HTMLSpanElement>('[data-underline]');
-                            if (line && !isActive) line.style.width = '0';
+                            const line =
+                              e.currentTarget.querySelector<HTMLSpanElement>(
+                                "[data-underline]",
+                              );
+                            if (line && !isActive) line.style.width = "0";
                           }}
                         >
                           {/* Number */}
-                          <span className="text-sm font-mono text-accent studio-tabular" style={{ letterSpacing: '0.12em' }}>
+                          <span
+                            className="text-sm font-mono text-accent studio-tabular"
+                            style={{ letterSpacing: "0.12em" }}
+                          >
                             {String(idx + 1).padStart(2, "0")}
                           </span>
                           {/* Label */}
-                          <span className={`text-[36px] sm:text-[48px] lg:text-[56px] font-bold tracking-tight leading-none transition-colors duration-200 ${
-                            isActive
-                              ? "text-accent"
-                              : "text-muted-foreground group-hover:text-foreground"
-                          }`}>
+                          <span
+                            className={`text-[36px] sm:text-[48px] lg:text-[56px] font-bold tracking-tight leading-none transition-colors duration-200 ${
+                              isActive
+                                ? "text-accent"
+                                : "text-muted-foreground group-hover:text-foreground"
+                            }`}
+                          >
                             {item.label}
                           </span>
                           {/* Amber underline draw — width transitions on hover */}
@@ -329,7 +380,10 @@ export function Navigation() {
                             <motion.div
                               layoutId="nav-active"
                               className="w-2 h-2 rounded-full bg-accent"
-                              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                              transition={{
+                                duration: 0.3,
+                                ease: [0.16, 1, 0.3, 1],
+                              }}
                             />
                           )}
                         </Link>
@@ -353,9 +407,9 @@ export function Navigation() {
               >
                 {/* Connect */}
                 <div className="mb-8">
-                  <span className="studio-eyebrow text-accent">
+                  <h2 className="text-base font-semibold text-foreground">
                     Connect
-                  </span>
+                  </h2>
                   <div className="flex gap-5 mt-3">
                     <Magnetic strength={0.1}>
                       <Link
@@ -388,9 +442,9 @@ export function Navigation() {
 
                 {/* Say Hello */}
                 <div>
-                  <span className="studio-eyebrow text-accent">
+                  <h2 className="text-base font-semibold text-foreground">
                     Say Hello
-                  </span>
+                  </h2>
                   <div className="mt-3">
                     <Magnetic strength={0.1}>
                       <Link

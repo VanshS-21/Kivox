@@ -22,7 +22,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) return {};
@@ -45,7 +49,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CaseStudyPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
@@ -74,12 +82,17 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         <Container>
           <div className="max-w-5xl mb-12 lg:mb-16">
             {/* Breadcrumb + Label */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6">
-              <Link href="/work" className="studio-eyebrow text-muted-foreground hover:text-foreground transition-colors">
-                ← Back to Work
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6 text-sm">
+              <Link
+                href="/work"
+                className="font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                ← Back to showcase
               </Link>
-              <span className="hidden sm:block text-muted-foreground opacity-30">·</span>
-              <span className="studio-eyebrow" style={{ color }}>
+              <span className="hidden sm:block text-muted-foreground opacity-30">
+                ·
+              </span>
+              <span className="font-medium" style={{ color }}>
                 {project.label}
               </span>
             </div>
@@ -109,9 +122,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
             {/* Metadata Strip */}
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-8">
-              {project.year && (
-                <MetaChip label="Year" value={project.year} />
-              )}
+              {project.year && <MetaChip label="Year" value={project.year} />}
               {project.duration && (
                 <MetaChip label="Duration" value={project.duration} />
               )}
@@ -127,14 +138,16 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                   <span
                     key={service}
                     className="text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full border"
-                    style={{ borderColor: `color-mix(in oklch, ${color}, transparent 70%)`, color }}
+                    style={{
+                      borderColor: `color-mix(in oklch, ${color}, transparent 70%)`,
+                      color,
+                    }}
                   >
                     {service}
                   </span>
                 ))}
               </div>
             )}
-
           </div>
 
           {/* ═══════════════════════════════════════════════════
@@ -156,15 +169,17 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           ═══════════════════════════════════════════════════ */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
             <div className="lg:col-span-4">
-              <span className="studio-eyebrow block mb-3" style={{ color }}>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Project Overview
-              </span>
+              </h2>
             </div>
             <div className="lg:col-span-8">
-              <p className="studio-body-serif text-muted-foreground" style={{ fontSize: "clamp(1.25rem, 2vw + 0.5rem, 1.75rem)" }}>
+              <p
+                className="studio-body-serif text-muted-foreground"
+                style={{ fontSize: "clamp(1.25rem, 2vw + 0.5rem, 1.75rem)" }}
+              >
                 {project.demonstrates}
               </p>
-
             </div>
           </div>
 
@@ -179,13 +194,16 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               {project.challenge && (
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16 lg:mb-20">
                   <div className="lg:col-span-4">
-                    <span className="studio-eyebrow block mb-3" style={{ color }}>
+                    <h2 className="text-2xl font-bold tracking-tight text-foreground">
                       The Challenge
-                    </span>
+                    </h2>
                   </div>
                   <div className="lg:col-span-8">
                     {project.challenge.split("\n\n").map((para, idx) => (
-                      <p key={idx} className="text-base lg:text-lg leading-[1.85] text-muted-foreground mb-6 last:mb-0">
+                      <p
+                        key={idx}
+                        className="text-base lg:text-lg leading-[1.85] text-muted-foreground mb-6 last:mb-0"
+                      >
                         {para}
                       </p>
                     ))}
@@ -209,12 +227,14 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                   >
                     &ldquo;
                   </span>
-                  <span className="studio-eyebrow block mb-5" style={{ color }}>
+                  <h2 className="mb-5 text-2xl font-bold tracking-tight text-foreground">
                     The Insight
-                  </span>
+                  </h2>
                   <p
                     className="font-serif text-foreground leading-[1.7] italic"
-                    style={{ fontSize: "clamp(1.1rem, 1.5vw + 0.5rem, 1.4rem)" }}
+                    style={{
+                      fontSize: "clamp(1.1rem, 1.5vw + 0.5rem, 1.4rem)",
+                    }}
                   >
                     &ldquo;{project.insight}&rdquo;
                   </p>
@@ -227,9 +247,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           {project.approach && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
               <div className="lg:col-span-4">
-                <span className="studio-eyebrow block mb-3" style={{ color }}>
+                <h2 className="text-2xl font-bold tracking-tight text-foreground">
                   Our Approach
-                </span>
+                </h2>
               </div>
               <div className="lg:col-span-8">
                 <p className="text-base lg:text-lg leading-[1.85] text-muted-foreground">
@@ -247,13 +267,14 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
                 <div className="lg:col-span-4">
-                  <span className="studio-eyebrow block mb-3" style={{ color }}>
+                  <h2 className="text-2xl font-bold tracking-tight text-foreground">
                     Our Process
-                  </span>
+                  </h2>
                 </div>
                 <div className="lg:col-span-8">
                   <p className="text-base lg:text-lg leading-relaxed text-muted-foreground">
-                    A structured approach from research through launch — each phase building on the insights of the last.
+                    A structured approach from research through launch — each
+                    phase building on the insights of the last.
                   </p>
                 </div>
               </div>
@@ -279,9 +300,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <div className="mb-20 lg:mb-32">
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="max-w-4xl mx-auto text-center">
-                <span className="studio-eyebrow block mb-8" style={{ color }}>
+                <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
                   Design Philosophy
-                </span>
+                </h2>
                 <blockquote
                   className="font-serif text-foreground leading-[1.8] italic"
                   style={{ fontSize: "clamp(1.15rem, 1.5vw + 0.5rem, 1.5rem)" }}
@@ -295,29 +316,36 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           {/* ═══════════════════════════════════════════════════
               § 7 — KEY DESIGN DECISIONS
           ═══════════════════════════════════════════════════ */}
-          {project.keyDesignDecisions && project.keyDesignDecisions.length > 0 && (
-            <div className="mb-20 lg:mb-32">
-              <div className="h-px bg-border w-full mb-16 lg:mb-24" />
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
-                <div className="lg:col-span-4">
-                  <span className="studio-eyebrow block mb-3" style={{ color }}>
-                    Key Design Decisions
-                  </span>
+          {project.keyDesignDecisions &&
+            project.keyDesignDecisions.length > 0 && (
+              <div className="mb-20 lg:mb-32">
+                <div className="h-px bg-border w-full mb-16 lg:mb-24" />
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
+                  <div className="lg:col-span-4">
+                    <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                      Key Design Decisions
+                    </h2>
+                  </div>
+                  <div className="lg:col-span-8">
+                    <p className="text-base lg:text-lg leading-relaxed text-muted-foreground">
+                      The choices that shaped the project — and why each one was
+                      made.
+                    </p>
+                  </div>
                 </div>
-                <div className="lg:col-span-8">
-                  <p className="text-base lg:text-lg leading-relaxed text-muted-foreground">
-                    The choices that shaped the project — and why each one was made.
-                  </p>
-                </div>
-              </div>
 
-              <div className="space-y-8">
-                {project.keyDesignDecisions.map((decision, idx) => (
-                  <DecisionCard key={idx} decision={decision} index={idx} color={color} />
-                ))}
+                <div className="space-y-8">
+                  {project.keyDesignDecisions.map((decision, idx) => (
+                    <DecisionCard
+                      key={idx}
+                      decision={decision}
+                      index={idx}
+                      color={color}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* ═══════════════════════════════════════════════════
               § 8 — RESULTS & IMPACT
@@ -327,13 +355,14 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
                 <div className="lg:col-span-4">
-                  <span className="studio-eyebrow block mb-3" style={{ color }}>
+                  <h2 className="text-2xl font-bold tracking-tight text-foreground">
                     Results & Impact
-                  </span>
+                  </h2>
                 </div>
                 <div className="lg:col-span-8">
                   <p className="text-base lg:text-lg leading-relaxed text-muted-foreground">
-                    Measurable outcomes from design decisions — not vanity metrics.
+                    Measurable outcomes from design decisions — not vanity
+                    metrics.
                   </p>
                 </div>
               </div>
@@ -353,9 +382,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <div className="mb-20 lg:mb-32">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
                 <div className="lg:col-span-4">
-                  <span className="studio-eyebrow block mb-3" style={{ color }}>
+                  <h2 className="text-2xl font-bold tracking-tight text-foreground">
                     Tech Stack
-                  </span>
+                  </h2>
                 </div>
                 <div className="lg:col-span-8">
                   <div className="flex flex-wrap items-center gap-3">
@@ -379,24 +408,41 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           {project.testimonial && (
             <div className="mb-20 lg:mb-32">
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
-              <TestimonialBlock testimonial={project.testimonial} color={color} />
+              <TestimonialBlock
+                testimonial={project.testimonial}
+                color={color}
+              />
             </div>
           )}
 
           {/* ═══════════════════════════════════════════════════
               § 11 — DATA GRID (Audience / Actions / Sections)
           ═══════════════════════════════════════════════════ */}
-          {(project.targetAudience || project.primaryActions || project.coreSections) && (
+          {(project.targetAudience ||
+            project.primaryActions ||
+            project.coreSections) && (
             <div className="mb-20 lg:mb-32 bg-card/20 border border-border/50 rounded-2xl p-8 lg:p-12">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-14">
                 {project.targetAudience && (
-                  <DataBlock label="Who it serves" items={project.targetAudience} color={color} />
+                  <DataBlock
+                    label="Who it serves"
+                    items={project.targetAudience}
+                    color={color}
+                  />
                 )}
                 {project.primaryActions && (
-                  <DataBlock label="Primary actions" items={project.primaryActions} color={color} />
+                  <DataBlock
+                    label="Primary actions"
+                    items={project.primaryActions}
+                    color={color}
+                  />
                 )}
                 {project.coreSections && (
-                  <DataBlock label="Key sections" items={project.coreSections} color={color} />
+                  <DataBlock
+                    label="Key sections"
+                    items={project.coreSections}
+                    color={color}
+                  />
                 )}
               </div>
             </div>
@@ -407,10 +453,18 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       {/* ═══════════════════════════════════════════════════
           § 12 — NEXT PROJECT FOOTER
       ═══════════════════════════════════════════════════ */}
-      <Section className="border-t border-border bg-card/10 py-24 lg:py-32 text-center" spacing="none">
+      <Section
+        className="border-t border-border bg-card/10 py-24 lg:py-32 text-center"
+        spacing="none"
+      >
         <Container>
-          <span className="studio-eyebrow text-muted-foreground mb-6 block">Next Project</span>
-          <Link href={`/work/${nextProject.slug}`} className="group inline-block">
+          <p className="mb-6 text-sm font-medium text-muted-foreground">
+            Next project
+          </p>
+          <Link
+            href={`/work/${nextProject.slug}`}
+            className="group inline-block"
+          >
             <h2
               className="font-sans font-bold text-foreground mb-4 group-hover:text-accent transition-colors duration-500"
               style={{
@@ -422,8 +476,15 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               {nextProject.title}
             </h2>
             <div className="flex items-center justify-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors duration-500">
-              <span className="studio-eyebrow" style={{ color: nextColor }}>{nextProject.label}</span>
-              <span className="inline-block transition-transform duration-500 group-hover:translate-x-2">→</span>
+              <span
+                className="text-sm font-medium"
+                style={{ color: nextColor }}
+              >
+                {nextProject.label}
+              </span>
+              <span className="inline-block transition-transform duration-500 group-hover:translate-x-2">
+                →
+              </span>
             </div>
           </Link>
         </Container>
@@ -431,7 +492,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     </div>
   );
 }
-
 
 /* ══════════════════════════════════════════════════════════
    Sub-components
@@ -441,7 +501,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 function MetaChip({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs font-mono uppercase tracking-wider text-subtle-foreground">{label}</span>
+      <span className="text-xs font-mono uppercase tracking-wider text-subtle-foreground">
+        {label}
+      </span>
       <span className="text-xs text-muted-foreground opacity-30">—</span>
       <span className="text-sm font-medium text-foreground">{value}</span>
     </div>
@@ -473,16 +535,17 @@ function ProcessBlock({
             style={{ background: color }}
           />
           {/* Line */}
-          {index < total - 1 && (
-            <div className="w-px flex-1 bg-border" />
-          )}
+          {index < total - 1 && <div className="w-px flex-1 bg-border" />}
         </div>
       </div>
 
       {/* Phase header */}
       <div className="lg:col-span-3 pb-2">
         <div className="flex items-center gap-3 mb-2">
-          <span className="text-sm font-mono font-bold studio-tabular" style={{ color }}>
+          <span
+            className="text-sm font-mono font-bold studio-tabular"
+            style={{ color }}
+          >
             {num}
           </span>
           <h3 className="text-lg font-bold text-foreground">{phase.phase}</h3>
@@ -529,7 +592,10 @@ function DecisionCard({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 p-8 lg:p-10 rounded-2xl bg-card/20 border border-border/50">
       <div className="lg:col-span-4 flex items-start gap-4">
-        <span className="text-sm font-mono font-bold studio-tabular shrink-0 mt-0.5" style={{ color }}>
+        <span
+          className="text-sm font-mono font-bold studio-tabular shrink-0 mt-0.5"
+          style={{ color }}
+        >
           {num}
         </span>
         <h3 className="text-lg font-bold text-foreground leading-snug">
@@ -546,12 +612,22 @@ function DecisionCard({
 }
 
 /** Result metric card */
-function ResultCard({ metric, color }: { metric: ResultMetric; color: string }) {
+function ResultCard({
+  metric,
+  color,
+}: {
+  metric: ResultMetric;
+  color: string;
+}) {
   return (
     <div className="p-6 lg:p-8 rounded-2xl bg-card/20 border border-border/50">
       <span
         className="block font-sans font-bold mb-2"
-        style={{ fontSize: "clamp(2rem, 3vw + 0.5rem, 3rem)", color, lineHeight: 1.1 }}
+        style={{
+          fontSize: "clamp(2rem, 3vw + 0.5rem, 3rem)",
+          color,
+          lineHeight: 1.1,
+        }}
       >
         {metric.value}
       </span>
@@ -568,12 +644,18 @@ function ResultCard({ metric, color }: { metric: ResultMetric; color: string }) 
 }
 
 /** Testimonial pull-quote */
-function TestimonialBlock({ testimonial, color }: { testimonial: Testimonial; color: string }) {
+function TestimonialBlock({
+  testimonial,
+  color,
+}: {
+  testimonial: Testimonial;
+  color: string;
+}) {
   return (
     <div className="max-w-4xl mx-auto text-center">
-      <span className="studio-eyebrow block mb-8" style={{ color }}>
+      <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">
         Client Testimonial
-      </span>
+      </h2>
 
       {/* Large quote mark */}
       <span
@@ -615,13 +697,19 @@ function DataBlock({
 }) {
   return (
     <div>
-      <span className="studio-eyebrow block mb-5" style={{ color }}>
+      <h3 className="mb-5 text-lg font-bold tracking-tight text-foreground">
         {label}
-      </span>
+      </h3>
       <ul className="space-y-3">
         {items.map((item) => (
-          <li key={item} className="flex items-start gap-3 text-base text-muted-foreground leading-snug">
-            <span className="mt-1.5 w-1 h-1 rounded-full shrink-0" style={{ background: color }} />
+          <li
+            key={item}
+            className="flex items-start gap-3 text-base text-muted-foreground leading-snug"
+          >
+            <span
+              className="mt-1.5 w-1 h-1 rounded-full shrink-0"
+              style={{ background: color }}
+            />
             {item}
           </li>
         ))}

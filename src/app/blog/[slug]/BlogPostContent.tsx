@@ -7,7 +7,6 @@ import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { easeOutExpo, easeOutQuint } from "@/lib/motion";
 import type { BlogPostMeta } from "@/lib/blog-types";
 import { formatDate } from "@/lib/blog-types";
@@ -46,7 +45,13 @@ function ReadingProgress() {
   );
 }
 
-export function BlogPostContent({ post, children }: { post: BlogPostMeta; children: React.ReactNode }) {
+export function BlogPostContent({
+  post,
+  children,
+}: {
+  post: BlogPostMeta;
+  children: React.ReactNode;
+}) {
   const reduce = useReducedMotion();
 
   return (
@@ -65,7 +70,11 @@ export function BlogPostContent({ post, children }: { post: BlogPostMeta; childr
             <Link
               href="/blog"
               className="group inline-flex items-center gap-2 font-mono text-muted-foreground hover:text-accent transition-colors duration-200 mb-8"
-              style={{ fontSize: "0.75rem", letterSpacing: "0.05em", textTransform: "uppercase" }}
+              style={{
+                fontSize: "0.75rem",
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+              }}
             >
               <svg
                 width="14"
@@ -78,7 +87,9 @@ export function BlogPostContent({ post, children }: { post: BlogPostMeta; childr
                 strokeLinejoin="round"
                 aria-hidden="true"
                 className="transition-transform duration-300 group-hover:-translate-x-1"
-                style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+                style={{
+                  transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                }}
               >
                 <path d="M12 7H2M6 11l-4-4 4-4" />
               </svg>
@@ -86,20 +97,15 @@ export function BlogPostContent({ post, children }: { post: BlogPostMeta; childr
             </Link>
           </motion.div>
 
-          {/* ── Article header ── */}
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOutQuint, delay: 0.05 }}
-          >
-            <Eyebrow className="text-accent">{post.category}</Eyebrow>
-          </motion.div>
-
           <motion.h1
-            initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.12 }}
-            className="mt-4 studio-h2 font-sans font-bold text-foreground"
+            initial={
+              reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }
+            }
+            animate={
+              reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
+            }
+            transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
+            className="studio-h2 font-sans font-bold text-foreground"
           >
             {post.title}
           </motion.h1>
@@ -144,12 +150,19 @@ export function BlogPostContent({ post, children }: { post: BlogPostMeta; childr
               </svg>
               {post.readingTime}
             </span>
+            <span className="rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground">
+              {post.category}
+            </span>
           </motion.div>
 
           {/* Lead paragraph — article description as lede */}
           <motion.p
-            initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }}
-            animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={
+              reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }
+            }
+            animate={
+              reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
+            }
             transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.28 }}
             className="mt-6 studio-lede"
           >
@@ -183,8 +196,8 @@ export function BlogPostContent({ post, children }: { post: BlogPostMeta; childr
             className="mt-16 sm:mt-20 pt-8 border-t border-border"
           >
             <p className="font-body text-muted-foreground text-base leading-relaxed max-w-xl">
-              If this resonated, we should talk. We build websites that earn trust
-              from the first visit.
+              If this resonated, we should talk. We build websites that earn
+              trust from the first visit.
             </p>
             <div className="mt-4 flex flex-col sm:flex-row gap-4">
               <Link
@@ -203,7 +216,9 @@ export function BlogPostContent({ post, children }: { post: BlogPostMeta; childr
                   strokeLinejoin="round"
                   aria-hidden="true"
                   className="transition-transform duration-300 group-hover:translate-x-1"
-                  style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+                  style={{
+                    transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                  }}
                 >
                   <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
@@ -223,7 +238,9 @@ export function BlogPostContent({ post, children }: { post: BlogPostMeta; childr
                   strokeLinejoin="round"
                   aria-hidden="true"
                   className="transition-transform duration-300 group-hover:-translate-x-0.5"
-                  style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+                  style={{
+                    transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                  }}
                 >
                   <path d="M12 7H2M6 11l-4-4 4-4" />
                 </svg>

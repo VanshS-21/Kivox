@@ -4,13 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
-import {
-  easeOutExpo,
-  easeOutQuint,
-  fadeUp,
-  viewportOnce,
-} from "@/lib/motion";
+import { easeOutExpo, easeOutQuint, fadeUp, viewportOnce } from "@/lib/motion";
 import type { BlogPostMeta } from "@/lib/blog-types";
 import { formatDate } from "@/lib/blog-types";
 /* ─── Reading time icon — small book glyph ─── */
@@ -53,7 +47,12 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
         <div className="flex items-center gap-3 mb-4">
           <span
             className="inline-flex items-center px-2.5 py-1 rounded-full bg-accent/10 font-mono text-accent"
-            style={{ fontSize: "0.5625rem", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 500 }}
+            style={{
+              fontSize: "0.5625rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              fontWeight: 500,
+            }}
           >
             Latest
           </span>
@@ -89,12 +88,17 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
               strokeLinejoin="round"
               aria-hidden="true"
               className="transition-transform duration-300 group-hover:translate-x-1"
-              style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+              style={{
+                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
             >
               <path d="M2 7h10M8 3l4 4-4 4" />
             </svg>
           </span>
-          <span className="inline-flex items-center gap-1.5 font-mono text-subtle-foreground" style={{ fontSize: "0.6875rem", letterSpacing: "0.05em" }}>
+          <span
+            className="inline-flex items-center gap-1.5 font-mono text-subtle-foreground"
+            style={{ fontSize: "0.6875rem", letterSpacing: "0.05em" }}
+          >
             <ReadingTimeIcon />
             {post.readingTime}
           </span>
@@ -105,13 +109,7 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
 }
 
 /* ─── Post list row ─── */
-function PostListItem({
-  post,
-  index,
-}: {
-  post: BlogPostMeta;
-  index: number;
-}) {
+function PostListItem({ post, index }: { post: BlogPostMeta; index: number }) {
   return (
     <motion.article
       variants={fadeUp}
@@ -125,7 +123,11 @@ function PostListItem({
         {/* Index number — brightens on hover */}
         <span
           className="font-mono text-accent studio-tabular select-none shrink-0 transition-opacity duration-200 group-hover:opacity-100"
-          style={{ fontSize: "0.6875rem", letterSpacing: "0.05em", opacity: 0.35 }}
+          style={{
+            fontSize: "0.6875rem",
+            letterSpacing: "0.05em",
+            opacity: 0.35,
+          }}
         >
           {String(index + 1).padStart(2, "0")}
         </span>
@@ -144,7 +146,11 @@ function PostListItem({
         <div className="flex items-center gap-3 shrink-0">
           <span
             className="inline-flex items-center px-2 py-0.5 rounded bg-accent/5 font-mono text-subtle-foreground hidden sm:inline-flex"
-            style={{ fontSize: "0.5625rem", letterSpacing: "0.08em", textTransform: "uppercase" }}
+            style={{
+              fontSize: "0.5625rem",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
           >
             {post.category}
           </span>
@@ -170,7 +176,9 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
     return (
       <div className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <Container size="default">
-          <Eyebrow>Blog</Eyebrow>
+          <h1 className="studio-h2 font-sans font-bold text-foreground">
+            Thinking, out loud
+          </h1>
           <p className="mt-6 studio-lede">No articles published yet.</p>
         </Container>
       </div>
@@ -180,27 +188,22 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
   return (
     <div className="pt-28 sm:pt-32 pb-16 sm:pb-24">
       <Container size="default">
-        {/* ── Header ── */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          animate={reduce ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: easeOutQuint }}
-        >
-          <Eyebrow>Journal</Eyebrow>
-        </motion.div>
-
         <motion.h1
           initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.08 }}
-          className="mt-3 studio-h2 font-sans font-bold text-foreground"
+          animate={
+            reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
+          }
+          transition={{ duration: 0.8, ease: easeOutQuint }}
+          className="studio-h2 font-sans font-bold text-foreground"
         >
           Thinking, out loud
         </motion.h1>
 
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }}
-          animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+          animate={
+            reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
+          }
           transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.18 }}
           className="mt-4 studio-lede max-w-2xl"
         >
@@ -241,7 +244,9 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
               transition={{ duration: 0.5, ease: easeOutExpo }}
               className="mb-4 mt-10 flex items-baseline gap-3"
             >
-              <span className="studio-eyebrow text-accent">More articles</span>
+              <h2 className="font-sans text-xl font-semibold tracking-tight text-foreground">
+                More articles
+              </h2>
               <span
                 className="font-mono text-subtle-foreground select-none"
                 style={{ fontSize: "0.5625rem", letterSpacing: "0.05em" }}
@@ -265,9 +270,14 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
         >
           <span
             className="font-mono text-subtle-foreground"
-            style={{ fontSize: "0.625rem", letterSpacing: "0.08em", textTransform: "uppercase" }}
+            style={{
+              fontSize: "0.625rem",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
           >
-            {posts.length} {posts.length === 1 ? "article" : "articles"} published
+            {posts.length} {posts.length === 1 ? "article" : "articles"}{" "}
+            published
           </span>
         </motion.div>
       </Container>

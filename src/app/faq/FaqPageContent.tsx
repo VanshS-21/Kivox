@@ -4,7 +4,6 @@ import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { easeOutExpo, easeOutQuint } from "@/lib/motion";
 import { faq } from "@/content/pages/faq";
@@ -16,26 +15,22 @@ export function FaqPageContent() {
     <div className="pt-28 sm:pt-32 pb-16 sm:pb-24">
       <Container size="narrow">
         {/* ── Header: staggered entrance with blur-to-sharp ── */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          animate={reduce ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: easeOutQuint }}
-        >
-          <Eyebrow>Frequently Asked</Eyebrow>
-        </motion.div>
-
         <motion.h1
           initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.08 }}
-          className="mt-3 studio-h2 font-sans font-bold text-foreground"
+          animate={
+            reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
+          }
+          transition={{ duration: 0.8, ease: easeOutQuint }}
+          className="studio-h2 font-sans font-bold text-foreground"
         >
           {faq.title}
         </motion.h1>
 
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }}
-          animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+          animate={
+            reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
+          }
           transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.18 }}
           className="mt-4 studio-lede"
         >
@@ -59,10 +54,14 @@ export function FaqPageContent() {
         >
           <span
             className="font-mono text-subtle-foreground"
-            style={{ fontSize: "0.625rem", letterSpacing: "0.08em", textTransform: "uppercase" }}
+            style={{
+              fontSize: "0.625rem",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
           >
-            {faq.categories.reduce((sum, c) => sum + c.items.length, 0)} questions across{" "}
-            {faq.categories.length} topics
+            {faq.categories.reduce((sum, c) => sum + c.items.length, 0)}{" "}
+            questions across {faq.categories.length} topics
           </span>
         </motion.div>
 
@@ -80,7 +79,7 @@ export function FaqPageContent() {
           className="mt-16 sm:mt-20 pt-8 border-t border-border"
         >
           <p className="font-body text-muted-foreground text-base leading-relaxed">
-            Didn't find what you're looking for?
+            Didn&apos;t find what you&apos;re looking for?
           </p>
           <Link
             href="/contact"
@@ -98,7 +97,9 @@ export function FaqPageContent() {
               strokeLinejoin="round"
               aria-hidden="true"
               className="transition-transform duration-300 group-hover:translate-x-1"
-              style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+              style={{
+                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
             >
               <path d="M3 8h10M9 4l4 4-4 4" />
             </svg>

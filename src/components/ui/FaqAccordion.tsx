@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
 import { easeOutExpo, viewportOnce, fadeUp } from "@/lib/motion";
@@ -52,7 +52,9 @@ function AccordionItem({
             fontSize: "0.6875rem",
             letterSpacing: "0.05em",
             opacity: isOpen ? 1 : 0.5,
-            transition: reduce ? "none" : "opacity 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+            transition: reduce
+              ? "none"
+              : "opacity 300ms cubic-bezier(0.16, 1, 0.3, 1)",
           }}
           aria-hidden="true"
         >
@@ -64,7 +66,9 @@ function AccordionItem({
           className="flex-1 font-sans font-semibold text-foreground text-base sm:text-lg leading-snug"
           style={{
             color: isOpen ? "var(--accent)" : undefined,
-            transition: reduce ? "none" : "color 250ms cubic-bezier(0.16, 1, 0.3, 1)",
+            transition: reduce
+              ? "none"
+              : "color 250ms cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         >
           {item.question}
@@ -160,15 +164,15 @@ function CategoryGroup({
         },
       }}
     >
-      {/* Category eyebrow with question count */}
+      {/* Category heading with question count */}
       <motion.div
         variants={fadeUp}
         transition={{ duration: 0.5, ease: easeOutExpo }}
         className="flex items-baseline gap-3 mb-4 mt-2"
       >
-        <span className="studio-eyebrow text-accent">
+        <h2 className="font-sans text-xl font-semibold tracking-tight text-foreground">
           {category.label}
-        </span>
+        </h2>
         <span
           className="font-mono text-subtle-foreground select-none"
           style={{ fontSize: "0.625rem", letterSpacing: "0.05em" }}
@@ -196,18 +200,20 @@ function CategoryGroup({
 
 /* ─── Main Export ─── */
 export function FaqAccordion({ categories }: { categories: FaqCategory[] }) {
-  let offset = 0;
+  const categoryOffsets = categories.map((_, index) =>
+    categories
+      .slice(0, index)
+      .reduce((sum, category) => sum + category.items.length, 0),
+  );
 
   return (
     <div className="space-y-14 sm:space-y-18">
-      {categories.map((category) => {
-        const currentOffset = offset;
-        offset += category.items.length;
+      {categories.map((category, index) => {
         return (
           <CategoryGroup
             key={category.label}
             category={category}
-            globalOffset={currentOffset}
+            globalOffset={categoryOffsets[index]}
           />
         );
       })}

@@ -7,12 +7,20 @@ import { HomeProcess } from "@/components/sections/HomeProcess";
 import { HomeProofBand } from "@/components/sections/HomeProofBand";
 import { HomeServices } from "@/components/sections/HomeServices";
 import { HomeTeam } from "@/components/sections/HomeTeam";
+import { HomeWorkPreview } from "@/components/sections/HomeWorkPreview";
 
 export default function Home() {
   return (
     <>
       <HomeHero />
-      <HomeProofBand />
+      <div id="live-examples" className="scroll-mt-24">
+        <div className="xl:hidden">
+          <HomeProofBand />
+        </div>
+        <div className="hidden xl:block">
+          <HomeWorkPreview />
+        </div>
+      </div>
       <HomeMarquee />
       <div className="cv-auto">
         <HomeServices />

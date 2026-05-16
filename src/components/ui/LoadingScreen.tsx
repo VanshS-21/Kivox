@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, animate, useReducedMotion } from "motion/react";
+import {
+  motion,
+  AnimatePresence,
+  animate,
+  useReducedMotion,
+} from "motion/react";
 import { useLoadingContext } from "@/lib/context/LoadingContext";
 import { easeOutExpo, easeOutQuint } from "@/lib/motion";
 
@@ -38,7 +43,7 @@ export function LoadingScreen() {
 
     // Sequence: Wait a beat, count up to 100 over ~1.2s, wait a beat, then hide
     let controls: ReturnType<typeof animate> | undefined;
-    
+
     const sequence = async () => {
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -47,19 +52,19 @@ export function LoadingScreen() {
         ease: easeOutQuint, // Fast start, slow finish
         onUpdate: (latest) => {
           setProgress(Math.floor(latest));
-        }
+        },
       });
 
       await controls;
-      
+
       // Wait a fraction of a second at 100% before lifting the curtain
       await new Promise((resolve) => setTimeout(resolve, 300));
-      
+
       finish();
     };
 
     sequence();
-    
+
     return () => {
       window.clearTimeout(fallbackTimer);
       if (controls) controls.stop();
@@ -93,14 +98,6 @@ export function LoadingScreen() {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
-            {/* Eyebrow Label */}
-            <span
-              className="text-[0.6875rem] font-medium tracking-[0.18em] uppercase mb-8"
-              style={{ color: "var(--hero-fg-muted)", fontFamily: "var(--font-mono)" }}
-            >
-              [ Kivox Studio ]
-            </span>
-
             {/* Percentage Counter */}
             <motion.span
               className="studio-tabular block mb-6"
@@ -112,11 +109,17 @@ export function LoadingScreen() {
                 lineHeight: 1,
               }}
             >
-              {String(progress).padStart(2, '0')}%
+              {String(progress).padStart(2, "0")}%
             </motion.span>
 
             {/* Expanding Amber Bar */}
-            <div className="w-[200px] h-px relative overflow-hidden" style={{ background: "color-mix(in oklch, var(--accent) 20%, transparent)" }}>
+            <div
+              className="w-[200px] h-px relative overflow-hidden"
+              style={{
+                background:
+                  "color-mix(in oklch, var(--accent) 20%, transparent)",
+              }}
+            >
               <motion.div
                 className="absolute inset-y-0 left-0"
                 style={{

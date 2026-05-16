@@ -49,6 +49,29 @@
   --accent-rose: oklch(0.55 0.12 35);
   --hero-glow-opacity: 0.16;
   --work-bg-overlay: 0.78;
+  --work-stage-bg: var(--bg-primary);
+  --work-primary-cta-fg: oklch(0.98 0.01 85);
+  --work-secondary-cta-bg: oklch(0.085 0.012 65 / 0.78);
+  --work-secondary-cta-border: oklch(0.95 0.01 80 / 0.16);
+  --work-secondary-cta-shadow: 0 18px 48px -34px oklch(0 0 0 / 0.74);
+  --proof-bg: var(--bg-primary);
+  --proof-surface: var(--bg-elevated);
+  --proof-linen: var(--bg-surface-alt);
+  --proof-ink: var(--fg-primary);
+  --proof-muted: var(--fg-muted);
+  --proof-subtle: var(--fg-subtle);
+  --proof-border: var(--border-strong);
+  --proof-border-strong: var(--border);
+  --proof-accent: var(--accent);
+  --proof-primary-cta-fg: oklch(0.98 0.01 85);
+  --proof-secondary-cta-bg: oklch(0.085 0.012 65 / 0.78);
+  --proof-secondary-cta-border: oklch(0.95 0.01 80 / 0.16);
+  --proof-secondary-cta-fg: var(--fg-primary);
+  --proof-secondary-cta-shadow: 0 18px 48px -34px oklch(0 0 0 / 0.74);
+  --proof-image-shade: oklch(0.05 0.005 65);
+  --proof-shadow: var(--shadow-rest);
+  --proof-stage-bg:
+    linear-gradient(180deg, var(--proof-bg) 0%, var(--proof-linen) 48%, var(--proof-bg) 100%);
 
   /* Semantic feedback */
   --error: oklch(0.68 0.16 25);
@@ -59,6 +82,8 @@
   --hero-fg: oklch(0.95 0.012 72);
   --hero-fg-muted: oklch(0.58 0.008 65);
   --hero-fg-subtle: oklch(0.45 0.008 65);
+  --hero-accent: oklch(0.72 0.18 65);
+  --hero-accent-ink: oklch(0.99 0.008 80);
   --hero-noise-opacity: 0.35;
   --hero-bg-scroll: oklch(0.05 0.008 65 / 0.92);
 
@@ -268,7 +293,8 @@
   /* Hero tokens: INTENTIONALLY OMITTED.
      Hero section is dark-locked — uses :root dark defaults regardless of theme.
      DO NOT add --hero-bg, --hero-fg, --hero-fg-muted, --hero-fg-subtle,
-     --hero-noise-opacity here. They inherit from :root (dark). */
+     --hero-accent, --hero-accent-ink, --hero-noise-opacity here.
+     They inherit from :root (dark). */
 
   --shadow-hover-strong:
     0 2px 6px oklch(0.60 0.22 55 / 0.10),
@@ -294,25 +320,109 @@
 :root[data-theme="dark"] .cinematic-img-dark { display: block; }
 :root[data-theme="dark"] .cinematic-img-light { display: none; }
 
-/* Hide the staggered media cluster when the website theme is explicitly dark */
-:root[data-theme="dark"] .showcase-cluster { display: none !important; }
+:root[data-theme="light"] .work-showcase {
+  --work-bg-overlay: 1;
+  --work-stage-bg:
+    radial-gradient(ellipse at 72% 45%, oklch(0.94 0.018 42 / 0.55), transparent 54%),
+    linear-gradient(135deg, oklch(0.985 0.006 72), oklch(0.952 0.011 58));
+  --work-primary-cta-fg: oklch(0.12 0.012 65);
+  --work-secondary-cta-bg: oklch(0.985 0.006 72 / 0.82);
+  --work-secondary-cta-border: oklch(0.34 0.018 65 / 0.16);
+  --work-secondary-cta-shadow: 0 16px 40px -30px oklch(0.24 0.025 65 / 0.35);
+  background:
+    radial-gradient(ellipse at 74% 46%, oklch(0.94 0.018 42 / 0.55), transparent 54%),
+    linear-gradient(135deg, oklch(0.985 0.006 72), oklch(0.952 0.011 58));
+}
 
-/* Center the text content in dark mode when the cluster is hidden */
-:root[data-theme="dark"] .work-preview-content {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  text-align: center !important;
-  align-items: center !important;
+:root[data-theme="light"] .proof-showcase {
+  --work-primary-cta-fg: oklch(0.12 0.012 65);
+  --work-secondary-cta-bg: oklch(0.985 0.006 72 / 0.82);
+  --work-secondary-cta-border: oklch(0.34 0.018 65 / 0.16);
+  --work-secondary-cta-shadow: 0 16px 40px -30px oklch(0.24 0.025 65 / 0.35);
+  --proof-bg: oklch(0.985 0.006 72);
+  --proof-surface: oklch(0.99 0.005 72);
+  --proof-linen: oklch(0.952 0.012 58);
+  --proof-ink: oklch(0.13 0.012 65);
+  --proof-muted: oklch(0.42 0.01 65);
+  --proof-subtle: oklch(0.58 0.008 65);
+  --proof-border: oklch(0.28 0.018 65 / 0.13);
+  --proof-border-strong: oklch(0.28 0.018 65 / 0.20);
+  --proof-accent: var(--accent);
+  --proof-primary-cta-fg: oklch(0.12 0.012 65);
+  --proof-secondary-cta-bg: oklch(0.985 0.006 72 / 0.82);
+  --proof-secondary-cta-border: oklch(0.34 0.018 65 / 0.16);
+  --proof-secondary-cta-fg: oklch(0.16 0.012 65);
+  --proof-secondary-cta-shadow: 0 16px 40px -30px oklch(0.24 0.025 65 / 0.35);
+  --proof-image-shade: oklch(0.18 0.018 65);
+  --proof-shadow:
+    0 1px 2px oklch(0.25 0.02 65 / 0.08),
+    0 18px 58px -42px oklch(0.30 0.03 65 / 0.24);
+  --proof-stage-bg:
+    radial-gradient(ellipse at 72% 24%, oklch(0.94 0.018 42 / 0.50), transparent 54%),
+    linear-gradient(180deg, oklch(0.985 0.006 72) 0%, oklch(0.952 0.012 58) 54%, oklch(0.982 0.006 72) 100%);
+  background: var(--proof-stage-bg);
 }
-:root[data-theme="dark"] .work-preview-flex-center {
-  justify-content: center !important;
+
+:root[data-theme="dark"] .proof-showcase {
+  --work-primary-cta-fg: oklch(0.98 0.01 85);
+  --work-secondary-cta-bg: oklch(0.085 0.012 65 / 0.78);
+  --work-secondary-cta-border: oklch(0.95 0.01 80 / 0.16);
+  --work-secondary-cta-shadow: 0 18px 48px -34px oklch(0 0 0 / 0.74);
+  --proof-bg: var(--bg-primary);
+  --proof-surface: oklch(0.095 0.01 65);
+  --proof-linen: oklch(0.065 0.008 65);
+  --proof-ink: var(--fg-primary);
+  --proof-muted: color-mix(in oklch, var(--fg-primary) 66%, transparent);
+  --proof-subtle: var(--fg-subtle);
+  --proof-border: oklch(0.92 0.018 80 / 0.11);
+  --proof-border-strong: oklch(0.92 0.018 80 / 0.16);
+  --proof-accent: var(--accent);
+  --proof-primary-cta-fg: oklch(0.98 0.01 85);
+  --proof-secondary-cta-bg: oklch(0.085 0.012 65 / 0.78);
+  --proof-secondary-cta-border: oklch(0.95 0.01 80 / 0.16);
+  --proof-secondary-cta-fg: var(--fg-primary);
+  --proof-secondary-cta-shadow: 0 18px 48px -34px oklch(0 0 0 / 0.74);
+  --proof-image-shade: oklch(0.045 0.006 65);
+  --proof-shadow:
+    0 1px 0 oklch(1 0 0 / 0.06),
+    0 24px 72px -46px oklch(0 0 0 / 0.88);
+  --proof-stage-bg:
+    radial-gradient(ellipse at 68% 22%, oklch(0.22 0.07 58 / 0.26), transparent 52%),
+    linear-gradient(180deg, oklch(0.05 0.006 65) 0%, oklch(0.075 0.012 65) 54%, oklch(0.05 0.006 65) 100%);
+  background: var(--proof-stage-bg);
 }
-:root[data-theme="dark"] .work-preview-divider {
-  display: none !important;
+
+:root[data-theme="dark"] .proof-media {
+  filter: saturate(0.88) contrast(0.96) brightness(0.9);
 }
-:root[data-theme="dark"] .work-preview-tags-row {
-  flex-direction: column !important;
-  align-items: center !important;
+
+:root[data-theme="dark"] .work-showcase {
+  --work-bg-overlay: 0.84;
+  --work-stage-bg: var(--bg-primary);
+  --work-primary-cta-fg: oklch(0.98 0.01 85);
+  --work-secondary-cta-bg: oklch(0.085 0.012 65 / 0.78);
+  --work-secondary-cta-border: oklch(0.95 0.01 80 / 0.16);
+  --work-secondary-cta-shadow: 0 18px 48px -34px oklch(0 0 0 / 0.74);
+}
+
+:root[data-theme="dark"] .showcase-cluster {
+  opacity: 0.88;
+  filter: saturate(0.86) contrast(0.94) brightness(0.88);
+}
+
+:root[data-theme="dark"] .showcase-cluster-frame {
+  filter: drop-shadow(0 40px 90px oklch(0 0 0 / 0.52));
+}
+
+:root[data-theme="dark"] .showcase-media-card {
+  border-color: oklch(0.92 0.018 80 / 0.13);
+  box-shadow:
+    0 24px 72px -42px oklch(0 0 0 / 0.92),
+    inset 0 1px 0 oklch(1 0 0 / 0.08);
+}
+
+:root[data-theme="dark"] .work-preview-description {
+  color: color-mix(in oklch, var(--fg-primary) 72%, transparent);
 }
 
 :root[data-theme="dark"] {
@@ -362,6 +472,8 @@
   --hero-fg: oklch(0.95 0.012 72);
   --hero-fg-muted: oklch(0.58 0.008 65);
   --hero-fg-subtle: oklch(0.45 0.008 65);
+  --hero-accent: oklch(0.72 0.18 65);
+  --hero-accent-ink: oklch(0.99 0.008 80);
   --hero-noise-opacity: 0.35;
   --hero-bg-scroll: oklch(0.05 0.008 65 / 0.92);
   --work-bg-overlay: 0.78;
@@ -727,6 +839,19 @@ p { text-wrap: pretty; }
 /* Progressive enhancement: Chrome/Edge/Safari only.                           */
 /* Firefox + reduced-motion: static (no degradation, just no effect).          */
 /* -------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/* Marquee motion                                                              */
+/* -------------------------------------------------------------------------- */
+
+@keyframes marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(-1 * var(--marquee-distance)), 0, 0);
+  }
+}
 
 /* Register custom properties for animation */
 @property --section-reveal {

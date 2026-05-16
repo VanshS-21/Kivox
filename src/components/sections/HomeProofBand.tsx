@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 
 import { Container } from "@/components/ui/Container";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { work } from "@/content/pages/work";
 
 const projectColors: Record<string, string> = {
@@ -13,39 +14,29 @@ const projectColors: Record<string, string> = {
 
 const outcomes: Record<string, string> = {
   cafe: "Menu, hours, and directions are visible fast enough to turn nearby interest into a visit.",
-  hotel: "Room confidence, policies, and direct-booking trust are brought forward before a guest leaves for an OTA.",
-  school: "Admissions steps and parent questions are structured so families know what to do next.",
+  hotel:
+    "Room confidence, policies, and direct-booking trust are brought forward before a guest leaves for an OTA.",
+  school:
+    "Admissions steps and parent questions are structured so families know what to do next.",
 };
 
-const sectionStyle = {
-  "--proof-bg": "oklch(0.97 0.003 250)",
-  "--proof-surface": "oklch(0.99 0.002 250)",
-  "--proof-linen": "oklch(0.955 0.008 70)",
-  "--proof-ink": "oklch(0.13 0.005 250)",
-  "--proof-muted": "oklch(0.45 0.005 250)",
-  "--proof-subtle": "oklch(0.62 0.004 250)",
-  "--proof-border": "oklch(0.13 0.005 250 / 0.12)",
-  "--proof-border-strong": "oklch(0.13 0.005 250 / 0.2)",
-  "--proof-accent": "oklch(0.60 0.22 55)",
-  "--proof-accent-ink": "oklch(0.99 0.002 250)",
-} as CSSProperties;
+type ProjectAccentStyle = CSSProperties & {
+  "--project-accent": string;
+};
 
 export function HomeProofBand() {
   const proofItems = work.featured;
 
   return (
     <section
-      id="live-examples"
-      aria-labelledby="live-examples-title"
-      className="relative scroll-mt-24 overflow-hidden py-16 sm:py-20 lg:py-28"
-      style={sectionStyle}
+      aria-labelledby="home-proof-band-title"
+      className="proof-showcase relative overflow-hidden py-14 sm:py-16 lg:py-20"
     >
       <div
         aria-hidden="true"
         className="absolute inset-0"
         style={{
-          background:
-            "linear-gradient(180deg, var(--proof-bg) 0%, var(--proof-linen) 48%, var(--proof-bg) 100%)",
+          background: "var(--proof-stage-bg)",
         }}
       />
       <div
@@ -55,45 +46,40 @@ export function HomeProofBand() {
       />
 
       <Container className="relative z-10">
-        <div className="grid gap-8 lg:grid-cols-[0.72fr_1fr] lg:gap-14">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <p className="studio-eyebrow mb-4" style={{ color: "var(--proof-accent)" }}>
-              [ Live Examples ]
-            </p>
+        <div className="space-y-8 sm:space-y-10">
+          <div>
             <h2
-              id="live-examples-title"
-              className="max-w-2xl font-sans text-[2.35rem] font-bold leading-[1.03] sm:text-5xl lg:text-6xl"
+              id="home-proof-band-title"
+              className="max-w-5xl font-sans text-[2.45rem] font-bold leading-[1.03] sm:text-5xl lg:text-6xl xl:text-7xl"
               style={{ color: "var(--proof-ink)", letterSpacing: "-0.025em" }}
             >
               See what Kivox can actually build.
             </h2>
-            <p
-              className="mt-5 max-w-xl text-base leading-7 sm:text-lg sm:leading-8"
-              style={{ color: "var(--proof-muted)" }}
-            >
-              Three launchable demonstrations, each built around a real business
-              decision path. Screenshot first, outcome clear, action obvious.
-            </p>
           </div>
 
           <div className="space-y-5 sm:space-y-6">
             {proofItems.map((project, index) => {
-              const accent = projectColors[project.slug] ?? "var(--proof-accent)";
-              const liveIsExternal = Boolean(project.liveUrl && !project.liveUrl.startsWith("/"));
+              const accent =
+                projectColors[project.slug] ?? "var(--proof-accent)";
+              const liveIsExternal = Boolean(
+                project.liveUrl && !project.liveUrl.startsWith("/"),
+              );
               const liveHref = project.liveUrl ?? `/work/${project.slug}`;
 
               return (
                 <article
-                  className="group grid overflow-hidden border bg-[var(--proof-surface)] shadow-[0_18px_60px_oklch(0.13_0.005_250_/_0.08)] transition-transform duration-300 ease-out hover:-translate-y-1 sm:grid-cols-[minmax(230px,0.92fr)_1fr]"
+                  className="group grid overflow-hidden border bg-[var(--proof-surface)] transition-transform duration-300 ease-out hover:-translate-y-1 sm:grid-cols-[minmax(280px,0.9fr)_1fr]"
                   key={project.slug}
                   style={{
+                    "--project-accent": accent,
                     borderColor: "var(--proof-border)",
                     borderRadius: "var(--radius-md)",
-                  }}
+                    boxShadow: "var(--proof-shadow)",
+                  } as ProjectAccentStyle}
                 >
                   <Link
                     aria-label={`View live site: ${project.title}`}
-                    className="relative block min-h-[220px] overflow-hidden bg-[var(--proof-linen)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--proof-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--proof-bg)] sm:min-h-full"
+                    className="proof-media relative block min-h-[220px] overflow-hidden bg-[var(--proof-linen)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--project-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--proof-bg)] sm:min-h-full"
                     href={liveHref}
                     rel={liveIsExternal ? "noopener noreferrer" : undefined}
                     target={liveIsExternal ? "_blank" : undefined}
@@ -103,26 +89,16 @@ export function HomeProofBand() {
                       className="object-cover object-left-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                       fill
                       priority={index === 0}
-                      sizes="(max-width: 639px) 100vw, (max-width: 1023px) 42vw, 34vw"
+                      sizes="(max-width: 639px) 100vw, (max-width: 1279px) 44vw, 34vw"
                       src={project.images?.[0] ?? project.image}
                     />
                     <div
                       aria-hidden="true"
                       className="absolute inset-0 opacity-25"
                       style={{
-                        background: `linear-gradient(180deg, transparent 45%, var(--proof-ink) 135%), radial-gradient(circle at 22% 16%, ${accent} 0%, transparent 46%)`,
+                        background: `linear-gradient(180deg, transparent 45%, var(--proof-image-shade) 135%), radial-gradient(circle at 22% 16%, ${accent} 0%, transparent 46%)`,
                       }}
                     />
-                    <span
-                      className="absolute left-4 top-4 rounded-full px-3 py-1.5 text-[0.66rem] font-mono font-semibold uppercase tracking-[0.12em]"
-                      style={{
-                        background: "color-mix(in oklch, var(--proof-surface) 86%, transparent)",
-                        color: "var(--proof-ink)",
-                        border: "1px solid var(--proof-border)",
-                      }}
-                    >
-                      Live example
-                    </span>
                   </Link>
 
                   <div className="flex min-h-[300px] flex-col justify-between p-5 sm:p-6 lg:p-8">
@@ -135,11 +111,17 @@ export function HomeProofBand() {
                       </p>
                       <h3
                         className="font-sans text-3xl font-bold leading-tight sm:text-[2.25rem]"
-                        style={{ color: "var(--proof-ink)", letterSpacing: "-0.018em" }}
+                        style={{
+                          color: "var(--proof-ink)",
+                          letterSpacing: "-0.018em",
+                        }}
                       >
                         {project.title}
                       </h3>
-                      <p className="mt-4 text-base leading-7" style={{ color: "var(--proof-muted)" }}>
+                      <p
+                        className="mt-4 text-base leading-7"
+                        style={{ color: "var(--proof-muted)" }}
+                      >
                         {outcomes[project.slug] ?? project.demonstrates}
                       </p>
                     </div>
@@ -153,7 +135,8 @@ export function HomeProofBand() {
                             style={{
                               borderColor: "var(--proof-border)",
                               color: "var(--proof-muted)",
-                              background: "color-mix(in oklch, var(--proof-linen) 58%, transparent)",
+                              background:
+                                "color-mix(in oklch, var(--proof-linen) 58%, transparent)",
                             }}
                           >
                             {service}
@@ -162,28 +145,44 @@ export function HomeProofBand() {
                       </div>
 
                       <div className="flex flex-col gap-3 min-[420px]:flex-row">
-                        <Link
-                          className="inline-flex min-h-12 items-center justify-center rounded-full px-5 text-sm font-semibold transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--proof-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--proof-surface)]"
-                          href={liveHref}
-                          rel={liveIsExternal ? "noopener noreferrer" : undefined}
-                          style={{ backgroundColor: "var(--proof-accent)", color: "var(--proof-accent-ink)" }}
-                          target={liveIsExternal ? "_blank" : undefined}
-                        >
-                          View live site
-                          <span className="ml-2" aria-hidden="true">
-                            -&gt;
-                          </span>
-                        </Link>
-                        <Link
-                          className="inline-flex min-h-12 items-center justify-center rounded-full border px-5 text-sm font-semibold transition-colors duration-200 hover:bg-[var(--proof-ink)] hover:text-[var(--proof-surface)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--proof-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--proof-surface)]"
-                          href={`/work/${project.slug}`}
-                          style={{
-                            borderColor: "var(--proof-border-strong)",
-                            color: "var(--proof-ink)",
-                          }}
-                        >
-                          Case study
-                        </Link>
+                        <Magnetic strength={0.2}>
+                          <Link
+                            aria-label={`View live website: ${project.title}`}
+                            className="group inline-flex items-center gap-3 rounded-full px-5 py-2.5 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                            href={liveHref}
+                            rel={
+                              liveIsExternal ? "noopener noreferrer" : undefined
+                            }
+                            style={{
+                              backgroundColor: accent,
+                            }}
+                            target={liveIsExternal ? "_blank" : undefined}
+                          >
+                            View Live Website
+                            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                              →
+                            </span>
+                          </Link>
+                        </Magnetic>
+                        <Magnetic strength={0.2}>
+                          <Link
+                            aria-label={`View Case Study: ${project.title}`}
+                            className="group inline-flex items-center gap-4 rounded-full text-sm font-semibold opacity-90 transition-opacity duration-300 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                            href={`/work/${project.slug}`}
+                            style={{
+                              color: accent,
+                            }}
+                          >
+                            <span
+                              className="block rounded-full border bg-[var(--work-secondary-cta-bg)] px-5 py-2.5 shadow-[var(--work-secondary-cta-shadow)] backdrop-blur-md transition-colors duration-300"
+                              style={{
+                                borderColor: `color-mix(in oklch, ${accent} 28%, var(--work-secondary-cta-border))`,
+                              }}
+                            >
+                              Case Study →
+                            </span>
+                          </Link>
+                        </Magnetic>
                       </div>
                     </div>
                   </div>

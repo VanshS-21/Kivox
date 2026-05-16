@@ -29,7 +29,7 @@ export function ShowcaseFrame() {
         </Link>
       </div>
       <div className="flex items-center gap-4">
-        <span className="opacity-50 tracking-widest uppercase text-xs font-semibold">Kivox Studio Demo</span>
+        <span className="opacity-50 tracking-widest uppercase text-xs font-semibold">Kivox Demo</span>
       </div>
     </div>
   );
