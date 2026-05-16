@@ -170,7 +170,7 @@ export function HomeContact() {
 
   return (
     <div ref={sectionRef}>
-      <Section id="contact" className="relative pt-[60px] md:pt-[80px] lg:pt-[120px] pb-[40px] md:pb-[60px] lg:pb-[100px] overflow-hidden bg-background">
+      <Section id="contact" className="relative pt-[60px] md:pt-[80px] lg:pt-[100px] pb-[40px] md:pb-[60px] lg:pb-[80px] overflow-hidden bg-background border-t border-border/40">
         {/* Ambient amber glow — static radial, no looping animation */}
         <div
           className="absolute top-[15%] left-[15%] w-[180px] md:w-[280px] lg:w-[520px] h-[180px] md:h-[280px] lg:h-[520px] rounded-full blur-[60px] md:blur-[80px] lg:blur-[150px] pointer-events-none"
@@ -198,7 +198,7 @@ export function HomeContact() {
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                 viewport={viewportOnce}
                 transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-foreground font-sans mb-6"
+                className="text-4xl sm:text-5xl lg:text-[56px] font-bold leading-[1.1] tracking-tight text-foreground font-sans mb-6"
               >
                 Ready to build
                 <br />

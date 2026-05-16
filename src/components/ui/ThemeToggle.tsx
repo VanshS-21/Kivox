@@ -42,7 +42,9 @@ export function ThemeToggle({ className = "", style }: { className?: string; sty
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(getStoredTheme());
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -66,11 +68,7 @@ export function ThemeToggle({ className = "", style }: { className?: string; sty
     applyTheme(next);
   }, [theme]);
 
-  // Determine which icon to show based on preference (not DOM)
-  const resolvedTheme: "dark" | "light" = (() => {
-    if (theme === "dark" || theme === "light") return theme;
-    return getSystemTheme();
-  })();
+  // (resolvedTheme removed as it was unused)
 
   if (!mounted) {
     // SSR placeholder — same size, no icon

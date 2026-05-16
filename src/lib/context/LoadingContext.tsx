@@ -17,7 +17,9 @@ export function LoadingProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const seen = sessionStorage.getItem("kivox_loaded");
     if (seen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasSeenLoader(true);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setReady(true);
     }
     // If not seen, it stays false and the LoadingScreen will handle the rest

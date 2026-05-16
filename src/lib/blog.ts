@@ -41,7 +41,7 @@ function parsePost(filename: string): BlogPost {
 export function getAllPosts(): BlogPostMeta[] {
   return getBlogFiles()
     .map(parsePost)
-    .map(({ content, ...meta }) => meta)
+    .map(({ content: _content, ...meta }) => meta)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 

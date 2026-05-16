@@ -149,6 +149,7 @@ function CategoryGroup({
 
   useEffect(() => {
     if (!isInView) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setOpenIndex(null);
     }
   }, [isInView]);
