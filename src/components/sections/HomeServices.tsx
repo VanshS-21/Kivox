@@ -42,6 +42,7 @@ export function HomeServices() {
     >
       <motion.div
         ref={ref}
+        className="relative"
         style={{
           scale: reduce ? 1 : sectionScale,
           rotateX: reduce ? 0 : sectionRotateX,

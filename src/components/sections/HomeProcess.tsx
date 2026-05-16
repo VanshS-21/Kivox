@@ -12,10 +12,6 @@ import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/moti
 export function HomeProcess() {
   const reduce = useReducedMotion();
   const [activeStep, setActiveStep] = useState<number | null>(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { margin: "-10% 0px -10% 0px" });
-
-  // Removed isInView effect to ensure the first step is always visible by default.
 
   const steps = home.process;
 
@@ -24,7 +20,7 @@ export function HomeProcess() {
 
   return (
     <Section id="process" spacing="default" className="relative overflow-hidden bg-surface-alt">
-      <Container className="relative z-10" ref={containerRef}>
+      <Container className="relative z-10">
 
         {/* Heading + intro */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 mb-10 md:mb-16 lg:mb-20">
@@ -64,11 +60,13 @@ export function HomeProcess() {
                 >
                   {/* Animated Active/Past line */}
                   <motion.div 
-                    className="absolute top-0 left-0 h-[2px] origin-left"
+                    className={cn(
+                      "absolute top-0 left-0 h-[2px] origin-left transition-colors duration-300",
+                      isActive ? "bg-accent" : "bg-foreground"
+                    )}
                     initial={false}
                     animate={{ 
-                      scaleX: isActive || isPast ? 1 : 0, 
-                      backgroundColor: isActive ? "var(--accent)" : "var(--foreground)" 
+                      scaleX: isActive || isPast ? 1 : 0 
                     }}
                     style={{ 
                       width: "100%",
