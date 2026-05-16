@@ -189,7 +189,7 @@ export function Navigation() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className={`text-sm font-medium tracking-tight transition-colors duration-200 ${isActive ? "text-accent" : "text-muted-foreground hover:text-foreground"}`}
+                    className={`text-sm font-semibold tracking-tight transition-colors duration-200 ${isActive ? "text-accent" : "text-muted-foreground hover:text-foreground"}`}
                   >
                     {item.label}
                   </Link>
