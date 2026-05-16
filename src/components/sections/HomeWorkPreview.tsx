@@ -104,8 +104,8 @@ export function HomeWorkPreview() {
 
   if (isCompact) {
     return (
-      <section ref={containerRef} className="relative overflow-hidden bg-background py-[var(--space-section)] work-showcase">
-        <div className="mx-auto mb-7 flex max-w-6xl justify-end px-5 sm:px-6 md:px-10 lg:px-12">
+      <section ref={containerRef} className="relative overflow-hidden bg-background pt-[60px] md:pt-[80px] lg:pt-[100px] pb-[40px] md:pb-[60px] lg:pb-[80px] work-showcase">
+        <div className="mx-auto mb-6 flex max-w-6xl justify-end px-5 sm:px-6 md:px-10 lg:px-12">
           <div className="hidden shrink-0 font-mono text-sm text-subtle-foreground md:block">
             {String(activeIndex + 1).padStart(2, "0")} /{" "}
             {String(totalPanels).padStart(2, "0")}
@@ -127,7 +127,7 @@ export function HomeWorkPreview() {
                   className="w-full shrink-0"
                   key={project.slug}
                 >
-                  <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface shadow-2xl shadow-black/10 md:min-h-[540px] md:grid-cols-[0.92fr_1.08fr] lg:min-h-[620px] lg:grid-cols-[1.05fr_0.95fr]">
+                  <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface md:min-h-[460px] md:grid-cols-[0.92fr_1.08fr] lg:min-h-[500px] lg:grid-cols-[1.05fr_0.95fr]">
                     <Link
                       aria-label={`View live website: ${project.title}`}
                       className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto transition-transform duration-300 active:scale-[0.98]"
@@ -149,21 +149,15 @@ export function HomeWorkPreview() {
                         sizes="(max-width: 767px) 100vw, (max-width: 1439px) 58vw, 50vw"
                         src={project.images?.[0] ?? project.image}
                       />
-                      <div
-                        className="absolute inset-0 opacity-[0.85]"
-                        style={{
-                          background: `linear-gradient(to top, var(--bg-primary) 0%, transparent 80%)`,
-                        }}
-                      />
                       <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-[oklch(0.12_0.012_65/0.72)] px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-white backdrop-blur-sm md:bottom-6 md:left-6">
                         Live showcase
                       </div>
                     </Link>
 
-                    <div className="flex min-h-[390px] flex-col justify-between p-6 sm:p-8 md:min-h-0 md:p-8 lg:p-12">
+                    <div className="flex min-h-[320px] flex-col justify-between p-6 sm:p-8 md:min-h-0 md:p-8 lg:p-10">
                       <div>
                         <p
-                          className="studio-eyebrow mb-5 font-bold"
+                          className="studio-eyebrow mb-4 font-bold"
                           style={{
                             color:
                               projectColors[project.slug] || "var(--accent)",
@@ -179,12 +173,12 @@ export function HomeWorkPreview() {
                             .
                           </span>
                         </h4>
-                        <p className="mt-5 max-w-xl studio-body text-muted-foreground">
+                        <p className="mt-4 max-w-xl studio-body text-muted-foreground">
                           {project.demonstrates}
                         </p>
                       </div>
 
-                      <div className="mt-9 space-y-6">
+                      <div className="mt-6 space-y-5">
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.68rem] font-mono uppercase tracking-[0.15em] text-subtle-foreground sm:text-xs">
                           {(
                             projectTags[project.slug] || [
