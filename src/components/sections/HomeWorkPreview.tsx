@@ -165,7 +165,7 @@ export function HomeWorkPreview() {
                         >
                           Showcase - {project.title}
                         </p>
-                        <h3 className="max-w-[10ch] studio-h2-editorial text-foreground">
+                        <h3 className="max-w-[10ch] studio-h3-sans text-foreground">
                           {project.title.split(" ")[0]}{" "}
                           <span className="font-serif italic text-accent">
                             {project.title.split(" ").slice(1).join(" ") ||
@@ -423,7 +423,7 @@ export function HomeWorkPreview() {
                             },
                           },
                         }}
-                        className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground"
+                        className="studio-h1-headline text-foreground"
                       >
                       <motion.span
                         variants={{

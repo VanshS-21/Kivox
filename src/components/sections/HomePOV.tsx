@@ -134,6 +134,7 @@ export function HomePOV() {
 
       <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end">
+          <h2 className="sr-only">Our Philosophy</h2>
           {/* Large left-aligned quote — word-by-word reveal */}
           <blockquote className="lg:col-span-8">
             <span className="sr-only">We believe great digital platforms are not built; they are crafted.</span>

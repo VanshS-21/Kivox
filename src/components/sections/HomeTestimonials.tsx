@@ -43,7 +43,7 @@ export function HomeTestimonials() {
                 <div className={`absolute -top-6 text-accent/10 font-serif text-8xl leading-none select-none pointer-events-none transition-colors duration-500 group-hover:text-accent/20 ${index === 2 ? 'left-1/2 -translate-x-1/2' : '-left-4'}`}>
                   "
                 </div>
-                <p className={`studio-h3-sans font-light leading-relaxed text-foreground relative z-10 ${index === 2 ? 'md:max-w-3xl mx-auto' : ''}`}>
+                <p className={`studio-body-serif font-light leading-relaxed text-foreground relative z-10 ${index === 2 ? 'md:max-w-3xl mx-auto' : ''}`}>
                   {testimonial.quote}
                 </p>
               </div>

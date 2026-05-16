@@ -79,7 +79,7 @@ export function HomeProcess() {
                     STEP {String(idx + 1).padStart(2, "0")}
                   </span>
                   <h3 className={cn(
-                    "font-serif text-3xl",
+                    "studio-h3-sans",
                     isDark ? "text-white" : "text-foreground"
                   )}>
                     {step.title}
@@ -88,12 +88,12 @@ export function HomeProcess() {
                 
                 {/* Content */}
                 <div className={cn("flex flex-col gap-3 relative z-10", isFullWidth ? "lg:flex-1" : "")}>
-                  <h4 className={cn(
+                  <p className={cn(
                     "studio-eyebrow",
                     isDark ? "text-white/90" : "text-foreground"
                   )}>
                     {step.subtitle}
-                  </h4>
+                  </p>
                   <p className={cn(
                     "studio-body text-lg leading-relaxed",
                     isDark ? "text-white/70" : "text-muted-foreground"

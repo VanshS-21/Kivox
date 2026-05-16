@@ -198,7 +198,7 @@ export function HomeContact() {
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                 viewport={viewportOnce}
                 transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
-                className="text-4xl sm:text-5xl lg:text-[56px] font-bold leading-[1.1] tracking-tight text-foreground font-sans mb-6"
+                className="studio-h1-headline text-foreground mb-6"
               >
                 Ready to build
                 <br />

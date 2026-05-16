@@ -106,7 +106,7 @@ export function HomeHero() {
           {/* Left Column: Text & CTAs */}
           <div className="max-w-[38rem] pt-8 lg:pt-0">
             <h1
-              className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-foreground font-sans"
+              className="mb-4 studio-h1-headline text-foreground"
               aria-label={home.hero.headline}
             >
               <SplitWords delay={0.18} reduce={reduce} isReady={isReady}>

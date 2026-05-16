@@ -35,7 +35,7 @@ export function HomeFAQ() {
     <Section className="bg-background">
       <Container className="max-w-4xl">
         <div className="mb-12 md:mb-16">
-          <h2 className="studio-h2">Frequently Asked Questions</h2>
+          <h2 className="studio-h2-editorial text-foreground">Frequently Asked Questions</h2>
           <p className="mt-4 text-muted-foreground studio-body">
             Everything you need to know about working with us.
           </p>
