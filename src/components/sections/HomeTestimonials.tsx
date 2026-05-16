@@ -1,51 +1,58 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { testimonials } from "@/content/testimonials";
+import { fadeUp, transitionDefault, viewportOnce } from "@/lib/motion";
 
 export function HomeTestimonials() {
+  const reduce = useReducedMotion();
+
   return (
-    <Section className="bg-muted/30">
-      <Container>
-        <div className="mb-12 md:mb-16">
-          <h2 className="studio-h2">Client Stories</h2>
-          <p className="mt-4 max-w-2xl text-muted-foreground studio-body">
+    <Section spacing="loose" className="bg-primary">
+      <Container className="max-w-6xl mx-auto">
+        <motion.div
+          initial={reduce ? false : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={viewportOnce}
+          variants={fadeUp}
+          transition={transitionDefault}
+          className="mb-16 md:mb-24 flex flex-col items-center text-center"
+        >
+          <p className="studio-eyebrow text-accent mb-4">[ Social Proof ]</p>
+          <h2 className="studio-h2-editorial">Client Stories</h2>
+          <p className="mt-6 max-w-2xl text-muted-foreground studio-body-large">
             Don't just take our word for it. Here's what business owners have to say about working with Kivox.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-16 md:gap-x-12 lg:gap-x-24 lg:gap-y-24">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex flex-col justify-between p-8 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow duration-300"
+              initial={reduce ? false : "hidden"}
+              whileInView={reduce ? undefined : "show"}
+              viewport={viewportOnce}
+              variants={fadeUp}
+              transition={{ ...transitionDefault, delay: reduce ? 0 : index * 0.1 }}
+              className={`flex flex-col group ${index === 2 ? 'md:col-span-2 md:items-center md:text-center' : ''}`}
             >
-              <div className="mb-8">
-                {/* Quote Icon */}
-                <svg
-                  className="w-8 h-8 text-accent/40 mb-6"
-                  fill="currentColor"
-                  viewBox="0 0 32 32"
-                  aria-hidden="true"
-                >
-                  <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                </svg>
-                <p className="text-lg leading-relaxed text-foreground">
-                  "{testimonial.quote}"
+              <div className="mb-8 relative">
+                {/* Minimalist quote mark */}
+                <div className={`absolute -top-6 text-accent/10 font-serif text-8xl leading-none select-none pointer-events-none transition-colors duration-500 group-hover:text-accent/20 ${index === 2 ? 'left-1/2 -translate-x-1/2' : '-left-4'}`}>
+                  "
+                </div>
+                <p className={`studio-h3-sans font-light leading-relaxed text-foreground relative z-10 ${index === 2 ? 'md:max-w-3xl mx-auto' : ''}`}>
+                  {testimonial.quote}
                 </p>
               </div>
               
-              <div>
-                <div className="font-semibold text-foreground">
+              <div className={`mt-auto transition-colors duration-500 ${index === 2 ? 'pt-4 border-t border-accent/30 group-hover:border-accent' : 'pl-4 border-l-2 border-accent/30 group-hover:border-accent'}`}>
+                <div className="font-semibold text-foreground tracking-wide">
                   {testimonial.author}
                 </div>
-                <div className="text-sm text-muted-foreground mt-1">
+                <div className="text-sm text-muted-foreground mt-1 font-mono uppercase tracking-widest opacity-80">
                   {testimonial.role}, {testimonial.company}
                 </div>
               </div>

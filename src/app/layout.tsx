@@ -88,7 +88,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${sans.variable} ${serif.variable} ${body.variable} ${mono.variable} ${handwritten.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col relative">
+      <body className="min-h-full flex flex-col relative overflow-x-hidden">
         <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
         <CursorProvider>
           <LoadingProvider>

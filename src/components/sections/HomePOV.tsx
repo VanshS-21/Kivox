@@ -42,7 +42,7 @@ function WordByWordReveal({
           key={`${word}-${i}`}
           className="inline-block"
           variants={{
-            hidden: { opacity: 0.08, y: 6 },
+            hidden: { opacity: 0.15, y: 6 },
             show: {
               opacity: 1,
               y: 0,

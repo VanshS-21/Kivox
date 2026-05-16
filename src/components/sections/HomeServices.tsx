@@ -24,15 +24,20 @@ export function HomeServices() {
           viewport={viewportOnce}
           variants={fadeUp}
           transition={transitionDefault}
-          className="mb-12 md:mb-16 lg:mb-20 text-center flex flex-col items-center"
+          className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
-          <p className="studio-eyebrow text-accent mb-4">[ Services ]</p>
-          <h2 className="studio-h2-editorial max-w-3xl text-foreground">
-            What Kivox builds.
-          </h2>
+          <div className="max-w-2xl">
+            <p className="studio-eyebrow text-accent mb-4">[ Services ]</p>
+            <h2 className="studio-h2-editorial text-foreground">
+              What Kivox builds.
+            </h2>
+          </div>
+          <p className="studio-body-large text-muted-foreground max-w-md">
+            We build websites and digital tools designed to earn trust and make your business easier to run.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-12">
           {home.services.map((service, idx) => (
             <motion.div
               key={service.id}
@@ -41,10 +46,10 @@ export function HomeServices() {
               viewport={viewportOnce}
               variants={fadeUp}
               transition={{ ...transitionDefault, delay: reduce ? 0 : idx * 0.1 }}
-              className="bg-card border border-border rounded-2xl p-8 flex flex-col hover:shadow-lg transition-all duration-300 group hover:-translate-y-1"
+              className="studio-surface p-8 lg:p-10 flex flex-col group transition-all duration-500 hover:shadow-hover hover:-translate-y-1 hover:border-accent/40"
             >
-              <div className="flex items-start gap-4 mb-6">
-                <span className="font-mono text-xl font-medium text-accent/40 studio-tabular select-none pt-0.5 transition-colors group-hover:text-accent">
+              <div className="flex items-center gap-4 mb-6">
+                <span className="font-mono text-xl font-medium text-accent/40 studio-tabular select-none transition-colors group-hover:text-accent">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
                 <h3 className="studio-h3-sans text-foreground">
@@ -56,7 +61,7 @@ export function HomeServices() {
                 {service.summary}
               </p>
               
-              <div className="space-y-3 border-t border-border/50 pt-6">
+              <div className="space-y-3 pt-6 border-t border-border/50">
                 {service.examples.map((example) => (
                   <div key={example} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-accent shrink-0 mt-0.5 opacity-80" strokeWidth={2.5} />

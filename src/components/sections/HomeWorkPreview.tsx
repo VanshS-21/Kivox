@@ -106,7 +106,8 @@ export function HomeWorkPreview() {
     return (
       <section ref={containerRef} className="relative overflow-hidden bg-background pt-[60px] md:pt-[80px] lg:pt-[100px] pb-[40px] md:pb-[60px] lg:pb-[80px] work-showcase">
         <div className="mx-auto mb-6 flex max-w-6xl justify-end px-5 sm:px-6 md:px-10 lg:px-12">
-          <div className="hidden shrink-0 font-mono text-sm text-subtle-foreground md:block">
+          <div className="hidden shrink-0 font-mono text-sm text-muted-foreground md:block">
+            <h2 className="sr-only">Featured Work</h2>
             {String(activeIndex + 1).padStart(2, "0")} /{" "}
             {String(totalPanels).padStart(2, "0")}
           </div>
@@ -123,13 +124,12 @@ export function HomeWorkPreview() {
             >
               {featuredWork.map((project, idx) => (
                 <article
-                  aria-hidden={idx !== activeIndex}
+                  inert={idx !== activeIndex}
                   className="w-full shrink-0"
                   key={project.slug}
                 >
                   <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface md:min-h-[460px] md:grid-cols-[0.92fr_1.08fr] lg:min-h-[500px] lg:grid-cols-[1.05fr_0.95fr]">
                     <Link
-                      aria-label={`View live website: ${project.title}`}
                       className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto transition-transform duration-300 active:scale-[0.98]"
                       href={project.liveUrl || `/work/${project.slug}`}
                       rel={
@@ -150,7 +150,7 @@ export function HomeWorkPreview() {
                         src={project.images?.[0] ?? project.image}
                       />
                       <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-[oklch(0.12_0.012_65/0.72)] px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-white backdrop-blur-sm md:bottom-6 md:left-6">
-                        Live showcase
+                        Live showcase <span className="sr-only">for {project.title}</span>
                       </div>
                     </Link>
 
@@ -165,14 +165,14 @@ export function HomeWorkPreview() {
                         >
                           Showcase - {project.title}
                         </p>
-                        <h4 className="max-w-[10ch] studio-h2-editorial text-foreground">
+                        <h3 className="max-w-[10ch] studio-h2-editorial text-foreground">
                           {project.title.split(" ")[0]}{" "}
                           <span className="font-serif italic text-accent">
                             {project.title.split(" ").slice(1).join(" ") ||
                               "Project"}
                             .
                           </span>
-                        </h4>
+                        </h3>
                         <p className="mt-4 max-w-xl studio-body text-muted-foreground">
                           {project.demonstrates}
                         </p>
@@ -221,6 +221,7 @@ export function HomeWorkPreview() {
                             >
                               View Live Website
                               <span className="ml-2">→</span>
+                              <span className="sr-only"> for {project.title}</span>
                             </Link>
                           ) : null}
                           <Link
@@ -233,6 +234,7 @@ export function HomeWorkPreview() {
                             }}
                           >
                             Case Study
+                            <span className="sr-only"> for {project.title}</span>
                           </Link>
                         </div>
                       </div>
@@ -249,18 +251,22 @@ export function HomeWorkPreview() {
             {featuredWork.map((project, idx) => (
               <button
                 aria-label={`Show ${project.title}`}
-                className="h-2.5 rounded-full transition-all"
+                className="relative min-w-[44px] min-h-[44px] flex items-center justify-center transition-all"
                 key={project.slug}
                 onClick={() => setActiveIndex(idx)}
-                style={{
-                  width: idx === activeIndex ? "2rem" : "0.625rem",
-                  backgroundColor:
-                    idx === activeIndex
-                      ? projectColors[project.slug] || "var(--accent)"
-                      : "var(--border-strong)",
-                }}
                 type="button"
-              />
+              >
+                <span
+                  className="block h-2.5 rounded-full transition-all"
+                  style={{
+                    width: idx === activeIndex ? "2rem" : "0.625rem",
+                    backgroundColor:
+                      idx === activeIndex
+                        ? projectColors[project.slug] || "var(--accent)"
+                        : "var(--border-strong)",
+                  }}
+                />
+              </button>
             ))}
           </div>
           <div className="font-mono text-xs text-subtle-foreground md:hidden">
@@ -283,7 +289,7 @@ export function HomeWorkPreview() {
       {/* Sticky viewport container */}
       <motion.div
         className={
-          reduce ? "flex flex-col" : "sticky top-0 h-screen overflow-hidden flex flex-col"
+          reduce ? "flex flex-col" : "sticky top-0 h-screen overflow-hidden flex flex-col w-full"
         }
         style={
           reduce
@@ -297,7 +303,8 @@ export function HomeWorkPreview() {
               }
         }
       >
-        {/* Removed Section Heading for full-bleed cinematic effect */}
+        {/* Section Heading for full-bleed cinematic effect hidden visually */}
+        <h2 className="sr-only">Featured Work</h2>
 
         {/* Counter — top right with rolling animation */}
         {!reduce && (
@@ -326,7 +333,7 @@ export function HomeWorkPreview() {
               className={
                 reduce
                   ? "w-full min-h-[85vh] flex items-center relative overflow-hidden border-b border-border/20"
-                  : "min-w-[100vw] h-full flex items-center relative overflow-hidden carousel-frame"
+                  : "w-[100vw] shrink-0 h-full flex items-center relative overflow-hidden carousel-frame"
               }
             >
               {/* ── Full-bleed background image ── */}
@@ -519,14 +526,13 @@ export function HomeWorkPreview() {
                               ? undefined
                               : "_blank"
                           }
-                          aria-label={`View live website: ${project.title}`}
                           className="inline-flex items-center gap-3 rounded-full px-5 py-2.5 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                           style={{
                             backgroundColor:
                               projectColors[project.slug] || "var(--accent)",
                           }}
                         >
-                          View Live Website
+                          View Live Website<span className="sr-only"> for {project.title}</span>
                           <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
                             →
                           </span>
@@ -536,7 +542,6 @@ export function HomeWorkPreview() {
                     <Magnetic strength={0.2}>
                       <Link
                         href={`/work/${project.slug}`}
-                        aria-label={`View Case Study: ${project.title}`}
                         className="inline-flex items-center gap-4 rounded-full text-sm font-semibold opacity-90 transition-opacity duration-300 hover:opacity-100 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                         style={{
                           color: projectColors[project.slug] || "var(--accent)",
@@ -548,7 +553,7 @@ export function HomeWorkPreview() {
                             borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 28%, var(--work-secondary-cta-border))`,
                           }}
                         >
-                          Case Study →
+                          Case Study <span className="sr-only">for {project.title}</span> →
                         </span>
                       </Link>
                     </Magnetic>

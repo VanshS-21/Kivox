@@ -86,7 +86,7 @@ export function ProjectCarousel({
               {images.map((src, idx) => (
                 <div
                   key={idx}
-                  aria-hidden={idx !== active}
+                  inert={idx !== active}
                   className="carousel-slide relative w-full shrink-0"
                   style={{ aspectRatio: "16 / 10", scrollSnapAlign: "start" }}
                 >
@@ -149,7 +149,7 @@ export function ProjectCarousel({
               key={idx}
               onClick={() => setActive(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className="relative p-1 cursor-pointer"
+              className="relative min-w-[44px] min-h-[44px] flex items-center justify-center p-1 cursor-pointer"
             >
               <span
                 className="block rounded-full transition-all duration-300"

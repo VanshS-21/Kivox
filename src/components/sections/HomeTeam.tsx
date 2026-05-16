@@ -55,21 +55,15 @@ export function HomeTeam() {
               className="group flex flex-col"
             >
               {/* Portrait */}
-              <div className="relative mb-5 overflow-hidden rounded-xl ring-0 group-hover:ring-1 ring-accent/30 transition-all duration-500 bg-surface">
+              <div className="relative mb-5 overflow-hidden rounded-xl bg-surface">
                 <div className="aspect-square relative">
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.role} at Kivox`}
                     fill
-                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                  {/* Overlay gradient for quote hover effect - bottom third */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-6 text-left">
-                    <p className="text-white/95 font-serif italic text-lg leading-relaxed transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                      &quot;{member.quote}&quot;
-                    </p>
-                  </div>
                 </div>
               </div>
 
@@ -88,8 +82,8 @@ export function HomeTeam() {
                   {member.focus}
                 </p>
                 
-                {/* Mobile quote (visible only on mobile since hover isn't reliable) */}
-                <p className="lg:hidden mt-4 text-[14px] italic text-muted-foreground/80 border-l-2 border-accent/40 pl-3">
+                {/* Quote (Always visible) */}
+                <p className="mt-4 text-[14px] italic text-muted-foreground/80 border-l-2 border-accent/40 pl-3">
                   &quot;{member.quote}&quot;
                 </p>
               </div>
