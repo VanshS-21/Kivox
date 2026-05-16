@@ -7,6 +7,7 @@ import { ChevronDown } from "lucide-react";
 import { home } from "@/content/pages/home";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { cn } from "@/lib/cn";
 import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/motion";
 
 export function HomeProcess() {
