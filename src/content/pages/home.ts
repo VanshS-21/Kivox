@@ -2,7 +2,7 @@ export const home = {
   hero: {
     headline: "Make your business easier to trust online.",
     subhead:
-      "Kivox designs and builds websites, web apps, and backend-enabled workflows that help customers understand you fast, and take the next step with confidence.",
+      "We build websites and digital tools that help your customers understand what you do—and make it easy for them to take the next step.",
     ctas: {
       primary: "Start a project",
     },
@@ -12,105 +12,105 @@ export const home = {
       id: "websites-web-apps",
       title: "Websites & Web Apps",
       summary:
-        "Clear pages, product flows, CMS, ecommerce, and conversion paths that make the next step obvious.",
-      tags: ["LANDING PAGES", "WEB APPLICATIONS", "E-COMMERCE", "CMS"],
-      examples: ["Booking pages", "Service websites", "CMS editing"],
+        "Clear, easy-to-use websites where customers can buy products, book services, and find exactly what they need.",
+      tags: ["BUSINESS WEBSITES", "ONLINE STORES", "CUSTOM TOOLS", "EASY UPDATES"],
+      examples: ["Booking pages", "Service websites", "Updating content"],
     },
     {
       id: "ui-ux-redesign",
-      title: "UI/UX Redesign",
+      title: "Fixing Your Current Site",
       summary:
-        "Fix confusing navigation, weak CTAs, slow pages, and broken mobile flows.",
-      tags: ["WIREFRAMES", "PROTOTYPING", "USABILITY AUDIT", "CONVERSION"],
-      examples: ["Mobile flows", "CTA hierarchy", "Checkout friction"],
+        "We improve websites that are hard to use or slow, making sure your visitors actually contact you.",
+      tags: ["FIXING LAYOUTS", "MOBILE UPGRADES", "FASTER PAGES", "BETTER RESULTS"],
+      examples: ["Better buttons", "Phone-friendly design", "Easier checkouts"],
     },
     {
       id: "seo-ai-search-readiness",
-      title: "SEO & AI Search Readiness",
+      title: "Getting Found on Google",
       summary:
-        "Technical cleanup, structured content, schema, and pages search engines can understand.",
-      tags: ["TECHNICAL SEO", "CONTENT STRATEGY", "SCHEMA", "AI READINESS"],
-      examples: ["Local search", "Service pages", "Answer-ready content"],
+        "We set up your website so Google and AI tools can easily find your business and send you the right customers.",
+      tags: ["GOOGLE SEARCH", "LOCAL VISIBILITY", "CLEAR WRITING", "AI READY"],
+      examples: ["Local searches", "Clear service lists", "Helpful answers"],
     },
     {
       id: "brand-identity",
       title: "Brand Identity",
       summary:
-        "Naming, messaging, visual systems, and practical launch assets for a clearer public presence.",
-      tags: ["LOGO DESIGN", "BRAND GUIDELINES", "MESSAGING", "VISUAL SYSTEMS"],
-      examples: ["Messaging", "Launch kits", "Visual systems"],
+        "We create a professional look for your business, including logos, colors, and the words you use to talk about what you do.",
+      tags: ["LOGOS", "BRAND COLORS", "WRITING STYLE", "LAUNCH KITS"],
+      examples: ["Clear messaging", "Professional look", "Ready to use"],
     },
     {
       id: "backend-enabled-systems",
-      title: "Backend-Enabled Systems",
+      title: "Custom Business Tools",
       summary:
-        "Inquiry workflows, booking flows, dashboards, portals, catalogs, and API-connected tools.",
-      tags: ["DASHBOARDS", "PORTALS", "WORKFLOWS", "API INTEGRATION"],
-      examples: ["Dashboards", "Portals", "Inquiry routing"],
+        "We build secure systems for your team to handle customer questions, manage bookings, and run your daily operations.",
+      tags: ["TEAM DASHBOARDS", "CLIENT PORTALS", "AUTOMATION", "CONNECTING APPS"],
+      examples: ["Team dashboards", "Client logins", "Managing requests"],
     },
     {
       id: "android-apps",
-      title: "Android Apps",
+      title: "Mobile Apps",
       summary:
-        "Mobile apps only when customers or staff genuinely need app-level access.",
-      tags: ["NATIVE APPS", "CROSS-PLATFORM", "APP STORE OPTIMIZATION"],
-      examples: ["Staff tools", "Customer accounts", "Field access"],
+        "We build dedicated phone apps for your customers or your staff when a normal website isn't quite enough.",
+      tags: ["PHONE APPS", "STAFF TOOLS", "CUSTOMER APPS"],
+      examples: ["Tools for your team", "Customer accounts", "On-the-go access"],
     },
   ],
   workPreview: {
     label: "Selected Work",
     summary:
-      "Handcrafted digital experiences built by Kivox. Each one a demonstration of how we structure, design, and build for trust and action.",
+      "Examples of websites and tools we've built. Each one is designed to be clear, professional, and easy for customers to use.",
   },
   process: [
     {
       title: "Discover",
-      subtitle: "Understand the landscape",
+      subtitle: "Understanding your business",
       description:
-        "We begin with a structured intake session to understand the business, the customer decision, and what success looks like in 90 days. This phase produces a concise brief and a content map that we both sign off on before any design work begins — so there are no surprises mid-project.",
+        "We start by learning about your business and your goals. We figure out exactly what your new website needs to do before we start designing, so there are no surprises.",
     },
     {
       title: "Define",
-      subtitle: "Set the strategic foundation",
+      subtitle: "Planning the structure",
       description:
-        "We fix the information architecture first: which pages are needed, in what order content should appear, where calls to action belong, and what the primary action on each page is. You receive a sitemap and a content outline you can review and edit before a single pixel is placed.",
+        "We map out exactly what pages you need and where the buttons should go. You get a clear plan of the website's structure to approve before we add colors or pictures.",
     },
     {
       title: "Design",
-      subtitle: "Craft the experience",
+      subtitle: "Creating the look",
       description:
-        "We design from wireframes through to high-fidelity, production-ready components — tested at every breakpoint, every state, and every edge case. This phase produces a full design file, a component library, and a clickable prototype for stakeholder review before we write any code.",
+        "We create the visual design of your website, making sure it looks great on phones, tablets, and computers. You get to see and click through a preview of the design.",
     },
     {
       title: "Build",
-      subtitle: "Engineer with precision",
+      subtitle: "Writing the code",
       description:
-        "We engineer the frontend and any backend systems with performance, accessibility, and maintainability as first-class requirements — not afterthoughts. Every page ships with semantic HTML, WCAG AA compliance, and a Lighthouse performance score of 90+.",
+        "We turn the design into a real, working website. We make sure it loads fast, works perfectly on all devices, and is easy for everyone to use.",
     },
     {
       title: "Launch & Evolve",
-      subtitle: "Grow & optimise continuously",
+      subtitle: "Going live and growing",
       description:
-        "We deploy, monitor, and hand over. Every project includes a dedicated handover session so your team understands what was built, how to update it, and how to measure it. After launch, we track real behaviour and iterate — because the best version of any product ships after its first users arrive.",
+        "We put your website on the internet and show your team how to update it. After it's live, we can help you track how people use it and make it even better over time.",
     },
   ],
   philosophy: {
     quote:
-      "We believe great digital platforms are not built; they are crafted. Every pixel, every interaction, every line of code is a statement of intent.",
+      "We believe a great website should feel like a premium experience. Every detail matters when you want to earn a customer's trust.",
     body:
-      "Kivox exists to raise the standard of digital craft. We partner with businesses that understand the value of exceptional digital experiences, and refuse to settle for less.",
+      "Kivox is here to raise the standard for small business websites. We work with owners who know that a professional, easy-to-use website brings in better customers.",
   },
   pov: {
-    title: "Trust is a design system.",
+    title: "Trust is built through design.",
     bullets: [
-      "Customers decide in seconds. Structure beats decoration.",
-      "Proof beats claims. Show your work, show the next step.",
-      "Performance is part of credibility.",
-      "Good motion is restraint, not fireworks.",
+      "Customers judge your business in seconds. A clean, organized site wins.",
+      "Show, don't just tell. Proof is better than promises.",
+      "A fast-loading website proves you are professional.",
+      "Simple and clear is always better than flashy and confusing.",
     ],
   },
   contact: {
     line:
-      "Tell us what you're building. We reply within 24 hours with next steps and the few details we need to scope it right.",
+      "Tell us what you want to build. We'll reply within 24 hours with the next steps and a clear plan.",
   },
 };
