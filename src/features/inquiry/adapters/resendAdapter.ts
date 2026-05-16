@@ -13,9 +13,7 @@ export async function resendAdapter(inquiry: Inquiry) {
   const text = [
     `What you need: ${inquiry.whatYouNeed}`,
     `Business type: ${inquiry.businessType}`,
-    `Primary goal: ${inquiry.primaryGoal}`,
     inquiry.timeline ? `Timeline: ${inquiry.timeline}` : null,
-    inquiry.currentUrl ? `Current site/app: ${inquiry.currentUrl}` : null,
     inquiry.notes ? `Notes: ${inquiry.notes}` : null,
     "",
     `Name: ${inquiry.name}`,

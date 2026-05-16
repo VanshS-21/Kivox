@@ -4,7 +4,8 @@ export const home = {
     subhead:
       "We build websites and digital tools that help your customers understand what you do—and make it easy for them to take the next step.",
     ctas: {
-      primary: "Start a project",
+      primary: "Book a Free Call",
+      secondary: "See Our Work",
     },
   },
   services: [

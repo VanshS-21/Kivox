@@ -8,7 +8,7 @@ brand
 
 **Primary Target**: SMB owners and operators (time-poor, want certainty, dislike jargon).
 
-**Context**: Evaluating potential web studio partners during business hours. They need to quickly understand capabilities, see proof of craft, and feel confident taking the next step.
+**Context**: Evaluating potential web studio partners during business hours, often on mobile, in bright daylight. They need to quickly understand capabilities, see proof of craft, and feel confident taking the next step. They compare multiple studios. Decision speed matters.
 
 **Job to be Done**: Find a trustworthy studio that can build a premium website/web app that makes their business easier to understand and trust online.
 
@@ -18,46 +18,72 @@ brand
 - Losing inquiries because information is hard to find
 - Needs a secure booking/appointment/inquiry workflow, not just a brochure site
 
+**What visitors notice first** (in this order):
+1. Does this feel professional and warm? (first 2 seconds)
+2. Can I see examples of websites they've actually built? (first 5 seconds)
+3. Do other people trust them? (first 10 seconds)
+4. What exactly do they offer, and how much might it cost? (first 30 seconds)
+5. How do I take the next step with minimal risk? (first 60 seconds)
+
+**What visitors never notice**: Color space precision, animation physics, design system documentation, technical stack choices, font licensing decisions.
+
 ## Product Purpose
 
 Kivox is a boutique studio website that converts qualified SMB owners/operators into serious project inquiries.
 
-**What it does**: Showcases Kivox's craft, clarity, and systems-thinking approach through bold design, editorial sophistication, and work-forward presentation.
+**What it does**: Showcases Kivox's craft, clarity, and approach through approachable design, visible proof, and clear paths to action.
 
-**Showcase role**: The showcase is not only a gallery of screenshots. It includes fully built sub-websites and product demos that behave like separate client-ready properties. Each sub-website is designed with its own business context, audience, interaction model, visual language, and conversion path. They may live inside Kivox during demonstration, or be launched separately when a business use case requires it.
+**Showcase role**: The showcase includes fully built concept websites that demonstrate how Kivox thinks through different business contexts. Each concept project has its own audience, interaction model, visual language, and conversion path. They demonstrate range and depth of thinking, not just visual polish.
 
-**Named sub-websites**: The current showcase properties are MedQueue, The Roastery, Aurelia Grand, Greenfield Academy, and Vortex Fitness. These names come from the case studies and are the canonical names for product, design, and implementation work.
+**Named concept projects**: The current showcase properties are MedQueue, The Roastery, Aurelia Grand, Greenfield Academy, and Vortex Fitness. These are self-initiated concept projects, not client work. They must be presented honestly as demonstrations of craft and thinking.
 
-**Sub-website standard**: These sub-websites do not inherit Kivox's theme by default. Their typography, palette, layout, motion, navigation, and content structure can be completely separate from Kivox when the showcased business demands it. What they must inherit is the Kivox standard: intentional design, sharp information architecture, fast technical execution, accessibility, responsive polish, and a clear reason for every interaction.
+**Sub-website standard**: These concept websites do not inherit Kivox's theme by default. Their typography, palette, layout, motion, navigation, and content structure can be completely separate from Kivox when the concept demands it. What they must inherit is the Kivox standard: intentional design, sharp information architecture, fast technical execution, accessibility, responsive polish, and a clear reason for every interaction.
 
-**Why it exists**: To establish premium trust through design quality itself - the site must feel premium, fast, and considered to prove Kivox can deliver the same for clients.
+**Why it exists**: To establish trust through visible proof. The site must feel professional, warm, and approachable while demonstrating craft quality that proves Kivox can deliver.
 
-**Success looks like**: Increased qualified project inquiries, visitors reaching Work and Contact sections at healthy rates, serious prospects exploring the live showcase experiences, and form completion rates improving over iterations.
+**Success looks like**: Increased qualified project inquiries, visitors understanding what Kivox does within 5 seconds, visitors reaching Work and Contact sections at healthy rates, form completion rates improving over iterations.
 
 ## Brand Personality
 
-**Three words**: Bold, Confident, Craft-focused
+**Three words**: Warm, Confident, Craft-focused
 
-**Voice & Tone**: Bold studio. Confident. Direct. Buyer-readable. No jargon unless immediately grounded in examples.
+**Voice & Tone**: Confident studio. Direct. Buyer-readable. Warm, not intimidating. No jargon unless immediately grounded in examples.
 
-**Emotional goals**:
-- **Confidence**: Visitors feel certain this studio knows what they're doing
-- **Trust**: Design quality proves capability without defensive disclaimers
-- **Clarity**: Plain language that an owner can stand behind
-- **Warmth**: Approachable premium, not cold or intimidating
+**Emotional goals** (in priority order):
+- **Warmth**: Approachable premium. The site should feel like walking into a well-run studio, not a dark server room.
+- **Trust**: Visible proof through real testimonials, craft demonstrations, and transparent process.
+- **Clarity**: Plain language. A bakery owner should understand everything on this page.
+- **Confidence**: The quality of execution proves capability without defensive disclaimers.
 
 **Brand promise**: "Clarity that earns trust. Craft that holds up."
+
+## Social Proof Strategy
+
+**What we have and how to use it:**
+
+1. **Real testimonials**: Display prominently on the homepage with names, roles, and photos where available. These are the strongest trust signal we have.
+2. **Concept project logos**: Present in a "Projects we've crafted" band. Frame honestly as demonstrations of thinking, not as client logos.
+3. **Process transparency**: The step-by-step process section serves as proof of professionalism.
+4. **Live showcases**: Interactive live demos are rare for studios at any level. This is a genuine differentiator when visitors actually experience them.
+
+**What we don't have and must not fake:**
+- Client count statistics ("50+ clients"). Do not fabricate.
+- Revenue impact claims ("increased sales by 120%"). Do not fabricate.
+- Awards or certifications we haven't earned.
+- Client logos from companies we haven't worked with.
+
+**When we earn real client work**: Add genuine stats, real client logos, and measurable results. Until then, let the craft speak and the testimonials provide social validation.
 
 ## Anti-references
 
 **What this should NOT look like**:
 
-1. **Generic SaaS template sites** - Gradient text, glassmorphism, hero-metric templates with big numbers, identical card grids
-2. **Loud startup pages** - Neon colors, aggressive animations, hype language, "disruptive" posturing
-3. **Template agency grids** - Same-sized cards with icon + heading + text repeated endlessly
-4. **Enterprise posturing** - Awards/metrics claims we don't have, corporate jargon, defensive disclaimers
-5. **Dark tech aesthetic** - Pure black backgrounds, neon accents, Matrix-style effects
-6. **Luxury hotel pages** - Excessive whitespace, pretentious copy, inaccessible minimalism
+1. **Generic SaaS template sites**: Gradient text, glassmorphism, hero-metric templates with big numbers, identical card grids
+2. **Loud startup pages**: Neon colors, aggressive animations, hype language, "disruptive" posturing
+3. **Template agency grids**: Same-sized cards with icon + heading + text repeated endlessly
+4. **Enterprise posturing**: Awards/metrics claims we don't have, corporate jargon, defensive disclaimers
+5. **Intimidating craft showcases**: Dark-by-default, abstract hero art that requires interpretation, hidden navigation, interactions that require exploration before understanding, philosophy over proof
+6. **Luxury hotel pages**: Excessive whitespace, pretentious copy, inaccessible minimalism
 
 **Specific bad patterns to avoid**:
 - Side-stripe borders as colored accents
@@ -66,22 +92,29 @@ Kivox is a boutique studio website that converts qualified SMB owners/operators 
 - Modal as first thought for interactions
 - Em dashes in copy
 - Restated headings or intros that repeat the title
+- Dark mode as default for non-technical audiences
+- Hiding navigation behind a hamburger on desktop
+- Abstract hero visuals that don't communicate what the studio builds
+- High-commitment CTAs ("Start a project") before trust is established
+- Fabricated statistics or client counts
 
 ## Design Principles
 
-1. **Practice what you preach**: The site itself must demonstrate the craft, clarity, and performance we promise clients. Every design decision should be defensible and intentional.
+1. **Customer-first clarity**: The site exists to serve visitors, not to impress designers. Every design decision is measured by whether a non-technical business owner can understand it in 5 seconds. If craft and clarity conflict, clarity wins.
 
-2. **Show, don't tell**: Proof beats claims. Use studio demonstrations, process artifacts, and the site's own quality as evidence rather than making unverifiable promises.
+2. **Show, don't tell**: Proof beats claims. Use live demonstrations, real testimonials, and the site's own quality as evidence. Never claim what you can't prove.
 
-3. **Clarity → action**: Visitors should understand what Kivox does and what to do next within 10 seconds. Every word earns its place. No jargon without immediate grounding.
+3. **Warmth before drama**: The default experience should feel warm, professional, and inviting. Dramatic or cinematic moments are earned through scroll progression, not imposed at first contact.
 
-4. **Work-forward confidence**: Lead with work and capability, not defensive disclaimers or apologies. Studio demonstrations are clearly labeled but presented with full confidence.
+4. **Reduce the next step**: Every section should make it easier to take action. Low-commitment CTAs ("Book a Free Call"), visible contact information, and FAQ sections that address objections before they form.
 
-5. **Craft is the proof**: Typography, spacing, motion, and interaction quality demonstrate capability more effectively than any claim. The site's execution is the portfolio.
+5. **Honest proof**: Concept projects are labeled as concept projects. Testimonials are from real people. The studio's stage of growth is presented with confidence, not disguised with inflated claims.
 
-6. **Separate worlds, same standard**: Showcase sub-websites may look and feel nothing like Kivox. MedQueue, The Roastery, Aurelia Grand, Greenfield Academy, and Vortex Fitness should each carry their own brand reality. The continuity is not visual sameness. The continuity is craft quality, technical depth, clarity, and intentionality.
+6. **Craft as proof**: Typography, spacing, motion, and interaction quality demonstrate capability more effectively than any claim. The site's execution is the portfolio. But craft must be visible to non-designers, not hidden behind interactions that only designers appreciate.
 
-7. **Launchable by default**: A sub-website should be treated as something that could become a real standalone website when needed. Demo status is not permission for thin screens, dead-end journeys, weak responsiveness, or decorative-only UI. Each showcase should have a coherent purpose, working path, and enough depth to prove how Kivox would think through that client's world.
+7. **Separate worlds, same standard**: Showcase concept websites may look and feel nothing like Kivox. Each should carry its own brand reality. The continuity is craft quality, not visual sameness.
+
+8. **Launchable by default**: A concept website should be treated as something that could become a real standalone website. Demo status is not permission for thin screens, dead-end journeys, or decorative-only UI.
 
 ## Accessibility & Inclusion
 
@@ -95,7 +128,7 @@ Kivox is a boutique studio website that converts qualified SMB owners/operators 
 
 **Considerations**:
 - **Reduced motion**: Complete static experience for users who prefer reduced motion. All animations disabled, instant state changes, no parallax or scroll effects. Hover states maintained without motion.
-- **Color blindness**: Amber accent provides 7.2:1 contrast on dark backgrounds (passes AAA). Never rely on color alone to convey information.
+- **Color blindness**: Amber accent provides sufficient contrast in both themes. Never rely on color alone to convey information.
 - **Mobile accessibility**: Touch targets minimum 44x44px, generous spacing, readable text sizes
 - **Form accessibility**: All labels associated with inputs, clear error messages, validation feedback
 

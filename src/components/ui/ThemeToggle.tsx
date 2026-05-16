@@ -8,7 +8,7 @@ type Theme = "dark" | "light" | "system";
 const STORAGE_KEY = "kivox-theme";
 
 function getSystemTheme(): "dark" | "light" {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   return window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
@@ -59,7 +59,7 @@ export function ThemeToggle({ className = "", style }: { className?: string; sty
   }, [theme]);
 
   const cycle = useCallback(() => {
-    const order: Theme[] = ["dark", "light", "system"];
+    const order: Theme[] = ["light", "dark", "system"];
     const nextIdx = (order.indexOf(theme) + 1) % order.length;
     const next = order[nextIdx];
     setTheme(next);

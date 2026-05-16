@@ -1,4 +1,9 @@
-"use client";
+const fs = require('fs');
+const path = require('path');
+
+const heroPath = path.join(__dirname, '../src/components/sections/HomeHero.tsx');
+
+const content = `"use client";
 
 import { useRef } from "react";
 import Image from "next/image";
@@ -44,7 +49,7 @@ function SplitWords({
     >
       {children.split(" ").map((word, index) => (
         <motion.span
-          key={`${word}-${index}`}
+          key={\`\${word}-\${index}\`}
           className="inline-block"
           variants={{
             hidden: { opacity: 0, y: 14 },
@@ -56,7 +61,7 @@ function SplitWords({
           }}
         >
           {word}
-          {index < children.split(" ").length - 1 && "\u00A0"}
+          {index < children.split(" ").length - 1 && "\\u00A0"}
         </motion.span>
       ))}
     </motion.span>
@@ -79,7 +84,7 @@ export function HomeHero() {
     <Section
       ref={ref}
       spacing="none"
-      className="relative flex items-center overflow-hidden pt-[calc(5rem+env(safe-area-inset-top))] pb-12 sm:pt-24 sm:pb-16 md:pt-[calc(6rem+env(safe-area-inset-top))] md:pb-20 lg:pt-28 lg:pb-24"
+      className="relative flex min-h-[min(100svh,47rem)] items-center overflow-hidden pt-[calc(5.5rem+env(safe-area-inset-top))] pb-8 [min-height:min(100dvh,47rem)] sm:min-h-[100svh] sm:pt-28 sm:pb-12 sm:[min-height:100dvh] md:min-h-[min(100svh,54rem)] md:items-start md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-16 md:[min-height:min(100dvh,54rem)] lg:min-h-[100svh] lg:items-center lg:pt-24 lg:pb-14 lg:[min-height:100dvh] xl:pb-16"
       style={{
         background: "var(--background)",
       }}
@@ -101,12 +106,12 @@ export function HomeHero() {
             opacity: reduce ? 1 : contentOpacity,
             scale: reduce ? 1 : contentScale,
           }}
-          className="grid items-center gap-8 lg:grid-cols-[1fr_1fr] xl:gap-12"
+          className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:gap-16"
         >
           {/* Left Column: Text & CTAs */}
           <div className="max-w-[38rem] pt-8 lg:pt-0">
             <h1
-              className="mb-4 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-foreground font-sans"
+              className="mb-6 studio-h1-headline sm:mb-7 lg:mb-6 text-foreground"
               aria-label={home.hero.headline}
             >
               <SplitWords delay={0.18} reduce={reduce} isReady={isReady}>
@@ -145,7 +150,7 @@ export function HomeHero() {
                   transition: { duration: 0.6, ease: easeOutExpo, delay: 0.78 },
                 },
               }}
-              className="mb-6 max-w-[34rem] studio-body sm:text-base text-muted-foreground sm:mb-8 lg:max-w-[28rem]"
+              className="mb-8 max-w-[34rem] studio-body text-muted-foreground sm:mb-10 md:max-w-[40rem] lg:mb-10 lg:max-w-[33rem] xl:max-w-[36rem]"
             >
               {home.hero.subhead}
             </motion.p>
@@ -201,7 +206,7 @@ export function HomeHero() {
                 <Magnetic strength={0.15}>
                   <ButtonLink
                     href="/work"
-                    variant="secondary"
+                    variant="outline"
                     className="w-full justify-center sm:w-auto"
                   >
                     {home.hero.ctas.secondary}
@@ -223,7 +228,7 @@ export function HomeHero() {
               },
             }}
             style={{ perspective: 1000 }}
-            className="relative mx-auto w-full max-w-sm sm:max-w-md lg:max-w-[420px] xl:max-w-[480px]"
+            className="relative mx-auto w-full max-w-2xl lg:max-w-none"
           >
             <div 
               className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden aspect-[16/10] ring-1 ring-black/5 dark:ring-white/10"
@@ -240,7 +245,7 @@ export function HomeHero() {
               {/* Browser Content */}
               <div className="relative w-full h-[calc(100%-2.5rem)] bg-muted/20">
                 <Image 
-                  src="/work/mockups/Cafe-1.webp" 
+                  src="/work/hotel copy.webp" 
                   alt="Kivox Website Showcase" 
                   fill 
                   className="object-cover object-top"
@@ -261,3 +266,7 @@ export function HomeHero() {
     </Section>
   );
 }
+`;
+
+fs.writeFileSync(heroPath, content);
+console.log('HomeHero.tsx refactored successfully.');

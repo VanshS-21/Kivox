@@ -85,9 +85,10 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={`${sans.variable} ${serif.variable} ${body.variable} ${mono.variable} ${handwritten.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col relative">
         <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
         <CursorProvider>
           <LoadingProvider>

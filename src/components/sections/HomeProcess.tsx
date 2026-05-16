@@ -1,30 +1,23 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
-import { ChevronDown } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 
 import { home } from "@/content/pages/home";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
-import { fadeUp, transitionDefault, viewportOnce, easeOutExpo } from "@/lib/motion";
+import { fadeUp, transitionDefault, viewportOnce } from "@/lib/motion";
 
 export function HomeProcess() {
   const reduce = useReducedMotion();
-  const [activeStep, setActiveStep] = useState<number | null>(0);
-
   const steps = home.process;
-
-  // Allow desktop step to be null to support closing
-  const desktopActiveStep = activeStep;
 
   return (
     <Section id="process" spacing="default" className="relative overflow-hidden bg-surface-alt">
       <Container className="relative z-10">
-
+        
         {/* Heading + intro */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 mb-10 md:mb-16 lg:mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 mb-12 md:mb-16 lg:mb-20">
           <motion.h2 initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: 0.05 }} className="lg:col-span-7 studio-h2-editorial text-foreground">
             A proven process<br />
             <em className="text-accent" style={{ fontStyle: "italic" }}>for exceptional results.</em>
@@ -34,144 +27,85 @@ export function HomeProcess() {
           </motion.p>
         </div>
 
-        {/* ── Desktop: Horizontal Stepper (Inside Floating Card) ── */}
-        <motion.div 
-          initial={reduce ? false : "hidden"}
-          whileInView={reduce ? undefined : "show"}
-          viewport={viewportOnce}
-          variants={fadeUp}
-          transition={{ ...transitionDefault, delay: 0.15 }}
-          className="hidden lg:flex w-full flex-col studio-surface rounded-2xl p-10 lg:p-14 relative overflow-hidden shadow-[0_20px_60px_oklch(0_0_0_/_0.05)] dark:shadow-[0_20px_60px_oklch(0_0_0_/_0.3)]"
-        >
-          {/* Stepper Track */}
-          <div className="flex w-full mb-16 relative">
-            {/* Base track line */}
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-border/40" />
-            
-            {steps.map((step, idx) => {
-              const isActive = desktopActiveStep === idx;
-              const isPast = desktopActiveStep !== null && idx < desktopActiveStep;
-              
-              return (
-                <button 
-                  key={idx}
-                  onClick={() => setActiveStep(isActive ? null : idx)}
-                  className="flex-1 relative text-left group pt-6 outline-none pr-4"
-                  aria-label={`Phase ${idx + 1}: ${step.title}`}
-                >
-                  {/* Animated Active/Past line */}
-                  <motion.div 
-                    className={cn(
-                      "absolute top-0 left-0 h-[2px] origin-left transition-colors duration-300",
-                      isActive ? "bg-accent" : "bg-foreground"
-                    )}
-                    initial={false}
-                    animate={{ 
-                      scaleX: isActive || isPast ? 1 : 0 
-                    }}
-                    style={{ 
-                      width: "100%",
-                      opacity: isPast && !isActive ? 0.3 : 1 
-                    }}
-                    transition={{ duration: 0.4, ease: easeOutExpo }}
-                  />
-                  
-                  {/* Step Info */}
-                  <div className="flex flex-col gap-2 transition-opacity duration-300" style={{ opacity: isActive ? 1 : 0.5 }}>
-                    <span className="font-mono text-xs studio-tabular tracking-widest text-accent">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-                    <span className="font-serif tracking-wide text-xl text-foreground">
-                      {step.title}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-          
-          {/* Detail Area */}
-          <div className="relative min-h-[140px] flex flex-col justify-center">
-            <AnimatePresence mode="wait">
-              {desktopActiveStep !== null && (
-                <motion.div
-                  key={desktopActiveStep}
-                  initial={reduce ? false : { opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.35, ease: easeOutExpo }}
-                  className="max-w-3xl"
-                >
-                  <h3 className="studio-h3-sans mb-3 text-foreground">
-                    {steps[desktopActiveStep].subtitle}
-                  </h3>
-                  <p className="studio-body text-muted-foreground text-lg leading-relaxed">
-                    {steps[desktopActiveStep].description}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </motion.div>
-
-        {/* ── Mobile: Accordion ── */}
-        <div className="lg:hidden flex flex-col gap-4">
+        {/* ── Bento Grid ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {steps.map((step, idx) => {
-            const isActive = activeStep === idx;
-            const num = String(idx + 1).padStart(2, "0");
+            // Bento spans: 2-1, 1-2, 3 pattern
+            let spanClass = "";
+            let isDark = false;
             
+            if (idx === 0) spanClass = "md:col-span-2 lg:col-span-2"; // Discover
+            if (idx === 1) spanClass = "md:col-span-1 lg:col-span-1"; // Define
+            if (idx === 2) { spanClass = "md:col-span-1 lg:col-span-1"; isDark = true; } // Design (Dark accent card)
+            if (idx === 3) spanClass = "md:col-span-1 lg:col-span-2"; // Build
+            if (idx === 4) { spanClass = "md:col-span-2 lg:col-span-3"; } // Launch & Evolve
+            
+            const isFullWidth = idx === 4;
+
             return (
-              <motion.div 
+              <motion.div
                 key={idx}
                 initial={reduce ? false : "hidden"}
                 whileInView={reduce ? undefined : "show"}
                 viewport={viewportOnce}
                 variants={fadeUp}
-                transition={{ ...transitionDefault, delay: idx * 0.05 }}
-                className="studio-surface rounded-xl overflow-hidden shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border border-border/50"
+                transition={{ ...transitionDefault, delay: idx * 0.1 }}
+                className={cn(
+                  "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border transition-transform duration-500 hover:-translate-y-1",
+                  spanClass,
+                  isDark 
+                    ? "bg-[oklch(0.20_0_0)] text-white border-transparent" 
+                    : "studio-surface border-border/50",
+                  isFullWidth ? "lg:flex-row lg:items-center lg:p-12 lg:gap-16" : "gap-12"
+                )}
               >
-                <button 
-                  onClick={() => setActiveStep(isActive ? null : idx)}
-                  className="w-full flex items-center justify-between p-5 md:p-6 text-left outline-none"
-                  aria-expanded={isActive}
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="font-mono text-sm text-accent studio-tabular">{num}</span>
-                    <span className="font-serif text-xl text-foreground">{step.title}</span>
-                  </div>
-                  <motion.div 
-                    animate={{ rotate: isActive ? 180 : 0 }}
-                    transition={{ duration: 0.3, ease: easeOutExpo }}
-                    className="text-muted-foreground"
-                  >
-                    <ChevronDown size={20} />
-                  </motion.div>
-                </button>
-                
-                <AnimatePresence initial={false}>
-                  {isActive && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: easeOutExpo }}
-                      style={{ overflow: "hidden" }}
-                    >
-                      <div className="px-5 pb-6 md:px-6 md:pb-7">
-                        <div className="pt-4 border-t border-border/40">
-                          <h4 className="studio-eyebrow text-foreground mb-2 block">{step.subtitle}</h4>
-                          <p className="studio-body text-muted-foreground">
-                            {step.description}
-                          </p>
-                        </div>
-                      </div>
-                    </motion.div>
+                {/* Decorative background number */}
+                <div 
+                  className={cn(
+                    "absolute -right-4 -bottom-8 text-[8rem] font-serif italic leading-none select-none pointer-events-none",
+                    isDark ? "text-white opacity-[0.05]" : "text-foreground opacity-[0.03]"
                   )}
-                </AnimatePresence>
+                  aria-hidden="true"
+                >
+                  {idx + 1}
+                </div>
+
+                {/* Number & Title */}
+                <div className={cn("flex flex-col gap-4 relative z-10", isFullWidth ? "lg:w-1/3 shrink-0" : "")}>
+                  <span className={cn(
+                    "font-mono text-sm studio-tabular font-semibold tracking-widest",
+                    isDark ? "text-white/70" : "text-accent"
+                  )}>
+                    STEP {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className={cn(
+                    "font-serif text-3xl",
+                    isDark ? "text-white" : "text-foreground"
+                  )}>
+                    {step.title}
+                  </h3>
+                </div>
+                
+                {/* Content */}
+                <div className={cn("flex flex-col gap-3 relative z-10", isFullWidth ? "lg:flex-1" : "")}>
+                  <h4 className={cn(
+                    "studio-eyebrow",
+                    isDark ? "text-white/90" : "text-foreground"
+                  )}>
+                    {step.subtitle}
+                  </h4>
+                  <p className={cn(
+                    "studio-body text-lg leading-relaxed",
+                    isDark ? "text-white/70" : "text-muted-foreground"
+                  )}>
+                    {step.description}
+                  </p>
+                </div>
               </motion.div>
             );
           })}
         </div>
+
       </Container>
     </Section>
   );

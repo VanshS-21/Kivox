@@ -5,21 +5,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { brand } from "@/content/brand";
+import { navigation } from "@/content/navigation";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { KivoxLogo } from "@/components/ui/KivoxLogo";
 import { Magnetic } from "@/components/ui/Magnetic";
 
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/work", label: "Showcase" },
-  { href: "/blog", label: "Blog" },
-  { href: "/#services", label: "Services" },
-  { href: "/contact", label: "Contact" },
-];
-
-const heroAccent = "var(--hero-accent, oklch(0.72 0.18 65))";
-const heroAccentInk = "var(--hero-accent-ink, oklch(0.99 0.008 80))";
-const heroForeground = "var(--hero-fg, oklch(0.95 0.012 72))";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,10 +19,6 @@ export function Navigation() {
   const [pastHero, setPastHero] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const pathname = usePathname();
-
-  // Only the home page has the dark constellation hero.
-  // All other pages use theme-aware backgrounds from the start.
-  const isHomePage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,7 +39,8 @@ export function Navigation() {
 
   // Track active section via IntersectionObserver
   useEffect(() => {
-    const sectionIds = ["services", "contact"];
+    // Track sections to know what is currently in view
+    const sectionIds = ["live-examples", "services", "process", "team", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -66,7 +53,7 @@ export function Navigation() {
             setActiveSection(id);
           }
         },
-        { threshold: 0.3 },
+        { threshold: 0.2 },
       );
       observer.observe(el);
       observers.push(observer);
@@ -133,13 +120,6 @@ export function Navigation() {
     };
   }, [isOpen]);
 
-  // Nav color states:
-  //   overHero = still scrolling over the dark hero section (home page only)
-  //   pastHero = scrolled past the hero into the page content
-  const overHero = isHomePage && !pastHero;
-  //   useHeroColors = true only if we are over the hero AND the menu is closed
-  const useHeroColors = overHero && !isOpen;
-
   // Hide on showcase demo sites
   if (pathname.startsWith("/showcase")) return null;
 
@@ -155,13 +135,6 @@ export function Navigation() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
           isScrolled ? "border-b border-border" : ""
         }`}
-        style={{
-          backgroundColor: useHeroColors
-            ? isScrolled
-              ? "var(--hero-bg-scroll)"
-              : "transparent"
-            : undefined,
-        }}
       >
         {/* Theme-aware background — fades in when past the hero */}
         <div
@@ -188,20 +161,41 @@ export function Navigation() {
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className={`transition-colors duration-500 group-hover:text-accent ${
-                    !useHeroColors ? "text-foreground" : ""
-                  }`}
-                  style={
-                    useHeroColors ? { color: heroForeground } : undefined
-                  }
+                  className="transition-colors duration-500 group-hover:text-accent text-foreground"
                 >
                   <KivoxLogo
                     height={24}
-                    variant={useHeroColors ? "brand" : "mono"}
+                    variant="mono"
                   />
                 </motion.div>
               </Link>
             </Magnetic>
+
+
+            {/* Desktop Links */}
+            <div className="hidden lg:flex items-center gap-8">
+              {navigation.primary.map((item) => {
+                let isActive = false;
+
+                if (item.href === "/") {
+                  isActive = pathname === "/" && !pastHero;
+                } else if (item.href.startsWith("/#")) {
+                  isActive = activeSection === item.href.substring(2);
+                } else {
+                  isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                }
+                  
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={`text-sm font-medium tracking-tight transition-colors duration-200 ${isActive ? "text-accent" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
 
             {/* Right side — CTA, theme toggle, hamburger */}
             <div className="flex items-center gap-3 relative z-[60]">
@@ -211,27 +205,15 @@ export function Navigation() {
                   <Link
                     href="/contact"
                     className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-200"
-                    style={
-                      useHeroColors
-                        ? {
-                            backgroundColor: heroAccent,
-                            color: heroAccentInk,
-                            boxShadow: `0 16px 42px -28px color-mix(in oklch, ${heroAccent} 72%, transparent)`,
-                          }
-                        : undefined
-                    }
                   >
-                    Start a project
+                    Book a Free Call
                     <span className="text-base">→</span>
                   </Link>
                 </Magnetic>
               )}
 
               {/* Theme toggle */}
-              <ThemeToggle
-                className={!useHeroColors ? "text-foreground" : ""}
-                style={useHeroColors ? { color: heroForeground } : undefined}
-              />
+              <ThemeToggle className="text-foreground" />
 
               {/* Hamburger button */}
               <Magnetic strength={0.25}>
@@ -240,7 +222,7 @@ export function Navigation() {
                   onClick={() => {
                     setIsOpen(!isOpen);
                   }}
-                  className="flex flex-col gap-1.5 p-2 rounded-lg hover:bg-accent/10 transition-colors"
+                  className="flex lg:hidden flex-col gap-1.5 p-2 rounded-lg hover:bg-accent/10 transition-colors"
                   aria-label="Toggle menu"
                   aria-expanded={isOpen}
                 >
@@ -251,9 +233,7 @@ export function Navigation() {
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className="w-6 h-0.5 transition-colors duration-500"
                     style={{
-                      background: useHeroColors
-                        ? heroAccent
-                        : "var(--fg-primary)",
+                      background: "var(--fg-primary)",
                     }}
                   />
                   <motion.span
@@ -265,9 +245,7 @@ export function Navigation() {
                     transition={{ duration: 0.3 }}
                     className="w-6 h-0.5 origin-center transition-colors duration-500"
                     style={{
-                      background: useHeroColors
-                        ? heroForeground
-                        : "var(--fg-primary)",
+                      background: "var(--fg-primary)",
                     }}
                   />
                   <motion.span
@@ -277,9 +255,7 @@ export function Navigation() {
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className="w-6 h-0.5 transition-colors duration-500"
                     style={{
-                      background: useHeroColors
-                        ? heroForeground
-                        : "var(--fg-primary)",
+                      background: "var(--fg-primary)",
                     }}
                   />
                 </button>
@@ -316,8 +292,16 @@ export function Navigation() {
               {/* Left — navigation links with dramatic cascade */}
               <div className="flex-1 flex flex-col justify-center">
                 <nav className="space-y-0">
-                  {navItems.map((item, idx) => {
-                    const isActive = item.href === `/#${activeSection}`;
+                  {navigation.primary.map((item, idx) => {
+                    let isActive = false;
+                    if (item.href === "/") {
+                      isActive = pathname === "/" && !pastHero;
+                    } else if (item.href.startsWith("/#")) {
+                      isActive = activeSection === item.href.substring(2);
+                    } else {
+                      isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                    }
+                    
                     return (
                       <motion.div
                         key={item.href}

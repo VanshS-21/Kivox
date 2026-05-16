@@ -117,7 +117,7 @@ export function HomePOV() {
   return (
     <div ref={sectionRef} className="relative">
     <Section
-      className="relative py-[100px] md:py-[140px] lg:py-[200px] overflow-hidden"
+      className="relative py-12 md:py-16 lg:py-20 overflow-hidden"
       style={{ background: 'var(--bg-primary)' }}
     >
       {/* Committed amber glow — restrained size so it doesn't bleed into adjacent sections */}
@@ -137,7 +137,7 @@ export function HomePOV() {
           {/* Large left-aligned quote — word-by-word reveal */}
           <blockquote className="lg:col-span-8">
             <span className="sr-only">We believe great digital platforms are not built; they are crafted.</span>
-            <p aria-hidden="true" className="studio-h1-headline text-foreground">
+            <p aria-hidden="true" className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight text-foreground font-sans">
               <WordByWordReveal reduce={reduce}>
                 We believe great digital platforms
               </WordByWordReveal>
@@ -153,7 +153,7 @@ export function HomePOV() {
                 whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.9 }}
-                className="text-accent inline-block relative not-italic studio-h1-headline font-serif"
+                className="text-accent inline-block relative not-italic text-2xl sm:text-3xl lg:text-4xl font-serif"
                 style={{
                   fontWeight: 300,
                   fontStyle: "italic",

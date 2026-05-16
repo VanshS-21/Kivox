@@ -39,7 +39,7 @@ function FormField({
   return (
     <div className={`flex flex-col gap-2 ${className || ""}`}>
       <div className="flex items-center justify-between gap-4">
-        <label htmlFor={id} className="studio-eyebrow text-muted-foreground">
+        <label htmlFor={id} className="text-sm uppercase tracking-widest font-mono font-medium text-muted-foreground">
           {label}
         </label>
         {error && (
@@ -58,7 +58,7 @@ const inputStyle = [
   "w-full px-0 py-4",
   "bg-transparent",
   "border-0 border-b border-border",
-  "studio-h4-sans text-foreground",
+  "studio-h3-sans text-foreground",
   "outline-none transition-colors duration-200",
   "focus:border-accent focus:bg-accent-muted/50",
   "placeholder:text-muted-foreground/40",
@@ -85,8 +85,6 @@ export function InquiryForm() {
       phone: "",
       businessType: "Other",
       whatYouNeed: "Website",
-      primaryGoal: "",
-      currentUrl: "",
       timeline: undefined,
       notes: "",
     },
@@ -144,7 +142,7 @@ export function InquiryForm() {
             autoComplete="name"
             className={inputStyle}
             disabled={isDisabled}
-            placeholder="Your full name"
+            placeholder="Full name"
             maxLength={100}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? errorId("name") : undefined}
@@ -158,7 +156,7 @@ export function InquiryForm() {
             className={inputStyle}
             disabled={isDisabled}
             type="email"
-            placeholder="you@company.com"
+            placeholder="Email address"
             maxLength={254}
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? errorId("email") : undefined}
@@ -181,7 +179,7 @@ export function InquiryForm() {
             className={inputStyle}
             disabled={isDisabled}
             type="tel"
-            placeholder="+91 ..."
+            placeholder="Phone number"
             maxLength={20}
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? errorId("phone") : undefined}
@@ -256,38 +254,12 @@ export function InquiryForm() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.18 }}
       >
-      <FormField label="Primary goal" error={errors.primaryGoal?.message} id={fieldId("primaryGoal")}>
-        <input
-          id={fieldId("primaryGoal")}
-          className={inputStyle}
-          disabled={isDisabled}
-          placeholder="What should improve when this is live?"
-          maxLength={300}
-          aria-invalid={!!errors.primaryGoal}
-          aria-describedby={errors.primaryGoal ? errorId("primaryGoal") : undefined}
-          {...form.register("primaryGoal")}
-        />
-      </FormField>
-
-      <FormField label="Current website/app (optional)" error={errors.currentUrl?.message} id={fieldId("currentUrl")}>
-        <input
-          id={fieldId("currentUrl")}
-          className={inputStyle}
-          disabled={isDisabled}
-          placeholder="https://"
-          maxLength={500}
-          aria-invalid={!!errors.currentUrl}
-          aria-describedby={errors.currentUrl ? errorId("currentUrl") : undefined}
-          {...form.register("currentUrl")}
-        />
-      </FormField>
-
       <FormField label="Notes (optional)" error={errors.notes?.message} id={fieldId("notes")}>
         <textarea
           id={fieldId("notes")}
           className={`${inputStyle} min-h-32 py-4 resize-y`}
           disabled={isDisabled}
-          placeholder="Anything else we should know: timeline, budget, inspiration..."
+          placeholder="Project details, scope, or any helpful context..."
           maxLength={5000}
           aria-invalid={!!errors.notes}
           aria-describedby={errors.notes ? errorId("notes") : undefined}
@@ -333,7 +305,7 @@ export function InquiryForm() {
               className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-base"
               role="alert"
             >
-              {status.message} Please try again, or reach us at hello@kivox.in.
+              {status.message} Please try again, or reach us at kivox.contact@gmail.com.
             </motion.div>
           )}
 

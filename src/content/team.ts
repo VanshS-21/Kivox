@@ -4,6 +4,7 @@ export interface TeamMember {
   role: string;
   focus: string;
   image: string;
+  quote: string;
 }
 
 export const team: {
@@ -23,6 +24,7 @@ export const team: {
       role: "Founder & Strategy",
       focus: "Business clarity, information architecture, client relationships",
       image: "/team/member-1.webp",
+      quote: "I believe technology should adapt to your business, not the other way around.",
     },
     {
       id: "priya",
@@ -30,6 +32,7 @@ export const team: {
       role: "Design Lead",
       focus: "Visual systems, typography, brand identity",
       image: "/team/member-2.webp",
+      quote: "Good design is obvious. Great design is invisible and effortless.",
     },
     {
       id: "kai",
@@ -37,6 +40,7 @@ export const team: {
       role: "Engineering Lead",
       focus: "Frontend architecture, performance, accessibility",
       image: "/team/member-3.webp",
+      quote: "Speed and accessibility aren't features—they're the foundation of the web.",
     },
     {
       id: "maya",
@@ -44,6 +48,7 @@ export const team: {
       role: "UX & Research",
       focus: "User flows, usability testing, content strategy",
       image: "/team/member-4.webp",
+      quote: "We listen to what your customers need, and build exactly that.",
     },
     {
       id: "omar",
@@ -51,6 +56,7 @@ export const team: {
       role: "Full-Stack Developer",
       focus: "Backend systems, integrations, deployment",
       image: "/team/member-5.webp",
+      quote: "The best systems are the ones you never have to think about.",
     },
     {
       id: "sara",
@@ -58,6 +64,7 @@ export const team: {
       role: "Visual Designer",
       focus: "UI design, motion, interaction details",
       image: "/team/member-6.webp",
+      quote: "The details are not the details. They make the design.",
     },
   ],
 };

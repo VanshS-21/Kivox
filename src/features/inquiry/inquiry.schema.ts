@@ -33,14 +33,6 @@ export const inquirySchema = z.object({
   phone: z.string().trim().min(6, "Please enter a valid phone number"),
   businessType: z.enum(businessTypeOptions),
   whatYouNeed: z.enum(whatYouNeedOptions),
-  primaryGoal: z.string().trim().min(4, "Tell us what should improve when this goes live"),
-  currentUrl: z
-    .string()
-    .trim()
-    .optional()
-    .refine((v) => !v || v.startsWith("http://") || v.startsWith("https://"), {
-      message: "Enter a valid URL (include https://)",
-    }),
   timeline: z.enum(timelineOptions).or(z.literal("")).optional().transform(val => val === "" ? undefined : val),
   notes: z.string().trim().max(5000).optional(),
 });

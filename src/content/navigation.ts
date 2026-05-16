@@ -1,9 +1,9 @@
 export const navigation = {
   primary: [
-    { label: "Showcase", href: "/work" },
-    { label: "Blog", href: "/blog" },
+    { label: "Home", href: "/" },
     { label: "Services", href: "/#services" },
-    { label: "Process", href: "/#process" },
+    { label: "Work", href: "/work" },
+    { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ],
 } as const;

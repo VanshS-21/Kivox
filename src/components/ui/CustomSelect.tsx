@@ -46,7 +46,7 @@ export function CustomSelect({
         id={id}
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full px-0 py-4 bg-transparent border-0 border-b text-left studio-h4-sans outline-none transition-colors duration-200 flex items-center justify-between disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${
+        className={`w-full px-0 py-4 bg-transparent border-0 border-b text-left studio-h3-sans outline-none transition-colors duration-200 flex items-center justify-between disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${
           hasError ? "border-error text-error" : "border-border text-foreground hover:border-accent focus:border-accent focus:bg-accent-muted/50"
         } ${!value ? "text-muted-foreground/40" : ""}`}
         aria-haspopup="listbox"

@@ -6,129 +6,92 @@ import { motion, useReducedMotion } from "motion/react";
 import { team } from "@/content/team";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { easeOutExpo, viewportOnce } from "@/lib/motion";
+import { easeOutExpo, viewportOnce, fadeUp, transitionDefault } from "@/lib/motion";
+import { cn } from "@/lib/cn";
 
 export function HomeTeam() {
   const reduce = useReducedMotion();
 
-  // Split: first 2 are featured (larger), rest are supporting (compact)
-  const featured = team.members.slice(0, 2);
-  const supporting = team.members.slice(2);
-
   return (
     <Section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden bg-surface-alt"
       spacing="default"
       id="team"
     >
       <Container>
-        {/* ── Section header — no eyebrow, label integrated into headline ── */}
+        {/* ── Section header ── */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+          initial={reduce ? false : "hidden"}
+          whileInView={reduce ? undefined : "show"}
           viewport={viewportOnce}
-          transition={{ duration: 0.7, ease: easeOutExpo }}
-          className="mb-10 md:mb-16 lg:mb-24"
+          variants={fadeUp}
+          transition={transitionDefault}
+          className="mb-12 md:mb-16"
         >
-          <p className="studio-eyebrow text-accent mb-5">[ Team ]</p>
-          <h2 className="studio-h2-editorial text-foreground mb-5">
+          <h2 className="studio-h2-editorial text-foreground mb-4">
             Built by{" "}
             <em className="font-serif italic text-accent" style={{ fontStyle: "italic" }}>
               People.
             </em>
           </h2>
-
           <p className="studio-body-serif text-muted-foreground max-w-xl">
             {team.intro}
           </p>
         </motion.div>
 
-        {/* ── Featured row: 2 large portraits ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 md:gap-x-8 lg:gap-x-10 gap-y-10 md:gap-y-14 lg:gap-y-16 mb-10 md:mb-12 lg:mb-16">
-          {featured.map((member, idx) => (
+        {/* ── Team Grid (3 columns, constrained width) ── */}
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 lg:gap-y-12">
+          {team.members.map((member, idx) => (
             <motion.div
               key={member.id}
-              initial={reduce ? false : { opacity: 0, y: 30 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              initial={reduce ? false : "hidden"}
+              whileInView={reduce ? undefined : "show"}
               viewport={viewportOnce}
+              variants={fadeUp}
               transition={{
-                duration: 0.6,
-                ease: easeOutExpo,
+                ...transitionDefault,
                 delay: idx * 0.1,
               }}
-              className="group"
+              className="group flex flex-col"
             >
-              {/* Portrait — large */}
-              <div className="relative mb-5 lg:mb-6 overflow-hidden rounded-xl lg:rounded-2xl ring-0 group-hover:ring-1 ring-accent/20 transition-all duration-500">
-                <div className="aspect-[4/5] relative">
+              {/* Portrait */}
+              <div className="relative mb-5 overflow-hidden rounded-xl ring-0 group-hover:ring-1 ring-accent/30 transition-all duration-500 bg-surface">
+                <div className="aspect-square relative">
                   <Image
                     src={member.image}
                     alt={`${member.name}, ${member.role} at Kivox`}
                     fill
-                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-
-                  {/* Subtle warm overlay on hover */}
-                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.08] transition-colors duration-500" />
+                  {/* Overlay gradient for quote hover effect - bottom third */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-6 text-left">
+                    <p className="text-white/95 font-serif italic text-lg leading-relaxed transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                      &quot;{member.quote}&quot;
+                    </p>
+                  </div>
                 </div>
               </div>
 
               {/* Info */}
-              <div>
-                <span className="studio-eyebrow text-accent block mb-2">
-                  {member.role}
-                </span>
-
-                <h3 className="studio-h3-sans text-foreground mb-2 transition-colors duration-300 group-hover:text-accent">
-                  {member.name}
-                </h3>
-
-                <p className="text-sm text-muted-foreground leading-relaxed">
+              <div className="flex flex-col flex-1">
+                <div className="flex justify-between items-start mb-1">
+                  <h3 className="studio-h4-sans text-foreground transition-colors duration-300 group-hover:text-accent">
+                    {member.name}
+                  </h3>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-accent/80 border border-accent/20 px-2 py-0.5 rounded-full">
+                    {member.role}
+                  </span>
+                </div>
+                
+                <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
                   {member.focus}
                 </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* ── Supporting row: 4 compact portraits ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 md:gap-x-6 lg:gap-x-8 gap-y-8 md:gap-y-10">
-          {supporting.map((member, idx) => (
-            <motion.div
-              key={member.id}
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={viewportOnce}
-              transition={{
-                duration: 0.5,
-                ease: easeOutExpo,
-                delay: 0.15 + idx * 0.06,
-              }}
-              className="group"
-            >
-              {/* Portrait — compact */}
-              <div className="relative mb-4 overflow-hidden rounded-lg lg:rounded-xl ring-0 group-hover:ring-1 ring-accent/20 transition-all duration-500">
-                <div className="aspect-[3/4] relative">
-                  <Image
-                    src={member.image}
-                    alt={`${member.name}, ${member.role} at Kivox`}
-                    fill
-                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                    sizes="(max-width: 640px) 50vw, 25vw"
-                  />
-                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.08] transition-colors duration-500" />
-                </div>
-              </div>
-
-              {/* Compact info — name + role only */}
-              <div>
-                <h3 className="studio-h4-sans text-foreground mb-1 transition-colors duration-300 group-hover:text-accent">
-                  {member.name}
-                </h3>
-                <span className="studio-eyebrow text-muted-foreground">
-                  {member.role}
-                </span>
+                
+                {/* Mobile quote (visible only on mobile since hover isn't reliable) */}
+                <p className="lg:hidden mt-4 text-[14px] italic text-muted-foreground/80 border-l-2 border-accent/40 pl-3">
+                  &quot;{member.quote}&quot;
+                </p>
               </div>
             </motion.div>
           ))}

@@ -122,27 +122,32 @@ components:
 
 ## 1. Overview
 
+**Default Theme: Light Mode.** The primary visitor experience is light mode. The target audience (SMB owners, non-technical business people) browses in daylight and associates light interfaces with professionalism and approachability. Dark mode remains available as a toggle for visitors who prefer it.
+
 **Creative North Stars:**
 
-**Dark Mode: "The Firelit Studio."** Kivox's dark mode draws from the intimacy of a well-lit workshop at dusk: warm amber light pooling across dark surfaces, the confidence of tools laid out with intention, materials that feel honest rather than polished to anonymity. Warm-tinted neutrals (hue 55–85, chroma 0.005–0.02) ground everything. Amber carries 30–60% of visual weight at hero moments.
+**Light Mode (Default): "The Atelier in Morning Light."** A master craftsman's studio in cold morning light. White walls, raw materials, clean surfaces, sharp shadows from a single window. Considered. Architectural. Precise. Cold-tinted neutrals (hue 250, chroma 0.002–0.005) with one deliberate exception: the services and process sections use Warm Linen `oklch(0.955 0.008 70)` to avoid sterility in content-dense areas. Amber deepens to burnt amber for authority against cool backgrounds.
 
-**Light Mode: "The Atelier in Morning Light."** A master craftsman's studio in cold morning light. White walls, raw materials, clean surfaces, sharp shadows from a single window. Considered. Architectural. Precise. The same craft and intention as the dark mode, expressed through clarity and restraint rather than drama and atmosphere. Cold-tinted neutrals (hue 250, chroma 0.002–0.005) replace warm surfaces, with one deliberate exception: the services and process sections use Warm Linen `oklch(0.955 0.008 70)` to avoid sterility in content-dense areas. Amber deepens to burnt amber for authority against cool backgrounds.
+**Dark Mode (Toggle): "The Firelit Studio."** Kivox's dark mode draws from the intimacy of a well-lit workshop at dusk: warm amber light pooling across dark surfaces, the confidence of tools laid out with intention. Warm-tinted neutrals (hue 55–85, chroma 0.005–0.02) ground everything. Amber carries 30–60% of visual weight at hero moments.
 
-The system is Committed: amber is the only chromatic color in site chrome. The dual-theme system uses deliberate temperature polarity: dark mode is warm, light mode is cold. The amber accent bridges both, operating as firelight in dark mode and as deliberate tooling marks in light mode.
+The system is Committed: amber is the only chromatic color in site chrome. The dual-theme system uses deliberate temperature polarity: dark mode is warm, light mode is cold. The amber accent bridges both, operating as deliberate tooling marks in light mode and as firelight in dark mode.
 
-This system explicitly rejects generic SaaS template sites, loud startup pages, dark tech aesthetics with neon accents, enterprise posturing, and luxury hotel minimalism. If a visitor could mistake this for a template, the design has failed. The proof is in the execution: typography that demonstrates mastery, spacing that breathes without pretension, motion that responds rather than performs.
+This system explicitly rejects generic SaaS template sites, loud startup pages, dark tech aesthetics with neon accents, enterprise posturing, luxury hotel minimalism, and intimidating craft showcases. If a non-technical visitor feels confused or intimidated, the design has failed. The proof is in approachable execution: typography that demonstrates mastery, spacing that breathes without pretension, motion that enhances rather than obstructs.
 
 **Key Characteristics:**
-- Temperature polarity: dark mode warm-tinted (hue 65), light mode cold-tinted (hue 250) with Warm Linen exception
+- Light mode default, dark mode via toggle
+- Temperature polarity: light mode cold-tinted (hue 250), dark mode warm-tinted (hue 65), with Warm Linen exception
 - Committed amber accent at key moments, restrained everywhere else
 - Editorial serif/sans pairing (Spectral + Bricolage Grotesque) for headline variety
 - Structural shadows with amber-tinted hover states
-- Scroll-driven section crossfades (overdrive system) for cinematic pacing
-- Dual-theme: cold architectural (light) and firelit dark, connected by amber
-- Hero and footer dark-locked in both themes
-- Magnetic CTA physics and 3D depth-fan service interactions
+- Hero shows product mockups (device frames displaying showcase websites)
+- Footer dark-locked in both themes
+- Full navigation bar visible on desktop; hamburger on mobile only
+- Services scannable without interaction; interactive detail as progressive enhancement
+- Social proof sections: testimonials, concept project band
+- Low-commitment primary CTA ("Book a Free Call" not "Start a project")
 
-Motion energy is Choreographed: orchestrated word-by-word hero entrances, scroll-driven crossfade reveals, magnetic CTA physics, 3D depth-fan service rows, tunnel canvas perspective effects, and constellation canvas generative backgrounds. All motion respects `prefers-reduced-motion` with instant fallbacks.
+Motion energy is Choreographed: word-by-word hero entrances, scroll-driven reveals, magnetic CTA physics, tunnel canvas perspective effects. The constellation canvas may serve as a subtle background texture in the hero, not as the primary visual. All motion respects `prefers-reduced-motion` with instant fallbacks.
 
 ## 2. Colors: The Dual-Temperature Palette
 
@@ -385,13 +390,15 @@ Before any rebuilt showcase is considered ready to launch separately, it must pa
 
 ### Parent-Site Color Rules
 
-**The Temperature Rule.** Dark mode is warm-tinted (hue 55–85, chroma 0.005–0.02). Light mode is cold-tinted (hue 250, chroma 0.002–0.005). This is deliberate polarity, not inconsistency. Pure `#000`, `#fff`, and `#808080` remain forbidden in both modes.
+**The Light-First Rule.** Light mode is the default visitor experience. The site loads in light mode unless the visitor has explicitly toggled to dark. System preference detection may be used, but the design must be optimized for light mode first.
+
+**The Temperature Rule.** Light mode is cold-tinted (hue 250, chroma 0.002–0.005). Dark mode is warm-tinted (hue 55–85, chroma 0.005–0.02). This is deliberate polarity, not inconsistency. Pure `#000`, `#fff`, and `#808080` remain forbidden in both modes.
 
 **The Warm Linen Exception.** Light mode uses cold neutrals everywhere except `--bg-surface-alt`, which uses `oklch(0.955 0.008 70)` (warm, hue 70). This prevents content-dense sections (services, process) from feeling clinical. The exception is intentional, not an oversight.
 
-**The Committed Amber Rule.** Amber is the only chromatic color in site chrome. It carries 30–60% of visual weight at hero moments, then retreats to ≤10% in content-heavy sections. In light mode, amber deepens to burnt amber `oklch(0.60 0.22 55)` for authority against cool surfaces.
+**The Committed Amber Rule.** Amber is the only chromatic color in site chrome. In light mode (the default), amber deepens to burnt amber `oklch(0.60 0.22 55)` for authority against cool surfaces. In dark mode, standard amber carries 30–60% of visual weight at hero moments, then retreats to ≤10% in content-heavy sections.
 
-**The Dark-Locked Zones Rule.** The hero section and footer are permanently dark in both themes. Hero tokens (`--hero-bg`, `--hero-fg`, etc.) are defined only in `:root`, never overridden in `[data-theme="light"]`. The footer explicitly resets to warm dark tokens in `[data-theme="light"] footer`.
+**The Dark Footer Rule.** The footer is permanently dark in both themes. The footer explicitly resets to warm dark tokens in `[data-theme="light"] footer`. The hero section is NOT dark-locked; it adapts to the active theme like all other sections.
 
 **The POV Wash Rule.** The philosophical section uses `--pov-wash`: `oklch(0.95 0.003 250)` (cool) in light mode, `oklch(0.09 0.025 60)` (warm amber atmosphere) in dark mode.
 
@@ -476,7 +483,7 @@ Tactile and assured. Buttons feel like physical objects: they lift on hover, com
 ### Cards / Containers
 
 - **Studio Surface:** The canonical card primitive. Elevated background, 1px strong border, 14px radius, rest shadow. Includes an internal hairline grid overlay (28px spacing, `--border-soft` at `--studio-grid-opacity`). Optional noise texture via `studio-surface--noise` modifier. Quiet/loud variants scale grid and noise opacity.
-- **Service Row:** Not a card; a full-width bordered row. No background at rest. On hover: the row lifts, rotates slightly in 3D (`perspective: 1200px`, `rotateX`, `translateZ`), and siblings compress/dim with graduated distance. Arrow icon box (amber background, 12px radius) rotates 45° and gains an amber glow + pulse ring.
+- **Service Card:** All services visible at a glance without interaction. Each card shows: service name (Title weight), short description (Body), and a checklist of 3–5 specific deliverables using check marks. Cards use `studio-surface` with standard padding. On desktop, an interactive detail panel may expand on click/hover as a progressive enhancement, but the default state must communicate the full service offering. The interactive 3D hover effects (perspective, rotateX, translateZ) may be retained as polish but must not gate content discovery.
 - **Carousel Frame:** Signature component. Dark matte container (`oklch(0.13 0.015 55)`) with generous padding, multi-layer outer shadow, inset depth shadows, noise texture overlay, and an inner image well with edge-fade masks. Light mode uses cool neutral shadows instead.
 
 ### Inputs / Fields
@@ -488,9 +495,9 @@ Tactile and assured. Buttons feel like physical objects: they lift on hover, com
 
 ### Navigation
 
-- **Desktop:** Fixed, full-width, 80px height, z-50. Transparent over dark hero, then transitions to theme-aware blurred background (`backdrop-filter: blur(20px)`) with border-bottom on scroll. Logo: Custom SVG `<KivoxLogo />` component, responsive and animated on hover. CTA button: amber pill with arrow, 8px radius. Hamburger: three animated bars (rotate to X on open).
-- **Mobile Overlay:** Full-screen, theme background, grain texture. Navigation links at 36–56px Bricolage Grotesque Bold with numbered indices (Geist Mono, amber). Cascade entrance with staggered blur-to-sharp reveals. Amber underline draws on hover. Connect/email info in right column with eyebrow labels.
-- **Scroll Behavior:** Nav element colors adapt: white/cream over dark hero, theme-foreground after scrolling past hero bottom edge. 500ms color transition.
+- **Desktop:** Fixed, full-width, 80px height, z-50. **Full horizontal nav bar** with visible links: Home, Services, Work, About, Blog, Contact. No hamburger on desktop. Transitions to theme-aware blurred background (`backdrop-filter: blur(20px)`) with border-bottom on scroll. Logo: Custom SVG `<KivoxLogo />` component, responsive and animated on hover. CTA button: amber pill ("Book a Free Call" or equivalent low-commitment text).
+- **Mobile:** Hamburger menu with full-screen overlay. Theme background, grain texture. Navigation links at 36–56px Bricolage Grotesque Bold with numbered indices (Geist Mono, amber). Cascade entrance with staggered blur-to-sharp reveals.
+- **Scroll Behavior:** Nav transitions from transparent to blurred background with border-bottom on scroll. 500ms transition.
 
 ### Back to Top
 
@@ -498,7 +505,23 @@ Floating circular button (44px, rounded-full). Elevated background with `backdro
 
 ### Signature: Constellation Canvas
 
-Generative background for the hero section. Dark variant always (`oklch(0.05 0.008 65)`). Floating nodes with connecting lines, amber-tinted. Radial amber glow overlay. Film grain texture at 35% opacity. Hero-only; never repeated.
+Optional subtle background texture for the hero section, not the primary visual. Floating nodes with connecting lines, amber-tinted. Reduced opacity in light mode to avoid competing with the product mockup. Film grain texture at lower opacity. Hero-only; never repeated. The primary hero visual is the product mockup; the constellation canvas adds depth behind it.
+
+### Hero Product Mockup
+
+The hero's primary visual anchor. A beautifully art-directed laptop and/or phone frame displaying the best showcase website (e.g., The Roastery, Aurelia Grand). This communicates "we build websites" within 2 seconds. The mockup should be high-quality, showing real screenshot content from the live showcases. May use subtle parallax or float animation. In dark mode, the device frames use dark bezels; in light mode, silver/white bezels that match the Atelier theme.
+
+### Testimonial Section
+
+Homepage section displaying real testimonials. Each testimonial card includes: quote text (Spectral italic, `studio-body-serif`), person name (Bricolage Grotesque, semibold), role/context (Figtree, muted text), and optional photo (48px circle). Cards use the `studio-surface` primitive. Section eyebrow: `[ What People Say ]` or equivalent. Minimum 2, maximum 4 visible testimonials. No carousel unless there are more than 4.
+
+### Concept Project Band
+
+A horizontal band showing logos or names of the concept projects (MedQueue, The Roastery, Aurelia Grand, Greenfield Academy, Vortex Fitness). Framed honestly: eyebrow label reads `[ Projects We've Crafted ]` not "Trusted by" or "Our Clients." Logos use theme-foreground color at 60% opacity, brightening to 100% on hover. Subtle horizontal scroll on mobile if needed.
+
+### Homepage FAQ
+
+3–5 frequently asked questions displayed inline on the homepage, after the process section and before the contact section. Uses the existing `FaqAccordion` component. Questions should address the top objections: pricing ballpark, timeline, process, what the client needs to provide, and revision policy. Section eyebrow: `[ Common Questions ]`. The FAQ section should use the Warm Linen background in light mode to visually separate it from surrounding sections.
 
 ### Signature: Tunnel Canvas
 
@@ -508,7 +531,13 @@ Converging perspective lines creating a one-point corridor effect on the Work pa
 
 ### Do:
 
-- **Do** tint every neutral toward the theme hue: hue 55–85 in dark mode, hue 250 in light mode, except Warm Linen.
+- **Do** default to light mode. The primary visitor experience is the Atelier (light) theme.
+- **Do** show the product in the hero. Device mockups displaying real showcase websites communicate "we build websites" within 2 seconds.
+- **Do** display a full navigation bar on desktop with all primary links visible. No hamburger on desktop.
+- **Do** make services scannable without interaction. All service offerings should be visible at a glance with deliverable checklists. Interactive enhancement is progressive, not required.
+- **Do** use low-commitment CTA language. "Book a Free Call" or "Let's Talk" rather than "Start a project."
+- **Do** include real testimonials, a concept project band, and a homepage FAQ section.
+- **Do** tint every neutral toward the theme hue: hue 250 in light mode, hue 55–85 in dark mode, except Warm Linen.
 - **Do** use OKLCH as the canonical color format. Reduce chroma as lightness approaches 0 or 100.
 - **Do** apply `text-wrap: balance` on all headings and `text-wrap: pretty` on all prose.
 - **Do** increase body line-height from 1.6 to 1.65 in dark mode for light-on-dark compensation.
@@ -517,12 +546,19 @@ Converging perspective lines creating a one-point corridor effect on the Work pa
 - **Do** ease out with exponential curves (`cubic-bezier(0.16, 1, 0.3, 1)` or quart/quint). No bounce, no elastic.
 - **Do** respect `prefers-reduced-motion` with instant fallbacks for every animation.
 - **Do** use the `studio-surface` utility for card containers. The hairline grid is the signature texture.
-- **Do** pair Bricolage Grotesque headlines with Spectral italic for the key emotional word in each section (e.g., "trust online.", "exceptional?", "building.").
-- **Do** dark-lock the hero and footer. Hero tokens inherit from `:root` defaults. Footer resets to warm dark tokens in `[data-theme="light"] footer`.
+- **Do** pair Bricolage Grotesque headlines with Spectral italic for the key emotional word in each section.
+- **Do** dark-lock the footer only. Footer resets to warm dark tokens in `[data-theme="light"] footer`.
 - **Do** deepen amber to burnt amber `oklch(0.60 0.22 55)` in light mode. Hover darkens further to `oklch(0.55 0.24 52)` (opposite direction from dark mode).
+- **Do** present concept projects honestly. Use "Projects we've crafted" not "Our clients" or "Trusted by."
 
 ### Don't:
 
+- **Don't** default to dark mode. Non-technical audiences associate dark UIs with "tech stuff."
+- **Don't** use abstract hero visuals (gradient orbs, constellation art, particle effects) as the primary hero content. These don't communicate what the studio builds.
+- **Don't** hide navigation behind a hamburger menu on desktop. All primary links must be visible.
+- **Don't** require interaction to understand services. If a visitor can't see all offerings without clicking, the layout has failed.
+- **Don't** use high-commitment CTA language ("Start a project") before trust is established.
+- **Don't** fabricate statistics, client counts, or revenue claims. Only display numbers you can prove.
 - **Don't** use pure black (`#000`), pure white (`#fff`), or any un-tinted gray. This violates the Temperature Rule.
 - **Don't** use gradient text (`background-clip: text`). Per PRODUCT.md: "generic SaaS template sites."
 - **Don't** use glassmorphism as a default surface treatment. Backdrop blur is reserved for the scrolled navigation bar and back-to-top button only.
@@ -536,5 +572,5 @@ Converging perspective lines creating a one-point corridor effect on the Work pa
 - **Don't** use modals as a first thought. Exhaust inline and progressive alternatives first.
 - **Don't** animate CSS layout properties (width, height, top, left). Use transform and opacity only.
 - **Don't** use Inter, Space Grotesk, or any geometric grotesque as a substitute for Bricolage Grotesque. These are reflex-reject fonts.
-- **Don't** override hero or footer tokens in `[data-theme="light"]`. Both zones are permanently dark.
+- **Don't** override footer tokens in `[data-theme="light"]`. The footer is permanently dark.
 - **Don't** use cold neutrals (hue 250) for `--bg-surface-alt` in light mode. That slot is the Warm Linen Exception.

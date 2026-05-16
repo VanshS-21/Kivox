@@ -85,6 +85,13 @@ export function HomeWorkPreview() {
     fitness: "var(--project-fitness)",
   };
 
+  const scrollToIndex = (idx: number) => {
+    if (!containerRef.current) return;
+    const scrollableDistance = containerRef.current.scrollHeight - window.innerHeight;
+    const targetY = containerRef.current.offsetTop + (idx / (totalPanels - 1)) * scrollableDistance;
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+  };
+
   useEffect(() => {
     if (!isCompact || reduce) return;
 
@@ -97,13 +104,8 @@ export function HomeWorkPreview() {
 
   if (isCompact) {
     return (
-      <section className="relative overflow-hidden bg-background py-[var(--space-section)] work-showcase">
-        <div className="mx-auto mb-7 flex max-w-6xl items-end justify-between gap-6 px-5 sm:px-6 md:px-10 lg:px-12">
-          <div>
-            <h2 className="max-w-3xl studio-h2-editorial text-foreground">
-              Built as living product proof.
-            </h2>
-          </div>
+      <section ref={containerRef} className="relative overflow-hidden bg-background py-[var(--space-section)] work-showcase">
+        <div className="mx-auto mb-7 flex max-w-6xl justify-end px-5 sm:px-6 md:px-10 lg:px-12">
           <div className="hidden shrink-0 font-mono text-sm text-subtle-foreground md:block">
             {String(activeIndex + 1).padStart(2, "0")} /{" "}
             {String(totalPanels).padStart(2, "0")}
@@ -148,9 +150,9 @@ export function HomeWorkPreview() {
                         src={project.images?.[0] ?? project.image}
                       />
                       <div
-                        className="absolute inset-0 opacity-35"
+                        className="absolute inset-0 opacity-[0.85]"
                         style={{
-                          background: `linear-gradient(180deg, transparent 48%, var(--bg-primary) 112%), radial-gradient(ellipse at 30% 18%, ${projectColors[project.slug] || "var(--accent)"} 0%, transparent 54%)`,
+                          background: `linear-gradient(to top, var(--bg-primary) 0%, transparent 80%)`,
                         }}
                       />
                       <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-[oklch(0.12_0.012_65/0.72)] px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-white backdrop-blur-sm md:bottom-6 md:left-6">
@@ -301,23 +303,7 @@ export function HomeWorkPreview() {
               }
         }
       >
-        {/* Section Heading positioned at top of sticky container */}
-        <div className={reduce ? "hidden" : "shrink-0 px-6 pt-20 md:px-12 lg:px-16 2xl:pt-24 z-20 relative"}>
-          <h2 className="studio-h2-editorial text-foreground">
-            See what Kivox can actually build.
-          </h2>
-        </div>
-        
-        <h2
-          aria-hidden={reduce ? undefined : true}
-          className={
-            reduce
-              ? "mx-auto w-full max-w-[1400px] px-6 pb-8 pt-14 studio-h2-editorial text-foreground md:px-12 lg:px-16"
-              : "sr-only"
-          }
-        >
-          See what Kivox can actually build.
-        </h2>
+        {/* Removed Section Heading for full-bleed cinematic effect */}
 
         {/* Counter — top right with rolling animation */}
         {!reduce && (
@@ -436,7 +422,7 @@ export function HomeWorkPreview() {
                             },
                           },
                         }}
-                        className="studio-h1-headline text-foreground"
+                        className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground"
                       >
                       <motion.span
                         variants={{
@@ -591,40 +577,57 @@ export function HomeWorkPreview() {
           className="absolute bottom-5 sm:bottom-8 left-0 right-0 z-20 px-6 md:px-12 lg:px-16 max-w-[1400px] mx-auto"
           style={reduce ? {} : { opacity: progressOpacity }}
         >
-          <div className="flex items-center gap-4 lg:gap-6">
-            {/* Label */}
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="studio-tag text-subtle-foreground">
-                More work
-              </span>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 lg:gap-6">
+            <div className="flex items-center gap-4 flex-1 w-full">
+              {/* Desktop Pagination Dots */}
+              <div className="hidden sm:flex items-center gap-2 shrink-0" role="tablist" aria-label="Project carousel pagination">
+                {featuredWork.map((project, idx) => (
+                  <DesktopDot 
+                    key={project.slug} 
+                    idx={idx} 
+                    totalPanels={totalPanels} 
+                    project={project} 
+                    projectColors={projectColors} 
+                    smoothScrollYProgress={smoothScrollYProgress} 
+                    onClick={() => scrollToIndex(idx)} 
+                  />
+                ))}
+              </div>
+              
+              {/* Label for Mobile */}
+              <div className="flex sm:hidden items-center gap-2 shrink-0">
+                <span className="studio-tag text-subtle-foreground">
+                  More work
+                </span>
+                <motion.span
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="text-subtle-foreground text-xs"
+                >
+                  →
+                </motion.span>
+              </div>
+
+              {/* Full-width track */}
+              <div className="flex-1 h-[2px] bg-border-soft rounded-full overflow-hidden">
+                <motion.div
+                  style={{ scaleX: smoothScrollYProgress }}
+                  className="h-full bg-accent origin-left"
+                />
+              </div>
+
+              {/* Percentage */}
               <motion.span
-                animate={{ x: [0, 4, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="text-subtle-foreground text-xs"
+                className="text-xs font-mono text-subtle-foreground studio-tabular shrink-0"
+                aria-hidden="true"
               >
-                →
+                {reduce ? "100%" : <Percentage value={smoothScrollYProgress} />}
               </motion.span>
             </div>
-
-            {/* Full-width track */}
-            <div className="flex-1 h-[2px] bg-border-soft rounded-full overflow-hidden">
-              <motion.div
-                style={{ scaleX: smoothScrollYProgress }}
-                className="h-full bg-accent origin-left"
-              />
-            </div>
-
-            {/* Percentage */}
-            <motion.span
-              className="text-xs font-mono text-subtle-foreground studio-tabular shrink-0"
-              aria-hidden="true"
-            >
-              {reduce ? "100%" : <Percentage value={smoothScrollYProgress} />}
-            </motion.span>
           </div>
         </motion.div>
       </motion.div>
@@ -785,5 +788,50 @@ function ShowcaseMediaCluster({
         </motion.div>
       </motion.div>
     </Link>
+  );
+}
+
+/** Interactive pagination dot for desktop carousel to bypass scroll trap */
+function DesktopDot({
+  idx,
+  totalPanels,
+  project,
+  projectColors,
+  smoothScrollYProgress,
+  onClick,
+}: {
+  idx: number;
+  totalPanels: number;
+  project: any;
+  projectColors: Record<string, string>;
+  smoothScrollYProgress: MotionValue<number>;
+  onClick: () => void;
+}) {
+  const dotWidth = useTransform(smoothScrollYProgress, (v: number) => {
+    const targetProgress = idx / (totalPanels - 1);
+    const distance = Math.abs(v - targetProgress);
+    const isActive = distance < 1 / ((totalPanels - 1) * 2);
+    return isActive ? "2rem" : "0.625rem";
+  });
+  
+  const dotColor = useTransform(smoothScrollYProgress, (v: number) => {
+    const targetProgress = idx / (totalPanels - 1);
+    const distance = Math.abs(v - targetProgress);
+    const isActive = distance < 1 / ((totalPanels - 1) * 2);
+    return isActive ? projectColors[project.slug] || "var(--accent)" : "var(--border-strong)";
+  });
+
+  return (
+    <motion.button
+      onClick={onClick}
+      aria-label={`Jump to ${project.title}`}
+      className="h-2.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors cursor-pointer"
+      style={{
+        width: dotWidth,
+        backgroundColor: dotColor,
+      }}
+      type="button"
+      role="tab"
+    />
   );
 }

@@ -63,7 +63,7 @@ export const legal: {
       {
         title: "Contact",
         lead: undefined,
-        paragraphs: ["For privacy-related requests, contact: hello@kivox.in"],
+        paragraphs: ["For privacy-related requests, contact: kivox.contact@gmail.com"],
         bullets: undefined,
       },
     ],
@@ -100,7 +100,7 @@ export const legal: {
       {
         title: "Contact",
         lead: undefined,
-        paragraphs: ["For questions, contact: hello@kivox.in"],
+        paragraphs: ["For questions, contact: kivox.contact@gmail.com"],
         bullets: undefined,
       },
     ],

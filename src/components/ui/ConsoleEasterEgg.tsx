@@ -18,7 +18,7 @@ export function ConsoleEasterEgg() {
     ];
 
     console.log(
-      "%cKivox\n%cBuilt with craft, not templates.\n%cInterested? → hello@kivox.in",
+      "%cKivox\n%cBuilt with craft, not templates.\n%cInterested? → kivox.contact@gmail.com",
       styles[0],
       styles[1],
       styles[2]
