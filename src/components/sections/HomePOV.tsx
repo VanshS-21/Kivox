@@ -117,8 +117,7 @@ export function HomePOV() {
   return (
     <div ref={sectionRef} className="relative">
     <Section
-      className="relative py-12 md:py-16 lg:py-20 overflow-hidden"
-      style={{ background: 'var(--bg-primary)' }}
+      className="relative py-12 md:py-16 lg:py-20 overflow-hidden bg-surface-alt"
     >
       {/* Committed amber glow — restrained size so it doesn't bleed into adjacent sections */}
       <motion.div

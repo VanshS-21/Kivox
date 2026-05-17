@@ -31,7 +31,7 @@ export function HomeTestimonials() {
             container.scrollBy({ left: container.clientWidth * 0.75, behavior: 'smooth' });
           }
         }
-      }, 4000); // 4 seconds interval
+      }, 2500); // 2.5 seconds interval
     };
 
     startAutoScroll();
@@ -71,7 +71,7 @@ export function HomeTestimonials() {
           </p>
         </motion.div>
 
-        <div ref={scrollContainerRef} className="flex overflow-x-auto md:grid md:grid-cols-2 snap-x snap-mandatory md:snap-none gap-x-6 gap-y-12 md:gap-x-12 lg:gap-x-24 lg:gap-y-24 pt-12 pb-8 md:pt-0 md:pb-0 -mx-5 px-5 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div ref={scrollContainerRef} className="flex overflow-x-auto md:overflow-visible md:grid md:grid-cols-2 snap-x snap-mandatory md:snap-none gap-x-6 gap-y-12 md:gap-x-12 lg:gap-x-24 lg:gap-y-24 pt-12 pb-8 md:pt-0 md:pb-0 -mx-5 px-5 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {testimonials.map((testimonial, index) => (
             <div key={testimonial.id} className={`w-[85vw] sm:w-[60vw] md:w-auto shrink-0 snap-center snap-always ${index === 2 ? 'md:col-span-2' : ''}`}>
               <TestimonialCard testimonial={testimonial} index={index} reduce={reduce} sectionRef={sectionRef} />
