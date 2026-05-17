@@ -25,7 +25,7 @@ export function HomeTestimonials() {
           <p className="studio-eyebrow text-accent mb-4">[ Social Proof ]</p>
           <h2 className="studio-h2-editorial">Client Stories</h2>
           <p className="mt-6 max-w-2xl text-muted-foreground studio-body-large">
-            Don't just take our word for it. Here's what business owners have to say about working with Kivox.
+            Don&apos;t just take our word for it. Here&apos;s what business owners have to say about working with Kivox.
           </p>
         </motion.div>
 
@@ -39,7 +39,9 @@ export function HomeTestimonials() {
   );
 }
 
-function TestimonialCard({ testimonial, index, reduce, sectionRef }: { testimonial: any; index: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
+import { memo } from "react";
+
+const TestimonialCard = memo(function TestimonialCard({ testimonial, index, reduce, sectionRef }: { testimonial: { id: string; quote: string; author: string; role: string; company: string; }; index: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -69,21 +71,21 @@ function TestimonialCard({ testimonial, index, reduce, sectionRef }: { testimoni
           whileTap={reduce ? undefined : { rotate: 15, scale: 1.1, y: 0, transition: { type: "spring", stiffness: 300, damping: 10 } }}
           className={`absolute -top-6 text-accent/10 font-serif text-8xl leading-none select-none pointer-events-auto transition-colors duration-500 group-hover:text-accent/20 cursor-default ${index === 2 ? 'left-1/2 -translate-x-1/2' : '-left-4'}`}
         >
-          "
+          &quot;
         </motion.div>
-        <p className={`studio-body-serif font-light leading-relaxed text-foreground relative z-10 ${index === 2 ? 'md:max-w-3xl mx-auto' : ''}`}>
+        <p className={`studio-body-serif font-light leading-relaxed text-foreground relative z-10 break-words min-w-0 ${index === 2 ? 'md:max-w-3xl mx-auto' : ''}`}>
           {testimonial.quote}
         </p>
       </div>
       
-      <div className={`mt-auto transition-colors duration-500 ${index === 2 ? 'pt-4 border-t border-accent/30 group-hover:border-accent' : 'pl-4 border-l-2 border-accent/30 group-hover:border-accent'}`}>
-        <div className="font-semibold text-foreground tracking-wide">
+      <div className={`mt-auto transition-colors duration-500 min-w-0 ${index === 2 ? 'pt-4 border-t border-accent/30 group-hover:border-accent' : 'ps-4 border-s-2 border-accent/30 group-hover:border-accent'}`}>
+        <div className="font-semibold text-foreground tracking-wide break-words">
           {testimonial.author}
         </div>
-        <div className="text-sm text-muted-foreground mt-1 font-mono uppercase tracking-widest opacity-80">
+        <div className="text-sm text-muted-foreground mt-1 font-mono uppercase tracking-widest opacity-80 break-words">
           {testimonial.role}, {testimonial.company}
         </div>
       </div>
     </motion.div>
   );
-}
+});

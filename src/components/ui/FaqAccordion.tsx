@@ -1,11 +1,7 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
-import { motion, useReducedMotion, useInView } from "motion/react";
+import { useCallback, useState } from "react";
 
-import { easeOutExpo, viewportOnce, fadeUp } from "@/lib/motion";
-
-/* ─── Types ─── */
 interface FaqItem {
   question: string;
   answer: string;
@@ -16,7 +12,6 @@ interface FaqCategory {
   items: FaqItem[];
 }
 
-/* ─── Single Accordion Row ─── */
 function AccordionItem({
   item,
   isOpen,
@@ -30,55 +25,38 @@ function AccordionItem({
   index: number;
   localIndex: number;
 }) {
-  const reduce = useReducedMotion();
-
   return (
-    <motion.div
-      variants={fadeUp}
-      transition={{ duration: 0.5, ease: easeOutExpo }}
-      className="border-b border-border"
-    >
+    <div className="border-b border-border">
       <button
         id={`faq-q-${index}`}
         aria-expanded={isOpen}
         aria-controls={`faq-a-${index}`}
         onClick={onToggle}
-        className="group w-full text-left py-5 sm:py-6 flex items-start gap-4 cursor-pointer focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+        className="group flex w-full cursor-pointer items-start gap-4 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:py-6"
       >
-        {/* Numbered index — mono, amber, tabular */}
         <span
-          className="studio-tabular font-mono text-accent shrink-0 mt-[3px] select-none"
+          className="studio-tabular mt-[3px] shrink-0 select-none font-mono text-accent transition-opacity duration-300"
           style={{
             fontSize: "0.6875rem",
             letterSpacing: "0.05em",
             opacity: isOpen ? 1 : 0.5,
-            transition: reduce
-              ? "none"
-              : "opacity 300ms cubic-bezier(0.16, 1, 0.3, 1)",
           }}
           aria-hidden="true"
         >
           {String(localIndex + 1).padStart(2, "0")}
         </span>
 
-        {/* Question text */}
         <span
-          className="flex-1 studio-h4-sans text-foreground leading-snug"
-          style={{
-            color: isOpen ? "var(--accent)" : undefined,
-            transition: reduce
-              ? "none"
-              : "color 250ms cubic-bezier(0.16, 1, 0.3, 1)",
-          }}
+          className={`studio-h4-sans min-w-0 flex-1 break-words leading-snug transition-colors duration-200 ${
+            isOpen ? "text-accent" : "text-foreground"
+          }`}
         >
           {item.question}
         </span>
 
-        {/* Expand indicator — plus rotates to X with bouncy spring */}
-        <motion.span
-          className="mt-1 flex-shrink-0 w-5 h-5 flex items-center justify-center text-accent"
-          animate={{ rotate: isOpen ? 315 : 0 }}
-          transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 10 }}
+        <span
+          className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center text-accent transition-transform duration-300"
+          style={{ transform: isOpen ? "rotate(315deg)" : "rotate(0deg)" }}
           aria-hidden="true"
         >
           <svg
@@ -93,10 +71,9 @@ function AccordionItem({
             <line x1="7" y1="2" x2="7" y2="12" />
             <line x1="2" y1="7" x2="12" y2="7" />
           </svg>
-        </motion.span>
+        </span>
       </button>
 
-      {/* Answer panel — CSS grid-rows transition for smooth height */}
       <div
         id={`faq-a-${index}`}
         role="region"
@@ -104,33 +81,25 @@ function AccordionItem({
         style={{
           display: "grid",
           gridTemplateRows: isOpen ? "1fr" : "0fr",
-          transition: reduce
-            ? "none"
-            : "grid-template-rows 500ms cubic-bezier(0.16, 1, 0.3, 1)",
+          transition: "grid-template-rows 400ms cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <div className="overflow-hidden min-h-0">
+        <div className="min-h-0 overflow-hidden">
           <div
-            className="pb-6 pl-10 pr-9 studio-body text-muted-foreground max-w-[60ch]"
+            className="studio-body max-w-[60ch] break-words pb-6 pe-9 ps-10 text-muted-foreground transition-all duration-300"
             style={{
               opacity: isOpen ? 1 : 0,
               transform: isOpen ? "translateY(0)" : "translateY(-4px)",
-              transition: reduce
-                ? "none"
-                : isOpen
-                  ? "opacity 400ms cubic-bezier(0.16, 1, 0.3, 1) 100ms, transform 400ms cubic-bezier(0.16, 1, 0.3, 1) 100ms"
-                  : "opacity 200ms ease, transform 200ms ease",
             }}
           >
             {item.answer}
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
-/* ─── Category Group ─── */
 function CategoryGroup({
   category,
   globalOffset,
@@ -138,56 +107,24 @@ function CategoryGroup({
   category: FaqCategory;
   globalOffset: number;
 }) {
-  const reduce = useReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
-
-  useEffect(() => {
-    if (!isInView) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setOpenIndex(null);
-    }
-  }, [isInView]);
 
   const handleToggle = useCallback((idx: number) => {
     setOpenIndex((prev) => (prev === idx ? null : idx));
   }, []);
 
   return (
-    <motion.div
-      ref={containerRef}
-      initial={reduce ? false : "hidden"}
-      whileInView={reduce ? undefined : "show"}
-      viewport={viewportOnce}
-      variants={{
-        hidden: {},
-        show: {
-          transition: {
-            staggerChildren: 0.06,
-            delayChildren: 0.12,
-          },
-        },
-      }}
-    >
-      {/* Category heading with question count */}
-      <motion.div
-        variants={fadeUp}
-        transition={{ duration: 0.5, ease: easeOutExpo }}
-        className="flex items-baseline gap-3 mb-4 mt-2"
-      >
-        <h2 className="studio-h3-sans text-foreground">
-          {category.label}
-        </h2>
+    <div>
+      <div className="mb-4 mt-2 flex items-baseline gap-3">
+        <h2 className="studio-h3-sans text-foreground">{category.label}</h2>
         <span
-          className="font-mono text-subtle-foreground select-none"
+          className="select-none font-mono text-subtle-foreground"
           style={{ fontSize: "0.625rem", letterSpacing: "0.05em" }}
         >
           {String(category.items.length).padStart(2, "0")}
         </span>
-      </motion.div>
+      </div>
 
-      {/* Items — staggered entrance */}
       <div className="border-t border-border">
         {category.items.map((item, idx) => (
           <AccordionItem
@@ -200,11 +137,10 @@ function CategoryGroup({
           />
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
-/* ─── Main Export ─── */
 export function FaqAccordion({ categories }: { categories: FaqCategory[] }) {
   const categoryOffsets = categories.map((_, index) =>
     categories
@@ -214,15 +150,13 @@ export function FaqAccordion({ categories }: { categories: FaqCategory[] }) {
 
   return (
     <div className="space-y-14 sm:space-y-18">
-      {categories.map((category, index) => {
-        return (
-          <CategoryGroup
-            key={category.label}
-            category={category}
-            globalOffset={categoryOffsets[index]}
-          />
-        );
-      })}
+      {categories.map((category, index) => (
+        <CategoryGroup
+          key={category.label}
+          category={category}
+          globalOffset={categoryOffsets[index]}
+        />
+      ))}
     </div>
   );
 }

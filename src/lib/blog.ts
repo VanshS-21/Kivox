@@ -41,7 +41,11 @@ function parsePost(filename: string): BlogPost {
 export function getAllPosts(): BlogPostMeta[] {
   return getBlogFiles()
     .map(parsePost)
-    .map(({ content: _content, ...meta }) => meta)
+    .map((post) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { content, ...meta } = post;
+      return meta;
+    })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 

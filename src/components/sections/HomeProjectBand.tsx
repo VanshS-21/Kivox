@@ -1,20 +1,19 @@
-"use client";
+import type { CSSProperties } from "react";
 
-import { motion } from "motion/react";
 import { conceptProjects } from "@/content/testimonials";
+
+const marqueeStyle = {
+  "--marquee-distance": "1000px",
+  animation: "marquee-scroll 30s linear infinite",
+} as CSSProperties;
 
 export function HomeProjectBand() {
   return (
     <div className="w-full overflow-hidden border-y border-border/50 bg-background py-8 flex flex-col items-center">
       <div className="relative flex max-w-[100vw] overflow-hidden">
-        <motion.div
-          animate={{ x: [0, -1000] }}
-          transition={{
-            repeat: Infinity,
-            ease: "linear",
-            duration: 30,
-          }}
+        <div
           className="flex whitespace-nowrap"
+          style={marqueeStyle}
         >
           {/* We duplicate the array to create an infinite scroll effect */}
           {[...conceptProjects, ...conceptProjects, ...conceptProjects].map((project, idx) => (
@@ -33,7 +32,7 @@ export function HomeProjectBand() {
               <div className="w-1.5 h-1.5 rounded-full bg-border mx-12 hidden md:block" />
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

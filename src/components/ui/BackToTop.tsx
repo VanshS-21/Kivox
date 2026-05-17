@@ -14,6 +14,7 @@ export function BackToTop() {
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
+    /* eslint-disable-next-line react-hooks/set-state-in-effect */
     setMounted(true);
 
     const threshold = window.innerHeight; // 100vh

@@ -1,30 +1,27 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "motion/react";
+import { usePathname } from "next/navigation";
+
 import { brand } from "@/content/brand";
 import { navigation } from "@/content/navigation";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { KivoxLogo } from "@/components/ui/KivoxLogo";
-import { Magnetic } from "@/components/ui/Magnetic";
-
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const hamburgerRef = useRef<HTMLButtonElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 80);
 
-      // Detect when the nav crosses the hero bottom edge
       const heroEl = document.querySelector("section");
       if (heroEl) {
         const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
@@ -37,9 +34,7 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Track active section via IntersectionObserver
   useEffect(() => {
-    // Track sections to know what is currently in view
     const sectionIds = ["live-examples", "services", "process", "team", "contact"];
     const observers: IntersectionObserver[] = [];
 
@@ -49,420 +44,277 @@ export function Navigation() {
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveSection(id);
-          }
+          if (entry.isIntersecting) setActiveSection(id);
         },
         { threshold: 0.2 },
       );
+
       observer.observe(el);
       observers.push(observer);
     });
 
-    return () => observers.forEach((o) => o.disconnect());
+    return () => observers.forEach((observer) => observer.disconnect());
   }, []);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
 
-  // Focus trap + Escape key for overlay
   useEffect(() => {
     if (!isOpen) return;
     const hamburger = hamburgerRef.current;
 
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
         setIsOpen(false);
         return;
       }
 
-      // Focus trap: cycle through focusable elements inside the overlay + hamburger
-      if (e.key === "Tab" && overlayRef.current) {
-        const focusable = overlayRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        );
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
+      if (event.key !== "Tab" || !overlayRef.current) return;
 
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+      const focusable = overlayRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
-    }
+    };
 
-    // Move focus into the overlay after entrance animation settles
-    const timer = setTimeout(() => {
-      const firstLink =
-        overlayRef.current?.querySelector<HTMLElement>("a[href]");
-      firstLink?.focus();
-    }, 100);
+    const timer = window.setTimeout(() => {
+      overlayRef.current?.querySelector<HTMLElement>("a[href]")?.focus();
+    }, 50);
 
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      clearTimeout(timer);
-      // Restore focus to hamburger on close
+      window.clearTimeout(timer);
       hamburger?.focus();
     };
   }, [isOpen]);
 
-  // Hide on showcase demo sites
   if (pathname.startsWith("/showcase")) return null;
+
+  const isActiveLink = (href: string) => {
+    if (href === "/") return pathname === "/" && !pastHero;
+    if (href.startsWith("/#")) return activeSection === href.substring(2);
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <>
-      {/* Navigation bar */}
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{
-          y: 0,
-          opacity: 1,
-          backdropFilter: isScrolled ? "blur(20px)" : "blur(0px)",
-        }}
-        transition={{
-          y: { type: "spring", stiffness: 300, damping: 30 },
-          opacity: { duration: 0.6 },
-          backdropFilter: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
-        }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ease-out ${
-          isScrolled ? "border-b border-border" : ""
+      <nav
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ease-out ${
+          isScrolled ? "border-b border-border backdrop-blur-xl" : ""
         }`}
       >
-        {/* Theme-aware background — fades in when past the hero */}
         <div
-          className="absolute inset-0 bg-background/90 transition-opacity duration-500 pointer-events-none"
+          className="pointer-events-none absolute inset-0 bg-background/90 transition-opacity duration-500"
           style={{ opacity: pastHero && isScrolled && !isOpen ? 1 : 0 }}
         />
 
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <Magnetic strength={0.1}>
-              <Link
-                href="/"
-                onClick={(e) => {
-                  if (pathname === "/") {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                    setIsOpen(false);
-                  }
-                }}
-                className="flex items-center gap-2 group relative z-[60]"
-                data-cursor="logo"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="transition-colors duration-500 group-hover:text-accent text-foreground"
-                >
-                  <KivoxLogo
-                    height={24}
-                    variant="mono"
-                  />
-                </motion.div>
-              </Link>
-            </Magnetic>
-
-
-            {/* Desktop Links */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navigation.primary.map((item) => {
-                let isActive = false;
-
-                if (item.href === "/") {
-                  isActive = pathname === "/" && !pastHero;
-                } else if (item.href.startsWith("/#")) {
-                  isActive = activeSection === item.href.substring(2);
-                } else {
-                  isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+        <div className="relative mx-auto max-w-[1400px] px-6 md:px-12 lg:px-16">
+          <div className="flex h-20 items-center justify-between">
+            <Link
+              href="/"
+              prefetch={false}
+              onClick={(event) => {
+                if (pathname === "/") {
+                  event.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  closeMenu();
                 }
-                  
+              }}
+              className="relative z-[60] flex items-center gap-2 text-foreground transition-colors duration-300 hover:text-accent"
+              data-cursor="logo"
+            >
+              <KivoxLogo height={24} variant="mono" />
+            </Link>
+
+            <div className="hidden items-center gap-8 lg:flex">
+              {navigation.primary.map((item) => {
+                const isActive = isActiveLink(item.href);
+
                 return (
-                  <Magnetic key={item.label} strength={0.08}>
-                    <Link
-                      href={item.href}
-                      className="block"
-                    >
-                      <motion.div
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                        className={`text-sm font-semibold tracking-tight transition-colors duration-200 ${isActive ? "text-accent" : "text-muted-foreground hover:text-foreground"}`}
-                      >
-                        {item.label}
-                      </motion.div>
-                    </Link>
-                  </Magnetic>
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    prefetch={false}
+                    className={`block text-sm font-semibold tracking-tight transition-colors duration-200 hover:-translate-y-0.5 ${
+                      isActive
+                        ? "text-accent"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
                 );
               })}
             </div>
 
-            {/* Right side — CTA, theme toggle, hamburger */}
-            <div className="flex items-center gap-3 relative z-[60]">
-              {/* Primary CTA */}
+            <div className="relative z-[60] flex items-center gap-3">
               {pathname !== "/contact" && (
-                <Magnetic strength={0.15}>
-                  <Link
-                    href="/contact"
-                    className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow active:scale-[0.9] transition-all duration-200"
-                  >
-                    Book a Free Call
-                    <span className="text-base">→</span>
-                  </Link>
-                </Magnetic>
+                <Link
+                  href="/contact"
+                  prefetch={false}
+                  className="hidden items-center gap-2 rounded-lg bg-accent px-6 py-2.5 text-sm font-medium tracking-tight text-accent-ink transition-all duration-200 hover:scale-105 hover:shadow-amber-glow active:scale-[0.97] sm:flex"
+                >
+                  Book a Free Call
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
               )}
 
-              {/* Theme toggle */}
               <ThemeToggle className="text-foreground" />
 
-              {/* Hamburger button */}
-              <Magnetic strength={0.25}>
-                <motion.button
-                  ref={hamburgerRef}
-                  whileTap={{ scale: 0.85 }}
-                  onClick={() => {
-                    setIsOpen(!isOpen);
-                  }}
-                  className="flex lg:hidden flex-col gap-1.5 p-2 rounded-lg hover:bg-accent/10 transition-colors"
-                  aria-label="Toggle menu"
-                  aria-expanded={isOpen}
-                >
-                  <motion.span
-                    animate={
-                      isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }
-                    }
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-6 h-0.5 transition-colors duration-500"
-                    style={{
-                      background: "var(--fg-primary)",
-                    }}
+              <button
+                ref={hamburgerRef}
+                onClick={() => setIsOpen((value) => !value)}
+                className="flex rounded-lg p-2 transition-colors hover:bg-accent/10 lg:hidden"
+                aria-label="Toggle menu"
+                aria-expanded={isOpen}
+                aria-controls="mobile-navigation"
+              >
+                <span className="flex flex-col gap-1.5">
+                  <span
+                    className="h-0.5 w-6 bg-foreground transition-transform duration-300"
+                    style={{ transform: isOpen ? "translateY(8px) rotate(45deg)" : undefined }}
                   />
-                  <motion.span
-                    animate={
-                      isOpen
-                        ? { opacity: 0, scaleX: 0 }
-                        : { opacity: 1, scaleX: 1 }
-                    }
-                    transition={{ duration: 0.3 }}
-                    className="w-6 h-0.5 origin-center transition-colors duration-500"
-                    style={{
-                      background: "var(--fg-primary)",
-                    }}
+                  <span
+                    className="h-0.5 w-6 bg-foreground transition-opacity duration-200"
+                    style={{ opacity: isOpen ? 0 : 1 }}
                   />
-                  <motion.span
-                    animate={
-                      isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
-                    }
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-6 h-0.5 transition-colors duration-500"
-                    style={{
-                      background: "var(--fg-primary)",
-                    }}
+                  <span
+                    className="h-0.5 w-6 bg-foreground transition-transform duration-300"
+                    style={{ transform: isOpen ? "translateY(-8px) rotate(-45deg)" : undefined }}
                   />
-                </motion.button>
-              </Magnetic>
+                </span>
+              </button>
             </div>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* Full-screen menu overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            ref={overlayRef}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-background"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation menu"
-          >
-            {/* Subtle grain texture */}
-            <div
-              className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-soft-light"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E")`,
-                backgroundSize: "240px 240px",
-              }}
-            />
+      {isOpen && (
+        <div
+          id="mobile-navigation"
+          ref={overlayRef}
+          className="fixed inset-0 z-40 bg-background"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+        >
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-soft-light"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E")`,
+              backgroundSize: "240px 240px",
+            }}
+          />
 
-            <div className="h-full flex flex-col lg:flex-row px-6 md:px-12 lg:px-16 pt-28 pb-12 overflow-y-auto">
-              {/* Left — navigation links with dramatic cascade */}
-              <div className="flex-1 flex flex-col justify-center">
-                <nav className="space-y-0">
-                  {navigation.primary.map((item, idx) => {
-                    let isActive = false;
-                    if (item.href === "/") {
-                      isActive = pathname === "/" && !pastHero;
-                    } else if (item.href.startsWith("/#")) {
-                      isActive = activeSection === item.href.substring(2);
-                    } else {
-                      isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-                    }
-                    
-                    return (
-                      <motion.div
-                        key={item.href}
-                        initial={{ y: 60, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: -30, opacity: 0 }}
-                        transition={{
-                          duration: 0.6,
-                          delay: 0.05 + idx * 0.08,
-                          ease: [0.16, 1, 0.3, 1],
-                        }}
-                        className="border-b border-border"
+          <div className="flex h-full flex-col overflow-y-auto px-6 pb-12 pt-28 md:px-12 lg:flex-row lg:px-16">
+            <div className="flex flex-1 flex-col justify-center">
+              <nav className="space-y-0">
+                {navigation.primary.map((item, idx) => {
+                  const isActive = isActiveLink(item.href);
+
+                  return (
+                    <div key={item.href} className="border-b border-border">
+                      <Link
+                        href={item.href}
+                        prefetch={false}
+                        onClick={closeMenu}
+                        className="group relative flex items-baseline gap-6 py-5 lg:py-6"
                       >
-                        <Link
-                          href={item.href}
-                          onClick={() => {
-                            setIsOpen(false);
-                          }}
-                          className="flex items-baseline gap-6 py-5 lg:py-6 group relative"
-                          onMouseEnter={(e) => {
-                            const line =
-                              e.currentTarget.querySelector<HTMLSpanElement>(
-                                "[data-underline]",
-                              );
-                            if (line) line.style.width = "100%";
-                          }}
-                          onMouseLeave={(e) => {
-                            const line =
-                              e.currentTarget.querySelector<HTMLSpanElement>(
-                                "[data-underline]",
-                              );
-                            if (line && !isActive) line.style.width = "0";
-                          }}
+                        <span
+                          className="studio-tabular font-mono text-sm text-accent"
+                          style={{ letterSpacing: "0.12em" }}
                         >
-                          {/* Number */}
-                          <span
-                            className="text-sm font-mono text-accent studio-tabular"
-                            style={{ letterSpacing: "0.12em" }}
-                          >
-                            {String(idx + 1).padStart(2, "0")}
-                          </span>
-                          {/* Label */}
-                          <span
-                            className={`text-[36px] sm:text-[48px] lg:text-[56px] font-bold tracking-tight leading-none transition-colors duration-200 ${
-                              isActive
-                                ? "text-accent"
-                                : "text-muted-foreground group-hover:text-foreground"
-                            }`}
-                          >
-                            {item.label}
-                          </span>
-                          {/* Amber underline draw — width transitions on hover */}
-                          <span
-                            data-underline
-                            className="absolute bottom-4 left-0 h-[2px] bg-accent origin-left transition-all duration-500 ease-out"
-                            style={{ width: isActive ? "100%" : "0" }}
-                          />
-                          {/* Active indicator dot */}
-                          {isActive && (
-                            <motion.div
-                              layoutId="nav-active"
-                              className="w-2 h-2 rounded-full bg-accent"
-                              transition={{
-                                duration: 0.3,
-                                ease: [0.16, 1, 0.3, 1],
-                              }}
-                            />
-                          )}
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-                </nav>
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                        <span
+                          className={`text-[36px] font-bold leading-none tracking-tight transition-colors duration-200 sm:text-[48px] lg:text-[56px] ${
+                            isActive
+                              ? "text-accent"
+                              : "text-muted-foreground group-hover:text-foreground"
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                        <span
+                          className="absolute bottom-4 left-0 h-[2px] origin-left bg-accent transition-all duration-500 ease-out group-hover:w-full"
+                          style={{ width: isActive ? "100%" : "0" }}
+                        />
+                        {isActive && (
+                          <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+                        )}
+                      </Link>
+                    </div>
+                  );
+                })}
+              </nav>
+            </div>
+
+            <div className="mt-auto lg:mt-0 lg:flex lg:w-[320px] lg:flex-col lg:justify-end lg:ps-16">
+              <div className="mb-8">
+                <h2 className="text-base font-semibold text-foreground">
+                  Connect
+                </h2>
+                <div className="mt-3 flex gap-5">
+                  <Link
+                    href={brand.socials.linkedin}
+                    prefetch={false}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                    className="block text-base text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    LinkedIn &nearr;
+                  </Link>
+                  <Link
+                    href={brand.socials.instagram}
+                    prefetch={false}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                    className="block text-base text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Instagram &nearr;
+                  </Link>
+                </div>
               </div>
 
-              {/* Right — connect & contact info */}
-              <motion.div
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.35,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="lg:w-[320px] lg:flex lg:flex-col lg:justify-end lg:pl-16 mt-auto lg:mt-0"
-              >
-                {/* Connect */}
-                <div className="mb-8">
-                  <h2 className="text-base font-semibold text-foreground">
-                    Connect
-                  </h2>
-                  <div className="flex gap-5 mt-3">
-                    <Magnetic strength={0.1}>
-                      <Link
-                        href={brand.socials.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                        className="block text-base text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        LinkedIn ↗
-                      </Link>
-                    </Magnetic>
-                    <Magnetic strength={0.1}>
-                      <Link
-                        href={brand.socials.instagram}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                        className="block text-base text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        Instagram ↗
-                      </Link>
-                    </Magnetic>
-                  </div>
+              <div>
+                <h2 className="text-base font-semibold text-foreground">
+                  Say Hello
+                </h2>
+                <div className="mt-3">
+                  <Link
+                    href={`mailto:${brand.contact.email}`}
+                    prefetch={false}
+                    onClick={closeMenu}
+                    className="inline-block text-lg font-medium text-foreground transition-colors hover:text-accent"
+                  >
+                    {brand.contact.email}
+                  </Link>
                 </div>
-
-                {/* Say Hello */}
-                <div>
-                  <h2 className="text-base font-semibold text-foreground">
-                    Say Hello
-                  </h2>
-                  <div className="mt-3">
-                    <Magnetic strength={0.1}>
-                      <Link
-                        href={`mailto:${brand.contact.email}`}
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                        className="inline-block text-lg text-foreground hover:text-accent transition-colors font-medium"
-                      >
-                        {brand.contact.email}
-                      </Link>
-                    </Magnetic>
-                  </div>
-                </div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -1,19 +1,14 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
 
 import { getAllProjects, projectColors, projectTags } from "@/lib/work";
 import { work } from "@/content/pages/work";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { easeOutExpo, easeOutQuint, viewportOnce } from "@/lib/motion";
 
 /* ── Page ── */
 
 export default function WorkPage() {
-  const reduce = useReducedMotion();
   const allProjects = getAllProjects();
 
   return (
@@ -24,9 +19,7 @@ export default function WorkPage() {
         spacing="none"
       >
         {/* Ambient glow */}
-        <motion.div
-          animate={reduce ? {} : { scale: [1, 1.15, 1], rotate: [0, 20, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        <div
           className="absolute top-[10%] right-[15%] w-[250px] md:w-[400px] lg:w-[500px] h-[250px] md:h-[400px] lg:h-[500px] rounded-full blur-[100px] md:blur-[160px] lg:blur-[200px] pointer-events-none"
           style={{
             background: "var(--accent)",
@@ -35,12 +28,7 @@ export default function WorkPage() {
         />
 
         <Container>
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOutQuint }}
-            className="max-w-3xl"
-          >
+          <div className="max-w-3xl">
             <h1 className="studio-h1-headline text-foreground mb-6">
               Our{" "}
               <em
@@ -54,17 +42,12 @@ export default function WorkPage() {
             <p className="studio-body-serif text-muted-foreground max-w-xl">
               {work.intro}
             </p>
-          </motion.div>
+          </div>
         </Container>
 
         {/* Decorative divider */}
         <Container>
-          <motion.div
-            initial={reduce ? false : { scaleX: 0 }}
-            animate={reduce ? undefined : { scaleX: 1 }}
-            transition={{ duration: 1.2, ease: easeOutExpo, delay: 0.5 }}
-            className="mt-12 lg:mt-16 h-px bg-border origin-left"
-          />
+          <div className="mt-12 h-px origin-left bg-border lg:mt-16" />
         </Container>
       </Section>
 
@@ -81,28 +64,23 @@ export default function WorkPage() {
               const num = String(idx + 1).padStart(2, "0");
 
               return (
-                <motion.div
+                <div
                   key={project.slug}
-                  initial={reduce ? false : { opacity: 0, y: 24 }}
-                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                  viewport={viewportOnce}
-                  transition={{
-                    duration: 0.6,
-                    ease: easeOutExpo,
-                    delay: (idx % 2) * 0.1,
-                  }}
                   className="group flex flex-col"
                 >
                   <Link
                     href={`/work/${project.slug}`}
-                    className="block relative aspect-video w-full overflow-hidden rounded-xl mb-8 bg-muted/20"
+                    prefetch={false}
+                    className="relative mb-8 block aspect-[8/1] w-full overflow-hidden rounded-xl bg-muted/20 sm:aspect-video"
                   >
                     <Image
                       src={project.images?.[0] || project.image}
                       alt={project.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      fetchPriority={idx === 0 ? "high" : "auto"}
+                      loading={idx === 0 ? "eager" : "lazy"}
+                      sizes="(max-width: 768px) 88vw, 44vw"
                     />
                     <div
                       className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 mix-blend-overlay pointer-events-none"
@@ -155,6 +133,7 @@ export default function WorkPage() {
 
                       <Link
                         href={`/work/${project.slug}`}
+                        prefetch={false}
                         className="flex items-center gap-2 text-sm font-semibold transition-colors duration-300"
                         style={{ color }}
                       >
@@ -168,7 +147,7 @@ export default function WorkPage() {
                       </Link>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>

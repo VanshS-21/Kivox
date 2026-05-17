@@ -27,98 +27,102 @@ export function HomeProcess() {
           </motion.p>
         </div>
 
-        {/* ── Bento Grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {steps.map((step, idx) => {
-            // Bento spans: 2-1, 1-2, 3 pattern
-            let spanClass = "";
-            let isDark = false;
-            
-            if (idx === 0) spanClass = "md:col-span-2 lg:col-span-2"; // Discover
-            if (idx === 1) spanClass = "md:col-span-1 lg:col-span-1"; // Define
-            if (idx === 2) { spanClass = "md:col-span-1 lg:col-span-1"; isDark = true; } // Design (Dark accent card)
-            if (idx === 3) spanClass = "md:col-span-1 lg:col-span-2"; // Build
-            if (idx === 4) { spanClass = "md:col-span-2 lg:col-span-3"; } // Launch & Evolve
-            
-            const isFullWidth = idx === 4;
-
-            return (
-              <motion.div
-                key={idx}
-                initial={reduce ? false : "hidden"}
-                whileInView={reduce ? undefined : "show"}
-                viewport={viewportOnce}
-                variants={fadeUp}
-                transition={{ ...transitionDefault, delay: idx * 0.1 }}
-                whileTap={reduce ? undefined : { scale: 0.98 }}
-                className={cn(
-                  "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border transition-transform duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-1",
-                  spanClass,
-                  isDark 
-                    ? "bg-[oklch(0.20_0_0)] text-white border-transparent" 
-                    : "studio-surface border-border/50",
-                  isFullWidth ? "lg:flex-row lg:items-center lg:p-12 lg:gap-16" : "gap-12"
-                )}
-              >
-                {/* Decorative background number */}
-                <motion.div 
-                  className={cn(
-                    "absolute -right-4 -bottom-8 text-[8rem] font-serif italic leading-none select-none pointer-events-none",
-                    isDark ? "text-white" : "text-foreground"
-                  )}
-                  style={{ opacity: isDark ? 0.05 : 0.03 }}
-                  animate={reduce ? undefined : {
-                    scale: [1, 1.05, 1],
-                    opacity: isDark ? [0.05, 0.08, 0.05] : [0.03, 0.06, 0.03],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: idx * 0.5,
-                  }}
-                  aria-hidden="true"
-                >
-                  {idx + 1}
-                </motion.div>
-
-                {/* Number & Title */}
-                <div className={cn("flex flex-col gap-4 relative z-10", isFullWidth ? "lg:w-1/3 shrink-0" : "")}>
-                  <span className={cn(
-                    "font-mono text-sm studio-tabular font-semibold tracking-widest",
-                    isDark ? "text-white/70" : "text-accent"
-                  )}>
-                    STEP {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className={cn(
-                    "studio-h3-sans",
-                    isDark ? "text-white" : "text-foreground"
-                  )}>
-                    {step.title}
-                  </h3>
-                </div>
-                
-                {/* Content */}
-                <div className={cn("flex flex-col gap-3 relative z-10", isFullWidth ? "lg:flex-1" : "")}>
-                  <p className={cn(
-                    "studio-eyebrow",
-                    isDark ? "text-white/90" : "text-foreground"
-                  )}>
-                    {step.subtitle}
-                  </p>
-                  <p className={cn(
-                    "studio-body text-lg leading-relaxed",
-                    isDark ? "text-white/70" : "text-muted-foreground"
-                  )}>
-                    {step.description}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
+          {steps.map((step, idx) => (
+            <ProcessStep key={idx} step={step} idx={idx} reduce={reduce} />
+          ))}
         </div>
 
       </Container>
     </Section>
   );
 }
+
+import { memo } from "react";
+
+const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { title: string; subtitle: string; description: string; }; idx: number; reduce: boolean | null }) {
+  // Bento spans: 2-1, 1-2, 3 pattern
+  let spanClass = "";
+  let isDark = false;
+  
+  if (idx === 0) spanClass = "md:col-span-2 lg:col-span-2"; // Discover
+  if (idx === 1) spanClass = "md:col-span-1 lg:col-span-1"; // Define
+  if (idx === 2) { spanClass = "md:col-span-1 lg:col-span-1"; isDark = true; } // Design (Dark accent card)
+  if (idx === 3) spanClass = "md:col-span-1 lg:col-span-2"; // Build
+  if (idx === 4) { spanClass = "md:col-span-2 lg:col-span-3"; } // Launch & Evolve
+  
+  const isFullWidth = idx === 4;
+
+  return (
+    <motion.div
+      initial={reduce ? false : "hidden"}
+      whileInView={reduce ? undefined : "show"}
+      viewport={viewportOnce}
+      variants={fadeUp}
+      transition={{ ...transitionDefault, delay: idx * 0.1 }}
+      whileTap={reduce ? undefined : { scale: 0.98 }}
+      className={cn(
+        "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border transition-transform duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-1",
+        spanClass,
+        isDark 
+          ? "bg-[oklch(0.20_0_0)] text-white border-transparent" 
+          : "studio-surface border-border/50",
+        isFullWidth ? "lg:flex-row lg:items-center lg:p-12 lg:gap-16" : "gap-12"
+      )}
+    >
+      {/* Decorative background number */}
+      <motion.div 
+        className={cn(
+          "absolute -right-4 -bottom-8 text-[8rem] font-serif italic leading-none select-none pointer-events-none",
+          isDark ? "text-white" : "text-foreground"
+        )}
+        style={{ opacity: isDark ? 0.05 : 0.03 }}
+        animate={reduce ? undefined : {
+          scale: [1, 1.05, 1],
+          opacity: isDark ? [0.05, 0.08, 0.05] : [0.03, 0.06, 0.03],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: idx * 0.5,
+        }}
+        aria-hidden="true"
+      >
+        {idx + 1}
+      </motion.div>
+
+      {/* Number & Title */}
+      <div className={cn("flex flex-col gap-4 relative z-10", isFullWidth ? "lg:w-1/3 shrink-0" : "")}>
+        <span className={cn(
+          "font-mono text-sm studio-tabular font-semibold tracking-widest",
+          isDark ? "text-white/70" : "text-accent"
+        )}>
+          STEP {String(idx + 1).padStart(2, "0")}
+        </span>
+        <h3 className={cn(
+          "studio-h3-sans",
+          isDark ? "text-white" : "text-foreground"
+        )}>
+          {step.title}
+        </h3>
+      </div>
+      
+      {/* Content */}
+      <div className={cn("flex flex-col gap-3 relative z-10", isFullWidth ? "lg:flex-1" : "")}>
+        <p className={cn(
+          "studio-eyebrow",
+          isDark ? "text-white/90" : "text-foreground"
+        )}>
+          {step.subtitle}
+        </p>
+        <p className={cn(
+          "studio-body text-lg leading-relaxed",
+          isDark ? "text-white/70" : "text-muted-foreground"
+        )}>
+          {step.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+});

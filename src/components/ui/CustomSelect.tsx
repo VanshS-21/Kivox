@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown } from "lucide-react";
-import { easeOutExpo } from "@/lib/motion";
 
 interface CustomSelectProps {
   id: string;
@@ -38,6 +36,35 @@ export function CustomSelect({
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
+  // Keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (disabled) return;
+    
+    switch (e.key) {
+      case "Enter":
+      case " ":
+        e.preventDefault();
+        setIsOpen((prev) => !prev);
+        break;
+      case "Escape":
+        setIsOpen(false);
+        containerRef.current?.focus();
+        break;
+      case "ArrowDown":
+        if (!isOpen) {
+          setIsOpen(true);
+        }
+        e.preventDefault();
+        break;
+      case "ArrowUp":
+        if (!isOpen) {
+          setIsOpen(true);
+        }
+        e.preventDefault();
+        break;
+    }
+  };
+
   return (
     <div className="relative w-full" ref={containerRef}>
       {/* Trigger Button */}
@@ -46,33 +73,31 @@ export function CustomSelect({
         id={id}
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={handleKeyDown}
         className={`w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b text-left text-lg outline-none transition-colors duration-200 flex items-center justify-between disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${
           hasError ? "border-error text-error" : "border-border text-foreground hover:border-accent focus:border-accent focus:bg-accent-muted/50"
         } ${!value ? "text-muted-foreground/40" : ""}`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <span className="text-left pr-4">{value || placeholder}</span>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.4, ease: easeOutExpo }}
-          className="shrink-0 ml-4"
+        <span className="text-left pe-4 min-w-0 break-words truncate">{value || placeholder}</span>
+        <div
+          className="shrink-0 ms-4"
+          style={{
+            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 250ms cubic-bezier(0.16, 1, 0.3, 1)",
+          }}
         >
           <ChevronDown className="w-4 h-4 opacity-50" />
-        </motion.div>
+        </div>
       </button>
 
       {/* Dropdown Options */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.ul
-            initial={{ opacity: 0, y: 4, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.98 }}
-            transition={{ duration: 0.3, ease: easeOutExpo }}
-            className="absolute z-50 w-full mt-1 bg-background border border-border/50 rounded-xl shadow-2xl overflow-hidden py-1 max-h-60 overflow-y-auto"
-            role="listbox"
-          >
+      {isOpen && (
+        <ul
+          className="absolute z-50 w-full mt-1 bg-background border border-border/50 rounded-xl shadow-2xl overflow-hidden py-1 max-h-60 overflow-y-auto"
+          role="listbox"
+        >
             {/* Optional empty state option for Timeline */}
             {placeholder === "Choose a timeline" && (
                <li
@@ -87,12 +112,7 @@ export function CustomSelect({
                  }`}
                >
                  {placeholder}
-                 {!value && (
-                   <motion.div
-                     layoutId="check"
-                     className="w-1.5 h-1.5 rounded-full bg-accent"
-                   />
-                 )}
+                 {!value && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
                </li>
             )}
             {options.map((option) => {
@@ -111,18 +131,12 @@ export function CustomSelect({
                   }`}
                 >
                   {option}
-                  {isSelected && (
-                    <motion.div
-                      layoutId="check"
-                      className="w-1.5 h-1.5 rounded-full bg-accent"
-                    />
-                  )}
+                  {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-accent" />}
                 </li>
               );
             })}
-          </motion.ul>
-        )}
-      </AnimatePresence>
+        </ul>
+      )}
     </div>
   );
 }

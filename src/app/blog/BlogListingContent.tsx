@@ -1,13 +1,9 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
 
 import { Container } from "@/components/ui/Container";
-import { easeOutExpo, easeOutQuint, fadeUp, viewportOnce } from "@/lib/motion";
 import type { BlogPostMeta } from "@/lib/blog-types";
 import { formatDate } from "@/lib/blog-types";
-/* ─── Reading time icon — small book glyph ─── */
+
 function ReadingTimeIcon() {
   return (
     <svg
@@ -28,25 +24,18 @@ function ReadingTimeIcon() {
   );
 }
 
-/* ─── Featured post (latest) ─── */
 function FeaturedPost({ post }: { post: BlogPostMeta }) {
-  const reduce = useReducedMotion();
-
   return (
-    <motion.article
-      initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(6px)" }}
-      animate={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
-      transition={{ duration: 0.7, ease: easeOutQuint, delay: 0.25 }}
-    >
+    <article>
       <Link
         href={`/blog/${post.slug}`}
-        className="group block py-10 sm:py-14 border-b border-border hover:border-accent/20 transition-colors duration-500"
+        prefetch={false}
+        className="group block border-b border-border py-10 transition-colors duration-500 hover:border-accent/20 sm:py-14"
         style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
-        {/* Category + date + "Latest" pill */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="mb-4 flex items-center gap-3">
           <span
-            className="inline-flex items-center px-2.5 py-1 rounded-full bg-accent/10 font-mono text-accent"
+            className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-1 font-mono text-accent"
             style={{
               fontSize: "0.5625rem",
               letterSpacing: "0.1em",
@@ -62,20 +51,17 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
           </span>
         </div>
 
-        {/* Title — large, editorial */}
         <h2
-          className="studio-h1-headline text-foreground group-hover:text-accent transition-colors duration-300 max-w-4xl"
+          className="studio-h1-headline max-w-4xl text-foreground transition-colors duration-300 group-hover:text-accent"
           style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
           {post.title}
         </h2>
 
-        {/* Description */}
-        <p className="mt-4 studio-lede max-w-3xl">{post.description}</p>
+        <p className="mt-4 max-w-3xl studio-lede">{post.description}</p>
 
-        {/* Read more + reading time */}
         <div className="mt-6 flex items-center gap-4">
-          <span className="font-semibold text-accent text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
+          <span className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-all duration-300 group-hover:gap-3">
             Read article
             <svg
               width="14"
@@ -104,25 +90,21 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
           </span>
         </div>
       </Link>
-    </motion.article>
+    </article>
   );
 }
 
-/* ─── Post list row ─── */
 function PostListItem({ post, index }: { post: BlogPostMeta; index: number }) {
   return (
-    <motion.article
-      variants={fadeUp}
-      transition={{ duration: 0.5, ease: easeOutExpo }}
-    >
+    <article>
       <Link
         href={`/blog/${post.slug}`}
-        className="group flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 py-6 sm:py-7 border-b border-border hover:border-accent/20 transition-colors duration-400"
+        prefetch={false}
+        className="group flex flex-col gap-2 border-b border-border py-6 transition-colors duration-400 hover:border-accent/20 sm:flex-row sm:items-baseline sm:gap-6 sm:py-7"
         style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
-        {/* Index number — brightens on hover */}
         <span
-          className="font-mono text-accent studio-tabular select-none shrink-0 transition-opacity duration-200 group-hover:opacity-100"
+          className="studio-tabular shrink-0 select-none font-mono text-accent transition-opacity duration-200 group-hover:opacity-100"
           style={{
             fontSize: "0.6875rem",
             letterSpacing: "0.05em",
@@ -132,20 +114,18 @@ function PostListItem({ post, index }: { post: BlogPostMeta; index: number }) {
           {String(index + 1).padStart(2, "0")}
         </span>
 
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          <h2 className="studio-h4-sans text-foreground leading-snug group-hover:text-accent transition-colors duration-200">
+        <div className="min-w-0 flex-1">
+          <h2 className="studio-h4-sans text-foreground transition-colors duration-200 group-hover:text-accent">
             {post.title}
           </h2>
-          <p className="mt-1.5 studio-body text-muted-foreground line-clamp-2 max-w-2xl">
+          <p className="mt-1.5 line-clamp-2 max-w-2xl studio-body text-muted-foreground">
             {post.description}
           </p>
         </div>
 
-        {/* Meta */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex shrink-0 items-center gap-3">
           <span
-            className="inline-flex items-center px-2 py-0.5 rounded bg-accent/5 font-mono text-subtle-foreground hidden sm:inline-flex"
+            className="hidden items-center rounded bg-accent/5 px-2 py-0.5 font-mono text-subtle-foreground sm:inline-flex"
             style={{
               fontSize: "0.5625rem",
               letterSpacing: "0.08em",
@@ -163,13 +143,11 @@ function PostListItem({ post, index }: { post: BlogPostMeta; index: number }) {
           </span>
         </div>
       </Link>
-    </motion.article>
+    </article>
   );
 }
 
-/* ─── Main listing ─── */
 export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
-  const reduce = useReducedMotion();
   const [featured, ...rest] = posts;
 
   if (!featured) {
@@ -188,86 +166,39 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
   return (
     <div className="pt-28 sm:pt-32 pb-16 sm:pb-24">
       <Container size="default">
-        <motion.h1
-          initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={
-            reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
-          }
-          transition={{ duration: 0.8, ease: easeOutQuint }}
-          className="studio-h1-headline text-foreground"
-        >
+        <h1 className="studio-h1-headline text-foreground">
           Thinking, out loud
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }}
-          animate={
-            reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
-          }
-          transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.18 }}
-          className="mt-4 studio-lede max-w-2xl"
-        >
+        <p className="mt-4 max-w-2xl studio-lede">
           Practical writing on design, trust, and building a business presence
           that works. No keyword stuffing. No filler paragraphs.
-        </motion.p>
+        </p>
 
-        {/* Decorative divider — draw-line */}
-        <motion.div
-          initial={reduce ? false : { scaleX: 0 }}
-          animate={reduce ? undefined : { scaleX: 1 }}
-          transition={{ duration: 1.2, ease: easeOutExpo, delay: 0.3 }}
-          className="mt-8 h-px bg-border origin-left"
-        />
+        <div className="mt-8 h-px bg-border" />
 
-        {/* ── Featured post (latest) ── */}
         <FeaturedPost post={featured} />
 
-        {/* ── Remaining posts — staggered scroll-reveal ── */}
         {rest.length > 0 && (
-          <motion.div
-            initial={reduce ? false : "hidden"}
-            whileInView={reduce ? undefined : "show"}
-            viewport={viewportOnce}
-            variants={{
-              hidden: {},
-              show: {
-                transition: {
-                  staggerChildren: 0.07,
-                  delayChildren: 0.12,
-                },
-              },
-            }}
-            className="mt-2"
-          >
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.5, ease: easeOutExpo }}
-              className="mb-4 mt-10 flex items-baseline gap-3"
-            >
+          <div className="mt-2">
+            <div className="mb-4 mt-10 flex items-baseline gap-3">
               <h2 className="studio-h3-sans text-foreground">
                 More articles
               </h2>
               <span
-                className="font-mono text-subtle-foreground select-none"
+                className="select-none font-mono text-subtle-foreground"
                 style={{ fontSize: "0.5625rem", letterSpacing: "0.05em" }}
               >
                 {String(rest.length).padStart(2, "0")}
               </span>
-            </motion.div>
+            </div>
             {rest.map((post, idx) => (
               <PostListItem key={post.slug} post={post} index={idx} />
             ))}
-          </motion.div>
+          </div>
         )}
 
-        {/* ── Article count ── */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0 }}
-          whileInView={reduce ? undefined : { opacity: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: easeOutExpo }}
-          className="mt-12 pt-6 border-t border-border"
-        >
+        <div className="mt-12 border-t border-border pt-6">
           <span
             className="font-mono text-subtle-foreground"
             style={{
@@ -279,7 +210,7 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
             {posts.length} {posts.length === 1 ? "article" : "articles"}{" "}
             published
           </span>
-        </motion.div>
+        </div>
       </Container>
     </div>
   );

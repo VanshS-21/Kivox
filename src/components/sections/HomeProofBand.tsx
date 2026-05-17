@@ -53,7 +53,7 @@ export function HomeProofBand() {
           </div>
 
           <div className="space-y-5 sm:space-y-6">
-            {proofItems.map((project, index) => {
+            {proofItems.map((project) => {
               const accent =
                 projectColors[project.slug] ?? "var(--proof-accent)";
               const liveIsExternal = Boolean(
@@ -76,6 +76,7 @@ export function HomeProofBand() {
                     aria-label={`View live site: ${project.title}`}
                     className="proof-media relative block min-h-[220px] overflow-hidden bg-[var(--proof-linen)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--project-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--proof-bg)] sm:min-h-full"
                     href={liveHref}
+                    prefetch={false}
                     rel={liveIsExternal ? "noopener noreferrer" : undefined}
                     target={liveIsExternal ? "_blank" : undefined}
                   >
@@ -83,8 +84,8 @@ export function HomeProofBand() {
                       alt={`${project.title} website screenshot`}
                       className="object-cover object-left-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                       fill
-                      priority={index === 0}
-                      sizes="(max-width: 639px) 100vw, (max-width: 1279px) 44vw, 34vw"
+                      loading="lazy"
+                      sizes="(max-width: 639px) 88vw, (max-width: 1279px) 44vw, 34vw"
                       src={project.images?.[0] ?? project.image}
                     />
                     <div
@@ -144,6 +145,7 @@ export function HomeProofBand() {
                             aria-label={`View live website: ${project.title}`}
                             className="group inline-flex items-center gap-3 rounded-full px-5 py-2.5 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                             href={liveHref}
+                            prefetch={false}
                             rel={
                               liveIsExternal ? "noopener noreferrer" : undefined
                             }
@@ -163,6 +165,7 @@ export function HomeProofBand() {
                             aria-label={`View Case Study: ${project.title}`}
                             className="group inline-flex items-center gap-4 rounded-full text-sm font-semibold opacity-90 transition-opacity duration-300 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                             href={`/work/${project.slug}`}
+                            prefetch={false}
                             style={{
                               color: accent,
                             }}

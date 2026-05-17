@@ -22,7 +22,7 @@ export const Section = forwardRef<HTMLElement, {
   };
 
   return (
-    <section ref={ref} className={cn(spacingClasses[spacing], className)} id={id} style={style}>
+    <section ref={ref} className={cn("relative", spacingClasses[spacing], className)} id={id} style={style}>
       {children}
     </section>
   );

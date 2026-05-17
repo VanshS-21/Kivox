@@ -1,31 +1,28 @@
-"use client";
-
-import { motion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
-import { useRef } from "react";
+import type { CSSProperties } from "react";
 import { ArrowRight, Check, MapPin, Clock } from "lucide-react";
 
-export default function FitnessShowcase() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const InstagramIcon = () => (
+const InstagramIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
   );
 
-  const XIcon = () => (
+const XIcon = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
   );
 
-  const YoutubeIcon = () => (
+const YoutubeIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
   );
 
+const marqueeStyle = {
+  "--marquee-distance": "50%",
+  animation: "marquee-scroll 15s linear infinite",
+} as CSSProperties;
+
+export default function FitnessShowcase() {
+
   return (
-    <div ref={containerRef} className="relative bg-[#050505] text-white min-h-screen font-sans selection:bg-[#CCFF00] selection:text-black">
+    <div className="relative bg-[#050505] text-white min-h-screen font-sans selection:bg-[#CCFF00] selection:text-black">
       
       {/* HEADER */}
       <header className="px-6 md:px-12 py-6 flex justify-between items-center fixed top-0 md:top-12 left-0 right-0 z-50 mix-blend-difference pointer-events-none">
@@ -54,17 +51,14 @@ export default function FitnessShowcase() {
             fill
             sizes="100vw"
             className="object-cover opacity-40 grayscale contrast-125"
-            priority
+            fetchPriority="high"
+            preload
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/50" />
         </div>
         
         <div className="relative z-10 w-full px-6 flex flex-col items-center text-center mt-20">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <div>
             <h1 className="text-[14vw] md:text-[12vw] font-black leading-[0.8] tracking-tighter uppercase italic flex flex-col items-center">
               <span>Push</span>
               <span className="text-transparent relative" style={{ WebkitTextStroke: "2px #CCFF00" }}>
@@ -72,23 +66,17 @@ export default function FitnessShowcase() {
               </span>
               <span>Your Limits</span>
             </h1>
-          </motion.div>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="mt-8 md:mt-12 text-lg md:text-2xl font-bold tracking-tight uppercase max-w-2xl text-white/80"
-          >
+          </div>
+          <p className="mt-8 md:mt-12 text-lg md:text-2xl font-bold tracking-tight uppercase max-w-2xl text-white/80">
             Elite facilities. World-class trainers. No excuses.
-          </motion.p>
+          </p>
         </div>
       </section>
 
       {/* MARQUEE */}
       <div className="bg-[#CCFF00] text-black py-4 md:py-6 overflow-hidden flex whitespace-nowrap -rotate-2 scale-110 relative z-20 origin-left border-y-4 border-white">
-        <motion.div 
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 15, ease: "linear", repeat: Infinity }}
+        <div 
+          style={marqueeStyle}
           className="flex items-center text-5xl md:text-7xl font-black uppercase italic tracking-tighter"
         >
           {[...Array(10)].map((_, i) => (
@@ -101,7 +89,7 @@ export default function FitnessShowcase() {
               <span className="mx-6 text-4xl">•</span>
             </span>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       {/* METHODOLOGIES (PROGRAMS) */}
@@ -136,12 +124,8 @@ export default function FitnessShowcase() {
               stat: "30 MIN",
             },
           ].map((item, i) => (
-            <motion.div 
+            <div 
               key={i} 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
               className="relative aspect-[3/4] group overflow-hidden bg-[#111] border border-white/10"
             >
               <Image 
@@ -165,7 +149,7 @@ export default function FitnessShowcase() {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -268,12 +252,8 @@ export default function FitnessShowcase() {
               { name: "Elena Rostova", role: "Endurance & Mobility", img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1000&auto=format&fit=crop" },
               { name: "David Vance", role: "Powerlifting", img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1000&auto=format&fit=crop" },
             ].map((trainer, i) => (
-              <motion.div 
+              <div 
                 key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
                 className="group cursor-pointer"
               >
                 <div className="relative aspect-square mb-6 overflow-hidden bg-black">
@@ -290,7 +270,7 @@ export default function FitnessShowcase() {
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter mb-1 group-hover:text-[#CCFF00] transition-colors">{trainer.name}</h3>
                 <p className="text-white/50 font-bold tracking-widest text-xs uppercase">{trainer.role}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -307,7 +287,7 @@ export default function FitnessShowcase() {
           {/* Tier 1 */}
           <div className="border border-white/10 bg-[#111] p-8 hover:border-white/30 transition-colors">
             <h3 className="text-2xl font-black uppercase italic tracking-tighter mb-2">Drop-In</h3>
-            <div className="text-5xl font-black tracking-tighter mb-6">$35<span className="text-lg text-white/40 tracking-normal font-medium">/day</span></div>
+            <div className="text-5xl font-black tracking-tighter mb-6">$35<span className="text-lg text-white/70 tracking-normal font-medium">/day</span></div>
             <ul className="space-y-4 mb-8 text-white/70 text-sm">
               <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#CCFF00]" /> Single day access</li>
               <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#CCFF00]" /> 1 Group Class</li>
@@ -324,7 +304,7 @@ export default function FitnessShowcase() {
               Most Popular
             </div>
             <h3 className="text-3xl font-black uppercase italic tracking-tighter mb-2 text-[#CCFF00]">Unlimited</h3>
-            <div className="text-6xl font-black tracking-tighter mb-6">$199<span className="text-xl text-white/40 tracking-normal font-medium">/mo</span></div>
+            <div className="text-6xl font-black tracking-tighter mb-6">$199<span className="text-xl text-white/70 tracking-normal font-medium">/mo</span></div>
             <ul className="space-y-4 mb-10 text-white/80">
               <li className="flex items-center gap-3"><Check className="w-5 h-5 text-[#CCFF00]" /> 24/7 Facility Access</li>
               <li className="flex items-center gap-3"><Check className="w-5 h-5 text-[#CCFF00]" /> Unlimited Group Classes</li>
@@ -339,7 +319,7 @@ export default function FitnessShowcase() {
           {/* Tier 3 */}
           <div className="border border-white/10 bg-[#111] p-8 hover:border-white/30 transition-colors">
             <h3 className="text-2xl font-black uppercase italic tracking-tighter mb-2">Personal Training</h3>
-            <div className="text-5xl font-black tracking-tighter mb-6">$499<span className="text-lg text-white/40 tracking-normal font-medium">/mo</span></div>
+            <div className="text-5xl font-black tracking-tighter mb-6">$499<span className="text-lg text-white/70 tracking-normal font-medium">/mo</span></div>
             <ul className="space-y-4 mb-8 text-white/70 text-sm">
               <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#CCFF00]" /> All Unlimited benefits</li>
               <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#CCFF00]" /> 4 PT Sessions / Month</li>
@@ -370,20 +350,20 @@ export default function FitnessShowcase() {
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           <div>
             <div className="text-3xl font-black tracking-tighter uppercase italic mb-8">
-              IRON<span className="text-[#CCFF00] drop-shadow-sm">CLAD</span>
+              IRON<span className="text-[#4D6100] drop-shadow-sm">CLAD</span>
             </div>
             <p className="text-black/60 font-medium mb-6 max-w-xs">
               Forging elite fitness through uncompromised discipline and state-of-the-art facilities.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-colors rounded-sm"><InstagramIcon /></a>
-              <a href="#" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-colors rounded-sm"><XIcon /></a>
-              <a href="#" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-colors rounded-sm"><YoutubeIcon /></a>
+              <a href="#" aria-label="Ironclad on Instagram" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-colors rounded-sm"><InstagramIcon /></a>
+              <a href="#" aria-label="Ironclad on X" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-colors rounded-sm"><XIcon /></a>
+              <a href="#" aria-label="Ironclad on YouTube" className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-colors rounded-sm"><YoutubeIcon /></a>
             </div>
           </div>
 
           <div>
-            <h4 className="font-black uppercase tracking-widest text-sm mb-6">Location</h4>
+            <p className="font-black uppercase tracking-widest text-sm mb-6">Location</p>
             <div className="flex gap-3 mb-4">
               <MapPin className="w-5 h-5 shrink-0" />
               <div>
@@ -394,7 +374,7 @@ export default function FitnessShowcase() {
           </div>
 
           <div>
-            <h4 className="font-black uppercase tracking-widest text-sm mb-6">Hours</h4>
+            <p className="font-black uppercase tracking-widest text-sm mb-6">Hours</p>
             <div className="flex gap-3">
               <Clock className="w-5 h-5 shrink-0" />
               <div className="space-y-2 text-sm text-black/70">
@@ -406,7 +386,7 @@ export default function FitnessShowcase() {
           </div>
 
           <div>
-            <h4 className="font-black uppercase tracking-widest text-sm mb-6">Legal</h4>
+            <p className="font-black uppercase tracking-widest text-sm mb-6">Legal</p>
             <ul className="space-y-3 text-sm text-black/60 font-medium">
               <li><a href="#" className="hover:text-black transition-colors">Privacy Policy</a></li>
               <li><a href="#" className="hover:text-black transition-colors">Terms of Service</a></li>

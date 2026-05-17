@@ -7,8 +7,7 @@ import { motion, useReducedMotion, useScroll, useTransform, useSpring } from "mo
 import { team } from "@/content/team";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { easeOutExpo, viewportOnce, fadeUp, transitionDefault } from "@/lib/motion";
-import { cn } from "@/lib/cn";
+import { viewportOnce, fadeUp, transitionDefault } from "@/lib/motion";
 
 export function HomeTeam() {
   const reduce = useReducedMotion();
@@ -53,7 +52,7 @@ export function HomeTeam() {
   );
 }
 
-function TeamMemberCard({ member, idx, reduce, sectionRef }: { member: any; idx: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
+function TeamMemberCard({ member, idx, reduce, sectionRef }: { member: { id: string; name: string; role: string; focus: string; quote: string; image: string; }; idx: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],

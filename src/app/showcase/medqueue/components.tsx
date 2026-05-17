@@ -85,7 +85,7 @@ export function MQButton({
 
   if (href) {
     return (
-      <Link className={className} href={href} style={style}>
+      <Link className={className} href={href} prefetch={false} style={style}>
         {content}
       </Link>
     );
@@ -197,7 +197,7 @@ export function MQNav() {
       }}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-        <Link className="flex items-center gap-3" href={routes.home}>
+        <Link className="flex items-center gap-3" href={routes.home} prefetch={false}>
           <span
             className="grid h-10 w-10 place-items-center rounded-2xl"
             style={{
@@ -219,13 +219,13 @@ export function MQNav() {
         </Link>
 
         <nav className="hidden items-center gap-1 text-sm font-semibold md:flex" style={{ color: mq.color.muted }}>
-          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.search}>
+          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.search} prefetch={false}>
             Find care
           </Link>
-          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.portal}>
+          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.portal} prefetch={false}>
             Portal
           </Link>
-          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.designSystem}>
+          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.designSystem} prefetch={false}>
             System
           </Link>
         </nav>
@@ -243,6 +243,7 @@ export function MQNav() {
           <Link
             className="inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-bold"
             href={routes.portal}
+            prefetch={false}
             style={{ backgroundColor: mq.color.ink, color: mq.color.white }}
           >
             <CalendarCheck2 aria-hidden="true" className="h-4 w-4" />

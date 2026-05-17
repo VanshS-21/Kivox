@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { fadeUp, transitionDefault, viewportOnce, staggerContainer } from "@/lib/motion";
+import { fadeUp, viewportOnce, staggerContainer } from "@/lib/motion";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";

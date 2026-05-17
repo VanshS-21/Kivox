@@ -85,6 +85,7 @@ export default async function CaseStudyPage({
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6 text-sm">
               <Link
                 href="/work"
+                prefetch={false}
                 className="font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
                 ← Back to showcase
@@ -159,7 +160,7 @@ export default async function CaseStudyPage({
           {/* ═══════════════════════════════════════════════════
               § 3 — PROJECT OVERVIEW
           ═══════════════════════════════════════════════════ */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
+          <div className="cv-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
             <div className="lg:col-span-4">
               <h2 className="studio-h3-sans text-foreground">
                 Project Overview
@@ -178,7 +179,7 @@ export default async function CaseStudyPage({
               § 4 — THE CHALLENGE + THE INSIGHT
           ═══════════════════════════════════════════════════ */}
           {(project.challenge || project.insight) && (
-            <div className="mb-20 lg:mb-32">
+            <div className="cv-auto mb-20 lg:mb-32">
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
 
               {/* Challenge */}
@@ -231,7 +232,7 @@ export default async function CaseStudyPage({
 
           {/* Approach */}
           {project.approach && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
+            <div className="cv-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
               <div className="lg:col-span-4">
                 <h2 className="studio-h3-sans text-foreground">
                   Our Approach
@@ -249,7 +250,7 @@ export default async function CaseStudyPage({
               § 5 — OUR PROCESS (Timeline)
           ═══════════════════════════════════════════════════ */}
           {project.process && project.process.length > 0 && (
-            <div className="mb-20 lg:mb-32">
+            <div className="cv-auto mb-20 lg:mb-32">
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
                 <div className="lg:col-span-4">
@@ -283,7 +284,7 @@ export default async function CaseStudyPage({
               § 6 — DESIGN PHILOSOPHY
           ═══════════════════════════════════════════════════ */}
           {project.designPhilosophy && (
-            <div className="mb-20 lg:mb-32">
+            <div className="cv-auto mb-20 lg:mb-32">
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="studio-h3-sans text-foreground mb-8">
@@ -301,7 +302,7 @@ export default async function CaseStudyPage({
           ═══════════════════════════════════════════════════ */}
           {project.keyDesignDecisions &&
             project.keyDesignDecisions.length > 0 && (
-              <div className="mb-20 lg:mb-32">
+              <div className="cv-auto mb-20 lg:mb-32">
                 <div className="h-px bg-border w-full mb-16 lg:mb-24" />
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
                   <div className="lg:col-span-4">
@@ -334,7 +335,7 @@ export default async function CaseStudyPage({
               § 8 — RESULTS & IMPACT
           ═══════════════════════════════════════════════════ */}
           {project.results && project.results.length > 0 && (
-            <div className="mb-20 lg:mb-32">
+            <div className="cv-auto mb-20 lg:mb-32">
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
                 <div className="lg:col-span-4">
@@ -362,7 +363,7 @@ export default async function CaseStudyPage({
               § 9 — TECH STACK
           ═══════════════════════════════════════════════════ */}
           {project.techStack && project.techStack.length > 0 && (
-            <div className="mb-20 lg:mb-32">
+            <div className="cv-auto mb-20 lg:mb-32">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
                 <div className="lg:col-span-4">
                   <h2 className="studio-h3-sans text-foreground">
@@ -389,7 +390,7 @@ export default async function CaseStudyPage({
               § 10 — CLIENT TESTIMONIAL
           ═══════════════════════════════════════════════════ */}
           {project.testimonial && (
-            <div className="mb-20 lg:mb-32">
+            <div className="cv-auto mb-20 lg:mb-32">
               <div className="h-px bg-border w-full mb-16 lg:mb-24" />
               <TestimonialBlock
                 testimonial={project.testimonial}
@@ -404,7 +405,7 @@ export default async function CaseStudyPage({
           {(project.targetAudience ||
             project.primaryActions ||
             project.coreSections) && (
-            <div className="mb-20 lg:mb-32 bg-card/20 border border-border/50 rounded-2xl p-8 lg:p-12">
+            <div className="cv-auto mb-20 lg:mb-32 bg-card/20 border border-border/50 rounded-2xl p-8 lg:p-12">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-14">
                 {project.targetAudience && (
                   <DataBlock
@@ -437,7 +438,7 @@ export default async function CaseStudyPage({
           § 12 — NEXT PROJECT FOOTER
       ═══════════════════════════════════════════════════ */}
       <Section
-        className="border-t border-border bg-card/10 py-24 lg:py-32 text-center"
+        className="cv-auto border-t border-border bg-card/10 py-24 lg:py-32 text-center"
         spacing="none"
       >
         <Container>
@@ -446,6 +447,7 @@ export default async function CaseStudyPage({
           </p>
           <Link
             href={`/work/${nextProject.slug}`}
+            prefetch={false}
             className="group inline-block"
           >
             <h2 className="studio-h1-headline text-foreground mb-4 group-hover:text-accent transition-colors duration-500">

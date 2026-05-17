@@ -135,6 +135,7 @@ export function HomeWorkPreview() {
                       whileTap={reduce ? undefined : { scale: 0.98 }}
                       className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto transition-transform duration-300 ease-[var(--ease-out-expo)]"
                       href={project.liveUrl || `/work/${project.slug}`}
+                      prefetch={false}
                       rel={
                         project.liveUrl?.startsWith("/")
                           ? undefined
@@ -148,8 +149,8 @@ export function HomeWorkPreview() {
                         alt={`${project.title} project showcase`}
                         className="object-cover object-left-top transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-[1.08] group-hover:rotate-2"
                         fill
-                        priority={idx === 0}
-                        sizes="(max-width: 767px) 100vw, (max-width: 1439px) 58vw, 50vw"
+                        loading="lazy"
+                        sizes="(max-width: 767px) 88vw, (max-width: 1439px) 58vw, 50vw"
                         src={project.images?.[0] ?? project.image}
                       />
                       <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-[oklch(0.12_0.012_65/0.72)] px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-white backdrop-blur-sm md:bottom-6 md:left-6">
@@ -207,6 +208,7 @@ export function HomeWorkPreview() {
                               whileTap={reduce ? undefined : { scale: 0.95 }}
                               className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5"
                               href={project.liveUrl}
+                              prefetch={false}
                               rel={
                                 project.liveUrl.startsWith("/")
                                   ? undefined
@@ -232,6 +234,7 @@ export function HomeWorkPreview() {
                             whileTap={reduce ? undefined : { scale: 0.95 }}
                             className="inline-flex min-h-12 items-center justify-center rounded-full border bg-[var(--work-secondary-cta-bg)] px-6 text-sm font-semibold transition-all hover:bg-accent hover:text-[var(--work-primary-cta-fg)]"
                             href={`/work/${project.slug}`}
+                            prefetch={false}
                             style={{
                               borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 34%, transparent)`,
                               color:
@@ -332,7 +335,7 @@ export function HomeWorkPreview() {
           style={reduce ? {} : { x, willChange: "transform" }}
           className={reduce ? "flex flex-col w-full" : "flex flex-1"}
         >
-          {featuredWork.map((project, idx) => (
+          {featuredWork.map((project) => (
             <div
               key={project.slug}
               className={
@@ -356,7 +359,7 @@ export function HomeWorkPreview() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 100vw"
-                    priority={idx === 0}
+                    loading="lazy"
                   />
                 </div>
                 {/* Opacity overlay — controls visibility in both themes */}
@@ -521,6 +524,7 @@ export function HomeWorkPreview() {
                       <Magnetic strength={0.2}>
                         <Link
                           href={project.liveUrl}
+                          prefetch={false}
                           rel={
                             project.liveUrl.startsWith("/")
                               ? undefined
@@ -547,6 +551,7 @@ export function HomeWorkPreview() {
                     <Magnetic strength={0.2}>
                       <Link
                         href={`/work/${project.slug}`}
+                        prefetch={false}
                         className="inline-flex items-center gap-4 rounded-full text-sm font-semibold opacity-90 transition-opacity duration-300 hover:opacity-100 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                         style={{
                           color: projectColors[project.slug] || "var(--accent)",
@@ -713,6 +718,7 @@ function ShowcaseMediaCluster({
   return (
     <Link
       href={href}
+      prefetch={false}
       target={href.startsWith("/") ? undefined : "_blank"}
       rel={href.startsWith("/") ? undefined : "noopener noreferrer"}
       aria-label="View Live Showcase"
@@ -806,7 +812,7 @@ function DesktopDot({
 }: {
   idx: number;
   totalPanels: number;
-  project: any;
+  project: { slug: string; title: string; [key: string]: unknown };
   projectColors: Record<string, string>;
   smoothScrollYProgress: MotionValue<number>;
   onClick: () => void;

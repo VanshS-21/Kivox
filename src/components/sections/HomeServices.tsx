@@ -50,7 +50,9 @@ export function HomeServices() {
   );
 }
 
-function ServiceCard({ service, idx, reduce, sectionRef }: { service: any; idx: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
+import { memo } from "react";
+
+const ServiceCard = memo(function ServiceCard({ service, idx, reduce, sectionRef }: { service: { id: string; title: string; summary: string; examples: string[] }; idx: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -99,4 +101,4 @@ function ServiceCard({ service, idx, reduce, sectionRef }: { service: any; idx: 
       </div>
     </motion.div>
   );
-}
+});

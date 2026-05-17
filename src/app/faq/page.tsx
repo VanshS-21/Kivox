@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Container } from "@/components/ui/Container";
+
 import { FaqPageContent } from "./FaqPageContent";
 import { faq } from "@/content/pages/faq";
 

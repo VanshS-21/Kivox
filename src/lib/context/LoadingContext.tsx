@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface LoadingContextType {
   isReady: boolean;
@@ -11,19 +11,8 @@ interface LoadingContextType {
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
 export function LoadingProvider({ children }: { children: React.ReactNode }) {
-  const [isReady, setReady] = useState(false);
-  const [hasSeenLoader, setHasSeenLoader] = useState(false);
-
-  useEffect(() => {
-    const seen = sessionStorage.getItem("kivox_loaded");
-    if (seen) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setHasSeenLoader(true);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setReady(true);
-    }
-    // If not seen, it stays false and the LoadingScreen will handle the rest
-  }, []);
+  const [isReady, setReady] = useState(true);
+  const [hasSeenLoader] = useState(true);
 
   return (
     <LoadingContext.Provider value={{ isReady, setReady, hasSeenLoader }}>

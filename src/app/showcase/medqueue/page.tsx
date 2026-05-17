@@ -205,7 +205,7 @@ export default function MedQueueHomePage() {
             who understands who they are seeing, what happens next, and where their care record lives.
           </p>
           <div className="mt-6">
-            <Link className="inline-flex items-center gap-2 text-sm font-black" href={routes.designSystem} style={{ color: mq.color.trust }}>
+            <Link className="inline-flex items-center gap-2 text-sm font-black" href={routes.designSystem} prefetch={false} style={{ color: mq.color.trust }}>
               View project design system
               <Search aria-hidden="true" className="h-4 w-4" />
             </Link>

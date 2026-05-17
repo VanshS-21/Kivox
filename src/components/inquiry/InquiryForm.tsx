@@ -3,9 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useId, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { motion, AnimatePresence } from "motion/react";
 import { CustomSelect } from "@/components/ui/CustomSelect";
-import { easeOutExpo } from "@/lib/motion";
 
 import { Button } from "@/components/ui/Button";
 import {
@@ -39,7 +37,7 @@ function FormField({
 }) {
   const errorId = `${id}-error`;
   return (
-    <div className={`flex flex-col gap-2 ${className || ""}`}>
+    <div className={`flex flex-col gap-2 min-w-0 ${className || ""}`}>
       <div className="flex items-center justify-between gap-4">
         <label htmlFor={id} className="text-sm uppercase tracking-widest font-mono font-medium text-muted-foreground flex gap-1">
           {label} {required && <span className="text-accent">*</span>}
@@ -80,7 +78,7 @@ export function InquiryForm() {
   const fieldId = (name: string) => `${uid}-${name}`;
   const errorId = (name: string) => `${uid}-${name}-error`;
 
-  const form = useForm<InquiryInput, any, Inquiry>({
+  const form = useForm<InquiryInput, unknown, Inquiry>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
       name: "",
@@ -133,12 +131,7 @@ export function InquiryForm() {
       />
 
       {/* Row 1: Name + Email */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0 }}
-        className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8"
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8">
         <FormField label="Your full name" error={errors.name?.message} id={fieldId("name")} required>
           <input
             id={fieldId("name")}
@@ -166,15 +159,10 @@ export function InquiryForm() {
             {...form.register("email")}
           />
         </FormField>
-      </motion.div>
+      </div>
 
       {/* Row 2: Phone + Business type */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.06 }}
-        className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8"
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8">
         <FormField label="Phone number" error={errors.phone?.message} id={fieldId("phone")} required>
           <input
             id={fieldId("phone")}
@@ -206,15 +194,10 @@ export function InquiryForm() {
             )}
           />
         </FormField>
-      </motion.div>
+      </div>
 
       {/* Row 3: What you need + Timeline */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.12 }}
-        className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8"
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8">
         <FormField label="What can we help you with?" error={errors.whatYouNeed?.message} id={fieldId("whatYouNeed")} required>
           <Controller
             name="whatYouNeed"
@@ -249,14 +232,10 @@ export function InquiryForm() {
             )}
           />
         </FormField>
-      </motion.div>
+      </div>
 
       {/* Full-width fields */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.18 }}
-      >
+      <div>
       <FormField label="Tell us a bit more about your goals (optional)" error={errors.notes?.message} id={fieldId("notes")}>
         <textarea
           id={fieldId("notes")}
@@ -269,15 +248,10 @@ export function InquiryForm() {
           {...form.register("notes")}
         />
       </FormField>
-      </motion.div>
+      </div>
 
       {/* Submit row */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.36 }}
-        className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-4"
-      >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-4">
         <Button
           disabled={isDisabled}
           type="submit"
@@ -291,43 +265,30 @@ export function InquiryForm() {
               : "Send message →"}
         </Button>
         <span className="text-xs text-muted-foreground">
-          We'll review and reply within 24 hours.
+          We&apos;ll review and reply within 24 hours.
         </span>
-      </motion.div>
+      </div>
 
       {/* Status messages — aria-live for screen reader announcements */}
       <div aria-live="polite" aria-atomic="true">
-        <AnimatePresence mode="wait">
-          {status.type === "error" && (
-            <motion.div
-              key="error"
-              initial={{ opacity: 0, y: 8, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.3, ease: easeOutExpo }}
-              className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-base"
-              role="alert"
-            >
-              {status.message} Please try again, or reach us at kivox.contact@gmail.com.
-            </motion.div>
-          )}
+        {status.type === "error" && (
+          <div
+            className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-base break-words"
+            role="alert"
+          >
+            {status.message} Please try again, or reach us at kivox.contact@gmail.com.
+          </div>
+        )}
 
-          {status.type === "success" && (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, y: 8, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.4, ease: easeOutExpo }}
-              className="rounded-xl border border-success/20 bg-success/5 text-success px-5 py-4 text-base"
-              role="status"
-            >
-              Received. We&apos;ll reply within 24 hours with next steps.
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {status.type === "success" && (
+          <div
+            className="rounded-xl border border-success/20 bg-success/5 text-success px-5 py-4 text-base"
+            role="status"
+          >
+            Received. We&apos;ll reply within 24 hours with next steps.
+          </div>
+        )}
       </div>
     </form>
   );
 }
-

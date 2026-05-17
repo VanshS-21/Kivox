@@ -22,7 +22,6 @@ function MagneticCTA({
 }) {
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const [isPressed, setIsPressed] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const offsetRef = useRef({ x: 0, y: 0 });
 
   const handleMouseMove = useCallback(
@@ -48,7 +47,6 @@ function MagneticCTA({
     if (!btn) return;
     btn.style.transform = "translate(0px, 0px)";
     btn.style.boxShadow = "";
-    setIsHovered(false);
   }, []);
 
   const handleMouseDown = useCallback(() => setIsPressed(true), []);
@@ -71,9 +69,9 @@ function MagneticCTA({
     <Link
       ref={buttonRef}
       href={href}
+      prefetch={false}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onMouseEnter={() => setIsHovered(true)}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onTouchStart={handleMouseDown}

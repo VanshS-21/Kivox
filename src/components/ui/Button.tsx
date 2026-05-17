@@ -38,6 +38,7 @@ export function Button({
       ref={ref}
       onMouseEnter={onMouseEnter}
       onClick={onClick}
+      aria-disabled={props.disabled}
       {...props}
     />
   );
@@ -50,6 +51,7 @@ export function ButtonLink({
   ref,
   onMouseEnter,
   onClick,
+  prefetch,
   ...props
 }: ComponentProps<typeof Link> & { variant?: Variant; size?: Size; ref?: Ref<HTMLAnchorElement> }) {
   return (
@@ -58,6 +60,8 @@ export function ButtonLink({
       ref={ref}
       onMouseEnter={onMouseEnter}
       onClick={onClick}
+      prefetch={prefetch ?? false}
+      aria-disabled={(props as { disabled?: boolean }).disabled || (props as { "aria-disabled"?: boolean })["aria-disabled"]}
       {...props}
     />
   );
