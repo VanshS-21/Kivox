@@ -65,7 +65,7 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
         "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border transition-transform duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-1",
         spanClass,
         isDark 
-          ? "bg-[oklch(0.20_0_0)] text-white border-transparent" 
+          ? "bg-[var(--bg-primary)] text-[var(--fg-primary)] border-transparent" 
           : "studio-surface border-border/50",
         isFullWidth ? "lg:flex-row lg:items-center lg:p-12 lg:gap-16" : "gap-12"
       )}
@@ -74,7 +74,7 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
       <motion.div 
         className={cn(
           "absolute -right-4 -bottom-8 text-[8rem] font-serif italic leading-none select-none pointer-events-none",
-          isDark ? "text-white" : "text-foreground"
+          isDark ? "text-[var(--fg-primary)]" : "text-foreground"
         )}
         style={{ opacity: isDark ? 0.05 : 0.03 }}
         animate={reduce ? undefined : {
@@ -96,13 +96,13 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
       <div className={cn("flex flex-col gap-4 relative z-10", isFullWidth ? "lg:w-1/3 shrink-0" : "")}>
         <span className={cn(
           "font-mono text-sm studio-tabular font-semibold tracking-widest",
-          isDark ? "text-white/70" : "text-accent"
+          isDark ? "text-[var(--fg-primary)]/70" : "text-accent"
         )}>
           STEP {String(idx + 1).padStart(2, "0")}
         </span>
         <h3 className={cn(
           "studio-h3-sans",
-          isDark ? "text-white" : "text-foreground"
+          isDark ? "text-[var(--fg-primary)]" : "text-foreground"
         )}>
           {step.title}
         </h3>
@@ -112,13 +112,13 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
       <div className={cn("flex flex-col gap-3 relative z-10", isFullWidth ? "lg:flex-1" : "")}>
         <p className={cn(
           "studio-eyebrow",
-          isDark ? "text-white/90" : "text-foreground"
+          isDark ? "text-[var(--fg-primary)]/90" : "text-foreground"
         )}>
           {step.subtitle}
         </p>
         <p className={cn(
           "studio-body text-lg leading-relaxed",
-          isDark ? "text-white/70" : "text-muted-foreground"
+          isDark ? "text-[var(--fg-primary)]/70" : "text-muted-foreground"
         )}>
           {step.description}
         </p>

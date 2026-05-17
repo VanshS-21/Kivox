@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { RotatingText } from "@/components/ui/RotatingText";
 import { home } from "@/content/pages/home";
 
 export function HomeHero() {
@@ -31,12 +32,7 @@ export function HomeHero() {
               websites that turn
               <br />
               visitors into{" "}
-              <span
-                className="font-serif text-accent"
-                style={{ fontStyle: "italic", fontWeight: 300 }}
-              >
-                customers.
-              </span>
+              <RotatingText />
             </h1>
 
             <p className="mb-6 max-w-[34rem] studio-body text-muted-foreground sm:mb-8 sm:text-base lg:max-w-[28rem]">
@@ -47,7 +43,7 @@ export function HomeHero() {
               <Link
                 href="/contact"
                 prefetch={false}
-                className="inline-flex h-11 items-center justify-center rounded-full bg-accent px-6 text-sm font-medium text-accent-ink shadow-[var(--shadow-1)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-accent px-6 text-sm font-medium text-accent-ink shadow-rest transition hover:-translate-y-0.5 hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 {home.hero.ctas.primary}
                 <span aria-hidden="true" className="ml-2">
@@ -57,14 +53,14 @@ export function HomeHero() {
               <Link
                 href="/work"
                 prefetch={false}
-                className="inline-flex h-11 items-center justify-center rounded-full border border-border bg-surface-1 px-6 text-sm font-medium text-foreground shadow-[var(--shadow-1)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-border bg-surface px-6 text-sm font-medium text-foreground shadow-rest transition hover:-translate-y-0.5 hover:shadow-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 {home.hero.ctas.secondary}
               </Link>
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[18rem] sm:max-w-md lg:max-w-[420px] xl:max-w-[480px]">
+          <div className="hidden lg:block relative mx-auto w-full max-w-[18rem] sm:max-w-md lg:max-w-[420px] xl:max-w-[480px]">
             <div className="relative overflow-hidden rounded-xl border border-border bg-card shadow-2xl ring-1 ring-black/5 dark:ring-white/10">
               <div className="flex h-10 items-center gap-2 border-b border-border bg-muted/50 px-4">
                 <div className="h-3 w-3 rounded-full bg-red-400/80 shadow-sm" />

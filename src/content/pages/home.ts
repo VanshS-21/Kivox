@@ -1,8 +1,7 @@
 export const home = {
   hero: {
     headline: "We build websites that turn visitors into",
-    subhead:
-      "We design beautiful, easy-to-use websites that clearly explain your value—so your customers feel confident choosing you over the competition.",
+    subhead: "You've worked hard to build this. Your website should show it.",
     ctas: {
       primary: "Book a Free Call",
       secondary: "See Our Work",

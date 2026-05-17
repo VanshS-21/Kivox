@@ -13,6 +13,7 @@ import {
   useMotionValue,
 } from "motion/react";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { Section } from "@/components/ui/Section";
 
 import { work } from "@/content/pages/work";
 import { easeOutExpo } from "@/lib/motion";
@@ -106,7 +107,7 @@ export function HomeWorkPreview() {
 
   if (isCompact) {
     return (
-      <section ref={containerRef} className="relative overflow-hidden bg-background pt-[60px] md:pt-[80px] lg:pt-[100px] pb-[40px] md:pb-[60px] lg:pb-[80px] work-showcase">
+      <Section spacing="loose" ref={containerRef} className="relative overflow-hidden bg-background work-showcase">
         <div className="mx-auto mb-6 flex max-w-6xl justify-end px-5 sm:px-6 md:px-10 lg:px-12">
           <div className="hidden shrink-0 font-mono text-sm text-muted-foreground md:block">
             <h2 className="sr-only">Featured Work</h2>
@@ -153,7 +154,7 @@ export function HomeWorkPreview() {
                         sizes="(max-width: 767px) 88vw, (max-width: 1439px) 58vw, 50vw"
                         src={project.images?.[0] ?? project.image}
                       />
-                      <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-[oklch(0.12_0.012_65/0.72)] px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-white backdrop-blur-sm md:bottom-6 md:left-6">
+                      <div className="absolute bottom-4 left-4 rounded-full border border-border/30 bg-elevated/80 px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-foreground backdrop-blur-md md:bottom-6 md:left-6">
                         Live showcase <span className="sr-only">for {project.title}</span>
                       </div>
                     </MotionLink>
@@ -282,7 +283,7 @@ export function HomeWorkPreview() {
             {String(totalPanels).padStart(2, "0")}
           </div>
         </div>
-      </section>
+      </Section>
     );
   }
 
@@ -737,7 +738,7 @@ function ShowcaseMediaCluster({
           whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
           transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.1 }}
           viewport={{ once: true, amount: 0.3 }}
-          className="showcase-media-card absolute top-[8%] right-[5%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] border border-white/10 bg-surface z-10"
+          className="showcase-media-card absolute top-[8%] right-[5%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[var(--shadow-strong)] border border-border/10 bg-surface z-10"
         >
           <Image
             src={images[2]}
@@ -755,7 +756,7 @@ function ShowcaseMediaCluster({
           whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
           transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.2 }}
           viewport={{ once: true, amount: 0.3 }}
-          className="showcase-media-card absolute top-[20%] right-[15%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[0_20px_40px_-12px_rgba(0,0,0,0.4)] border border-white/15 z-20 bg-surface"
+          className="showcase-media-card absolute top-[20%] right-[15%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[var(--shadow-strong)] border border-border/15 z-20 bg-surface"
         >
           <Image
             src={images[1]}
@@ -774,7 +775,7 @@ function ShowcaseMediaCluster({
           transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.3 }}
           viewport={{ once: true, amount: 0.3 }}
           style={{ translateZ: "40px" }}
-          className="showcase-media-card absolute top-[32%] right-[25%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)] border border-white/20 z-30 bg-surface"
+          className="showcase-media-card absolute top-[32%] right-[25%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[var(--shadow-strong)] border border-border/20 z-30 bg-surface"
         >
           <Image
             src={images[0]}
@@ -789,7 +790,7 @@ function ShowcaseMediaCluster({
             className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{
               background:
-                "radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 60%)",
+                "radial-gradient(circle at center, color-mix(in oklch, var(--fg-primary) 15%, transparent) 0%, transparent 60%)",
               x: glareX,
               y: glareY,
               scale: 2,

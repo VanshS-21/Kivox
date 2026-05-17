@@ -1,86 +1,62 @@
-/**
- * Kivox brand logo — "The Voice" (Three-Ray Broadcast)
- *
- * A sound-wave icon mark: 3 lines radiating from a focal point
- * with concentric arcs — signal, reach, amplification.
- * "Vox" means voice; the mark embodies that etymology.
- *
- * Variants:
- *   • `mono`  – entire logo in `currentColor` (nav, inherits theme)
- *   • `brand` – amber mark (#c8a050) + cream text / muted ".in"
- *
- * Per /rendering-animate-svg-wrapper: wrap in <div> for CSS animations.
- * Per /rendering-svg-precision: coordinates kept to integers (≤1 dp).
- */
-
 import type { CSSProperties } from "react";
 
+// Tight bounding box of traced logo content: x[216,1062] y[431,757] → 2.4:1 aspect ratio
+const VB = "196 411 886 366";
+
 interface KivoxLogoProps {
-  /** Height in px. Width scales proportionally. */
+  /** Height in px. Width auto-scales at ~2.4:1. Used in nav/inline contexts. */
   height?: number;
-  /** `mono` inherits CSS color. `brand` uses official amber + cream. */
+  /**
+   * Fluid mode: SVG fills 100% width of its container and scales height
+   * proportionally. Ignores `height`. Used for the footer watermark.
+   */
+  fluid?: boolean;
+  /** `mono` inherits CSS color. `brand` uses official amber. */
   variant?: "mono" | "brand";
-  /** Hide the ".in" suffix (e.g. at very small sizes). */
+  /** Kept for API compatibility. */
   hideSuffix?: boolean;
   className?: string;
   style?: CSSProperties;
 }
 
 export function KivoxLogo({
-  height = 28,
+  height = 32,
+  fluid = false,
   variant = "mono",
-  hideSuffix = false,
   className,
   style,
 }: KivoxLogoProps) {
-  const vw = hideSuffix ? 230 : 290;
-  const vh = 64;
-  const w = height * (vw / vh);
+  const color = variant === "brand" ? "var(--accent)" : "currentColor";
 
-  const mark = variant === "brand" ? "#c8a050" : "currentColor";
-  const text = variant === "brand" ? "#f5f0e8" : "currentColor";
-  const muted = variant === "brand" ? "#8a8070" : "currentColor";
+  // Aspect ratio ≈ 886/366 ≈ 2.42
+  const width = fluid ? undefined : Math.round(height * 2.42);
 
   return (
-    <svg
-      width={w}
-      height={height}
-      viewBox={`0 0 ${vw} ${vh}`}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
       className={className}
-      style={style}
-      role="img"
-      aria-label="Kivox.in logo"
+      style={{
+        ...style,
+        display: fluid ? "block" : "inline-flex",
+        alignItems: "center",
+        width: fluid ? "100%" : undefined,
+      }}
     >
-      {/* ── Voice mark: 3 rays + 3 arcs ── */}
-      <g>
-        <path d="M4 32L20 12" stroke={mark} strokeWidth="4" strokeLinecap="round" />
-        <path d="M4 32L20 32" stroke={mark} strokeWidth="4" strokeLinecap="round" />
-        <path d="M4 32L20 52" stroke={mark} strokeWidth="4" strokeLinecap="round" />
-        <path d="M28 20a16 16 0 0 1 0 24" stroke={mark} strokeWidth="3" strokeLinecap="round" fill="none" />
-        <path d="M36 14a24 24 0 0 1 0 36" stroke={mark} strokeWidth="2.5" strokeLinecap="round" fill="none" opacity=".6" />
-        <path d="M44 8a32 32 0 0 1 0 48" stroke={mark} strokeWidth="2" strokeLinecap="round" fill="none" opacity=".3" />
-      </g>
-
-      {/* ── Wordmark: Kivox ── */}
-      <g fill={text}>
-        <path d="M74 12h7v20.5L98 12h8.5L90 31l17.5 21H99L81 31.5V52h-7V12Z" />
-        <path d="M121 20.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0ZM122 28h5v24h-5V28Z" />
-        <path d="M143 28l8 18 8-18h5.5L152.5 52h-3L137.5 28H143Z" />
-        <path d="M177 27c8 0 13 5.5 13 13s-5 13-13 13-13-5.5-13-13 5-13 13-13Zm0 4.5c-5 0-8 3.5-8 8.5s3 8.5 8 8.5 8-3.5 8-8.5-3-8.5-8-8.5Z" />
-        <path d="M203 28l7.5 10.5L218 28h6l-10.5 13L224 52h-6l-7.5-9.5L203 52h-6l10.5-11L197 28h6Z" />
-      </g>
-
-      {/* ── Suffix: .in ── */}
-      {!hideSuffix && (
-        <g fill={muted}>
-          <circle cx="231" cy="48" r="2.5" />
-          <circle cx="242" cy="22" r="2.5" />
-          <rect x="240" y="28" width="5" height="24" rx="1" />
-          <path d="M256 28v24h5V38c0-5 3-7 7-7s6 2 6 6v15h5V36c0-6-4-9-10-9-4 0-7 2-8 4V28h-5Z" />
-        </g>
-      )}
-    </svg>
+      <svg
+        width={fluid ? "100%" : width}
+        height={fluid ? undefined : height}
+        viewBox={VB}
+        fill={color}
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Kivox logo"
+        style={fluid ? { display: "block" } : undefined}
+      >
+        <path
+          fillRule="evenodd"
+          d="m216.2 565.3.3 134.2h55l.5-31.8.5-31.7 32 32 32 32H447V539H327.6l-27.8 27.7-27.8 27.8V431h-56zm507.4-125.8c-.3.9-1.5 10-2.7 20.3-2.5 20.5-3.2 49.3-1.3 51.2 1.6 1.6 3-.7 5-8 2.8-11.2 3.2-65 .4-65q-.7.1-1.4 1.5m-312.1 1.8a32 32 0 0 0-14.8 9.3 32 32 0 0 0-.7 43.8 32 32 0 0 0 43.5 4.5 30 30 0 0 0 13-26c0-6.5-.4-8.4-3.3-14.2a32 32 0 0 0-16.7-15.8c-6-2.6-15.6-3.4-21-1.6m359.4 27.4c-7.2 11-21.9 39.2-21.9 42.1 0 3 4.5-2.8 12-15.3a448 448 0 0 0 20-36.8q-.2-.7-1.5-.7c-.9 0-4.7 4.8-8.6 10.8m-102.9-6c0 2.6 4.8 16.3 11 31.7 11.2 27.7 14.3 29.6 5.6 3.4-8.3-25.3-16.6-42.8-16.6-35.2m-36.6 23.6c5 12 33 47.1 35 44 1-1.8-31.7-45.5-35-46.7-1.2-.5-1.2 0 0 2.7m185.9 2.2c-14.5 10-39.6 37.7-38 42q.8 1.5 2 .8a867 867 0 0 0 45.7-47.2c0-1.9-1.3-1.3-9.7 4.4m-342.6 50c-2.1.7-4 1.5-4.1 1.7-2.6 3.5-3.6 6-3.6 9.3 0 3 7.7 21.9 31.6 77.7 29.4 68.7 31.9 74 35.8 77.6a17.3 17.3 0 0 0 27.7-5c6.3-12.4 63.2-146 63.6-149.3.6-5.8-2.2-10.7-7-12.2-5.3-1.8-11.6-.6-14.7 2.6-1.6 1.7-12.2 25.9-29.9 68.4-15 36.2-27.5 65.6-27.6 65.5-.2-.2-12-29-26.4-64a4839 4839 0 0 0-27.6-66.8c-3-5.8-10.7-8.2-17.8-5.6m219.3-.8a76 76 0 0 0-41 20.4c-16.2 16-24 37.3-24 65.5 0 30 10 54.1 28.7 69.8 6.7 5.6 19.2 12 27.8 14.3 8.3 2.2 27.4 3 37.6 1.4 43.8-6.4 70.1-45.5 65-96.6-2.3-23.1-8.7-38.6-21.5-52.3a69 69 0 0 0-55.1-22.6 213 213 0 0 0-17.5.1m115.3.5c-4 1.2-7.3 5.3-7.3 9.3s2 7.3 13.9 22l25.3 31.8 15.7 19.6-29 36.3c-30.1 37.8-31.4 39.8-29 45.8 2.6 6.2 13.6 8 20.6 3.5 1.6-1 14.3-16.2 28.3-33.8s25.7-31.4 26.2-31a6193 6193 0 0 1 49.5 62c6.4 7.6 21.5 6.8 24.6-1.4 2-5.4-.2-9-29.6-45.4a1314 1314 0 0 1-28.5-36c0-.3 12-15.4 26.5-33.5 29-35.9 30.3-38 27-44.2-2.6-4.8-8-6.7-14.6-5-6 1.4-8.8 4.3-33 34.9a882 882 0 0 1-21 26.3c-1.6 1.8-2.6.7-23.7-26-12.1-15.3-23-28.8-24.1-30-4.5-4.7-12-7-17.8-5.2m-452 43.2L323 615.5l34.5 34.5 34.5 34.5v-68.8c0-37.8-.1-68.7-.3-68.7zM697 560c-2.5.5-7.7 2.5-11.7 4.4-12.6 6.2-21.7 18.9-26 36.2-2.6 10.5-2.3 37.2.5 47.6 7.5 27.6 28.5 42.3 55.4 39 31.3-4 48.1-31.8 44.7-74-1.5-18.2-6.5-30.9-16-40.4A52 52 0 0 0 697 560m297.2 54.1c-1.7 1.7-1.5 7.4.4 9.2 2.1 2.2 7.7 2 9.7-.2 2.2-2.4 2.1-6.5-.1-8.5s-8.3-2.2-10-.5m23.2 26.2c-1.8 1.4-2 3-2.2 29.3-.2 30.3 0 32.5 5 33.1s5.8-2 5.8-23.3c0-17.8.2-19.2 2.3-23 4-7.1 12.8-10.8 20.5-8.6 8.6 2.5 9.4 5.2 10.1 31.6l.6 22 2.9 1c2.4.8 3 .6 4.7-1.4s1.9-4.2 1.9-21c0-21-1-27.9-4.4-33.2-6.7-10-25.8-10.4-35.5-.8l-4.1 4.1v-4.5c0-3.6-.5-4.9-2-5.7-2.5-1.3-3.2-1.3-5.6.4m-22.3 1.5c-1.2 2.1-1.6 54.7-.5 57.5 1 2.6 4 3.7 6.8 2.6l2.6-1-.2-30.2-.3-30.3-3.7-.3c-2.8-.2-4 .1-4.7 1.7m-22.5 49.3c-3.6 5.1-.7 10.8 5.4 10.8 2.9 0 4.3-.6 5.4-2.2 3.6-5.1.7-10.8-5.4-10.8-2.9 0-4.3.6-5.4 2.2"
+        />
+      </svg>
+    </div>
   );
 }
+

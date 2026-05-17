@@ -141,7 +141,7 @@ export function Navigation() {
               className="relative z-[60] flex items-center gap-2 text-foreground transition-colors duration-300 hover:text-accent"
               data-cursor="logo"
             >
-              <KivoxLogo height={24} variant="mono" />
+              <KivoxLogo height={32} variant="mono" />
             </Link>
 
             <div className="hidden items-center gap-8 lg:flex">

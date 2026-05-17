@@ -87,8 +87,8 @@ export function ProjectCarousel({
             prefetch={false}
             rel={liveRel}
             style={{
-              background: `linear-gradient(135deg, ${accentColor}, color-mix(in oklch, ${accentColor}, black 18%))`,
-              borderColor: `color-mix(in oklch, ${accentColor}, white 30%)`,
+              background: `linear-gradient(135deg, ${accentColor}, color-mix(in oklch, ${accentColor}, var(--bg-primary) 18%))`,
+              borderColor: `color-mix(in oklch, ${accentColor}, var(--fg-primary) 30%)`,
             }}
             target={liveTarget}
           >
