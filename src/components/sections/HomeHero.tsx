@@ -12,15 +12,12 @@ export function HomeHero() {
   return (
     <Section
       spacing="none"
-      className="relative flex items-center overflow-hidden pt-[calc(5rem+env(safe-area-inset-top))] pb-12 sm:pt-24 sm:pb-16 md:pt-[calc(6rem+env(safe-area-inset-top))] md:pb-20 lg:pt-28 lg:pb-24"
-      style={{
-        background: "var(--background)",
-      }}
+      className="home-hero relative flex items-center overflow-hidden pt-[calc(5rem+env(safe-area-inset-top))] pb-12 sm:pt-24 sm:pb-16 md:pt-[calc(6rem+env(safe-area-inset-top))] md:pb-20 lg:pt-28 lg:pb-24"
     >
-      <div className="absolute inset-0 z-0 dark:hidden">
+      <div aria-hidden="true" className="home-hero__constellation home-hero__constellation--light absolute inset-0 z-0">
         <ConstellationCanvas variant="light" />
       </div>
-      <div className="absolute inset-0 z-0 hidden dark:block">
+      <div aria-hidden="true" className="home-hero__constellation home-hero__constellation--dark absolute inset-0 z-0">
         <ConstellationCanvas variant="dark" />
       </div>
 
@@ -54,10 +51,10 @@ export function HomeHero() {
             <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#141413]/85 shadow-[0_32px_90px_-52px_rgba(217,119,87,0.62)] ring-1 ring-white/10">
               <div className="relative aspect-[16/10] bg-[#141413]">
                 <Image
-                  src="/work/mockups/kivox-hero-atelier.webp"
-                  alt="Abstract Kivox design system turning website visitors into business actions"
+                  src="/work/mockups/kivox-hero-option-a-board.webp"
+                  alt="Matte Kivox website planning boards connected by a conversion route"
                   fill
-                  className="object-cover"
+                  className="scale-[1.08] object-cover"
                   fetchPriority="high"
                   loading="eager"
                   sizes="(max-width: 640px) 80vw, (max-width: 1024px) 520px, 560px"

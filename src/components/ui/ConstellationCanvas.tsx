@@ -41,19 +41,19 @@ const palettes = {
     cursorGlow: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
   },
   light: {
-    nodeNeutral: (a: number) => `oklch(0.45 0.005 250 / ${a})`,
-    nodeAmber: (a: number) => `oklch(0.60 0.22 55 / ${a})`,
-    nodeGlow: (a: number) => `oklch(0.60 0.22 55 / ${a})`,
-    edgeNeutral: (a: number) => `oklch(0.45 0.005 250 / ${a})`,
-    edgeAmber: (a: number) => `oklch(0.60 0.22 55 / ${a})`,
-    neutralAlpha: (glow: number) => 0.25 + glow * 0.2,
-    amberAlpha: (glow: number) => 0.45 + glow * 0.35,
-    edgeNeutralMul: 0.06,
-    edgeAmberMul: 0.18,
-    edgeWidthNeutral: 0.4,
-    edgeWidthAmber: 0.7,
-    glowMul: 0.12,
-    cursorGlow: (a: number) => `oklch(0.60 0.22 55 / ${a})`,
+    nodeNeutral: (a: number) => `oklch(0.42 0.035 65 / ${a})`,
+    nodeAmber: (a: number) => `oklch(0.56 0.20 65 / ${a})`,
+    nodeGlow: (a: number) => `oklch(0.63 0.19 65 / ${a})`,
+    edgeNeutral: (a: number) => `oklch(0.44 0.032 65 / ${a})`,
+    edgeAmber: (a: number) => `oklch(0.56 0.20 65 / ${a})`,
+    neutralAlpha: (glow: number) => 0.24 + glow * 0.18,
+    amberAlpha: (glow: number) => 0.66 + glow * 0.26,
+    edgeNeutralMul: 0.10,
+    edgeAmberMul: 0.31,
+    edgeWidthNeutral: 0.55,
+    edgeWidthAmber: 0.9,
+    glowMul: 0.06,
+    cursorGlow: (a: number) => `oklch(0.63 0.19 65 / ${a})`,
   },
 } as const;
 
@@ -350,6 +350,7 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
     if (!ctx) return;
 
     let isVisible = true;
+    let resizeFrame = 0;
 
     // Mouse tracking relative to canvas
     function handleMouseMove(e: MouseEvent) {
@@ -377,16 +378,39 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
       if (!canvas) return;
       const parent = canvas.parentElement;
       if (!parent) return;
-      canvas.width = parent.offsetWidth;
-      canvas.height = parent.offsetHeight;
-      if (nodesRef.current.length === 0) {
-        initNodes(canvas.width, canvas.height);
+
+      const width = parent.offsetWidth;
+      const height = parent.offsetHeight;
+      if (width === 0 || height === 0) return;
+
+      const sizeChanged = canvas.width !== width || canvas.height !== height;
+      if (sizeChanged) {
+        canvas.width = width;
+        canvas.height = height;
+        initNodes(width, height);
+      } else if (nodesRef.current.length === 0) {
+        initNodes(width, height);
       }
     }
 
+    function scheduleResize() {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(resize);
+    }
+
     resize();
-    initNodes(canvas.width, canvas.height);
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", scheduleResize);
+
+    const resizeObserver = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(scheduleResize);
+    if (parent && resizeObserver) {
+      resizeObserver.observe(parent);
+    }
+
+    const themeObserver = new MutationObserver(scheduleResize);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     const MAX_DIST = 130;
     const MAX_DIST_SQ = MAX_DIST * MAX_DIST;
@@ -397,6 +421,12 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
       const w = canvas.width;
       const h = canvas.height;
       const cursor = cursorRef.current;
+
+      if (w === 0 || h === 0) {
+        scheduleResize();
+        animationRef.current = requestAnimationFrame(frame);
+        return;
+      }
 
       ctx.clearRect(0, 0, w, h);
 
@@ -429,8 +459,11 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
     frame();
 
     return () => {
+      cancelAnimationFrame(resizeFrame);
       cancelAnimationFrame(animationRef.current);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", scheduleResize);
+      resizeObserver?.disconnect();
+      themeObserver.disconnect();
       observer.disconnect();
       if (parent) {
         parent.removeEventListener("mousemove", handleMouseMove);

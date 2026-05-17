@@ -77,7 +77,7 @@
   --error: oklch(0.68 0.16 25);
   --success: oklch(0.68 0.14 155);
 
-  /* Hero constellation — DARK-LOCKED (identical in all theme states) */
+  /* Hero constellation — dark defaults; light mode overrides the hero surface below */
   --hero-bg: oklch(0.05 0.008 65);
   --hero-fg: oklch(0.95 0.012 72);
   --hero-fg-muted: oklch(0.58 0.008 65);
@@ -290,18 +290,14 @@
   --error: oklch(0.48 0.18 25);
   --success: oklch(0.48 0.14 155);
 
-  /* Hero tokens: INTENTIONALLY OMITTED.
-     Hero section is dark-locked — uses :root dark defaults regardless of theme.
-     DO NOT add --hero-bg, --hero-fg, --hero-fg-muted, --hero-fg-subtle,
-     --hero-accent, --hero-accent-ink, --hero-noise-opacity here.
-     They inherit from :root (dark). */
+  /* Hero uses explicit .home-hero theme styles below. */
 
   --shadow-hover-strong:
     0 2px 6px oklch(0.60 0.22 55 / 0.10),
     0 24px 72px oklch(0.60 0.22 55 / 0.12);
 }
 
-/* Footer — dark-locked in light mode (same treatment as hero) */
+/* Footer — intentionally dark-locked in light mode. */
 :root[data-theme="light"] footer {
   --bg-surface-alt: oklch(0.07 0.005 65);
   --bg-primary: oklch(0.05 0.005 65);
@@ -319,6 +315,44 @@
 :root[data-theme="light"] .cinematic-img-light { display: block; }
 :root[data-theme="dark"] .cinematic-img-dark { display: block; }
 :root[data-theme="dark"] .cinematic-img-light { display: none; }
+
+/* Hero constellation field */
+.home-hero {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.home-hero__constellation {
+  display: none;
+  pointer-events: none;
+}
+
+:root[data-theme="light"] .home-hero {
+  background:
+    linear-gradient(90deg, oklch(0.16 0.012 250 / 0.030) 1px, transparent 1px),
+    linear-gradient(180deg, oklch(0.16 0.012 250 / 0.026) 1px, transparent 1px),
+    linear-gradient(118deg, oklch(0.925 0.012 250) 0%, oklch(0.968 0.005 250) 48%, oklch(0.945 0.018 58) 100%);
+  background-size: 96px 96px, 96px 96px, auto;
+}
+
+:root[data-theme="dark"] .home-hero {
+  background:
+    linear-gradient(118deg, oklch(0.040 0.006 65) 0%, oklch(0.055 0.010 65) 52%, oklch(0.070 0.020 58) 100%);
+}
+
+:root[data-theme="light"] .home-hero__constellation--light,
+:root[data-theme="dark"] .home-hero__constellation--dark {
+  display: block;
+}
+
+:root[data-theme="light"] .home-hero__constellation--light {
+  opacity: 0.92;
+  mix-blend-mode: multiply;
+}
+
+:root[data-theme="dark"] .home-hero__constellation--dark {
+  opacity: 1;
+}
 
 :root[data-theme="light"] .work-showcase {
   --work-bg-overlay: 1;
