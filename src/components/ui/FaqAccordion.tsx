@@ -115,15 +115,17 @@ function CategoryGroup({
 
   return (
     <div>
-      <div className="mb-4 mt-2 flex items-baseline gap-3">
-        <h2 className="studio-h3-sans text-foreground">{category.label}</h2>
-        <span
-          className="select-none font-mono text-subtle-foreground"
-          style={{ fontSize: "0.625rem", letterSpacing: "0.05em" }}
-        >
-          {String(category.items.length).padStart(2, "0")}
-        </span>
-      </div>
+      {category.label && (
+        <div className="mb-4 mt-2 flex items-baseline gap-3">
+          <h2 className="studio-h3-sans text-foreground">{category.label}</h2>
+          <span
+            className="select-none font-mono text-subtle-foreground"
+            style={{ fontSize: "0.625rem", letterSpacing: "0.05em" }}
+          >
+            {String(category.items.length).padStart(2, "0")}
+          </span>
+        </div>
+      )}
 
       <div className="border-t border-border">
         {category.items.map((item, idx) => (

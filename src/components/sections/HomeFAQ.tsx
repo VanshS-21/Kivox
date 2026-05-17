@@ -8,7 +8,7 @@ import { FaqAccordion } from "@/components/ui/FaqAccordion";
 
 const faqCategories = [
   {
-    label: "Common Questions",
+    label: "",
     items: [
       {
         question: "How much does a website project cost?",
