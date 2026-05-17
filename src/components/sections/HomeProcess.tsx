@@ -62,7 +62,7 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
       transition={{ ...transitionDefault, delay: idx * 0.1 }}
       whileTap={reduce ? undefined : { scale: 0.98 }}
       className={cn(
-        "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border transition-transform duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-1",
+        "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-rest border transition-transform duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-1",
         spanClass,
         isDark 
           ? "bg-[var(--bg-primary)] text-[var(--fg-primary)] border-transparent" 

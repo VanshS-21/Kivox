@@ -48,9 +48,9 @@ export function ProjectCarousel({
 
         {total > 1 && (
           <div className="absolute bottom-4 right-5 z-10 lg:bottom-6 lg:right-7">
-            <span className="font-mono text-xs tracking-widest text-[oklch(0.98_0.01_85/0.4)]">
+            <span className="font-mono text-xs tracking-widest text-foreground/40">
               01
-              <span className="mx-1 text-[oklch(0.98_0.01_85/0.2)]">/</span>
+              <span className="mx-1 text-foreground/20">/</span>
               {String(total).padStart(2, "0")}
             </span>
           </div>
@@ -92,7 +92,7 @@ export function ProjectCarousel({
             }}
             target={liveTarget}
           >
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-[oklch(0.99_0.008_80/0.18)] text-background ring-1 ring-[oklch(0.99_0.008_80/0.28)] transition group-hover/live:translate-x-0.5">
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-accent-ink/[0.18] text-background ring-1 ring-accent-ink/[0.28] transition group-hover/live:translate-x-0.5">
               &#8599;
             </span>
             <span>{liveLabel}</span>

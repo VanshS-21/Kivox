@@ -134,7 +134,7 @@ export function HomeWorkPreview() {
                   <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface md:min-h-[460px] md:grid-cols-[0.92fr_1.08fr] lg:min-h-[500px] lg:grid-cols-[1.05fr_0.95fr]">
                     <MotionLink
                       whileTap={reduce ? undefined : { scale: 0.98 }}
-                      className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto transition-transform duration-300 ease-[var(--ease-out-expo)]"
+                      className="group relative block h-[250px] overflow-hidden bg-surface-alt sm:h-[340px] md:h-auto transition-transform duration-300 ease-[var(--ease-out-expo)]"
                       href={project.liveUrl || `/work/${project.slug}`}
                       prefetch={false}
                       rel={
@@ -738,7 +738,7 @@ function ShowcaseMediaCluster({
           whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
           transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.1 }}
           viewport={{ once: true, amount: 0.3 }}
-          className="showcase-media-card absolute top-[8%] right-[5%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[var(--shadow-strong)] border border-border/10 bg-surface z-10"
+          className="showcase-media-card absolute top-[8%] right-[5%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-strong border border-border/10 bg-surface z-10"
         >
           <Image
             src={images[2]}
@@ -756,7 +756,7 @@ function ShowcaseMediaCluster({
           whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
           transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.2 }}
           viewport={{ once: true, amount: 0.3 }}
-          className="showcase-media-card absolute top-[20%] right-[15%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[var(--shadow-strong)] border border-border/15 z-20 bg-surface"
+          className="showcase-media-card absolute top-[20%] right-[15%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-strong border border-border/15 z-20 bg-surface"
         >
           <Image
             src={images[1]}
@@ -775,7 +775,7 @@ function ShowcaseMediaCluster({
           transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.3 }}
           viewport={{ once: true, amount: 0.3 }}
           style={{ translateZ: "40px" }}
-          className="showcase-media-card absolute top-[32%] right-[25%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-[var(--shadow-strong)] border border-border/20 z-30 bg-surface"
+          className="showcase-media-card absolute top-[32%] right-[25%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-strong border border-border/20 z-30 bg-surface"
         >
           <Image
             src={images[0]}

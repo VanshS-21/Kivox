@@ -95,11 +95,11 @@ function TeamMemberCard({ member, idx, reduce, sectionRef }: { member: { id: str
         
         {/* Mobile Quote Overlay (Tap to show) */}
         <div 
-          className={`absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[var(--bg-primary)]/90 via-[var(--bg-primary)]/60 to-transparent p-5 pt-16 transition-all duration-300 md:hidden ${
+          className={`absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background/90 via-background/60 to-transparent p-5 pt-16 transition-all duration-300 md:hidden ${
             showQuote ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 pointer-events-none"
           }`}
         >
-          <p className="text-[12px] sm:text-[14px] italic text-[var(--fg-primary)]/90 border-l-2 border-accent/60 pl-2 sm:pl-3">
+          <p className="text-[12px] sm:text-[14px] italic text-foreground/90 border-l-2 border-accent/60 pl-2 sm:pl-3">
             &quot;{member.quote}&quot;
           </p>
         </div>
