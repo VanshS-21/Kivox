@@ -11,7 +11,10 @@ const START_COOKIE_NAME = "kivox_inquiry_started_at";
 
 export async function POST(req: Request) {
   // 1. IP-based Rate Limiting (DDoS & Spam Protection)
-  const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "127.0.0.1";
   const rateLimitResult = apiRateLimiter.check(ip);
 
   if (!rateLimitResult.success) {
@@ -69,7 +72,8 @@ export async function POST(req: Request) {
     } else {
       await devLogAdapter(data);
     }
-  } catch {
+  } catch (error) {
+    console.error("Inquiry delivery failed:", error);
     return NextResponse.json({ error: "Unable to send right now. Please email instead." }, { status: 500, headers: rateLimitHeaders });
   }
 

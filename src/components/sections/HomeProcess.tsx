@@ -47,7 +47,7 @@ import { memo } from "react";
 const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { title: string; subtitle: string; description: string; }; idx: number; reduce: boolean | null }) {
   // Bento spans: 2-1, 1-2, 3 pattern
   let spanClass = "";
-  let isDark = false;
+  const isDark = false;
   
   if (idx === 0) spanClass = "md:col-span-2 lg:col-span-2"; // Discover
   if (idx === 1) spanClass = "md:col-span-1 lg:col-span-1"; // Define
