@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useReducedMotion, useScroll, useTransform, useSpring } from "motion/react";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
@@ -10,6 +10,48 @@ import { fadeUp, scaleIn, transitionDefault, viewportOnce } from "@/lib/motion";
 export function HomeTestimonials() {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || reduce) return;
+
+    let intervalId: number;
+
+    const startAutoScroll = () => {
+      intervalId = window.setInterval(() => {
+        // Only auto-scroll if it's a horizontal scrolling container (mobile)
+        if (container.scrollWidth > container.clientWidth) {
+          const maxScrollLeft = container.scrollWidth - container.clientWidth;
+          if (container.scrollLeft >= maxScrollLeft - 10) {
+            // Reset to start
+            container.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            // Scroll to next snap point
+            container.scrollBy({ left: container.clientWidth * 0.75, behavior: 'smooth' });
+          }
+        }
+      }, 4000); // 4 seconds interval
+    };
+
+    startAutoScroll();
+
+    // Pause on user interaction
+    const stopAutoScroll = () => clearInterval(intervalId);
+    
+    container.addEventListener('touchstart', stopAutoScroll, { passive: true });
+    container.addEventListener('touchend', startAutoScroll, { passive: true });
+    container.addEventListener('mouseenter', stopAutoScroll);
+    container.addEventListener('mouseleave', startAutoScroll);
+
+    return () => {
+      clearInterval(intervalId);
+      container.removeEventListener('touchstart', stopAutoScroll);
+      container.removeEventListener('touchend', startAutoScroll);
+      container.removeEventListener('mouseenter', stopAutoScroll);
+      container.removeEventListener('mouseleave', startAutoScroll);
+    };
+  }, [reduce]);
 
   return (
     <Section ref={sectionRef} spacing="loose" className="bg-background">
@@ -29,9 +71,11 @@ export function HomeTestimonials() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-16 md:gap-x-12 lg:gap-x-24 lg:gap-y-24">
+        <div ref={scrollContainerRef} className="flex overflow-x-auto md:grid md:grid-cols-2 snap-x snap-mandatory md:snap-none gap-x-6 gap-y-12 md:gap-x-12 lg:gap-x-24 lg:gap-y-24 pt-12 pb-8 md:pt-0 md:pb-0 -mx-5 px-5 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} reduce={reduce} sectionRef={sectionRef} />
+            <div key={testimonial.id} className={`w-[85vw] sm:w-[60vw] md:w-auto shrink-0 snap-center snap-always ${index === 2 ? 'md:col-span-2' : ''}`}>
+              <TestimonialCard testimonial={testimonial} index={index} reduce={reduce} sectionRef={sectionRef} />
+            </div>
           ))}
         </div>
       </Container>
@@ -59,7 +103,7 @@ const TestimonialCard = memo(function TestimonialCard({ testimonial, index, redu
       variants={fadeUp}
       transition={{ ...transitionDefault, delay: reduce ? 0 : index * 0.1 }}
       style={{ y: reduce ? 0 : y }}
-      className={`flex flex-col group ${index === 2 ? 'md:col-span-2 md:items-center md:text-center' : ''}`}
+      className={`flex flex-col group h-full ${index === 2 ? 'md:items-center md:text-center' : ''}`}
     >
       <div className="mb-8 relative">
         {/* Minimalist quote mark with ambient float */}
