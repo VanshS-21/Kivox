@@ -149,7 +149,24 @@ This system explicitly rejects generic SaaS template sites, loud startup pages, 
 
 Motion energy is Choreographed: word-by-word hero entrances, scroll-driven reveals, magnetic CTA physics, tunnel canvas perspective effects. The constellation canvas may serve as a subtle background texture in the hero, not as the primary visual. All motion respects `prefers-reduced-motion` with instant fallbacks.
 
-## 2. Colors: The Dual-Temperature Palette
+### Sub-Website Rebuild Design Systems
+
+These are target design systems for the rebuild of every launchable showcase website. The current `/showcase/*` implementations are not canonical design references. The case studies in `src/content/work/*` are the source of truth for business context, user intent, information architecture, proof, and conversion behavior.
+
+Each rebuilt sub-website should feel like a separate client property that could launch on its own domain. They are not Kivox theme variants. They may have their own logo, navigation, typography, palette, motion, component grammar, and content structure. Kivox chrome should stay outside the sub-website canvas, limited to the demo frame or route wrapper when needed.
+
+The shared inheritance is quality, not visual sameness:
+
+- **Intentional separation**: A sub-website should look like the client world it represents, not like Kivox wearing a different accent color.
+- **Local tokens first**: Each sub-website owns its own color, type, spacing, radius, shadow, and motion tokens. Kivox tokens may be referenced for implementation convenience only when they fit the sub-brand.
+- **Case-study alignment**: Every design choice must map back to the case study's challenge, insight, approach, key design decisions, target audience, primary actions, and core sections.
+- **Launchable depth**: Each system must support a real homepage, key conversion path, legal/contact footer, responsive navigation, metadata, and at least one deeper proof or transaction screen.
+- **AA by default**: Contrast, focus states, keyboard flows, reduced motion, form labels, and touch target sizing are part of every sub-system.
+- **Performance as craft**: Sub-websites should be image-optimized, mobile-first, and fast enough to be launched without a rebuild of their visual foundation.
+
+*Note: For detailed sub-website specs (MedQueue, The Roastery, Aurelia Grand, Greenfield Academy, Vortex Fitness), refer to the case studies and project documentation.*
+
+## 2. Colors
 
 A dual-theme palette with deliberate temperature polarity. Dark mode is warm-tinted (hue 55–85); light mode is cold-tinted (hue 250) with one deliberate exception. The hero and footer are always dark. OKLCH is the canonical color space.
 
@@ -199,195 +216,6 @@ Used exclusively for Work page slides and case study contexts. Never in site chr
 - **Fitness Violet** `oklch(0.55 0.22 300)`: Fitness projects.
 - **Café Coral** `oklch(0.55 0.24 25)`: Food & beverage projects.
 
-## 3. Sub-Website Rebuild Design Systems
-
-These are target design systems for the rebuild of every launchable showcase website. The current `/showcase/*` implementations are not canonical design references. The case studies in `src/content/work/*` are the source of truth for business context, user intent, information architecture, proof, and conversion behavior.
-
-Each rebuilt sub-website should feel like a separate client property that could launch on its own domain. They are not Kivox theme variants. They may have their own logo, navigation, typography, palette, motion, component grammar, and content structure. Kivox chrome should stay outside the sub-website canvas, limited to the demo frame or route wrapper when needed.
-
-The shared inheritance is quality, not visual sameness:
-
-- **Intentional separation**: A sub-website should look like the client world it represents, not like Kivox wearing a different accent color.
-- **Local tokens first**: Each sub-website owns its own color, type, spacing, radius, shadow, and motion tokens. Kivox tokens may be referenced for implementation convenience only when they fit the sub-brand.
-- **Case-study alignment**: Every design choice must map back to the case study's challenge, insight, approach, key design decisions, target audience, primary actions, and core sections.
-- **Launchable depth**: Each system must support a real homepage, key conversion path, legal/contact footer, responsive navigation, metadata, and at least one deeper proof or transaction screen.
-- **AA by default**: Contrast, focus states, keyboard flows, reduced motion, form labels, and touch target sizing are part of every sub-system.
-- **Performance as craft**: Sub-websites should be image-optimized, mobile-first, and fast enough to be launched without a rebuild of their visual foundation.
-
-### MedQueue Healthcare Product
-
-**Physical scene:** A patient or caregiver booking care from a bright phone screen under mild stress, needing proof before action.
-
-**Role:** Product UI system for healthcare search, doctor evaluation, appointment booking, and patient portal screens.
-
-**Case-study source of truth:** MedQueue is a decision engine, not a doctor directory. The core problem is uncertainty: patients need to know whether a doctor is credible, available today, and safe to book without calling three clinics manually.
-
-**Redesign mandate:** Rebuild the experience around a tight confidence path: search by symptom, specialty, or location; compare doctors through contextual trust signals; inspect a profile that leads with verified credentials; choose a real slot from an availability grid; confirm and manage the appointment in a patient portal. Convenience should emerge from trust, not replace it.
-
-**Color strategy:** Restrained clinical confidence. Cold blue neutrals carry the surface, hospital blue carries primary action, and soft green is reserved for trust or completion states.
-
-- **Background** `oklch(0.97 0.005 240)`
-- **Surface** `oklch(0.993 0.003 240)`
-- **Ink** `oklch(0.15 0.008 240)`
-- **Muted** `oklch(0.45 0.008 240)`
-- **Rule** `oklch(0.88 0.012 240)`
-- **Primary Blue** `oklch(0.55 0.17 240)`
-- **Primary Soft** `oklch(0.93 0.035 240)`
-- **Primary Deep** `oklch(0.40 0.14 240)`
-- **Trust Green** `oklch(0.55 0.12 175)`
-- **Trust Soft** `oklch(0.94 0.025 175)`
-- **Hero Navy** `oklch(0.18 0.04 240)`
-
-**Typography:** Bricolage Grotesque for names and major decision headings, Figtree for patient-readable body copy, Geist Mono for fees, IDs, wait times, and appointment metadata, Spectral only for testimonial or reassurance moments.
-
-**Layout:** Dense but calm. Use max-width shells around `72rem`, two-column search/detail layouts on desktop, sticky booking summaries, calendar-grid interactions, and clear empty states. Progressive disclosure beats long medical walls.
-
-**Required rebuild journey:** Search and discovery, doctor profile, slot selection, payment or confirmation, patient dashboard, appointment history, document/prescription surface, and a clinic-management preview if the story needs platform depth.
-
-**Components:** Doctor card, credential strip, availability grid, filter rail, booking stepper, portal appointment card, document list, trust callout, search input, patient action footer.
-
-**Motion:** Low amplitude. State changes can fade or slide 4 to 8px. Loading and confirmation states should feel steady, not celebratory. Respect reduced motion with instant state changes.
-
-**Do not:** Use wellness gradients, generic teal healthcare branding, hospital stock-photo hero cliches, star ratings without context, hidden fees, phantom availability, or urgency copy around medical decisions.
-
-### The Roastery Cafe Site
-
-**Physical scene:** A visitor standing outside or walking nearby, phone in one hand, deciding if this cafe is worth entering now.
-
-**Role:** Visit-intent brand site for hours, location, menu, atmosphere, and wholesale or catering inquiries.
-
-**Case-study source of truth:** The Roastery is a real-time decision tool. Visitors are nearby, often mobile, and asking one practical question: should I go here right now?
-
-**Redesign mandate:** Rebuild around the two-second decision: hours, address, direction tap, and full menu access must be visible immediately on mobile. The menu is not a secondary page. It is the primary content object, with prices, categories, dietary tags, seasonal specials, and proof of craft.
-
-**Color strategy:** Warm material restraint. Dark roast brown grounds the brand, oat cream makes menu content readable, copper carries action, and muted coffee browns support secondary information.
-
-- **Roast Ink** `oklch(0.20 0.035 55)` from `#2C241B`
-- **Oat Cream** `oklch(0.97 0.012 78)` from `#F9F6F0`
-- **Coffee Muted** `oklch(0.52 0.045 62)` from `#8B6E52`
-- **Copper CTA** `oklch(0.62 0.145 43)` from `#D26E4B`
-- **Steam Line** `oklch(0.88 0.018 72)`
-
-**Typography:** Warm serif display for cafe atmosphere and menu headings, clean sans-serif for practical information, tabular numerals for prices and hours. Type should feel printed and readable in sunlight, not decorative.
-
-**Layout:** Mobile-first single column. Hours, location, and menu entry must appear early. Menu sections should scan like a physical menu card with generous line-height, clear price alignment, and dietary tags kept small.
-
-**Required rebuild journey:** Decide from the hero, scan signature items, open the full menu, check hours and location, get directions, understand the roasting story, view real place photography, and make contact for group, wholesale, or reservation needs.
-
-**Components:** Sticky visit bar, menu category list, product row, seasonal special, map/directions block, hours panel, wholesale inquiry block, photo-led atmosphere section.
-
-**Motion:** Gentle reveal, no parallax dependency. Hover states may warm copper or lift slightly, but the site must remain fast on poor mobile networks.
-
-**Do not:** Hide the menu behind a PDF, bury address or hours, use startup-style gradients, rely on Instagram embeds, or make the site feel like a coffee marketplace.
-
-### Aurelia Grand Hotel Site
-
-**Physical scene:** A guest comparing rooms at night on a tablet, weighing trust, cancellation terms, and direct booking confidence.
-
-**Role:** Boutique hotel brand and booking site for room discovery, policy clarity, direct reservation, and property confidence.
-
-**Case-study source of truth:** Aurelia Grand competes with OTAs, not just other hotel websites. The site must out-trust aggregators through clearer room information, transparent policies, and a first-party direct booking experience.
-
-**Redesign mandate:** Rebuild as the hotel's first room: unhurried, image-led, specific, and conversion-aware. Room cards must answer booking questions before selling ambiance. Policy content must feel like hospitality. Direct booking must feel safer than leaving for an OTA.
-
-**Color strategy:** Modern restraint. Deep navy-black carries atmosphere, muted gold marks premium action, porcelain surfaces support room information, and warm linen softens policy content.
-
-- **Lobby Navy** `oklch(0.13 0.025 250)`
-- **Midnight Panel** `oklch(0.18 0.025 250)`
-- **Porcelain** `oklch(0.96 0.006 82)`
-- **Quiet Gold** `oklch(0.68 0.15 75)`
-- **Aged Gold** `oklch(0.58 0.12 70)`
-- **Policy Linen** `oklch(0.92 0.018 78)`
-- **Guest Ink** `oklch(0.16 0.012 250)`
-
-**Typography:** Elegant display serif for room names and property moments, measured sans-serif for booking facts, mono or tabular numerals for rates and availability. Luxury comes from precision, not ornamental type.
-
-**Layout:** Image-led and unhurried. Room pages need decision cards for size, bed type, view, occupancy, cancellation, and rate parity. Policy pages should read like hospitality touchpoints, not legal footers.
-
-**Required rebuild journey:** Property arrival, room comparison, room detail, policy clarity, direct booking, concierge contact, amenities and experiences, location confidence, and post-booking reassurance.
-
-**Components:** Full-bleed property hero, room decision card, rate comparison row, policy panel, booking date selector, amenity list, direct-booking reassurance strip, concierge contact block.
-
-**Motion:** Slow and fluid. Use opacity, scale, and subtle image movement. Avoid spectacle that fights the calm of a premium stay.
-
-**Do not:** Use generic luxury hotel whitespace, carousel-by-default hero sections, gold-on-white low contrast, third-party booking-engine styling, vague room descriptions, or policy text treated as an afterthought.
-
-### Greenfield Academy School Site
-
-**Physical scene:** A parent evaluating admissions after work, trying to understand fit, fees, deadlines, outcomes, and values without calling the office.
-
-**Role:** Admissions-first school website for parent trust, program comparison, inquiry, and seasonal admissions updates.
-
-**Case-study source of truth:** Greenfield Academy is built for parents evaluating trust, competence, fees, deadlines, and fit for their child. Admissions is the primary journey, not a department buried under institutional self-presentation.
-
-**Redesign mandate:** Rebuild as a parent-facing prospectus with answers before atmosphere. The first viewport should establish legitimacy, grades served, admissions path, and next action. Programs should be organized by age group, not academic department. Forms should be humane enough for a parent filling them at 11 PM.
-
-**Color strategy:** Institutional warmth. Forest green carries trust and continuity, sage supports data and labels, sandstone warms parent-facing sections, and crisp light surfaces keep information legible.
-
-- **Academy Forest** `oklch(0.19 0.045 150)` from `#0F2218`
-- **Board Green** `oklch(0.29 0.055 150)` from `#1E392A`
-- **Sage Proof** `oklch(0.62 0.075 112)` from `#8A9A5B`
-- **Prospectus Paper** `oklch(0.96 0.012 84)`
-- **Sandstone Warmth** `oklch(0.86 0.045 75)`
-- **Parent Ink** `oklch(0.16 0.012 150)`
-
-**Typography:** Traditional serif for institutional headings, modern sans-serif for parent-readable details, tabular numerals for fees, ratios, years, deadlines, and admissions steps.
-
-**Layout:** Prospectus clarity. Lead with admissions timeline, grades served, outcomes, fees, and inquiry path. Use structured sections, fact strips, timeline rows, and comparison blocks before emotional storytelling.
-
-**Required rebuild journey:** Legitimacy check, admissions timeline, grade/program exploration, fee and document review, campus life proof, FAQ, inquiry form, campus visit scheduling, and admissions-team contact.
-
-**Components:** Admissions timeline, grade/program card, fee summary, campus life image block, parent FAQ accordion, inquiry form, deadline banner, proof strip, event schedule.
-
-**Motion:** Minimal and reassuring. Timelines can step into view, accordions should be calm, and forms should validate progressively with plain language.
-
-**Do not:** Use childish primary colors, mascot-first branding, drone-campus hero dependence, committee mission copy, hidden fees, or admissions buried behind generic About pages.
-
-### Vortex Fitness Site
-
-**Physical scene:** A comparison shopper checking schedules and pricing between workouts or on a commute, already motivated and looking for logistics.
-
-**Role:** High-conversion fitness site for programs, schedule, coaches, transparent pricing, and trial booking.
-
-**Case-study source of truth:** Vortex Fitness is a logistics and conversion site, not a motivational poster. Visitors already have intent. They need services, schedule, pricing, trainer credibility, and a clear trial path.
-
-**Redesign mandate:** Rebuild around the three questions that win trial bookings: what do you offer, when are the classes, and how much does it cost? Schedule must be hero-level, pricing must be honest, trainers must lead with credentials, and every section should return to a no-card trial CTA.
-
-**Color strategy:** Drenched high-energy dark. Near-black and charcoal create focus, electric lime owns action and urgency, red/orange appear only as difficulty or intensity metadata.
-
-- **Training Black** `oklch(0.04 0.004 260)` from `#050505`
-- **Iron Charcoal** `oklch(0.12 0.006 260)` from `#111`
-- **Electric Lime** `oklch(0.91 0.29 126)` from `#CCFF00`
-- **Intensity Red** `oklch(0.62 0.25 28)` from `#FF3333`
-- **Power Orange** `oklch(0.74 0.18 62)` from `#FF9900`
-- **Chalk White** `oklch(0.96 0.004 260)`
-
-**Typography:** Heavy condensed or black-weight sans-serif for headings, italic cuts for movement, compact sans-serif for practical copy, tabular numerals for class times and prices. All-caps are acceptable for short labels and aggressive headings, not for body copy.
-
-**Layout:** Direct and kinetic. Programs, schedule, coaches, pricing, and trial CTA each need clear sections. Schedules should be tables on desktop and stacked cards on mobile, with class type and level visible without interaction.
-
-**Required rebuild journey:** Service overview, schedule preview, full schedule filtering, trainer credential review, pricing comparison, trial booking, confirmation, and contact for questions without hiding the price.
-
-**Components:** Skewed CTA button, program image slab, schedule table, mobile class card, difficulty chip, trainer card, pricing tier, scrolling marquee, trial booking strip.
-
-**Motion:** High-energy but controlled. Marquees, image grayscale-to-color, slight skewed button feedback, and section reveal are allowed. Do not animate layout properties, and reduce motion must stop continuous movement.
-
-**Do not:** Use vague motivational poster copy, auto-playing video as the conversion engine, hidden pricing, lead-capture walls, PDF schedules, or skull-and-grunge aggression.
-
-### Sub-Website Rebuild Quality Gate
-
-Before any rebuilt showcase is considered ready to launch separately, it must pass this gate:
-
-- The rebuilt direction can be explained from the case study without referring to the old demo implementation.
-- The sub-website has its own local design tokens or documented token mapping.
-- Navigation, footer, metadata, and primary CTA make sense without Kivox around it.
-- The core journey is complete: evaluate, compare, decide, act.
-- Mobile layout is not a compressed desktop layout.
-- Forms and interactive flows include loading, error, empty, success, and reduced-motion states.
-- Images are real, optimized, and relevant to the business world.
-- The design survives without borrowed Kivox amber, Kivox typography rules, or Kivox section grammar.
-- The page proves the case study's key decision: MedQueue reduces uncertainty, The Roastery answers visit intent, Aurelia earns direct bookings, Greenfield clarifies admissions, and Vortex converts through transparent logistics.
-
 ### Parent-Site Color Rules
 
 **The Light-First Rule.** Light mode is the default visitor experience. The site loads in light mode unless the visitor has explicitly toggled to dark. System preference detection may be used, but the design must be optimized for light mode first.
@@ -402,7 +230,7 @@ Before any rebuilt showcase is considered ready to launch separately, it must pa
 
 **The POV Wash Rule.** The philosophical section uses `--pov-wash`: `oklch(0.95 0.003 250)` (cool) in light mode, `oklch(0.09 0.025 60)` (warm amber atmosphere) in dark mode.
 
-## 4. Typography
+## 3. Typography
 
 **Display Font:** Bricolage Grotesque (with system-ui, sans-serif fallback) — `--font-headline`
 **Body Font:** Figtree (with system-ui, sans-serif fallback) — `--font-body-sans`
@@ -431,7 +259,7 @@ All sizes use `clamp()` for fluid viewport scaling. Scale ratio ≥1.25× betwee
 
 **The Balance Rule.** All headings use `text-wrap: balance`. All prose uses `text-wrap: pretty`. Non-negotiable.
 
-## 5. Elevation
+## 4. Elevation
 
 This system uses **structural shadows** with amber-tinted interaction states. Surfaces are flat by default; shadows define the elevation hierarchy and respond to user interaction with warmth.
 
@@ -460,7 +288,7 @@ Surface texture tokens also shift per theme: `--studio-grid-opacity` is 0.22 (da
 
 **The Frame Rule.** The carousel frame component uses multi-layered inset + outer shadows to create a physical "recessed well" effect. This is the deepest elevation in the system: 5 shadow layers including inset shadows. No other component may approach this shadow complexity.
 
-## 6. Components
+## 5. Components
 
 ### Buttons
 
@@ -527,7 +355,9 @@ A horizontal band showing logos or names of the concept projects (MedQueue, The 
 
 Converging perspective lines creating a one-point corridor effect on the Work page carousel. Amber lines animate toward center, creating depth that draws the eye into project mockups.
 
-## 7. Do's and Don'ts
+## 6. Do's and Don'ts
+
+Concrete, forceful guardrails mapping directly to PRODUCT.md's anti-references.
 
 ### Do:
 

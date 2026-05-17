@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-17T15:42:00Z",
+  "title": "Design System: Kivox",
+  "extensions": {
+    "colorMeta": {
+      "warm-amber": { "role": "primary", "displayName": "Warm Amber", "canonical": "oklch(0.72 0.18 65)", "tonalRamp": ["oklch(0.20 0.18 65)", "oklch(0.35 0.18 65)", "oklch(0.50 0.18 65)", "oklch(0.65 0.18 65)", "oklch(0.72 0.18 65)", "oklch(0.85 0.18 65)", "oklch(0.95 0.18 65)", "oklch(0.98 0.18 65)"] },
+      "burnt-amber": { "role": "primary", "displayName": "Burnt Amber", "canonical": "oklch(0.60 0.22 55)", "tonalRamp": ["oklch(0.20 0.22 55)", "oklch(0.35 0.22 55)", "oklch(0.50 0.22 55)", "oklch(0.60 0.22 55)", "oklch(0.70 0.22 55)", "oklch(0.85 0.22 55)", "oklch(0.95 0.22 55)", "oklch(0.98 0.22 55)"] },
+      "firelit-black": { "role": "neutral", "displayName": "Firelit Black", "canonical": "oklch(0.05 0.005 65)", "tonalRamp": ["oklch(0.05 0.005 65)", "oklch(0.15 0.005 65)", "oklch(0.30 0.005 65)", "oklch(0.45 0.005 65)", "oklch(0.60 0.005 65)", "oklch(0.75 0.005 65)", "oklch(0.90 0.005 65)", "oklch(0.98 0.005 65)"] },
+      "atelier-white": { "role": "neutral", "displayName": "Atelier White", "canonical": "oklch(0.97 0.003 250)", "tonalRamp": ["oklch(0.10 0.003 250)", "oklch(0.25 0.003 250)", "oklch(0.40 0.003 250)", "oklch(0.55 0.003 250)", "oklch(0.70 0.003 250)", "oklch(0.85 0.003 250)", "oklch(0.95 0.003 250)", "oklch(0.97 0.003 250)"] },
+      "warm-linen": { "role": "neutral", "displayName": "Warm Linen", "canonical": "oklch(0.955 0.008 70)", "tonalRamp": ["oklch(0.10 0.008 70)", "oklch(0.25 0.008 70)", "oklch(0.40 0.008 70)", "oklch(0.55 0.008 70)", "oklch(0.70 0.008 70)", "oklch(0.85 0.008 70)", "oklch(0.955 0.008 70)", "oklch(0.99 0.008 70)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headlines only." },
+      "headline": { "displayName": "Headline", "purpose": "Section subheads, editorial moments." },
+      "title": { "displayName": "Title", "purpose": "Card titles, service names, subsection headings." },
+      "body": { "displayName": "Body", "purpose": "Running text, descriptions." },
+      "label": { "displayName": "Label", "purpose": "Eyebrows, tags, metadata." }
+    },
+    "shadows": [
+      { "name": "shadow-rest", "value": "0 1px 0 0 oklch(1 0 0 / 0.08), 0 20px 60px -30px oklch(0 0 0 / 0.4)", "purpose": "Default card elevation." },
+      { "name": "shadow-hover", "value": "0 1px 0 0 oklch(0.72 0.18 65 / 0.15), 0 20px 60px oklch(0.72 0.18 65 / 0.06)", "purpose": "Amber-tinted highlight + diffuse glow." },
+      { "name": "shadow-amber-glow", "value": "0 0 40px oklch(0.72 0.18 65 / 0.3)", "purpose": "Pure radial amber glow. CTAs, focus indicators." },
+      { "name": "shadow-strong", "value": "0 1px 0 0 oklch(1 0 0 / 0.12), 0 40px 90px -60px oklch(0 0 0 / 0.7)", "purpose": "Maximum elevation for carousel frame." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Primary swift and smooth easing." },
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.25, 1, 0.5, 1)", "purpose": "Softer exit transitions." },
+      { "name": "ease-out-quint", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Long-tail easing for magnetic effects." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Tactile and assured. Lifts on hover and glows with amber warmth.",
+      "html": "<button class=\"ds-btn-primary\">Book a Free Call</button>",
+      "css": ".ds-btn-primary { background: oklch(0.72 0.18 65); color: oklch(0.99 0.008 80); padding: 0 24px; height: 44px; font-family: 'Figtree', system-ui, sans-serif; font-size: 14px; font-weight: 500; border: none; border-radius: 9999px; transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; } .ds-btn-primary:hover { background: oklch(0.78 0.18 65); transform: translateY(-2px); box-shadow: 0 0 40px oklch(0.72 0.18 65 / 0.3); } .ds-btn-primary:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action button.",
+      "html": "<button class=\"ds-btn-ghost\">View Work</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: oklch(0.98 0.01 85); padding: 0 24px; height: 36px; font-family: 'Figtree', system-ui, sans-serif; font-size: 14px; font-weight: 500; border: none; border-radius: 9999px; transition: background 200ms cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; } .ds-btn-ghost:hover { background: oklch(0.98 0.01 85 / 0.08); }"
+    },
+    {
+      "name": "Tag Pill",
+      "kind": "chip",
+      "refersTo": "tag-pill",
+      "description": "Used for categories or status labels.",
+      "html": "<span class=\"ds-tag-pill\">Strategy</span>",
+      "css": ".ds-tag-pill { background: transparent; color: oklch(0.98 0.01 85); padding: 8px 16px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid oklch(0.85 0.008 65 / 0.08); border-radius: 9999px; transition: border-color 200ms, color 200ms, background 200ms; } .ds-tag-pill:hover { border-color: oklch(0.72 0.18 65 / 0.4); color: oklch(0.72 0.18 65); background: oklch(0.72 0.18 65 / 0.12); }"
+    },
+    {
+      "name": "Studio Surface",
+      "kind": "card",
+      "refersTo": "card-standard",
+      "description": "The canonical card primitive with a subtle hairline grid.",
+      "html": "<div class=\"ds-surface\">Card Content</div>",
+      "css": ".ds-surface { position: relative; background: oklch(0.10 0.005 65); color: oklch(0.98 0.01 85); padding: 32px; border: 1px solid oklch(0.85 0.008 65 / 0.12); border-radius: 14px; box-shadow: 0 1px 0 0 oklch(1 0 0 / 0.08), 0 20px 60px -30px oklch(0 0 0 / 0.4); overflow: hidden; } .ds-surface::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(to right, oklch(0.85 0.008 65 / 0.05) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.85 0.008 65 / 0.05) 1px, transparent 1px); background-size: 28px 28px; opacity: 0.22; }"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Text inputs for forms and inquiries.",
+      "html": "<input type=\"text\" class=\"ds-input\" placeholder=\"Your name\" />",
+      "css": ".ds-input { background: oklch(0.98 0.01 85 / 0.05); color: oklch(0.98 0.01 85); padding: 16px 20px; font-family: 'Figtree', sans-serif; font-size: 16px; border: 1px solid oklch(0.85 0.008 65 / 0.08); border-radius: 14px; width: 100%; box-sizing: border-box; outline: none; transition: border-color 200ms, box-shadow 200ms; } .ds-input:focus { border-color: oklch(0.72 0.18 65); box-shadow: 0 0 0 3px oklch(0.72 0.18 65 / 0.12); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Atelier in Morning Light / The Firelit Studio",
+    "overview": "A master craftsman's studio. In light mode, it's considered, architectural, precise, and bathed in cold morning light. In dark mode, it's an intimate well-lit workshop at dusk with warm amber light pooling across surfaces. The dual-theme system uses deliberate temperature polarity: dark mode is warm, light mode is cold. The amber accent bridges both, operating as deliberate tooling marks in light mode and as firelight in dark mode. This system explicitly rejects generic SaaS template sites, loud startup pages, dark tech aesthetics with neon accents, enterprise posturing, luxury hotel minimalism, and intimidating craft showcases. If a non-technical visitor feels confused or intimidated, the design has failed.",
+    "keyCharacteristics": [
+      "Light mode default, dark mode via toggle",
+      "Temperature polarity: light mode cold-tinted (hue 250), dark mode warm-tinted (hue 65), with Warm Linen exception",
+      "Committed amber accent at key moments, restrained everywhere else",
+      "Editorial serif/sans pairing (Spectral + Bricolage Grotesque) for headline variety",
+      "Structural shadows with amber-tinted hover states",
+      "Hero shows product mockups (device frames displaying showcase websites)",
+      "Footer dark-locked in both themes",
+      "Full navigation bar visible on desktop; hamburger on mobile only",
+      "Services scannable without interaction; interactive detail as progressive enhancement",
+      "Social proof sections: testimonials, concept project band",
+      "Low-commitment primary CTA (\"Book a Free Call\" not \"Start a project\")"
+    ],
+    "rules": [
+      { "name": "The Light-First Rule", "body": "Light mode is the default visitor experience. The site loads in light mode unless the visitor has explicitly toggled to dark. System preference detection may be used, but the design must be optimized for light mode first.", "section": "overview" },
+      { "name": "The Temperature Rule", "body": "Light mode is cold-tinted (hue 250, chroma 0.002–0.005). Dark mode is warm-tinted (hue 55–85, chroma 0.005–0.02). Pure #000, #fff, and #808080 remain forbidden in both modes.", "section": "colors" },
+      { "name": "The Warm Linen Exception", "body": "Light mode uses cold neutrals everywhere except --bg-surface-alt, which uses oklch(0.955 0.008 70) (warm, hue 70). This prevents content-dense sections from feeling clinical.", "section": "colors" },
+      { "name": "The Committed Amber Rule", "body": "Amber is the only chromatic color in site chrome. In light mode, amber deepens to burnt amber for authority. In dark mode, standard amber carries 30–60% of visual weight at hero moments.", "section": "colors" },
+      { "name": "The Three-Voice Rule", "body": "Headlines use Bricolage Grotesque (confident craft), subheads use Spectral (editorial warmth), body uses Figtree (clear readability).", "section": "typography" },
+      { "name": "The Tabular Rule", "body": "All numeric data uses font-variant-numeric: tabular-nums. No exceptions.", "section": "typography" },
+      { "name": "The Balance Rule", "body": "All headings use text-wrap: balance. All prose uses text-wrap: pretty. Non-negotiable.", "section": "typography" },
+      { "name": "The Warm Response Rule", "body": "Shadows are neutral at rest and warm on interaction. The transition from colorless depth to amber-tinted glow is the fundamental feedback pattern.", "section": "elevation" },
+      { "name": "The Frame Rule", "body": "The carousel frame component uses multi-layered inset + outer shadows to create a physical 'recessed well' effect.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do default to light mode. The primary visitor experience is the Atelier (light) theme.",
+      "Do show the product in the hero. Device mockups displaying real showcase websites.",
+      "Do display a full navigation bar on desktop with all primary links visible. No hamburger on desktop.",
+      "Do make services scannable without interaction.",
+      "Do use low-commitment CTA language. 'Book a Free Call' or 'Let's Talk'.",
+      "Do tint every neutral toward the theme hue: hue 250 in light mode, hue 55–85 in dark mode.",
+      "Do use OKLCH as the canonical color format.",
+      "Do apply text-wrap: balance on all headings and text-wrap: pretty on all prose.",
+      "Do increase body line-height from 1.6 to 1.65 in dark mode for light-on-dark compensation.",
+      "Do ease out with exponential curves. No bounce, no elastic.",
+      "Do respect prefers-reduced-motion with instant fallbacks for every animation.",
+      "Do use the studio-surface utility for card containers. The hairline grid is the signature texture.",
+      "Do pair Bricolage Grotesque headlines with Spectral italic for the key emotional word.",
+      "Do present concept projects honestly. Use 'Projects we've crafted' not 'Our clients'."
+    ],
+    "donts": [
+      "Don't default to dark mode. Non-technical audiences associate dark UIs with 'tech stuff'.",
+      "Don't use generic SaaS template sites: Gradient text, glassmorphism, hero-metric templates with big numbers, identical card grids.",
+      "Don't use loud startup pages: Neon colors, aggressive animations, hype language, 'disruptive' posturing.",
+      "Don't build template agency grids: Same-sized cards with icon + heading + text repeated endlessly.",
+      "Don't use enterprise posturing: Awards/metrics claims we don't have, corporate jargon, defensive disclaimers.",
+      "Don't build intimidating craft showcases: Dark-by-default, abstract hero art that requires interpretation, hidden navigation, interactions that require exploration before understanding, philosophy over proof.",
+      "Don't use luxury hotel pages: Excessive whitespace, pretentious copy, inaccessible minimalism.",
+      "Don't use side-stripe borders as colored accents.",
+      "Don't use glassmorphism as default.",
+      "Don't use modal as first thought for interactions.",
+      "Don't use em dashes in copy.",
+      "Don't hide navigation behind a hamburger on desktop.",
+      "Don't use abstract hero visuals that don't communicate what the studio builds.",
+      "Don't use high-commitment CTAs ('Start a project') before trust is established.",
+      "Don't use pure black (#000), pure white (#fff), or any un-tinted gray.",
+      "Don't animate CSS layout properties (width, height, top, left)."
+    ]
+  }
+}
