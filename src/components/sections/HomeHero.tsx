@@ -3,10 +3,9 @@ import * as motion from "motion/react-client";
 
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { RotatingText } from "@/components/ui/RotatingText";
 import { ConstellationCanvas } from "@/components/ui/ConstellationCanvas";
-import { StaggeredHeadline } from "@/components/ui/StaggeredHeadline";
 import { ButtonLink } from "@/components/ui/Button";
+import { HeroHeadline } from "@/components/sections/HeroHeadline";
 import { home } from "@/content/pages/home";
 
 export function HomeHero() {
@@ -28,13 +27,7 @@ export function HomeHero() {
       <Container className="relative z-10 w-full">
         <div className="grid items-center gap-8 lg:grid-cols-[1fr_1fr] xl:gap-12">
           <div className="max-w-[38rem] pt-8 lg:pt-0">
-            <StaggeredHeadline className="mb-4">
-              We build <br className="hidden lg:block" />
-              websites that turn
-              <br />
-              visitors into{" "}
-              <RotatingText />
-            </StaggeredHeadline>
+            <HeroHeadline className="mb-4" />
 
             <p className="mb-6 max-w-[34rem] studio-body text-muted-foreground sm:mb-8 sm:text-base lg:max-w-[28rem]">
               {home.hero.subhead}
@@ -56,28 +49,22 @@ export function HomeHero() {
           <motion.div 
             animate={{ y: [0, -12, 0] }}
             transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-            className="relative mx-auto w-full max-w-[18rem] sm:max-w-md lg:max-w-[420px] xl:max-w-[480px] mt-8 lg:mt-0"
+            className="relative mx-auto mt-8 w-full max-w-[20rem] sm:max-w-lg lg:mt-0 lg:max-w-[520px] xl:max-w-[560px]"
           >
-            <div className="relative overflow-hidden rounded-xl border border-border shadow-2xl ring-1 ring-black/5 dark:ring-white/10 bg-[#f4f4f4] dark:bg-[#1a1a1a]">
-              <div className="flex h-10 items-center gap-2 border-b border-border/40 bg-[#f4f4f4] dark:bg-[#1a1a1a] px-4">
-                <div className="h-3 w-3 rounded-full bg-red-400/80 shadow-sm" />
-                <div className="h-3 w-3 rounded-full bg-amber-400/80 shadow-sm" />
-                <div className="h-3 w-3 rounded-full bg-green-400/80 shadow-sm" />
-              </div>
-              <div className="relative aspect-[16/10] bg-muted/20">
+            <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#141413]/85 shadow-[0_32px_90px_-52px_rgba(217,119,87,0.62)] ring-1 ring-white/10">
+              <div className="relative aspect-[16/10] bg-[#141413]">
                 <Image
-                  src="/work/mockups/Cafe-1.webp"
-                  alt="Kivox Website Showcase"
+                  src="/work/mockups/kivox-hero-atelier.webp"
+                  alt="Abstract Kivox design system turning website visitors into business actions"
                   fill
-                  className="object-cover object-top"
+                  className="object-cover"
                   fetchPriority="high"
                   loading="eager"
-                  sizes="(max-width: 640px) 70vw, (max-width: 768px) 88vw, 480px"
+                  sizes="(max-width: 640px) 80vw, (max-width: 1024px) 520px, 560px"
                 />
               </div>
-              <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
+              <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/10" />
             </div>
-            <div className="absolute -inset-8 z-[-1] rounded-full bg-accent/20 opacity-100 blur-[60px]" />
           </motion.div>
         </div>
       </Container>

@@ -2,7 +2,7 @@
 
 import { useReducedMotion } from "motion/react";
 import * as motion from "motion/react-client";
-import { ReactNode } from "react";
+import { isValidElement, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 interface StaggeredHeadlineProps {
@@ -73,6 +73,10 @@ function StaggerChildren({ children }: { children: ReactNode }) {
     );
   }
 
+  if (isValidElement(children) && children.type === "br") {
+    return children;
+  }
+
   // If it's a React element, we can wrap it in a motion span so it staggers as a single block
   return (
     <motion.span variants={wordVariants} className="inline-block align-bottom">
@@ -84,16 +88,12 @@ function StaggerChildren({ children }: { children: ReactNode }) {
 export function StaggeredHeadline({ className, children, delay = 0.1 }: StaggeredHeadlineProps) {
   const reduce = useReducedMotion();
 
-  if (reduce) {
-    return <h1 className={cn("studio-h1-headline text-foreground", className)}>{children}</h1>;
-  }
-
   return (
     <motion.h1
       className={cn("studio-h1-headline text-foreground", className)}
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
+      variants={reduce ? undefined : containerVariants}
+      initial={reduce ? false : "hidden"}
+      animate={reduce ? undefined : "visible"}
       custom={delay}
     >
       <StaggerChildren>{children}</StaggerChildren>
