@@ -17,6 +17,8 @@ import { Magnetic } from "@/components/ui/Magnetic";
 import { work } from "@/content/pages/work";
 import { easeOutExpo } from "@/lib/motion";
 
+const MotionLink = motion.create(Link);
+
 export function HomeWorkPreview() {
   const reduce = useReducedMotion();
   const featuredWork = work.featured;
@@ -129,8 +131,9 @@ export function HomeWorkPreview() {
                   key={project.slug}
                 >
                   <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface md:min-h-[460px] md:grid-cols-[0.92fr_1.08fr] lg:min-h-[500px] lg:grid-cols-[1.05fr_0.95fr]">
-                    <Link
-                      className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto transition-transform duration-300 active:scale-[0.98]"
+                    <MotionLink
+                      whileTap={reduce ? undefined : { scale: 0.98 }}
+                      className="group relative block h-[250px] overflow-hidden bg-[var(--bg-surface-alt)] sm:h-[340px] md:h-auto transition-transform duration-300 ease-[var(--ease-out-expo)]"
                       href={project.liveUrl || `/work/${project.slug}`}
                       rel={
                         project.liveUrl?.startsWith("/")
@@ -143,7 +146,7 @@ export function HomeWorkPreview() {
                     >
                       <Image
                         alt={`${project.title} project showcase`}
-                        className="object-cover object-left-top transition duration-700 group-hover:scale-[1.035]"
+                        className="object-cover object-left-top transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-[1.08] group-hover:rotate-2"
                         fill
                         priority={idx === 0}
                         sizes="(max-width: 767px) 100vw, (max-width: 1439px) 58vw, 50vw"
@@ -152,7 +155,7 @@ export function HomeWorkPreview() {
                       <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-[oklch(0.12_0.012_65/0.72)] px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-white backdrop-blur-sm md:bottom-6 md:left-6">
                         Live showcase <span className="sr-only">for {project.title}</span>
                       </div>
-                    </Link>
+                    </MotionLink>
 
                     <div className="flex min-h-[320px] flex-col justify-between p-6 sm:p-8 md:min-h-0 md:p-8 lg:p-10">
                       <div>
@@ -200,8 +203,9 @@ export function HomeWorkPreview() {
 
                         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                           {project.liveUrl ? (
-                            <Link
-                              className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 active:scale-95"
+                            <MotionLink
+                              whileTap={reduce ? undefined : { scale: 0.95 }}
+                              className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5"
                               href={project.liveUrl}
                               rel={
                                 project.liveUrl.startsWith("/")
@@ -222,10 +226,11 @@ export function HomeWorkPreview() {
                               View Live Website
                               <span className="ml-2">→</span>
                               <span className="sr-only"> for {project.title}</span>
-                            </Link>
+                            </MotionLink>
                           ) : null}
-                          <Link
-                            className="inline-flex min-h-12 items-center justify-center rounded-full border bg-[var(--work-secondary-cta-bg)] px-6 text-sm font-semibold transition-all hover:bg-accent hover:text-[var(--work-primary-cta-fg)] active:scale-95"
+                          <MotionLink
+                            whileTap={reduce ? undefined : { scale: 0.95 }}
+                            className="inline-flex min-h-12 items-center justify-center rounded-full border bg-[var(--work-secondary-cta-bg)] px-6 text-sm font-semibold transition-all hover:bg-accent hover:text-[var(--work-primary-cta-fg)]"
                             href={`/work/${project.slug}`}
                             style={{
                               borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 34%, transparent)`,
@@ -235,7 +240,7 @@ export function HomeWorkPreview() {
                           >
                             Case Study
                             <span className="sr-only"> for {project.title}</span>
-                          </Link>
+                          </MotionLink>
                         </div>
                       </div>
                     </div>
@@ -350,7 +355,7 @@ export function HomeWorkPreview() {
                     alt={`${project.title} project showcase`}
                     fill
                     className="object-cover"
-                    sizes="100vw"
+                    sizes="(max-width: 768px) 100vw, 100vw"
                     priority={idx === 0}
                   />
                 </div>

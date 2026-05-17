@@ -10,27 +10,30 @@ export const businessTypeOptions = [
 ] as const;
 
 export const whatYouNeedOptions = [
-  "Website",
-  "Web app",
-  "Redesign",
-  "SEO",
-  "Brand identity",
-  "Backend-enabled system",
-  "Android app",
+  "A brand new website",
+  "Redesign my current website",
+  "Get more traffic (SEO)",
+  "A custom web application",
+  "Logo & Brand identity",
+  "Something else",
 ] as const;
 
 export const timelineOptions = [
-  "ASAP",
-  "2–4 weeks",
-  "1–2 months",
-  "2–3 months",
-  "Not sure yet",
+  "As soon as possible",
+  "In the next few weeks",
+  "In a month or two",
+  "I'm not in a rush",
 ] as const;
 
 export const inquirySchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
   email: z.string().trim().email("Enter a valid email"),
-  phone: z.string().trim().min(6, "Please enter a valid phone number"),
+  phone: z.string().trim().refine((val) => {
+    // Remove optional +91 prefix and all spaces/hyphens
+    const numberPart = val.replace(/^(\+91)?/, "").replace(/[\s-]/g, "");
+    // Ensure exactly 10 digits remaining, starting with 6, 7, 8, or 9
+    return /^[6-9]\d{9}$/.test(numberPart);
+  }, "Please enter a valid 10-digit Indian phone number"),
   businessType: z.enum(businessTypeOptions),
   whatYouNeed: z.enum(whatYouNeedOptions),
   timeline: z.enum(timelineOptions).or(z.literal("")).optional().transform(val => val === "" ? undefined : val),

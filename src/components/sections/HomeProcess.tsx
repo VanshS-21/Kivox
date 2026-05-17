@@ -50,8 +50,9 @@ export function HomeProcess() {
                 viewport={viewportOnce}
                 variants={fadeUp}
                 transition={{ ...transitionDefault, delay: idx * 0.1 }}
+                whileTap={reduce ? undefined : { scale: 0.98 }}
                 className={cn(
-                  "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border transition-transform duration-500 hover:-translate-y-1",
+                  "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-[0_10px_40px_oklch(0_0_0_/_0.03)] dark:shadow-[0_10px_40px_oklch(0_0_0_/_0.2)] border transition-transform duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-1",
                   spanClass,
                   isDark 
                     ? "bg-[oklch(0.20_0_0)] text-white border-transparent" 
@@ -60,15 +61,26 @@ export function HomeProcess() {
                 )}
               >
                 {/* Decorative background number */}
-                <div 
+                <motion.div 
                   className={cn(
                     "absolute -right-4 -bottom-8 text-[8rem] font-serif italic leading-none select-none pointer-events-none",
-                    isDark ? "text-white opacity-[0.05]" : "text-foreground opacity-[0.03]"
+                    isDark ? "text-white" : "text-foreground"
                   )}
+                  style={{ opacity: isDark ? 0.05 : 0.03 }}
+                  animate={reduce ? undefined : {
+                    scale: [1, 1.05, 1],
+                    opacity: isDark ? [0.05, 0.08, 0.05] : [0.03, 0.06, 0.03],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: idx * 0.5,
+                  }}
                   aria-hidden="true"
                 >
                   {idx + 1}
-                </div>
+                </motion.div>
 
                 {/* Number & Title */}
                 <div className={cn("flex flex-col gap-4 relative z-10", isFullWidth ? "lg:w-1/3 shrink-0" : "")}>

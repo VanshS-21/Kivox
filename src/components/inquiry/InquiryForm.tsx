@@ -28,19 +28,21 @@ function FormField({
   children,
   className,
   id,
+  required,
 }: {
   label: string;
   error?: string;
   children: React.ReactNode;
   className?: string;
   id: string;
+  required?: boolean;
 }) {
   const errorId = `${id}-error`;
   return (
     <div className={`flex flex-col gap-2 ${className || ""}`}>
       <div className="flex items-center justify-between gap-4">
-        <label htmlFor={id} className="text-sm uppercase tracking-widest font-mono font-medium text-muted-foreground">
-          {label}
+        <label htmlFor={id} className="text-sm uppercase tracking-widest font-mono font-medium text-muted-foreground flex gap-1">
+          {label} {required && <span className="text-accent">*</span>}
         </label>
         {error && (
           <span id={errorId} className="text-xs text-error" role="alert">
@@ -54,16 +56,17 @@ function FormField({
 }
 
 /** Clean input style — bottom border only, transparent background */
-const inputStyle = [
-  "w-full px-0 py-4",
+const getInputStyle = (hasError?: boolean) => [
+  "w-full px-0 py-3 sm:py-4",
   "bg-transparent",
-  "border-0 border-b border-border",
-  "studio-h3-sans text-foreground",
+  hasError ? "border-0 border-b border-error text-error" : "border-0 border-b border-border text-foreground",
+  "text-lg",
   "outline-none transition-colors duration-200",
-  "focus:border-accent focus:bg-accent-muted/50",
-  "placeholder:text-muted-foreground/40",
+  hasError ? "focus:border-error focus:bg-error/5" : "focus:border-accent focus:bg-accent-muted/50",
+  "placeholder:text-muted-foreground/40 placeholder:text-base",
   "disabled:opacity-50 disabled:pointer-events-none",
 ].join(" ");
+
 
 
 
@@ -82,9 +85,9 @@ export function InquiryForm() {
     defaultValues: {
       name: "",
       email: "",
-      phone: "",
+      phone: "+91 ",
       businessType: "Other",
-      whatYouNeed: "Website",
+      whatYouNeed: "A brand new website",
       timeline: undefined,
       notes: "",
     },
@@ -117,7 +120,7 @@ export function InquiryForm() {
   const isDisabled = status.type === "submitting" || status.type === "success";
 
   return (
-    <form className="flex flex-col gap-10" onSubmit={form.handleSubmit(onSubmit)} noValidate>
+    <form className="flex flex-col gap-8 sm:gap-10" onSubmit={form.handleSubmit(onSubmit)} noValidate>
       {/* Honeypot */}
       <input
         autoComplete="off"
@@ -134,29 +137,29 @@ export function InquiryForm() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: easeOutExpo, delay: 0 }}
-        className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8"
       >
-        <FormField label="Name" error={errors.name?.message} id={fieldId("name")}>
+        <FormField label="Your full name" error={errors.name?.message} id={fieldId("name")} required>
           <input
             id={fieldId("name")}
             autoComplete="name"
-            className={inputStyle}
+            className={getInputStyle(!!errors.name)}
             disabled={isDisabled}
-            placeholder="Full name"
+            placeholder="e.g. John Doe"
             maxLength={100}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? errorId("name") : undefined}
             {...form.register("name")}
           />
         </FormField>
-        <FormField label="Email" error={errors.email?.message} id={fieldId("email")}>
+        <FormField label="Email address" error={errors.email?.message} id={fieldId("email")} required>
           <input
             id={fieldId("email")}
             autoComplete="email"
-            className={inputStyle}
+            className={getInputStyle(!!errors.email)}
             disabled={isDisabled}
             type="email"
-            placeholder="Email address"
+            placeholder="e.g. john@yourbusiness.com"
             maxLength={254}
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? errorId("email") : undefined}
@@ -170,23 +173,23 @@ export function InquiryForm() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.06 }}
-        className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8"
       >
-        <FormField label="Phone" error={errors.phone?.message} id={fieldId("phone")}>
+        <FormField label="Phone number" error={errors.phone?.message} id={fieldId("phone")} required>
           <input
             id={fieldId("phone")}
             autoComplete="tel"
-            className={inputStyle}
+            className={getInputStyle(!!errors.phone)}
             disabled={isDisabled}
             type="tel"
-            placeholder="Phone number"
+            placeholder="e.g. +91 98765 43210"
             maxLength={20}
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? errorId("phone") : undefined}
             {...form.register("phone")}
           />
         </FormField>
-        <FormField label="Business type" error={errors.businessType?.message} id={fieldId("businessType")}>
+        <FormField label="What kind of business do you run?" error={errors.businessType?.message} id={fieldId("businessType")} required>
           <Controller
             name="businessType"
             control={form.control}
@@ -198,7 +201,7 @@ export function InquiryForm() {
                 options={businessTypeOptions}
                 disabled={isDisabled}
                 hasError={!!errors.businessType}
-                placeholder="Select business type"
+                placeholder="Select an option"
               />
             )}
           />
@@ -210,9 +213,9 @@ export function InquiryForm() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.12 }}
-        className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8"
       >
-        <FormField label="What you need" error={errors.whatYouNeed?.message} id={fieldId("whatYouNeed")}>
+        <FormField label="What can we help you with?" error={errors.whatYouNeed?.message} id={fieldId("whatYouNeed")} required>
           <Controller
             name="whatYouNeed"
             control={form.control}
@@ -224,12 +227,12 @@ export function InquiryForm() {
                 options={whatYouNeedOptions}
                 disabled={isDisabled}
                 hasError={!!errors.whatYouNeed}
-                placeholder="Select an option"
+                placeholder="Select what you need"
               />
             )}
           />
         </FormField>
-        <FormField label="Timeline (optional)" error={errors.timeline?.message} id={fieldId("timeline")}>
+        <FormField label="When do you need this by? (optional)" error={errors.timeline?.message} id={fieldId("timeline")}>
           <Controller
             name="timeline"
             control={form.control}
@@ -241,7 +244,7 @@ export function InquiryForm() {
                 options={timelineOptions}
                 disabled={isDisabled}
                 hasError={!!errors.timeline}
-                placeholder="Choose a timeline"
+                placeholder="Select a timeline"
               />
             )}
           />
@@ -254,12 +257,12 @@ export function InquiryForm() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.18 }}
       >
-      <FormField label="Notes (optional)" error={errors.notes?.message} id={fieldId("notes")}>
+      <FormField label="Tell us a bit more about your goals (optional)" error={errors.notes?.message} id={fieldId("notes")}>
         <textarea
           id={fieldId("notes")}
-          className={`${inputStyle} min-h-32 py-4 resize-y`}
+          className={`${getInputStyle(!!errors.notes)} min-h-16 resize-y`}
           disabled={isDisabled}
-          placeholder="Project details, scope, or any helpful context..."
+          placeholder="Any specific features you need? Or just say hi!"
           maxLength={5000}
           aria-invalid={!!errors.notes}
           aria-describedby={errors.notes ? errorId("notes") : undefined}
@@ -279,16 +282,16 @@ export function InquiryForm() {
           disabled={isDisabled}
           type="submit"
           variant="primary"
-          className="px-10 py-3.5 text-sm font-semibold"
+          className="px-10 py-3.5 text-sm font-semibold active:scale-[0.9] transition-transform duration-200"
         >
           {status.type === "submitting"
             ? "Sending…"
             : status.type === "success"
-              ? "Sent ✓"
-              : "Send inquiry →"}
+              ? "Message Sent ✓"
+              : "Send message →"}
         </Button>
         <span className="text-xs text-muted-foreground">
-          We reply within 24 hours with next steps.
+          We'll review and reply within 24 hours.
         </span>
       </motion.div>
 

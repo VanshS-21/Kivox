@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform, useSpring } from "motion/react";
 import { Check } from "lucide-react";
 
 import { home } from "@/content/pages/home";
@@ -10,9 +11,11 @@ import { fadeUp, transitionDefault, viewportOnce } from "@/lib/motion";
 
 export function HomeServices() {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
     <Section
+      ref={sectionRef}
       id="services"
       spacing="loose"
       className="bg-surface-alt"
@@ -39,40 +42,61 @@ export function HomeServices() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-12">
           {home.services.map((service, idx) => (
-            <motion.div
-              key={service.id}
-              initial={reduce ? false : "hidden"}
-              whileInView={reduce ? undefined : "show"}
-              viewport={viewportOnce}
-              variants={fadeUp}
-              transition={{ ...transitionDefault, delay: reduce ? 0 : idx * 0.1 }}
-              className="studio-surface p-8 lg:p-10 flex flex-col group transition-all duration-500 hover:shadow-hover hover:-translate-y-1 hover:border-accent/40"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <span className="font-mono text-xl font-medium text-accent/40 studio-tabular select-none transition-colors group-hover:text-accent">
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
-                <h3 className="studio-h3-sans text-foreground">
-                  {service.title}
-                </h3>
-              </div>
-              
-              <p className="studio-body text-muted-foreground mb-8 flex-grow">
-                {service.summary}
-              </p>
-              
-              <div className="space-y-3 pt-6 border-t border-border/50">
-                {service.examples.map((example) => (
-                  <div key={example} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-accent shrink-0 mt-0.5 opacity-80" strokeWidth={2.5} />
-                    <span className="text-sm text-foreground/80 font-medium">{example}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+            <ServiceCard key={service.id} service={service} idx={idx} reduce={reduce} sectionRef={sectionRef} />
           ))}
         </div>
       </Container>
     </Section>
+  );
+}
+
+function ServiceCard({ service, idx, reduce, sectionRef }: { service: any; idx: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  
+  const rawY = useTransform(scrollYProgress, [0, 1], [0, (idx % 3) * -30]);
+  const y = useSpring(rawY, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  return (
+    <motion.div
+      initial={reduce ? false : "hidden"}
+      whileInView={reduce ? undefined : "show"}
+      viewport={viewportOnce}
+      variants={fadeUp}
+      transition={{ ...transitionDefault, delay: reduce ? 0 : idx * 0.1 }}
+      whileTap={reduce ? undefined : { scale: 0.98 }}
+      style={{ y: reduce ? 0 : y }}
+      className="studio-surface p-8 lg:p-10 flex flex-col group transition-all duration-200 ease-[var(--ease-out-expo)] hover:shadow-hover hover:-translate-y-1 hover:border-accent/40"
+    >
+      <div className="flex items-center gap-4 mb-6">
+        <motion.span
+          animate={reduce ? undefined : { y: [-3, 3, -3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
+          className="inline-block"
+        >
+          <span className="font-mono text-xl font-medium text-accent/40 studio-tabular select-none transition-all duration-[500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:text-accent group-hover:scale-[1.3] group-hover:-translate-y-2 block origin-bottom-left">
+            {String(idx + 1).padStart(2, "0")}
+          </span>
+        </motion.span>
+        <h3 className="studio-h3-sans text-foreground">
+          {service.title}
+        </h3>
+      </div>
+      
+      <p className="studio-body text-muted-foreground mb-8 flex-grow">
+        {service.summary}
+      </p>
+      
+      <div className="space-y-3 pt-6 border-t border-border/50">
+        {service.examples.map((example: string) => (
+          <div key={example} className="flex items-start gap-3">
+            <Check className="w-5 h-5 text-accent shrink-0 mt-0.5 opacity-80" strokeWidth={2.5} />
+            <span className="text-sm text-foreground/80 font-medium">{example}</span>
+          </div>
+        ))}
+      </div>
+    </motion.div>
   );
 }

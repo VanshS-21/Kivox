@@ -325,7 +325,7 @@
   --work-stage-bg:
     radial-gradient(ellipse at 72% 45%, oklch(0.94 0.018 42 / 0.55), transparent 54%),
     linear-gradient(135deg, oklch(0.985 0.006 72), oklch(0.952 0.011 58));
-  --work-primary-cta-fg: oklch(0.12 0.012 65);
+  --work-primary-cta-fg: oklch(0.98 0.01 85);
   --work-secondary-cta-bg: oklch(0.985 0.006 72 / 0.82);
   --work-secondary-cta-border: oklch(0.34 0.018 65 / 0.16);
   --work-secondary-cta-shadow: 0 16px 40px -30px oklch(0.24 0.025 65 / 0.35);
@@ -335,7 +335,7 @@
 }
 
 :root[data-theme="light"] .proof-showcase {
-  --work-primary-cta-fg: oklch(0.12 0.012 65);
+  --work-primary-cta-fg: oklch(0.98 0.01 85);
   --work-secondary-cta-bg: oklch(0.985 0.006 72 / 0.82);
   --work-secondary-cta-border: oklch(0.34 0.018 65 / 0.16);
   --work-secondary-cta-shadow: 0 16px 40px -30px oklch(0.24 0.025 65 / 0.35);
@@ -348,7 +348,7 @@
   --proof-border: oklch(0.28 0.018 65 / 0.13);
   --proof-border-strong: oklch(0.28 0.018 65 / 0.20);
   --proof-accent: var(--accent);
-  --proof-primary-cta-fg: oklch(0.12 0.012 65);
+  --proof-primary-cta-fg: oklch(0.98 0.01 85);
   --proof-secondary-cta-bg: oklch(0.985 0.006 72 / 0.82);
   --proof-secondary-cta-border: oklch(0.34 0.018 65 / 0.16);
   --proof-secondary-cta-fg: oklch(0.16 0.012 65);

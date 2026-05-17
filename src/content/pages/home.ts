@@ -1,8 +1,8 @@
 export const home = {
   hero: {
-    headline: "Make your business easier to trust online.",
+    headline: "We build websites that turn visitors into",
     subhead:
-      "We build websites and digital tools that help your customers understand what you do—and make it easy for them to take the next step.",
+      "We design beautiful, easy-to-use websites that clearly explain your value—so your customers feel confident choosing you over the competition.",
     ctas: {
       primary: "Book a Free Call",
       secondary: "See Our Work",
@@ -11,88 +11,87 @@ export const home = {
   services: [
     {
       id: "websites-web-apps",
-      title: "Websites & Web Apps",
+      title: "Beautiful, Custom Websites",
       summary:
-        "Clear, easy-to-use websites where customers can buy products, book services, and find exactly what they need.",
-      tags: ["BUSINESS WEBSITES", "ONLINE STORES", "CUSTOM TOOLS", "EASY UPDATES"],
-      examples: ["Booking pages", "Service websites", "Updating content"],
+        "Clear, fast-loading websites where your customers can easily buy products, book services, and find exactly what they need.",
+      tags: ["MORE SALES", "EASY TO MANAGE", "CUSTOM DESIGN", "FAST LOADING"],
+      examples: ["Booking pages", "Service lists", "Contact forms"],
     },
     {
       id: "ui-ux-redesign",
-      title: "Fixing Your Current Site",
+      title: "Website Makeovers",
       summary:
-        "We improve websites that are hard to use or slow, making sure your visitors actually contact you.",
-      tags: ["FIXING LAYOUTS", "MOBILE UPGRADES", "FASTER PAGES", "BETTER RESULTS"],
-      examples: ["Better buttons", "Phone-friendly design", "Easier checkouts"],
+        "We fix outdated websites that are frustrating to use, turning them into modern, professional pages that actually bring in new business.",
+      tags: ["FIXING LAYOUTS", "MOBILE UPGRADES", "FRESH LOOK", "BETTER RESULTS"],
+      examples: ["Clearer buttons", "Phone-friendly design", "Easier checkouts"],
     },
     {
       id: "seo-ai-search-readiness",
-      title: "Getting Found on Google",
+      title: "Showing Up on Google",
       summary:
-        "We set up your website so Google and AI tools can easily find your business and send you the right customers.",
-      tags: ["GOOGLE SEARCH", "LOCAL VISIBILITY", "CLEAR WRITING", "AI READY"],
+        "We build your website so people in your local area can easily find your business when they search online for your services.",
+      tags: ["GOOGLE SEARCH", "LOCAL VISIBILITY", "CLEAR WRITING", "EASY TO FIND"],
       examples: ["Local searches", "Clear service lists", "Helpful answers"],
     },
     {
       id: "brand-identity",
-      title: "Brand Identity",
+      title: "Professional Branding",
       summary:
-        "We create a professional look for your business, including logos, colors, and the words you use to talk about what you do.",
+        "We give your business a polished, trustworthy look, from choosing the right colors to finding the perfect words to describe your work.",
       tags: ["LOGOS", "BRAND COLORS", "WRITING STYLE", "LAUNCH KITS"],
       examples: ["Clear messaging", "Professional look", "Ready to use"],
     },
     {
       id: "backend-enabled-systems",
-      title: "Custom Business Tools",
+      title: "Tools to Run Your Business",
       summary:
-        "We build secure systems for your team to handle customer questions, manage bookings, and run your daily operations.",
+        "We build secure, private systems to help you manage your customer bookings, track your inventory, and handle your daily tasks easily.",
       tags: ["TEAM DASHBOARDS", "CLIENT PORTALS", "AUTOMATION", "CONNECTING APPS"],
       examples: ["Team dashboards", "Client logins", "Managing requests"],
     },
     {
       id: "android-apps",
-      title: "Mobile Apps",
+      title: "Custom Phone Apps",
       summary:
-        "We build dedicated phone apps for your customers or your staff when a normal website isn't quite enough.",
-      tags: ["PHONE APPS", "STAFF TOOLS", "CUSTOMER APPS"],
+        "When a website isn't enough, we build dedicated apps for your customers to download and use right from their phones.",
+      tags: ["PHONE APPS", "STAFF TOOLS", "CUSTOMER LOYALTY"],
       examples: ["Tools for your team", "Customer accounts", "On-the-go access"],
     },
   ],
   workPreview: {
     label: "Selected Work",
-    summary:
-      "Examples of websites and tools we've built. Each one is designed to be clear, professional, and easy for customers to use.",
+    summary: "See what we've been building.",
   },
   process: [
     {
-      title: "Discover",
-      subtitle: "Understanding your business",
+      title: "1. Let's Talk",
+      subtitle: "Understanding your goals",
       description:
-        "We start by learning about your business and your goals. We figure out exactly what your new website needs to do before we start designing, so there are no surprises.",
+        "We start by listening. We want to learn everything about your business so we know exactly what your new website needs to achieve.",
     },
     {
-      title: "Define",
+      title: "2. The Blueprint",
       subtitle: "Planning the structure",
       description:
-        "We map out exactly what pages you need and where the buttons should go. You get a clear plan of the website's structure to approve before we add colors or pictures.",
+        "We map out every page and button. You'll get a simple blueprint of the website to approve before we add any colors or pictures.",
     },
     {
-      title: "Design",
-      subtitle: "Creating the look",
+      title: "3. The Design",
+      subtitle: "Adding your style",
       description:
-        "We create the visual design of your website, making sure it looks great on phones, tablets, and computers. You get to see and click through a preview of the design.",
+        "We bring the blueprint to life with your colors and style. You'll get to click through a visual preview of exactly how it will look.",
     },
     {
-      title: "Build",
+      title: "4. Building It",
       subtitle: "Writing the code",
       description:
-        "We turn the design into a real, working website. We make sure it loads fast, works perfectly on all devices, and is easy for everyone to use.",
+        "We do all the heavy lifting to turn the design into a real, working website that loads instantly and works perfectly on mobile phones.",
     },
     {
-      title: "Launch & Evolve",
-      subtitle: "Going live and growing",
+      title: "5. Launch & Grow",
+      subtitle: "Going live",
       description:
-        "We put your website on the internet and show your team how to update it. After it's live, we can help you track how people use it and make it even better over time.",
+        "We put your website on the internet and show you exactly how to use it. Even after it's live, we're here to help you keep growing.",
     },
   ],
   philosophy: {
@@ -102,16 +101,16 @@ export const home = {
       "Kivox is here to raise the standard for small business websites. We work with owners who know that a professional, easy-to-use website brings in better customers.",
   },
   pov: {
-    title: "Trust is built through design.",
+    title: "Trust starts with a great first impression.",
     bullets: [
-      "Customers judge your business in seconds. A clean, organized site wins.",
-      "Show, don't just tell. Proof is better than promises.",
-      "A fast-loading website proves you are professional.",
-      "Simple and clear is always better than flashy and confusing.",
+      "People judge your business in seconds. A clean, organized website instantly builds trust.",
+      "Show them, don't just tell them. Real proof works better than empty promises.",
+      "A fast, smooth website proves that you care about quality.",
+      "Keeping things simple and clear is always better than being flashy and confusing.",
     ],
   },
   contact: {
     line:
-      "Tell us what you want to build. We'll reply within 24 hours with the next steps and a clear plan.",
+      "Tell us what you want to build. Fill out our simple form, and we'll reply within 24 hours to chat about how we can help your business.",
   },
 };

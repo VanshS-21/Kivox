@@ -74,15 +74,11 @@ function AccordionItem({
           {item.question}
         </span>
 
-        {/* Expand indicator — plus rotates to X */}
-        <span
+        {/* Expand indicator — plus rotates to X with bouncy spring */}
+        <motion.span
           className="mt-1 flex-shrink-0 w-5 h-5 flex items-center justify-center text-accent"
-          style={{
-            transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-            transition: reduce
-              ? "none"
-              : "transform 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-          }}
+          animate={{ rotate: isOpen ? 315 : 0 }}
+          transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 10 }}
           aria-hidden="true"
         >
           <svg
@@ -97,7 +93,7 @@ function AccordionItem({
             <line x1="7" y1="2" x2="7" y2="12" />
             <line x1="2" y1="7" x2="12" y2="7" />
           </svg>
-        </span>
+        </motion.span>
       </button>
 
       {/* Answer panel — CSS grid-rows transition for smooth height */}

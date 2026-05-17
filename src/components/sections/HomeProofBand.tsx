@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { Container } from "@/components/ui/Container";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { work } from "@/content/pages/work";
+import { home } from "@/content/pages/home";
 
 const projectColors: Record<string, string> = {
   cafe: "var(--project-cafe)",
@@ -12,13 +13,6 @@ const projectColors: Record<string, string> = {
   school: "var(--project-school)",
 };
 
-const outcomes: Record<string, string> = {
-  cafe: "Menu, hours, and directions are visible fast enough to turn nearby interest into a visit.",
-  hotel:
-    "Room confidence, policies, and direct-booking trust are brought forward before a guest leaves for an OTA.",
-  school:
-    "Admissions steps and parent questions are structured so families know what to do next.",
-};
 
 type ProjectAccentStyle = CSSProperties & {
   "--project-accent": string;
@@ -48,13 +42,13 @@ export function HomeProofBand() {
       <Container className="relative z-10">
         <div className="space-y-8 sm:space-y-10">
           <div>
-            <p className="studio-eyebrow mb-5" style={{ color: "var(--proof-muted)" }}>[ Work ]</p>
+            <p className="studio-eyebrow mb-5" style={{ color: "var(--proof-muted)" }}>[ {home.workPreview.label} ]</p>
             <h2
               id="home-proof-band-title"
               className="max-w-5xl studio-h2-editorial"
               style={{ color: "var(--proof-ink)" }}
             >
-              See what Kivox can actually build.
+              {home.workPreview.summary}
             </h2>
           </div>
 
@@ -122,7 +116,7 @@ export function HomeProofBand() {
                         className="mt-4 studio-body"
                         style={{ color: "var(--proof-muted)" }}
                       >
-                        {outcomes[project.slug] ?? project.demonstrates}
+                        {project.demonstrates}
                       </p>
                     </div>
 

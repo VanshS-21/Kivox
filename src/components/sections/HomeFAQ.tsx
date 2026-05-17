@@ -1,3 +1,7 @@
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
+import { fadeUp, transitionDefault, viewportOnce, staggerContainer } from "@/lib/motion";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
@@ -8,7 +12,7 @@ const faqCategories = [
     items: [
       {
         question: "How much does a website project cost?",
-        answer: "Every project is different, but our website projects typically start at $3,500. After our initial call, we provide a detailed proposal with clear pricing and no hidden fees."
+        answer: "Every project is different and custom-priced based on exactly what you need. After our initial call, we provide a detailed proposal with clear pricing and no hidden fees."
       },
       {
         question: "How long will it take to build?",
@@ -31,17 +35,28 @@ const faqCategories = [
 ];
 
 export function HomeFAQ() {
+  const reduce = useReducedMotion();
+
   return (
     <Section className="bg-background">
       <Container className="max-w-4xl">
-        <div className="mb-12 md:mb-16">
-          <h2 className="studio-h2-editorial text-foreground">Frequently Asked Questions</h2>
-          <p className="mt-4 text-muted-foreground studio-body">
-            Everything you need to know about working with us.
-          </p>
-        </div>
-        
-        <FaqAccordion categories={faqCategories} />
+        <motion.div
+          initial={reduce ? false : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={viewportOnce}
+          variants={staggerContainer}
+        >
+          <motion.div variants={fadeUp} className="mb-12 md:mb-16">
+            <h2 className="studio-h2-editorial text-foreground">Frequently Asked Questions</h2>
+            <p className="mt-4 text-muted-foreground studio-body">
+              Everything you need to know about working with us.
+            </p>
+          </motion.div>
+          
+          <motion.div variants={fadeUp}>
+            <FaqAccordion categories={faqCategories} />
+          </motion.div>
+        </motion.div>
       </Container>
     </Section>
   );

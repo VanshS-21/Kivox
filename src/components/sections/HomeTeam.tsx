@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform, useSpring } from "motion/react";
 
 import { team } from "@/content/team";
 import { Container } from "@/components/ui/Container";
@@ -11,9 +12,11 @@ import { cn } from "@/lib/cn";
 
 export function HomeTeam() {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
     <Section
+      ref={sectionRef}
       className="relative overflow-hidden bg-surface-alt"
       spacing="default"
       id="team"
@@ -42,55 +45,70 @@ export function HomeTeam() {
         {/* ── Team Grid (3 columns, constrained width) ── */}
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 lg:gap-y-12">
           {team.members.map((member, idx) => (
-            <motion.div
-              key={member.id}
-              initial={reduce ? false : "hidden"}
-              whileInView={reduce ? undefined : "show"}
-              viewport={viewportOnce}
-              variants={fadeUp}
-              transition={{
-                ...transitionDefault,
-                delay: idx * 0.1,
-              }}
-              className="group flex flex-col"
-            >
-              {/* Portrait */}
-              <div className="relative mb-5 overflow-hidden rounded-xl bg-surface">
-                <div className="aspect-square relative">
-                  <Image
-                    src={member.image}
-                    alt={`${member.name}, ${member.role} at Kivox`}
-                    fill
-                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                </div>
-              </div>
-
-              {/* Info */}
-              <div className="flex flex-col flex-1">
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="studio-h4-sans text-foreground transition-colors duration-300 group-hover:text-accent">
-                    {member.name}
-                  </h3>
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-accent/80 border border-accent/20 px-2 py-0.5 rounded-full">
-                    {member.role}
-                  </span>
-                </div>
-                
-                <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
-                  {member.focus}
-                </p>
-                
-                {/* Quote (Always visible) */}
-                <p className="mt-4 text-[14px] italic text-muted-foreground/80 border-l-2 border-accent/40 pl-3">
-                  &quot;{member.quote}&quot;
-                </p>
-              </div>
-            </motion.div>
+            <TeamMemberCard key={member.id} member={member} idx={idx} reduce={reduce} sectionRef={sectionRef} />
           ))}
         </div>
       </Container>
     </Section>
+  );
+}
+
+function TeamMemberCard({ member, idx, reduce, sectionRef }: { member: any; idx: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  
+  // Parallax on portrait
+  const rawY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+  const y = useSpring(rawY, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  return (
+    <motion.div
+      initial={reduce ? false : "hidden"}
+      whileInView={reduce ? undefined : "show"}
+      viewport={viewportOnce}
+      variants={fadeUp}
+      transition={{
+        ...transitionDefault,
+        delay: idx * 0.1,
+      }}
+      whileTap={reduce ? undefined : { scale: 0.98 }}
+      className="group flex flex-col"
+    >
+      {/* Portrait */}
+      <div className="relative mb-5 overflow-hidden rounded-xl bg-surface">
+        <motion.div className="aspect-square relative" style={{ y: reduce ? 0 : y, scale: 1.15 }}>
+          <Image
+            src={member.image}
+            alt={`${member.name}, ${member.role} at Kivox`}
+            fill
+            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        </motion.div>
+      </div>
+
+      {/* Info */}
+      <div className="flex flex-col flex-1">
+        <div className="flex justify-between items-start mb-1">
+          <h3 className="studio-h4-sans text-foreground transition-colors duration-300 group-hover:text-accent">
+            {member.name}
+          </h3>
+          <span className="font-mono text-[10px] uppercase tracking-wider text-accent/80 border border-accent/20 px-2 py-0.5 rounded-full">
+            {member.role}
+          </span>
+        </div>
+        
+        <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+          {member.focus}
+        </p>
+        
+        {/* Quote (Always visible) */}
+        <p className="mt-4 text-[14px] italic text-muted-foreground/80 border-l-2 border-accent/40 pl-3">
+          &quot;{member.quote}&quot;
+        </p>
+      </div>
+    </motion.div>
   );
 }

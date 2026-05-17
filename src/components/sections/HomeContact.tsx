@@ -171,13 +171,40 @@ export function HomeContact() {
   return (
     <div ref={sectionRef}>
       <Section id="contact" className="relative pt-[60px] md:pt-[80px] lg:pt-[100px] pb-[40px] md:pb-[60px] lg:pb-[80px] overflow-hidden bg-background border-t border-border/40">
-        {/* Ambient amber glow — static radial, no looping animation */}
-        <div
+        {/* Ambient amber glow */}
+        <motion.div
+          animate={
+            reduce
+              ? undefined
+              : {
+                  opacity: [0.45, 0.65, 0.45],
+                  scale: [1, 1.05, 1],
+                }
+          }
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
           className="absolute top-[15%] left-[15%] w-[180px] md:w-[280px] lg:w-[520px] h-[180px] md:h-[280px] lg:h-[520px] rounded-full blur-[60px] md:blur-[80px] lg:blur-[150px] pointer-events-none"
           style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.65)' }}
         />
-        {/* Rose counterpoint — off-axis, lower opacity to avoid duplicating POV treatment */}
-        <div
+        {/* Rose counterpoint */}
+        <motion.div
+          animate={
+            reduce
+              ? undefined
+              : {
+                  opacity: [0.18, 0.28, 0.18],
+                  scale: [1, 1.08, 1],
+                }
+          }
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1, // Offset timing
+          }}
           className="absolute bottom-[20%] right-[15%] w-[120px] md:w-[200px] lg:w-[380px] h-[120px] md:h-[200px] lg:h-[380px] rounded-full blur-[50px] md:blur-[70px] lg:blur-[120px] pointer-events-none"
           style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.28)' }}
         />

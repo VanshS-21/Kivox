@@ -150,10 +150,12 @@ export function HomePOV() {
               {/* Special emphasis on "crafted." with hand-drawn underline */}
               <motion.em
                 aria-hidden="true"
-                initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-                whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+                initial={reduce ? false : { opacity: 0, scale: 0.8, rotate: -15 }}
+                whileInView={reduce ? undefined : { opacity: 1, scale: 1, rotate: 0 }}
+                whileHover={reduce ? undefined : { scale: 1.15, rotate: 8 }}
+                whileTap={reduce ? undefined : { scale: 0.9, rotate: -5 }}
                 viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 12, delay: 0.9 }}
                 className="text-accent inline-block relative not-italic text-2xl sm:text-3xl lg:text-4xl font-serif"
                 style={{
                   fontWeight: 300,
@@ -172,7 +174,7 @@ export function HomePOV() {
               initial={reduce ? false : { scaleX: 0, opacity: 0 }}
               whileInView={reduce ? undefined : { scaleX: 1, opacity: 1 }}
               viewport={viewportOnce}
-              transition={{ duration: 1, ease: easeOutExpo, delay: 0.4 }}
+              transition={{ duration: 1, ease: easeOutExpo, delay: 1.2 }}
               className="w-24 md:w-32 h-px bg-accent/30 origin-left lg:origin-right mb-6 lg:mb-8"
             />
             {/* Supporting body text — aligned left or right */}
@@ -181,7 +183,7 @@ export function HomePOV() {
               whileInView={reduce ? undefined : "show"}
               viewport={viewportOnce}
               variants={fadeUp}
-              transition={{ ...transitionDefault, delay: 0.2 }}
+              transition={{ ...transitionDefault, delay: 1.4 }}
               className="studio-body-serif text-muted-foreground lg:text-right max-w-md"
             >
               {home.philosophy.body}

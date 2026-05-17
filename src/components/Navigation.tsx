@@ -127,12 +127,18 @@ export function Navigation() {
     <>
       {/* Navigation bar */}
       <motion.nav
-        initial={false}
+        initial={{ y: -100, opacity: 0 }}
         animate={{
+          y: 0,
+          opacity: 1,
           backdropFilter: isScrolled ? "blur(20px)" : "blur(0px)",
         }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+        transition={{
+          y: { type: "spring", stiffness: 300, damping: 30 },
+          opacity: { duration: 0.6 },
+          backdropFilter: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
+        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ease-out ${
           isScrolled ? "border-b border-border" : ""
         }`}
       >
@@ -186,13 +192,21 @@ export function Navigation() {
                 }
                   
                 return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className={`text-sm font-semibold tracking-tight transition-colors duration-200 ${isActive ? "text-accent" : "text-muted-foreground hover:text-foreground"}`}
-                  >
-                    {item.label}
-                  </Link>
+                  <Magnetic key={item.label} strength={0.08}>
+                    <Link
+                      href={item.href}
+                      className="block"
+                    >
+                      <motion.div
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        className={`text-sm font-semibold tracking-tight transition-colors duration-200 ${isActive ? "text-accent" : "text-muted-foreground hover:text-foreground"}`}
+                      >
+                        {item.label}
+                      </motion.div>
+                    </Link>
+                  </Magnetic>
                 );
               })}
             </div>
@@ -204,7 +218,7 @@ export function Navigation() {
                 <Magnetic strength={0.15}>
                   <Link
                     href="/contact"
-                    className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow transition-all duration-200"
+                    className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-ink rounded-lg text-sm font-medium tracking-tight hover:scale-105 hover:shadow-amber-glow active:scale-[0.9] transition-all duration-200"
                   >
                     Book a Free Call
                     <span className="text-base">→</span>
@@ -217,8 +231,9 @@ export function Navigation() {
 
               {/* Hamburger button */}
               <Magnetic strength={0.25}>
-                <button
+                <motion.button
                   ref={hamburgerRef}
+                  whileTap={{ scale: 0.85 }}
                   onClick={() => {
                     setIsOpen(!isOpen);
                   }}
@@ -258,7 +273,7 @@ export function Navigation() {
                       background: "var(--fg-primary)",
                     }}
                   />
-                </button>
+                </motion.button>
               </Magnetic>
             </div>
           </div>

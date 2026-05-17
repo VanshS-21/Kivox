@@ -21,69 +21,69 @@ export const faq: {
       label: "Working Together",
       items: [
         {
-          question: "How does a project typically start?",
+          question: "How do we get started?",
           answer:
-            "You fill out the inquiry form or email us directly. We reply within 24 hours with a few focused questions, then schedule a 30-minute discovery call. After that, we send a written scope, timeline, and cost estimate. No work begins until both sides agree in writing.",
+            "It starts with a simple conversation. You fill out our form, and we’ll reply within 24 hours to set up a quick 30-minute chat. After we understand what you need, we’ll send you a clear plan and a custom price. We never start work until you are completely comfortable.",
         },
         {
-          question: "What does your process look like?",
+          question: "How do you build a website?",
           answer:
-            "Five stages: Discover (understand the business and customer decision), Define (fix the structure, pages, content order, calls to action), Design (craft the interface with clarity), Build (fast, responsive, maintainable code), Launch and Evolve (deploy, measure, iterate). Each stage has a clear deliverable and a feedback checkpoint before moving forward.",
+            "We guide you through every step. First we get to know you, then we make a clear plan for your pages. Next we design how everything looks, and finally we build it so it works perfectly. You’ll be able to check in and share your thoughts at every single step.",
         },
         {
           question: "How long does a typical project take?",
           answer:
-            "A focused website (5 to 8 pages) takes 4 to 6 weeks from kickoff to launch. Larger projects with custom backend systems or web apps take 8 to 12 weeks. Timelines depend on scope, feedback speed, and content readiness. We share a detailed timeline in the proposal.",
+            "A standard business website usually takes 4 to 6 weeks from our first meeting to going live. Larger custom tools take 8 to 12 weeks. We always agree on a clear timeline before we start any work.",
         },
         {
-          question: "Who will I be working with?",
+          question: "Who will I be talking to?",
           answer:
-            "You work directly with the people building your project. No account managers, no hand-offs to junior teams. The person on the discovery call is the person designing and building your site.",
+            "You’ll work directly with the people actually building your website. There are no middlemen or confusing hand-offs—just direct, honest communication.",
         },
       ],
     },
     {
-      label: "Scope and Pricing",
+      label: "Pricing & Budget",
       items: [
         {
-          question: "How much does a project cost?",
+          question: "How much does a website cost?",
           answer:
-            "It depends on scope. A focused website starts around ₹80,000 to ₹1,50,000. Web apps, custom dashboards, or backend-enabled systems start higher. We provide a fixed quote after the discovery call, never hourly billing, never surprise invoices. You know the full cost before any work begins.",
+            "Every business is different, so every project is custom-priced based on exactly what you need. After our first chat, we’ll give you a fixed quote (in Rupees). We never charge by the hour, so you will never get a surprise bill from us.",
         },
         {
-          question: "Do you offer payment plans?",
+          question: "Do I have to pay it all at once?",
           answer:
-            "Yes. Standard structure is 40% at kickoff, 30% at design approval, and 30% at launch. For larger projects, we can discuss milestone-based schedules. The exact terms are defined in the project agreement.",
+            "Not at all. We split the payment into easy milestones: a portion to start, a portion when you approve the design, and the final piece only when your website goes live.",
         },
         {
           question: "What if my budget is limited?",
           answer:
-            "We scope to your budget, not the other way around. If the full vision doesn't fit today, we'll recommend which pieces to build first for the most impact and what can wait for a Phase 2. We'd rather build something excellent at a smaller scope than something mediocre at full scope.",
+            "We can work with your budget by deciding what pieces are most important to build right now, and what can wait for later. We’d rather build something excellent that fits your budget today, than try to rush everything.",
         },
       ],
     },
     {
-      label: "Design and Development",
+      label: "How We Build",
       items: [
         {
-          question: "What technologies do you use?",
+          question: "Do I need to know anything about coding or technology?",
           answer:
-            "We choose tools based on the project, not habit. For most business websites: Next.js, React, and Tailwind CSS for fast, SEO-ready, responsive builds. For backend systems: Node.js, PostgreSQL, or whatever fits the problem. For Android apps: Kotlin or cross-platform frameworks. We never lock you into a proprietary stack.",
+            "Absolutely not! That’s what we are here for. We handle all the complicated technical details behind the scenes. We just need you to be the expert on your own business.",
         },
         {
-          question: "Will my website be mobile-friendly?",
+          question: "Will my website look good on mobile phones?",
           answer:
-            "Every project is designed mobile-first. We test across real devices and screen sizes. Performance is part of the build, not an afterthought: fast load times, accessible navigation, touch-friendly interactions.",
+            "Yes! More than half of your customers will visit from their phones, so we actually design for phones first. Your site will look perfect and be easy to tap and read on any screen size.",
         },
         {
-          question: "How many revisions are included?",
+          question: "What if I don't like the first design?",
           answer:
-            "Design includes two rounds of structured feedback at each major milestone. This isn't about counting revisions; it's about making decisions together at the right moments. Most projects need fewer rounds than expected because we align on direction early in the process.",
+            "We include plenty of time for your feedback. We check in with you at every major step to make sure you love the direction we’re heading. Because we plan so carefully together, there are very rarely any big surprises.",
         },
         {
-          question: "Do you handle SEO?",
+          question: "Will people be able to find me on Google?",
           answer:
-            "Technical SEO is built into every project: semantic HTML, structured data, meta tags, performance optimization, mobile responsiveness. For content strategy and ongoing SEO campaigns, we can scope that as an add-on or recommend a specialist partner.",
+            "Yes. We build every website to be easily found by search engines, making sure it loads fast and uses the right keywords. For ongoing marketing, we can also point you to the right specialists.",
         },
       ],
     },
@@ -91,19 +91,19 @@ export const faq: {
       label: "After Launch",
       items: [
         {
-          question: "Who owns the code and design?",
+          question: "Who actually owns the website?",
           answer:
-            "You do. After final payment, all source code, design files, and assets transfer to you completely. No licensing fees, no lock-in. You can take the project to any developer in the future.",
+            "You do, 100%. Once the final payment is made, everything belongs to you. There are no hidden licensing fees or tricks to keep you locked in with us.",
         },
         {
-          question: "Do you offer maintenance after launch?",
+          question: "Will you help me if something breaks after it goes live?",
           answer:
-            "We include 30 days of post-launch support for bug fixes and minor adjustments at no extra cost. For ongoing maintenance (updates, hosting management, content changes), we offer monthly retainer plans. These are optional, not required.",
+            "Yes! We include 30 days of free support after launch to make sure everything runs perfectly. If you want us to keep updating and managing the site for you long-term, we also offer simple monthly plans.",
         },
         {
           question: "What if I need changes later?",
           answer:
-            "You can reach out anytime. Small tweaks are usually handled quickly on a per-request basis. Larger changes (new features, redesigns, integrations) follow the same scoping process as a new project: discovery, proposal, agreement, then build.",
+            "You can reach out anytime. Small tweaks are usually handled quickly. For larger additions (like new pages or features), we'll just have a quick chat and give you a simple price before we start.",
         },
       ],
     },

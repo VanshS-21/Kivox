@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 import { home } from "@/content/pages/home";
 import { ButtonLink } from "@/components/ui/Button";
@@ -67,6 +67,15 @@ export function HomeHero() {
   const reduce = useReducedMotion();
   const { isReady } = useLoadingContext();
   const ref = useRef<HTMLElement>(null);
+  const [index, setIndex] = useState(0);
+  const words = ["customers.", "growth.", "revenue."];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -85,8 +94,21 @@ export function HomeHero() {
       }}
     >
       {/* Subtle background glow */}
-      <div
+      <motion.div
         className="pointer-events-none absolute inset-0 z-0"
+        animate={
+          reduce
+            ? undefined
+            : {
+                opacity: [0.6, 1, 0.6],
+                scale: [1, 1.05, 1],
+              }
+        }
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
         style={{
           background:
             "radial-gradient(circle at 75% 25%, color-mix(in oklch, var(--accent) 5%, transparent), transparent 50%)",
@@ -107,33 +129,38 @@ export function HomeHero() {
           <div className="max-w-[38rem] pt-8 lg:pt-0">
             <h1
               className="mb-4 studio-h1-headline text-foreground"
-              aria-label={home.hero.headline}
+              aria-label="We build websites that turn visitors into customers, growth, and revenue."
             >
               <SplitWords delay={0.18} reduce={reduce} isReady={isReady}>
-                Make your
+                We build
               </SplitWords>
               {" "}
               <br className="hidden lg:block" />
               <SplitWords delay={0.34} reduce={reduce} isReady={isReady}>
-                business
+                websites that turn
               </SplitWords>
               <br />
               <SplitWords delay={0.5} reduce={reduce} isReady={isReady}>
-                easier to
+                visitors into
               </SplitWords>
               {" "}
-              <motion.span
-                initial={reduce ? false : { opacity: 0, y: 14 }}
-                animate={reduce ? undefined : isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-                transition={{ duration: 0.7, ease: easeOutQuint, delay: 0.66 }}
-                className="inline-block font-serif text-accent"
-                style={{
-                  fontStyle: "italic",
-                  fontWeight: 300,
-                }}
+              <span 
+                className="inline-flex overflow-hidden align-bottom font-serif text-accent" 
+                style={{ fontStyle: "italic", fontWeight: 300, minWidth: "5em" }}
               >
-                trust online.
-              </motion.span>
+                <AnimatePresence mode="popLayout">
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -40 }}
+                    transition={{ duration: 0.6, ease: easeOutQuint }}
+                    className="inline-block"
+                  >
+                    {words[index]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </h1>
 
             <motion.p
@@ -171,12 +198,13 @@ export function HomeHero() {
                     transition: { duration: 0.5, ease: easeOutExpo },
                   },
                 }}
+                whileTap={reduce ? undefined : { scale: 0.95 }}
               >
                 <Magnetic strength={0.15}>
                   <ButtonLink
                     href="/contact"
                     variant="primary"
-                    className="group w-full justify-center sm:w-auto"
+                    className="group w-full justify-center sm:w-auto transition-transform duration-200"
                   >
                     {home.hero.ctas.primary}
                     <ArrowRight
@@ -197,6 +225,7 @@ export function HomeHero() {
                     transition: { duration: 0.5, ease: easeOutExpo },
                   },
                 }}
+                whileTap={reduce ? undefined : { scale: 0.95 }}
               >
                 <Magnetic strength={0.15}>
                   <ButtonLink
@@ -225,36 +254,41 @@ export function HomeHero() {
             style={{ perspective: 1000 }}
             className="relative mx-auto w-full max-w-sm sm:max-w-md lg:max-w-[420px] xl:max-w-[480px]"
           >
-            <div 
-              className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden aspect-[16/10] ring-1 ring-black/5 dark:ring-white/10"
-              style={{
-                transformStyle: "preserve-3d",
-              }}
+            <motion.div
+              animate={reduce ? undefined : { y: [-6, 6, -6] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             >
-              {/* Browser Title Bar */}
-              <div className="h-10 border-b border-border bg-muted/50 flex items-center px-4 gap-2 backdrop-blur-md">
-                <div className="w-3 h-3 rounded-full bg-red-400/80 shadow-sm" />
-                <div className="w-3 h-3 rounded-full bg-amber-400/80 shadow-sm" />
-                <div className="w-3 h-3 rounded-full bg-green-400/80 shadow-sm" />
-              </div>
-              {/* Browser Content */}
-              <div className="relative w-full h-[calc(100%-2.5rem)] bg-muted/20">
-                <Image 
-                  src="/work/mockups/Cafe-1.webp" 
-                  alt="Kivox Website Showcase" 
-                  fill 
-                  className="object-cover object-top"
-                  priority
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                />
+              <div 
+                className="relative rounded-xl border border-border bg-card shadow-2xl overflow-hidden aspect-[16/10] ring-1 ring-black/5 dark:ring-white/10"
+                style={{
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                {/* Browser Title Bar */}
+                <div className="h-10 border-b border-border bg-muted/50 flex items-center px-4 gap-2 backdrop-blur-md">
+                  <div className="w-3 h-3 rounded-full bg-red-400/80 shadow-sm" />
+                  <div className="w-3 h-3 rounded-full bg-amber-400/80 shadow-sm" />
+                  <div className="w-3 h-3 rounded-full bg-green-400/80 shadow-sm" />
+                </div>
+                {/* Browser Content */}
+                <div className="relative w-full h-[calc(100%-2.5rem)] bg-muted/20">
+                  <Image 
+                    src="/work/mockups/Cafe-1.webp" 
+                    alt="Kivox Website Showcase" 
+                    fill 
+                    className="object-cover object-top"
+                    priority
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                  />
+                </div>
+                
+                {/* Soft overlay gradient to ensure it looks embedded */}
+                <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-xl" />
               </div>
               
-              {/* Soft overlay gradient to ensure it looks embedded */}
-              <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-xl" />
-            </div>
-            
-            {/* Ambient shadow glow behind the mockup */}
-            <div className="absolute -inset-4 z-[-1] bg-accent/20 blur-3xl rounded-full opacity-0 lg:opacity-100 transition-opacity duration-1000" />
+              {/* Ambient shadow glow behind the mockup */}
+              <div className="absolute -inset-4 z-[-1] bg-accent/20 blur-3xl rounded-full opacity-100 transition-opacity duration-1000" />
+            </motion.div>
           </motion.div>
         </motion.div>
       </Container>
