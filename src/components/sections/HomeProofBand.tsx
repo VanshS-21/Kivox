@@ -24,7 +24,7 @@ export function HomeProofBand() {
   return (
     <section
       aria-labelledby="home-proof-band-title"
-      className="proof-showcase relative overflow-hidden py-14 sm:py-16 lg:py-20"
+      className="proof-showcase relative overflow-hidden py-14 sm:py-16 lg:py-20 border-t border-border"
     >
       <div
         aria-hidden="true"

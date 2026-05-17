@@ -13,7 +13,7 @@ export function HomeProcess() {
   const steps = home.process;
 
   return (
-    <Section id="process" spacing="default" className="relative overflow-hidden bg-surface-alt">
+    <Section id="process" spacing="default" className="relative overflow-hidden bg-surface-alt border-t border-border">
       <Container className="relative z-10">
         
         {/* Heading + intro */}

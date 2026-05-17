@@ -168,7 +168,7 @@ export function HomeContact() {
 
   return (
     <div ref={sectionRef}>
-      <Section id="contact" className="relative pt-[60px] md:pt-[80px] lg:pt-[100px] pb-[40px] md:pb-[60px] lg:pb-[80px] overflow-hidden bg-background border-t border-border/40">
+      <Section id="contact" className="relative pt-[60px] md:pt-[80px] lg:pt-[100px] pb-[40px] md:pb-[60px] lg:pb-[80px] overflow-hidden bg-background border-t border-border">
         {/* Ambient amber glow */}
         <motion.div
           animate={

@@ -38,7 +38,7 @@ export function HomeFAQ() {
   const reduce = useReducedMotion();
 
   return (
-    <Section className="bg-background">
+    <Section className="bg-background border-t border-border">
       <Container className="max-w-4xl">
         <motion.div
           initial={reduce ? false : "hidden"}

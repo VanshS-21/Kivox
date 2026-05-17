@@ -18,7 +18,7 @@ export function HomeServices() {
       ref={sectionRef}
       id="services"
       spacing="loose"
-      className="bg-surface-alt"
+      className="bg-surface-alt border-t border-border"
     >
       <Container>
         <motion.div

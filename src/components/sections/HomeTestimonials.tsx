@@ -31,7 +31,7 @@ export function HomeTestimonials() {
             container.scrollBy({ left: container.clientWidth * 0.75, behavior: 'smooth' });
           }
         }
-      }, 2500); // 2.5 seconds interval
+      }, 1500); // 2.5 seconds interval
     };
 
     startAutoScroll();
@@ -54,7 +54,7 @@ export function HomeTestimonials() {
   }, [reduce]);
 
   return (
-    <Section ref={sectionRef} spacing="loose" className="bg-background">
+    <Section ref={sectionRef} spacing="loose" className="bg-background border-t border-border">
       <Container className="max-w-6xl mx-auto">
         <motion.div
           initial={reduce ? false : "hidden"}
@@ -85,16 +85,7 @@ export function HomeTestimonials() {
 
 import { memo } from "react";
 
-const TestimonialCard = memo(function TestimonialCard({ testimonial, index, reduce, sectionRef }: { testimonial: { id: string; quote: string; author: string; role: string; company: string; }; index: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  
-  // Staggered parallax based on index
-  const rawY = useTransform(scrollYProgress, [0, 1], [0, index === 2 ? -20 : -40 + (index * 15)]);
-  const y = useSpring(rawY, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
+const TestimonialCard = memo(function TestimonialCard({ testimonial, index, reduce }: { testimonial: { id: string; quote: string; author: string; role: string; company: string; }; index: number; reduce: boolean | null; sectionRef: React.RefObject<HTMLElement | null> }) {
   return (
     <motion.div
       initial={reduce ? false : "hidden"}
@@ -102,21 +93,15 @@ const TestimonialCard = memo(function TestimonialCard({ testimonial, index, redu
       viewport={viewportOnce}
       variants={fadeUp}
       transition={{ ...transitionDefault, delay: reduce ? 0 : index * 0.1 }}
-      style={{ y: reduce ? 0 : y }}
       className={`flex flex-col group h-full ${index === 2 ? 'md:items-center md:text-center' : ''}`}
     >
       <div className="mb-8 relative">
-        {/* Minimalist quote mark with ambient float */}
-        <motion.div 
-          variants={scaleIn}
-          animate={reduce ? undefined : { rotate: [-5, 5, -5], y: [0, -8, 0] }}
-          transition={reduce ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
-          whileHover={reduce ? undefined : { rotate: 15, scale: 1.3, y: 0, transition: { type: "spring", stiffness: 300, damping: 10 } }}
-          whileTap={reduce ? undefined : { rotate: 15, scale: 1.1, y: 0, transition: { type: "spring", stiffness: 300, damping: 10 } }}
-          className={`absolute -top-6 text-accent/10 font-serif text-8xl leading-none select-none pointer-events-auto transition-colors duration-500 group-hover:text-accent/20 cursor-default ${index === 2 ? 'left-1/2 -translate-x-1/2' : '-left-4'}`}
+        {/* Minimalist static quote mark */}
+        <div 
+          className={`absolute -top-6 text-accent/10 font-serif text-8xl leading-none select-none pointer-events-none transition-colors duration-500 group-hover:text-accent/20 ${index === 2 ? 'md:left-1/2 md:-translate-x-1/2 -left-4' : '-left-4'}`}
         >
           &quot;
-        </motion.div>
+        </div>
         <p className={`studio-body-serif font-light leading-relaxed text-foreground relative z-10 break-words min-w-0 ${index === 2 ? 'md:max-w-3xl mx-auto' : ''}`}>
           {testimonial.quote}
         </p>

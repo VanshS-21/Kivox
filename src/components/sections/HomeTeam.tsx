@@ -16,7 +16,7 @@ export function HomeTeam() {
   return (
     <Section
       ref={sectionRef}
-      className="relative overflow-hidden bg-surface-alt"
+      className="relative overflow-hidden bg-background border-t border-border"
       spacing="default"
       id="team"
     >

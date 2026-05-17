@@ -107,7 +107,7 @@ export function HomeWorkPreview() {
 
   if (isCompact) {
     return (
-      <Section spacing="loose" ref={containerRef} className="relative overflow-hidden bg-background work-showcase">
+      <Section spacing="loose" ref={containerRef} className="relative overflow-hidden bg-background border-t border-border work-showcase">
         <div className="mx-auto mb-6 flex max-w-6xl justify-end px-5 sm:px-6 md:px-10 lg:px-12">
           <div className="hidden shrink-0 font-mono text-sm text-muted-foreground md:block">
             <h2 className="sr-only">Featured Work</h2>
