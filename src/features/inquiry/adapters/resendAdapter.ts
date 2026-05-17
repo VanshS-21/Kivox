@@ -49,8 +49,8 @@ function compactBrandHeader(label: string): string {
     <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
       <tr>
         <td style="vertical-align:middle;">
-          <p style="margin:0;color:#FFF9EC;font-size:24px;line-height:1;font-weight:800;letter-spacing:-0.08em;">
-            kivox<span style="font-size:11px;font-weight:700;letter-spacing:-0.02em;">.in</span>
+          <p style="margin:0;color:#FFF9EC;font-size:22px;line-height:1;font-weight:800;letter-spacing:-0.08em;">
+            kivox<span style="font-size:10px;font-weight:700;letter-spacing:-0.02em;">.in</span>
           </p>
         </td>
         <td align="right" style="vertical-align:middle;">
@@ -76,9 +76,9 @@ function buildAdminEmailHtml(inquiry: Inquiry): string {
         <td align="center">
           <table width="${CARD_WIDTH}" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:${CARD_WIDTH}px;background:#12100D;border:1px solid #2B251E;border-radius:20px;overflow:hidden;box-shadow:0 28px 80px rgba(0,0,0,0.34);">
             <tr>
-              <td style="padding:28px 34px;background:linear-gradient(135deg,#120F0B 0%,#241809 54%,#B77910 100%);">
+              <td style="padding:26px 32px;background:linear-gradient(135deg,#120F0B 0%,#241809 54%,#B77910 100%);">
                 ${compactBrandHeader("New inquiry")}
-                <h1 style="margin:22px 0 0;color:#FFF9EC;font-size:26px;line-height:1.16;font-weight:750;letter-spacing:-0.02em;">Someone wants to build with Kivox.</h1>
+                <h1 style="margin:20px 0 0;color:#FFF9EC;font-size:24px;line-height:1.16;font-weight:750;letter-spacing:-0.02em;">Someone wants to build with Kivox.</h1>
                 <p style="margin:14px 0 0;color:#F7E6C7;font-size:14px;line-height:1.65;">Submitted from ${escapeHtml(SITE_URL)} on ${submittedAt} IST.</p>
               </td>
             </tr>
@@ -122,9 +122,9 @@ function buildAutoReplyHtml(inquiry: Inquiry): string {
         <td align="center">
           <table width="${CARD_WIDTH}" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:${CARD_WIDTH}px;background:#FFFCF7;border:1px solid #E8DFD2;border-radius:20px;overflow:hidden;box-shadow:0 22px 70px rgba(41,29,12,0.12);">
             <tr>
-              <td style="padding:30px 36px;background:#100D0A;">
+              <td style="padding:28px 34px;background:#100D0A;">
                 ${compactBrandHeader("Message received")}
-                <h1 style="margin:22px 0 0;color:#FFF9EC;font-size:26px;line-height:1.18;font-weight:750;letter-spacing:-0.02em;">We received your inquiry.</h1>
+                <h1 style="margin:20px 0 0;color:#FFF9EC;font-size:24px;line-height:1.18;font-weight:750;letter-spacing:-0.02em;">We received your inquiry.</h1>
                 <p style="margin:14px 0 0;color:#D9C9AD;font-size:14px;line-height:1.7;">${escapeHtml(brand.tagline)}</p>
               </td>
             </tr>

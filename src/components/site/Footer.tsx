@@ -45,6 +45,23 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
 export function Footer() {
   const pathname = usePathname();
 
@@ -52,9 +69,9 @@ export function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-border bg-surface-alt">
-      <div className="mx-auto max-w-[1320px] px-6 pb-6 pt-12 md:px-10 md:pt-14 lg:px-14 lg:pt-16">
-        <div className="mb-10 flex flex-col justify-between gap-10 lg:mb-12 lg:flex-row lg:gap-10">
-          <div className="flex max-w-xl flex-col gap-5">
+      <div className="mx-auto max-w-[1320px] px-6 pb-5 pt-10 md:px-10 md:pt-14 lg:px-14 lg:pt-16">
+        <div className="mb-8 flex flex-col justify-between gap-8 lg:mb-10 lg:flex-row lg:gap-10">
+          <div className="flex max-w-xl flex-col gap-4 md:gap-5">
             <div>
               <h2 className="studio-h2-editorial mb-3 text-foreground">
                 Let&apos;s start a{" "}
@@ -89,14 +106,14 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-9 sm:flex-nowrap lg:gap-14">
+          <div className="grid w-full grid-cols-3 gap-4 sm:flex sm:w-auto sm:flex-nowrap sm:gap-9 lg:gap-14">
             <div>
-              <h3 className="studio-eyebrow mb-4 text-foreground opacity-60">
+              <h3 className="studio-eyebrow mb-3 text-foreground opacity-60 sm:mb-4">
                 Navigate
               </h3>
               <nav
                 aria-label="Footer navigation"
-                className="flex flex-col items-start gap-3"
+                className="flex flex-col items-start gap-2.5 sm:gap-3"
               >
                 {navigation.primary.map((link) => {
                   if (pathname === link.href) return null;
@@ -105,7 +122,7 @@ export function Footer() {
                       key={link.href}
                       href={link.href}
                       prefetch={false}
-                      className="text-base font-medium text-foreground transition-colors hover:text-accent"
+                      className="text-sm font-medium text-foreground transition-colors hover:text-accent sm:text-base"
                     >
                       {link.label}
                     </Link>
@@ -115,12 +132,12 @@ export function Footer() {
             </div>
 
             <div>
-              <h3 className="studio-eyebrow mb-4 text-foreground opacity-60">
+              <h3 className="studio-eyebrow mb-3 text-foreground opacity-60 sm:mb-4">
                 Studio
               </h3>
               <nav
                 aria-label="Studio sections"
-                className="flex flex-col items-start gap-3"
+                className="flex flex-col items-start gap-2.5 sm:gap-3"
               >
                 {[
                   { label: "Our Process", href: "/#process" },
@@ -132,7 +149,7 @@ export function Footer() {
                     key={link.href}
                     href={link.href}
                     prefetch={false}
-                    className="text-base font-medium text-foreground transition-colors hover:text-accent"
+                    className="text-sm font-medium text-foreground transition-colors hover:text-accent sm:text-base"
                   >
                     {link.label}
                   </Link>
@@ -141,36 +158,45 @@ export function Footer() {
             </div>
 
             <div>
-              <h3 className="studio-eyebrow mb-4 text-foreground opacity-60">
+              <h3 className="studio-eyebrow mb-3 text-foreground opacity-60 sm:mb-4">
                 Connect
               </h3>
               <nav
                 aria-label="Social connections"
-                className="flex flex-col items-start gap-3"
+                className="flex flex-col items-start gap-2.5 sm:gap-3"
               >
                 <a
-                  className="group flex items-center gap-3 text-base font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100"
+                  className="group flex items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
                   href={brand.socials.linkedin}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <LinkedinIcon className="h-5 w-5" />
+                  <LinkedinIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>LinkedIn</span>
                 </a>
                 <a
-                  className="group flex items-center gap-3 text-base font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100"
+                  className="group flex items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
                   href={brand.socials.instagram}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <InstagramIcon className="h-5 w-5" />
+                  <InstagramIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>Instagram</span>
                 </a>
                 <a
-                  className="group flex items-center gap-3 text-base font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100"
+                  className="group flex items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
+                  href={brand.socials.facebook}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <FacebookIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span>Facebook</span>
+                </a>
+                <a
+                  className="group flex items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
                   href={`mailto:${brand.contact.email}`}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 sm:h-5 sm:w-5">
                     <rect width="20" height="16" x="2" y="4" rx="2" />
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                   </svg>
@@ -186,7 +212,7 @@ export function Footer() {
             href="/"
             prefetch={false}
             aria-label="Back to top"
-            className="group block w-full max-w-[340px] cursor-pointer sm:max-w-[460px] lg:max-w-[620px]"
+            className="group block w-full max-w-[260px] cursor-pointer sm:max-w-[380px] lg:max-w-[520px]"
             data-cursor="logo"
           >
             <KivoxLogo
@@ -199,7 +225,7 @@ export function Footer() {
       </div>
 
       <div className="relative z-10 border-t border-accent/10 bg-surface-alt">
-        <div className="mx-auto max-w-[1320px] px-6 py-4 md:px-10 lg:px-14">
+        <div className="mx-auto max-w-[1320px] px-6 py-3 md:px-10 lg:px-14">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div className="studio-caption">
               &copy; {new Date().getFullYear()} {brand.name} &middot;{" "}

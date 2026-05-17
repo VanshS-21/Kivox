@@ -37,7 +37,7 @@ export default function Home() {
       </LazySection>
       <LazySection rootMargin="0px">
         <div className="cv-auto">
-          <HomeTestimonials />
+          <HomeProcess />
         </div>
       </LazySection>
       <LazySection rootMargin="0px">
@@ -47,7 +47,7 @@ export default function Home() {
       </LazySection>
       <LazySection rootMargin="0px">
         <div className="cv-auto">
-          <HomeProcess />
+          <HomeTestimonials />
         </div>
       </LazySection>
       <LazySection rootMargin="0px">

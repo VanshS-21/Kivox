@@ -11,6 +11,15 @@ import { fadeUp, transitionDefault, viewportOnce } from "@/lib/motion";
 export function HomeProcess() {
   const reduce = useReducedMotion();
   const steps = home.process;
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleNext = useCallback(() => {
+    if (scrollRef.current) {
+      // scroll by approximate width of one card + gap (85vw + gap)
+      const scrollAmount = window.innerWidth * 0.85;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  }, []);
 
   return (
     <Section id="process" spacing="default" className="relative overflow-hidden bg-surface-alt border-t border-border">
@@ -29,9 +38,12 @@ export function HomeProcess() {
           </motion.p>
         </div>
 
-        <div className="flex overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:snap-none md:pb-0 md:mx-0 md:px-0 gap-5 md:gap-6 [&::-webkit-scrollbar]:hidden">
+        <div 
+          ref={scrollRef}
+          className="flex overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:snap-none md:pb-0 md:mx-0 md:px-0 gap-5 md:gap-6 [&::-webkit-scrollbar]:hidden"
+        >
           {steps.map((step, idx) => (
-            <ProcessStep key={idx} step={step} idx={idx} reduce={reduce} />
+            <ProcessStep key={idx} step={step} idx={idx} reduce={reduce} onNext={handleNext} />
           ))}
           {/* Spacer for last item right padding on mobile */}
           <div className="w-1 shrink-0 md:hidden" aria-hidden="true" />
@@ -42,9 +54,9 @@ export function HomeProcess() {
   );
 }
 
-import { memo } from "react";
+import { memo, useRef, useCallback } from "react";
 
-const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { title: string; subtitle: string; description: string; }; idx: number; reduce: boolean | null }) {
+const ProcessStep = memo(function ProcessStep({ step, idx, reduce, onNext }: { step: { title: string; subtitle: string; description: string; }; idx: number; reduce: boolean | null; onNext?: () => void }) {
   // Bento spans: 2-1, 1-2, 3 pattern
   let spanClass = "";
   const isDark = false;
@@ -131,11 +143,15 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
 
       {/* Mobile Swipe Arrow (Centered on card edge) */}
       {idx < 4 && (
-        <div className="md:hidden absolute right-4 top-1/2 -translate-y-1/2 text-accent/40 pointer-events-none">
+        <button 
+          onClick={onNext}
+          className="md:hidden absolute right-2 top-1/2 -translate-y-1/2 text-accent/40 hover:text-accent p-2 cursor-pointer z-20 focus:outline-none"
+          aria-label="Next step"
+        >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 18l6-6-6-6" />
           </svg>
-        </div>
+        </button>
       )}
     </motion.div>
   );
