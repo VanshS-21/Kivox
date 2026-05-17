@@ -44,6 +44,22 @@ function row(label: string, value: string): string {
     </tr>`;
 }
 
+function compactBrandHeader(label: string): string {
+  return `
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+      <tr>
+        <td style="vertical-align:middle;">
+          <p style="margin:0;color:#FFF9EC;font-size:24px;line-height:1;font-weight:800;letter-spacing:-0.08em;">
+            kivox<span style="font-size:11px;font-weight:700;letter-spacing:-0.02em;">.in</span>
+          </p>
+        </td>
+        <td align="right" style="vertical-align:middle;">
+          <p style="margin:0;color:#F1B64B;font-size:10px;line-height:1.4;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;">${label}</p>
+        </td>
+      </tr>
+    </table>`;
+}
+
 function buildAdminEmailHtml(inquiry: Inquiry): string {
   const submittedAt = formatSubmittedAt();
 
@@ -60,14 +76,14 @@ function buildAdminEmailHtml(inquiry: Inquiry): string {
         <td align="center">
           <table width="${CARD_WIDTH}" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:${CARD_WIDTH}px;background:#12100D;border:1px solid #2B251E;border-radius:20px;overflow:hidden;box-shadow:0 28px 80px rgba(0,0,0,0.34);">
             <tr>
-              <td style="padding:34px 38px;background:linear-gradient(135deg,#120F0B 0%,#241809 54%,#B77910 100%);">
-                <p style="margin:0 0 12px;font-size:11px;font-weight:700;color:#F1B64B;text-transform:uppercase;letter-spacing:0.16em;">New project inquiry</p>
-                <h1 style="margin:0;color:#FFF9EC;font-size:30px;line-height:1.15;font-weight:750;letter-spacing:-0.02em;">Someone wants to build with Kivox.</h1>
+              <td style="padding:28px 34px;background:linear-gradient(135deg,#120F0B 0%,#241809 54%,#B77910 100%);">
+                ${compactBrandHeader("New inquiry")}
+                <h1 style="margin:22px 0 0;color:#FFF9EC;font-size:26px;line-height:1.16;font-weight:750;letter-spacing:-0.02em;">Someone wants to build with Kivox.</h1>
                 <p style="margin:14px 0 0;color:#F7E6C7;font-size:14px;line-height:1.65;">Submitted from ${escapeHtml(SITE_URL)} on ${submittedAt} IST.</p>
               </td>
             </tr>
             <tr>
-              <td style="padding:34px 38px;background:#FFFCF7;">
+              <td style="padding:30px 34px;background:#FFFCF7;">
                 <p style="margin:0 0 22px;color:#3D352D;font-size:15px;line-height:1.75;">The contact form captured the details below. Replying to this email will reply directly to the prospect.</p>
                 <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border:1px solid #E8DFD2;border-radius:14px;overflow:hidden;">
                   ${row("Name", escapeHtml(inquiry.name))}
@@ -106,14 +122,14 @@ function buildAutoReplyHtml(inquiry: Inquiry): string {
         <td align="center">
           <table width="${CARD_WIDTH}" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:${CARD_WIDTH}px;background:#FFFCF7;border:1px solid #E8DFD2;border-radius:20px;overflow:hidden;box-shadow:0 22px 70px rgba(41,29,12,0.12);">
             <tr>
-              <td style="padding:38px 40px;background:#100D0A;">
-                <p style="margin:0 0 12px;font-size:11px;font-weight:700;color:#F1B64B;text-transform:uppercase;letter-spacing:0.16em;">Kivox</p>
-                <h1 style="margin:0;color:#FFF9EC;font-size:30px;line-height:1.18;font-weight:750;letter-spacing:-0.02em;">We received your inquiry.</h1>
+              <td style="padding:30px 36px;background:#100D0A;">
+                ${compactBrandHeader("Message received")}
+                <h1 style="margin:22px 0 0;color:#FFF9EC;font-size:26px;line-height:1.18;font-weight:750;letter-spacing:-0.02em;">We received your inquiry.</h1>
                 <p style="margin:14px 0 0;color:#D9C9AD;font-size:14px;line-height:1.7;">${escapeHtml(brand.tagline)}</p>
               </td>
             </tr>
             <tr>
-              <td style="padding:36px 40px;">
+              <td style="padding:32px 36px;">
                 <p style="margin:0 0 18px;color:#211B14;font-size:16px;line-height:1.7;font-weight:700;">Hi ${safeName},</p>
                 <p style="margin:0 0 16px;color:#4A4037;font-size:15px;line-height:1.8;">Thanks for reaching out to Kivox. We have your project details and will review them carefully before replying.</p>
                 <p style="margin:0 0 24px;color:#4A4037;font-size:15px;line-height:1.8;">We help businesses build websites, apps, and online systems that are easier to find, trust, and choose. You can expect a clear next step from us within 24 hours.</p>
@@ -133,7 +149,7 @@ function buildAutoReplyHtml(inquiry: Inquiry): string {
               </td>
             </tr>
             <tr>
-              <td style="padding:22px 40px;background:#F6F1E9;border-top:1px solid #E8DFD2;">
+              <td style="padding:20px 36px;background:#F6F1E9;border-top:1px solid #E8DFD2;">
                 <p style="margin:0;color:#7C7065;font-size:12px;line-height:1.7;">You can reply to this email directly, or reach us at <a href="mailto:${escapeHtml(brand.contact.email)}" style="color:#B77910;text-decoration:none;font-weight:700;">${escapeHtml(brand.contact.email)}</a>. ${escapeHtml(brand.locationLine)}</p>
               </td>
             </tr>

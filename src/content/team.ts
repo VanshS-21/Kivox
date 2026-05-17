@@ -44,7 +44,7 @@ export const team: {
       focus: "Frontend architecture, performance, accessibility",
       image: "/team/RoushanGupta.png",
       quote: "AI is a tool, not magic. My job is to find where it actually makes things simpler for real people.",
-      objectPosition: "center",
+      objectPosition: "center 60%",
     },
     {
       id: "manish-kumar",
@@ -53,7 +53,7 @@ export const team: {
       focus: "User flows, usability testing, content strategy",
       image: "/team/ManishKumarJha.png",
       quote: "Good operations are invisible — when they work, the team just flows and clients feel it.",
-      objectPosition: "top",
+      objectPosition: "center 7%",
     },
     {
       id: "sacchidanand-pandey",
