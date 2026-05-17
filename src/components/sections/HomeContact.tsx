@@ -184,7 +184,7 @@ export function HomeContact() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-[15%] left-[15%] w-[180px] md:w-[280px] lg:w-[520px] h-[180px] md:h-[280px] lg:h-[520px] rounded-full blur-[60px] md:blur-[80px] lg:blur-[150px] pointer-events-none"
+          className="absolute top-[15%] left-[15%] w-[240px] md:w-[400px] lg:w-[600px] h-[240px] md:h-[400px] lg:h-[600px] rounded-full blur-[80px] md:blur-[120px] lg:blur-[200px] pointer-events-none"
           style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.65)' }}
         />
         {/* Rose counterpoint */}
@@ -203,7 +203,7 @@ export function HomeContact() {
             ease: "easeInOut",
             delay: 1, // Offset timing
           }}
-          className="absolute bottom-[20%] right-[15%] w-[120px] md:w-[200px] lg:w-[380px] h-[120px] md:h-[200px] lg:h-[380px] rounded-full blur-[50px] md:blur-[70px] lg:blur-[120px] pointer-events-none"
+          className="absolute bottom-[20%] right-[15%] w-[160px] md:w-[280px] lg:w-[480px] h-[160px] md:h-[280px] lg:h-[480px] rounded-full blur-[70px] md:blur-[100px] lg:blur-[180px] pointer-events-none"
           style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.28)' }}
         />
 

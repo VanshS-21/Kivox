@@ -122,7 +122,7 @@ export function HomePOV() {
       {/* Committed amber glow — restrained size so it doesn't bleed into adjacent sections */}
       <motion.div
         style={{ y: reduce ? 0 : glowY1 }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] md:w-[500px] lg:w-[800px] h-[240px] md:h-[500px] lg:h-[800px] rounded-full blur-[50px] md:blur-[70px] lg:blur-[120px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] md:w-[600px] lg:w-[1000px] h-[320px] md:h-[600px] lg:h-[1000px] rounded-full blur-[80px] md:blur-[100px] lg:blur-[160px] pointer-events-none"
         data-glow="primary"
       >
         <div

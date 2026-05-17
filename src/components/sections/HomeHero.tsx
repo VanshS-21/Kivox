@@ -81,7 +81,7 @@ export function HomeHero() {
               </div>
               <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
             </div>
-            <div className="absolute -inset-4 z-[-1] rounded-full bg-accent/20 opacity-100 blur-3xl" />
+            <div className="absolute -inset-8 z-[-1] rounded-full bg-accent/20 opacity-100 blur-[60px]" />
           </div>
         </div>
       </Container>

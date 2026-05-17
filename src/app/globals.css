@@ -47,7 +47,7 @@
   /* Section-specific — dark defaults */
   --pov-wash: oklch(0.09 0.025 60);
   --accent-rose: oklch(0.55 0.12 35);
-  --hero-glow-opacity: 0.16;
+  --hero-glow-opacity: 0.10;
   --work-bg-overlay: 0.78;
   --work-stage-bg: var(--bg-primary);
   --work-primary-cta-fg: oklch(0.98 0.01 85);
@@ -266,7 +266,7 @@
   /* Section-specific */
   --pov-wash: oklch(0.95 0.003 250);
   --accent-rose: oklch(0.52 0.12 25);
-  --hero-glow-opacity: 0.06;
+  --hero-glow-opacity: 0.04;
   --work-bg-overlay: 1;
 
   /* Cursor glow — stronger amber for visibility on light surfaces */
@@ -478,7 +478,7 @@
   --hero-bg-scroll: oklch(0.05 0.008 65 / 0.92);
   --work-bg-overlay: 0.78;
   --accent-rose: oklch(0.55 0.12 35);        /* Darker rose for depth */
-  --hero-glow-opacity: 0.20;
+  --hero-glow-opacity: 0.12;
 
   /* Cursor glow — warm amber */
   --cursor-dot: oklch(0.72 0.18 65 / 0.5);
