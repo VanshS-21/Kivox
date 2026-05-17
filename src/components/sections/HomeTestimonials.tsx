@@ -98,7 +98,7 @@ const TestimonialCard = memo(function TestimonialCard({ testimonial, index, redu
       <div className="mb-8 relative">
         {/* Minimalist static quote mark */}
         <div 
-          className={`absolute -top-6 text-accent/10 font-serif text-8xl leading-none select-none pointer-events-none transition-colors duration-500 group-hover:text-accent/20 ${index === 2 ? 'md:left-1/2 md:-translate-x-1/2 -left-4' : '-left-4'}`}
+          className={`absolute -top-6 text-accent/20 font-serif text-8xl leading-none select-none pointer-events-none transition-colors duration-500 group-hover:text-accent/40 ${index === 2 ? 'md:left-1/2 md:-translate-x-1/2 -left-4' : '-left-4'}`}
         >
           &quot;
         </div>
