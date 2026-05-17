@@ -63,31 +63,31 @@ export const home = {
   },
   process: [
     {
-      title: "1. Let's Talk",
+      title: "Let's Talk",
       subtitle: "Understanding your goals",
       description:
         "We start by listening. We want to learn everything about your business so we know exactly what your new website needs to achieve.",
     },
     {
-      title: "2. The Blueprint",
+      title: "The Blueprint",
       subtitle: "Planning the structure",
       description:
         "We map out every page and button. You'll get a simple blueprint of the website to approve before we add any colors or pictures.",
     },
     {
-      title: "3. The Design",
+      title: "The Design",
       subtitle: "Adding your style",
       description:
         "We bring the blueprint to life with your colors and style. You'll get to click through a visual preview of exactly how it will look.",
     },
     {
-      title: "4. Building It",
+      title: "Building It",
       subtitle: "Writing the code",
       description:
         "We do all the heavy lifting to turn the design into a real, working website that loads instantly and works perfectly on mobile phones.",
     },
     {
-      title: "5. Launch & Grow",
+      title: "Launch & Grow",
       subtitle: "Going live",
       description:
         "We put your website on the internet and show you exactly how to use it. Even after it's live, we're here to help you keep growing.",

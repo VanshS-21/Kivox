@@ -17,20 +17,24 @@ export function HomeProcess() {
       <Container className="relative z-10">
         
         {/* Heading + intro */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 mb-12 md:mb-16 lg:mb-20">
-          <motion.h2 initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: 0.05 }} className="lg:col-span-7 studio-h2-editorial text-foreground">
-            A proven process<br />
-            <em className="text-accent" style={{ fontStyle: "italic" }}>for exceptional results.</em>
-          </motion.h2>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 mb-10 md:mb-16 lg:mb-20 items-end">
+          <div className="lg:col-span-7 flex justify-between items-end">
+            <motion.h2 initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: 0.05 }} className="studio-h2-editorial text-foreground">
+              A proven process<br />
+              <em className="text-accent" style={{ fontStyle: "italic" }}>for exceptional results.</em>
+            </motion.h2>
+          </div>
           <motion.p initial={reduce ? false : "hidden"} whileInView={reduce ? undefined : "show"} viewport={viewportOnce} variants={fadeUp} transition={{ ...transitionDefault, delay: 0.1 }} className="lg:col-span-5 studio-body-serif text-muted-foreground self-end">
             Every project follows the same disciplined arc, from understanding the problem to crafting a solution that endures.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <div className="flex overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:snap-none md:pb-0 md:mx-0 md:px-0 gap-5 md:gap-6 [&::-webkit-scrollbar]:hidden">
           {steps.map((step, idx) => (
             <ProcessStep key={idx} step={step} idx={idx} reduce={reduce} />
           ))}
+          {/* Spacer for last item right padding on mobile */}
+          <div className="w-1 shrink-0 md:hidden" aria-hidden="true" />
         </div>
 
       </Container>
@@ -47,7 +51,7 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
   
   if (idx === 0) spanClass = "md:col-span-2 lg:col-span-2"; // Discover
   if (idx === 1) spanClass = "md:col-span-1 lg:col-span-1"; // Define
-  if (idx === 2) { spanClass = "md:col-span-1 lg:col-span-1"; isDark = true; } // Design (Dark accent card)
+  if (idx === 2) { spanClass = "md:col-span-1 lg:col-span-1"; } // Design
   if (idx === 3) spanClass = "md:col-span-1 lg:col-span-2"; // Build
   if (idx === 4) { spanClass = "md:col-span-2 lg:col-span-3"; } // Launch & Evolve
   
@@ -63,6 +67,7 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
       whileTap={reduce ? undefined : { scale: 0.98 }}
       className={cn(
         "relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 lg:p-10 shadow-rest border transition-transform duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-1",
+        "w-[85vw] shrink-0 snap-center md:w-auto md:shrink md:snap-none",
         spanClass,
         isDark 
           ? "bg-[var(--bg-primary)] text-[var(--fg-primary)] border-transparent" 
@@ -117,12 +122,21 @@ const ProcessStep = memo(function ProcessStep({ step, idx, reduce }: { step: { t
           {step.subtitle}
         </p>
         <p className={cn(
-          "studio-body text-lg leading-relaxed",
+          "studio-body text-lg leading-relaxed pr-6", // Added pr-6 for mobile arrow spacing
           isDark ? "text-[var(--fg-primary)]/70" : "text-muted-foreground"
         )}>
           {step.description}
         </p>
       </div>
+
+      {/* Mobile Swipe Arrow (Centered on card edge) */}
+      {idx < 4 && (
+        <div className="md:hidden absolute right-4 top-1/2 -translate-y-1/2 text-accent/40 pointer-events-none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </div>
+      )}
     </motion.div>
   );
 });
