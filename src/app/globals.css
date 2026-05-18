@@ -546,6 +546,24 @@
   --work-secondary-cta-shadow: 0 18px 48px -34px oklch(0 0 0 / 0.74);
 }
 
+.home-work-carousel-band {
+  display: none;
+}
+
+.home-work-proof-band {
+  display: block;
+}
+
+@media (min-width: 1024px) and (orientation: landscape), (min-width: 1280px) {
+  .home-work-carousel-band {
+    display: block;
+  }
+
+  .home-work-proof-band {
+    display: none;
+  }
+}
+
 :root[data-theme="dark"] .showcase-cluster {
   opacity: 0.88;
   filter: saturate(0.86) contrast(0.94) brightness(0.88);
