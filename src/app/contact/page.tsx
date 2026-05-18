@@ -29,13 +29,13 @@ export default function ContactPage() {
           {/* 1. Header (Mobile: Top, Desktop: Top-Left) */}
           <div className="lg:col-start-1 lg:col-span-5 lg:row-start-1 order-1 mb-2 lg:mb-10">
             <h1 className="studio-h1-headline text-foreground mb-5">
-              Let&apos;s grow your
+              {contact.headline.part1}
               <br />
               <em
                 className="font-serif font-normal text-accent"
                 style={{ fontStyle: "italic" }}
               >
-                business.
+                {contact.headline.part2}
               </em>
             </h1>
 
@@ -46,28 +46,20 @@ export default function ContactPage() {
 
           {/* 2. Form (Mobile: Middle, Desktop: Right side spanning full height) */}
           <div className="lg:col-start-6 lg:col-span-7 xl:col-start-7 xl:col-span-6 lg:row-start-1 lg:row-span-2 order-2">
-            <InquiryForm />
+            <div className="bg-surface/50 backdrop-blur-md rounded-[24px] p-6 sm:p-8 lg:p-10 border border-border shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+              <InquiryForm />
+            </div>
           </div>
 
           {/* 3. What happens next (Mobile: Bottom, Desktop: Bottom-Left) */}
           <div className="lg:col-start-1 lg:col-span-5 lg:row-start-2 order-3 mt-4 lg:mt-auto self-end">
             <div className="h-px bg-border mb-10 origin-left" />
             <h2 className="studio-h3-sans text-foreground mb-8">
-              What happens next
+              {contact.nextSteps.title}
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-8">
-              {[
-                {
-                  step: "01",
-                  text: "We'll review your details and get back to you within 24 hours.",
-                },
-                {
-                  step: "02",
-                  text: "We'll ask a few simple questions to understand exactly what you need.",
-                },
-                { step: "03", text: "We'll share a clear plan, a timeline, and a transparent price." },
-              ].map((item) => (
+              {contact.nextSteps.steps.map((item) => (
                 <div
                   key={item.step}
                   className="flex flex-col lg:flex-row gap-3 lg:gap-6 lg:items-start"

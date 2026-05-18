@@ -28,18 +28,22 @@ export function initPosthog(): void {
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
   if (!key) return;
 
-  void import("posthog-js").then(({ default: posthog }) => {
-    if (isInitialized) return;
+  void import("posthog-js")
+    .then(({ default: posthog }) => {
+      if (isInitialized) return;
 
-    posthogClient = posthog as PosthogClient;
-    posthogClient.init(key, {
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-      capture_pageview: false,
-      autocapture: false,
+      posthogClient = posthog as PosthogClient;
+      posthogClient.init(key, {
+        api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+        capture_pageview: false,
+        autocapture: false,
+      });
+
+      isInitialized = true;
+    })
+    .catch(() => {
+      posthogClient = null;
     });
-
-    isInitialized = true;
-  });
 }
 
 export function capture(event: AnalyticsEvent): void {

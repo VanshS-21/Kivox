@@ -8,10 +8,10 @@
 
   /* Dark mode defaults — site defaults to dark (see themeScript.ts) */
   --bg-primary: oklch(0.05 0.005 65);
-  --bg-elevated: oklch(0.10 0.005 65);
+  --bg-elevated: oklch(0.1 0.005 65);
   --bg-surface: oklch(0.13 0.006 65);
   --bg-surface-alt: oklch(0.07 0.005 65);
-  
+
   --fg-primary: oklch(0.98 0.01 85);
   --fg-muted: oklch(0.98 0.01 85 / 0.6);
   --fg-subtle: oklch(0.98 0.01 85 / 0.35);
@@ -26,16 +26,13 @@
   --border-strong: oklch(0.85 0.008 65 / 0.12);
   --border-soft: oklch(0.85 0.008 65 / 0.05);
 
-  --shadow-rest: 
-    0 1px 0 0 oklch(1 0 0 / 0.08),
-    0 20px 60px -30px oklch(0 0 0 / 0.4);
+  --shadow-rest:
+    0 1px 0 0 oklch(1 0 0 / 0.08), 0 20px 60px -30px oklch(0 0 0 / 0.4);
   --shadow-hover:
-    0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
-    0 20px 60px oklch(0.72 0.18 65 / 0.06);
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.15), 0 20px 60px oklch(0.72 0.18 65 / 0.06);
   --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
   --shadow-strong:
-    0 1px 0 0 oklch(1 0 0 / 0.12),
-    0 40px 90px -60px oklch(0 0 0 / 0.7);
+    0 1px 0 0 oklch(1 0 0 / 0.12), 0 40px 90px -60px oklch(0 0 0 / 0.7);
 
   /* Project-specific accents */
   --project-hospital: oklch(0.55 0.17 240);
@@ -47,7 +44,7 @@
   /* Section-specific — dark defaults */
   --pov-wash: oklch(0.09 0.025 60);
   --accent-rose: oklch(0.55 0.12 35);
-  --hero-glow-opacity: 0.10;
+  --hero-glow-opacity: 0.1;
   --work-bg-overlay: 0.78;
   --work-stage-bg: var(--bg-primary);
   --work-primary-cta-fg: oklch(0.98 0.01 85);
@@ -70,8 +67,12 @@
   --proof-secondary-cta-shadow: 0 18px 48px -34px oklch(0 0 0 / 0.74);
   --proof-image-shade: oklch(0.05 0.005 65);
   --proof-shadow: var(--shadow-rest);
-  --proof-stage-bg:
-    linear-gradient(180deg, var(--proof-bg) 0%, var(--proof-linen) 48%, var(--proof-bg) 100%);
+  --proof-stage-bg: linear-gradient(
+    180deg,
+    var(--proof-bg) 0%,
+    var(--proof-linen) 48%,
+    var(--proof-bg) 100%
+  );
 
   /* Semantic feedback */
   --error: oklch(0.68 0.16 25);
@@ -95,10 +96,10 @@
   --cursor-blend: screen;
 
   /* Service arrow icon — expanded amber glow on hover */
-  --shadow-service-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15);
+  --shadow-service-glow:
+    0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15);
   --shadow-hover-strong:
-    0 1px 0 0 oklch(0.72 0.18 65 / 0.25),
-    0 24px 80px oklch(0.72 0.18 65 / 0.12);
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.25), 0 24px 80px oklch(0.72 0.18 65 / 0.12);
 
   /* Border radius */
   --radius-sm: 8px;
@@ -107,9 +108,9 @@
   --radius-xl: 32px;
 
   /* Spacing — fluid responsive tokens */
-  --space-section: clamp(64px, 8vw + 20px, 120px);
-  --space-section-large: clamp(80px, 10vw + 24px, 160px);
-  --space-section-small: clamp(48px, 6vw + 16px, 80px);
+  --space-section: clamp(56px, 6vw + 18px, 104px);
+  --space-section-large: clamp(64px, 7vw + 20px, 128px);
+  --space-section-small: clamp(40px, 5vw + 14px, 72px);
   --space-xl: clamp(40px, 4vw + 16px, 64px);
   --space-lg: clamp(32px, 3vw + 12px, 48px);
   --space-md: 32px;
@@ -126,6 +127,61 @@
   --duration-medium: 300ms;
   --duration-slow: 600ms;
   --duration-entrance: 800ms;
+}
+
+@keyframes hero-copy-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-sheen-sweep {
+  from {
+    opacity: 0;
+    transform: translate3d(-145%, 0, 0) skewX(-14deg);
+  }
+  28% {
+    opacity: 0.34;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(145%, 0, 0) skewX(-14deg);
+  }
+}
+
+.motion-hero-copy,
+.motion-hero-actions {
+  opacity: 0;
+  animation: hero-copy-rise 620ms var(--ease-out-expo) forwards;
+}
+
+.motion-hero-copy {
+  animation-delay: 260ms;
+}
+
+.motion-hero-actions {
+  animation-delay: 380ms;
+}
+
+.hero-mockup-frame::after {
+  content: "";
+  position: absolute;
+  inset: 8% 4%;
+  border-radius: 24px;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 22%,
+    oklch(1 0 0 / 0.18) 46%,
+    transparent 68%
+  );
+  mix-blend-mode: screen;
+  animation: hero-sheen-sweep 1100ms var(--ease-out-expo) 920ms both;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -200,10 +256,17 @@
   --duration-entrance: var(--duration-entrance);
 
   /* fonts — Bricolage Grotesque (headline), Figtree (body), Spectral (serif), Geist Mono */
-  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: var(--font-spectral), Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-body: var(--font-figtree), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: var(--font-geist-mono), "SFMono-Regular", Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans:
+    var(--font-bricolage), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif:
+    var(--font-spectral), Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-body:
+    var(--font-figtree), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono:
+    var(--font-geist-mono), "SFMono-Regular", Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 /* @media (prefers-color-scheme: dark) block REMOVED.
@@ -229,38 +292,37 @@
   --bg-elevated: oklch(0.99 0.002 250);
   --bg-surface: oklch(0.97 0.003 250);
   --bg-surface-alt: oklch(0.955 0.008 70);
-  
+
   /* Foregrounds — cool-tinted inks */
   --fg-primary: oklch(0.13 0.005 250);
   --fg-muted: oklch(0.45 0.005 250);
   --fg-subtle: oklch(0.62 0.004 250);
 
   /* Accent — committed amber, rich and decisive on cool surfaces */
-  --accent: oklch(0.60 0.22 55);
+  --accent: oklch(0.6 0.22 55);
   --accent-hover: oklch(0.55 0.24 52);
-  --accent-glow: oklch(0.60 0.22 55 / 0.18);
-  --accent-muted: oklch(0.60 0.22 55 / 0.08);
+  --accent-glow: oklch(0.6 0.22 55 / 0.18);
+  --accent-muted: oklch(0.6 0.22 55 / 0.08);
   --accent-ink: oklch(0.15 0.05 55);
 
   /* Borders — cool-tinted, stronger for definition */
-  --border: oklch(0.13 0.005 250 / 0.10);
+  --border: oklch(0.13 0.005 250 / 0.1);
   --border-strong: oklch(0.13 0.005 250 / 0.18);
   --border-soft: oklch(0.13 0.005 250 / 0.05);
 
   /* Shadows — cool at rest, warm on interaction (single-window lighting) */
-  --shadow-rest: 
+  --shadow-rest:
     0 1px 3px oklch(0.13 0.005 250 / 0.06),
     0 6px 24px oklch(0.13 0.005 250 / 0.06);
   --shadow-hover:
-    0 2px 6px oklch(0.60 0.22 55 / 0.08),
-    0 16px 48px oklch(0.60 0.22 55 / 0.08);
-  --shadow-amber-glow: 0 0 30px oklch(0.60 0.22 55 / 0.14);
+    0 2px 6px oklch(0.6 0.22 55 / 0.08), 0 16px 48px oklch(0.6 0.22 55 / 0.08);
+  --shadow-amber-glow: 0 0 30px oklch(0.6 0.22 55 / 0.14);
   --shadow-strong:
     0 2px 6px oklch(0.13 0.005 250 / 0.08),
-    0 24px 72px oklch(0.13 0.005 250 / 0.10);
+    0 24px 72px oklch(0.13 0.005 250 / 0.1);
 
   /* Surface texture — precise, not heavy */
-  --studio-grid-opacity: 0.10;
+  --studio-grid-opacity: 0.1;
   --studio-noise-opacity: 0.008;
 
   /* Section-specific */
@@ -273,18 +335,19 @@
   --cursor-dot: oklch(0.55 0.24 55 / 0.7);
   --cursor-dot-glow: 0 0 18px 6px oklch(0.55 0.24 55 / 0.25);
   --cursor-trail: oklch(0.55 0.24 55 / 0.18);
-  --cursor-trail-glow: 0 0 28px 10px oklch(0.55 0.24 55 / 0.10);
+  --cursor-trail-glow: 0 0 28px 10px oklch(0.55 0.24 55 / 0.1);
   --cursor-blend: normal;
 
   /* Service arrow icon — bolder glow for cool surfaces */
-  --shadow-service-glow: 0 0 30px oklch(0.60 0.22 55 / 0.18), 0 8px 32px oklch(0.60 0.22 55 / 0.10);
+  --shadow-service-glow:
+    0 0 30px oklch(0.6 0.22 55 / 0.18), 0 8px 32px oklch(0.6 0.22 55 / 0.1);
 
   /* Project accents — optimized for light surfaces */
   --project-hospital: oklch(0.45 0.14 240);
-  --project-hotel: oklch(0.50 0.15 75);
+  --project-hotel: oklch(0.5 0.15 75);
   --project-school: oklch(0.48 0.16 155);
-  --project-fitness: oklch(0.48 0.20 300);
-  --project-cafe: oklch(0.48 0.20 25);
+  --project-fitness: oklch(0.48 0.2 300);
+  --project-cafe: oklch(0.48 0.2 25);
 
   /* Semantic feedback — deeper for cool bg contrast */
   --error: oklch(0.48 0.18 25);
@@ -293,8 +356,7 @@
   /* Hero uses explicit .home-hero theme styles below. */
 
   --shadow-hover-strong:
-    0 2px 6px oklch(0.60 0.22 55 / 0.10),
-    0 24px 72px oklch(0.60 0.22 55 / 0.12);
+    0 2px 6px oklch(0.6 0.22 55 / 0.1), 0 24px 72px oklch(0.6 0.22 55 / 0.12);
 }
 
 /* Footer — intentionally dark-locked in light mode. */
@@ -311,10 +373,18 @@
 }
 
 /* Cinematic break — theme-specific image */
-:root[data-theme="light"] .cinematic-img-dark { display: none; }
-:root[data-theme="light"] .cinematic-img-light { display: block; }
-:root[data-theme="dark"] .cinematic-img-dark { display: block; }
-:root[data-theme="dark"] .cinematic-img-light { display: none; }
+:root[data-theme="light"] .cinematic-img-dark {
+  display: none;
+}
+:root[data-theme="light"] .cinematic-img-light {
+  display: block;
+}
+:root[data-theme="dark"] .cinematic-img-dark {
+  display: block;
+}
+:root[data-theme="dark"] .cinematic-img-light {
+  display: none;
+}
 
 /* Hero constellation field */
 .home-hero {
@@ -329,15 +399,27 @@
 
 :root[data-theme="light"] .home-hero {
   background:
-    linear-gradient(90deg, oklch(0.16 0.012 250 / 0.030) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.16 0.012 250 / 0.03) 1px, transparent 1px),
     linear-gradient(180deg, oklch(0.16 0.012 250 / 0.026) 1px, transparent 1px),
-    linear-gradient(118deg, oklch(0.925 0.012 250) 0%, oklch(0.968 0.005 250) 48%, oklch(0.945 0.018 58) 100%);
-  background-size: 96px 96px, 96px 96px, auto;
+    linear-gradient(
+      118deg,
+      oklch(0.925 0.012 250) 0%,
+      oklch(0.968 0.005 250) 48%,
+      oklch(0.945 0.018 58) 100%
+    );
+  background-size:
+    96px 96px,
+    96px 96px,
+    auto;
 }
 
 :root[data-theme="dark"] .home-hero {
-  background:
-    linear-gradient(118deg, oklch(0.040 0.006 65) 0%, oklch(0.055 0.010 65) 52%, oklch(0.070 0.020 58) 100%);
+  background: linear-gradient(
+    118deg,
+    oklch(0.04 0.006 65) 0%,
+    oklch(0.055 0.01 65) 52%,
+    oklch(0.07 0.02 58) 100%
+  );
 }
 
 :root[data-theme="light"] .home-hero__constellation--light,
@@ -357,14 +439,22 @@
 :root[data-theme="light"] .work-showcase {
   --work-bg-overlay: 1;
   --work-stage-bg:
-    radial-gradient(ellipse at 72% 45%, oklch(0.94 0.018 42 / 0.55), transparent 54%),
+    radial-gradient(
+      ellipse at 72% 45%,
+      oklch(0.94 0.018 42 / 0.55),
+      transparent 54%
+    ),
     linear-gradient(135deg, oklch(0.985 0.006 72), oklch(0.952 0.011 58));
   --work-primary-cta-fg: oklch(0.98 0.01 85);
   --work-secondary-cta-bg: oklch(0.985 0.006 72 / 0.82);
   --work-secondary-cta-border: oklch(0.34 0.018 65 / 0.16);
   --work-secondary-cta-shadow: 0 16px 40px -30px oklch(0.24 0.025 65 / 0.35);
   background:
-    radial-gradient(ellipse at 74% 46%, oklch(0.94 0.018 42 / 0.55), transparent 54%),
+    radial-gradient(
+      ellipse at 74% 46%,
+      oklch(0.94 0.018 42 / 0.55),
+      transparent 54%
+    ),
     linear-gradient(135deg, oklch(0.985 0.006 72), oklch(0.952 0.011 58));
 }
 
@@ -380,7 +470,7 @@
   --proof-muted: oklch(0.42 0.01 65);
   --proof-subtle: oklch(0.58 0.008 65);
   --proof-border: oklch(0.28 0.018 65 / 0.13);
-  --proof-border-strong: oklch(0.28 0.018 65 / 0.20);
+  --proof-border-strong: oklch(0.28 0.018 65 / 0.2);
   --proof-accent: var(--accent);
   --proof-primary-cta-fg: oklch(0.98 0.01 85);
   --proof-secondary-cta-bg: oklch(0.985 0.006 72 / 0.82);
@@ -390,10 +480,19 @@
   --proof-image-shade: oklch(0.18 0.018 65);
   --proof-shadow:
     0 1px 2px oklch(0.25 0.02 65 / 0.08),
-    0 18px 58px -42px oklch(0.30 0.03 65 / 0.24);
+    0 18px 58px -42px oklch(0.3 0.03 65 / 0.24);
   --proof-stage-bg:
-    radial-gradient(ellipse at 72% 24%, oklch(0.94 0.018 42 / 0.50), transparent 54%),
-    linear-gradient(180deg, oklch(0.985 0.006 72) 0%, oklch(0.952 0.012 58) 54%, oklch(0.982 0.006 72) 100%);
+    radial-gradient(
+      ellipse at 72% 24%,
+      oklch(0.94 0.018 42 / 0.5),
+      transparent 54%
+    ),
+    linear-gradient(
+      180deg,
+      oklch(0.985 0.006 72) 0%,
+      oklch(0.952 0.012 58) 54%,
+      oklch(0.982 0.006 72) 100%
+    );
   background: var(--proof-stage-bg);
 }
 
@@ -418,11 +517,19 @@
   --proof-secondary-cta-shadow: 0 18px 48px -34px oklch(0 0 0 / 0.74);
   --proof-image-shade: oklch(0.045 0.006 65);
   --proof-shadow:
-    0 1px 0 oklch(1 0 0 / 0.06),
-    0 24px 72px -46px oklch(0 0 0 / 0.88);
+    0 1px 0 oklch(1 0 0 / 0.06), 0 24px 72px -46px oklch(0 0 0 / 0.88);
   --proof-stage-bg:
-    radial-gradient(ellipse at 68% 22%, oklch(0.22 0.07 58 / 0.26), transparent 52%),
-    linear-gradient(180deg, oklch(0.05 0.006 65) 0%, oklch(0.075 0.012 65) 54%, oklch(0.05 0.006 65) 100%);
+    radial-gradient(
+      ellipse at 68% 22%,
+      oklch(0.22 0.07 58 / 0.26),
+      transparent 52%
+    ),
+    linear-gradient(
+      180deg,
+      oklch(0.05 0.006 65) 0%,
+      oklch(0.075 0.012 65) 54%,
+      oklch(0.05 0.006 65) 100%
+    );
   background: var(--proof-stage-bg);
 }
 
@@ -464,10 +571,10 @@
 
   /* Dark mode (primary) — warm-tinted neutrals */
   --bg-primary: oklch(0.05 0.005 65);
-  --bg-elevated: oklch(0.10 0.005 65);
+  --bg-elevated: oklch(0.1 0.005 65);
   --bg-surface: oklch(0.13 0.006 65);
   --bg-surface-alt: oklch(0.07 0.005 65);
-  
+
   --fg-primary: oklch(0.98 0.01 85);
   --fg-muted: oklch(0.98 0.015 80 / 0.6);
   --fg-subtle: oklch(0.98 0.01 85 / 0.35);
@@ -482,24 +589,21 @@
   --border-strong: oklch(0.85 0.008 65 / 0.12);
   --border-soft: oklch(0.85 0.008 65 / 0.05);
 
-  --shadow-rest: 
-    0 1px 0 0 oklch(1 0 0 / 0.08),
-    0 20px 60px -30px oklch(0 0 0 / 0.4);
+  --shadow-rest:
+    0 1px 0 0 oklch(1 0 0 / 0.08), 0 20px 60px -30px oklch(0 0 0 / 0.4);
   --shadow-hover:
-    0 1px 0 0 oklch(0.72 0.18 65 / 0.15),
-    0 20px 60px oklch(0.72 0.18 65 / 0.06);
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.15), 0 20px 60px oklch(0.72 0.18 65 / 0.06);
   --shadow-amber-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3);
   --shadow-strong:
-    0 1px 0 0 oklch(1 0 0 / 0.12),
-    0 40px 90px -60px oklch(0 0 0 / 0.7);
+    0 1px 0 0 oklch(1 0 0 / 0.12), 0 40px 90px -60px oklch(0 0 0 / 0.7);
 
   --studio-grid-opacity: 0.22;
   --studio-noise-opacity: 0.03;
   --pov-wash: oklch(0.09 0.025 60);
 
   /* Semantic feedback — dark mode */
-  --error: oklch(0.68 0.16 25);            /* Warm coral on dark */
-  --success: oklch(0.68 0.14 155);         /* Warm sage on dark */
+  --error: oklch(0.68 0.16 25); /* Warm coral on dark */
+  --success: oklch(0.68 0.14 155); /* Warm sage on dark */
 
   /* Hero constellation — dark variant */
   --hero-bg: oklch(0.05 0.008 65);
@@ -511,7 +615,7 @@
   --hero-noise-opacity: 0.35;
   --hero-bg-scroll: oklch(0.05 0.008 65 / 0.92);
   --work-bg-overlay: 0.78;
-  --accent-rose: oklch(0.55 0.12 35);        /* Darker rose for depth */
+  --accent-rose: oklch(0.55 0.12 35); /* Darker rose for depth */
   --hero-glow-opacity: 0.12;
 
   /* Cursor glow — warm amber */
@@ -522,18 +626,18 @@
   --cursor-blend: screen;
 
   /* Service arrow icon — amber glow */
-  --shadow-service-glow: 0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15);
+  --shadow-service-glow:
+    0 0 40px oklch(0.72 0.18 65 / 0.3), 0 8px 32px oklch(0.72 0.18 65 / 0.15);
 
   /* Project accents — optimized for dark surfaces */
   --project-hospital: oklch(0.65 0.17 240);
-  --project-hotel: oklch(0.70 0.15 75);
-  --project-school: oklch(0.68 0.20 155);
+  --project-hotel: oklch(0.7 0.15 75);
+  --project-school: oklch(0.68 0.2 155);
   --project-fitness: oklch(0.65 0.22 300);
   --project-cafe: oklch(0.65 0.24 25);
 
   --shadow-hover-strong:
-    0 1px 0 0 oklch(0.72 0.18 65 / 0.25),
-    0 24px 80px oklch(0.72 0.18 65 / 0.12);
+    0 1px 0 0 oklch(0.72 0.18 65 / 0.25), 0 24px 80px oklch(0.72 0.18 65 / 0.12);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -553,11 +657,22 @@ body {
 
 /* Dark-mode body text compensation: bump line-height for light-on-dark */
 /* Dark body line-height: handled by [data-theme] only */
-:root[data-theme="dark"] body { line-height: 1.65; }
+:root[data-theme="dark"] body {
+  line-height: 1.65;
+}
 
 /* Balanced headings, pretty prose */
-h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
-p { text-wrap: pretty; }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
 
 ::selection {
   background: var(--accent-muted);
@@ -570,7 +685,8 @@ p { text-wrap: pretty; }
 }
 
 .medqueue-scope :focus-visible {
-  outline: none;
+  outline: 2px solid oklch(0.78 0.105 55);
+  outline-offset: 3px;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -587,7 +703,6 @@ p { text-wrap: pretty; }
 /*   h4 1.625rem → body-large 1.25rem (1.30×)                                  */
 /* -------------------------------------------------------------------------- */
 @layer utilities {
-
   /* --- Size tokens (font-family + weight intentionally omitted) ----------- */
 
   .studio-h1 {
@@ -720,7 +835,9 @@ p { text-wrap: pretty; }
   }
 
   /* Tabular numbers for data alignment */
-  .studio-tabular { font-variant-numeric: tabular-nums; }
+  .studio-tabular {
+    font-variant-numeric: tabular-nums;
+  }
 
   /* --- Containers --------------------------------------------------------- */
 
@@ -772,16 +889,8 @@ p { text-wrap: pretty; }
     inset: 0;
     pointer-events: none;
     background-image:
-      linear-gradient(
-        to right,
-        var(--border-soft) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        var(--border-soft) 1px,
-        transparent 1px
-      );
+      linear-gradient(to right, var(--border-soft) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-soft) 1px, transparent 1px);
     background-size: 28px 28px;
     opacity: var(--studio-grid-opacity);
   }
@@ -885,91 +994,30 @@ p { text-wrap: pretty; }
 /* Marquee motion                                                              */
 /* -------------------------------------------------------------------------- */
 
-@keyframes marquee-scroll {
+@keyframes marquee-left {
   from {
-    transform: translate3d(0, 0, 0);
+    transform: translateX(0);
   }
   to {
-    transform: translate3d(calc(-1 * var(--marquee-distance)), 0, 0);
+    transform: translateX(-100%);
   }
 }
 
-/* Register custom properties for animation */
-@property --section-reveal {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
-}
-
-@property --section-blur {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-/* Scroll-driven reveal keyframes */
-@keyframes section-scroll-reveal {
-  0% {
-    --section-reveal: 0;
-    --section-blur: 6px;
-    opacity: 0.3;
-    transform: translateY(30px) scale(0.985);
-    filter: blur(6px);
+@keyframes marquee-right {
+  from {
+    transform: translateX(-100%);
   }
-  15% {
-    --section-reveal: 1;
-    --section-blur: 0px;
-    opacity: 1;
-    transform: translateY(0px) scale(1);
-    filter: blur(0px);
-  }
-  85% {
-    --section-reveal: 1;
-    --section-blur: 0px;
-    opacity: 1;
-    transform: translateY(0px) scale(1);
-    filter: blur(0px);
-  }
-  100% {
-    --section-reveal: 0;
-    --section-blur: 4px;
-    opacity: 0.4;
-    transform: translateY(-20px) scale(0.99);
-    filter: blur(4px);
+  to {
+    transform: translateX(0);
   }
 }
 
-/* Apply to sections with the overdrive-crossfade class */
-@supports (animation-timeline: view()) {
-  .overdrive-crossfade {
-    animation: section-scroll-reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%, exit 60% exit 100%;
-    will-change: opacity, transform, filter;
-  }
+.animate-marquee {
+  animation: marquee-left 36s linear infinite;
 }
 
-/* Scroll-driven parallax for decorative elements */
-@keyframes overdrive-parallax-slow {
-  from { transform: translateY(40px); }
-  to { transform: translateY(-40px); }
-}
-
-@keyframes overdrive-parallax-fast {
-  from { transform: translateY(60px); }
-  to { transform: translateY(-60px); }
-}
-
-@supports (animation-timeline: view()) {
-  .overdrive-parallax-slow {
-    animation: overdrive-parallax-slow linear both;
-    animation-timeline: view();
-  }
-
-  .overdrive-parallax-fast {
-    animation: overdrive-parallax-fast linear both;
-    animation-timeline: view();
-  }
+.animate-marquee-reverse {
+  animation: marquee-right 36s linear infinite;
 }
 
 /* Smooth scroll for the whole document */
@@ -1042,21 +1090,20 @@ html {
   box-shadow: inset 0 0 0 0.5px oklch(0.2 0.01 55 / 0.15);
 }
 
-
-
 @media (prefers-reduced-motion: reduce) {
   .carousel-image {
     transition: none;
   }
+  .motion-hero-copy,
+  .motion-hero-actions {
+    opacity: 1;
+    animation: none;
+  }
+  .hero-mockup-frame::after {
+    display: none;
+  }
   html {
     scroll-behavior: auto;
-  }
-  .overdrive-crossfade {
-    animation: none !important;
-  }
-  .overdrive-parallax-slow,
-  .overdrive-parallax-fast {
-    animation: none !important;
   }
   .back-to-top {
     transition: none;
@@ -1088,30 +1135,26 @@ html {
   position: absolute;
   right: clamp(20px, 4vw, 80px);
   top: 50%;
-  transform: translateY(-52%);   /* slight upward bias — feels more "placed" */
+  transform: translateY(-52%); /* slight upward bias — feels more "placed" */
   width: 46%;
   max-width: 640px;
   z-index: 5;
   pointer-events: none;
 }
 
-
-
 /* ── Entrance animation helper — the perspective "floating down" feel ── */
 @keyframes macbook-settle {
   0% {
     opacity: 0;
     transform: translateY(30px) scale(0.97);
-    filter:
-      drop-shadow(0 1px 2px oklch(0.08 0.005 250 / 0.10))
+    filter: drop-shadow(0 1px 2px oklch(0.08 0.005 250 / 0.1))
       drop-shadow(0 4px 12px oklch(0.08 0.005 250 / 0.08))
       drop-shadow(0 12px 30px oklch(0.08 0.005 250 / 0.05));
   }
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter:
-      drop-shadow(0 1px 2px oklch(0.08 0.005 250 / 0.25))
+    filter: drop-shadow(0 1px 2px oklch(0.08 0.005 250 / 0.25))
       drop-shadow(0 8px 24px oklch(0.08 0.005 250 / 0.18))
       drop-shadow(0 24px 60px oklch(0.08 0.005 250 / 0.12))
       drop-shadow(0 48px 100px oklch(0.08 0.005 250 / 0.06));
@@ -1126,6 +1169,15 @@ html {
 }
 
 .bg-stripes-slate-100 {
-  background-image: repeating-linear-gradient(45deg, #F1F5F9 25%, transparent 25%, transparent 50%, #F1F5F9 50%, #F1F5F9 75%, transparent 75%, transparent);
+  background-image: repeating-linear-gradient(
+    45deg,
+    #f1f5f9 25%,
+    transparent 25%,
+    transparent 50%,
+    #f1f5f9 50%,
+    #f1f5f9 75%,
+    transparent 75%,
+    transparent
+  );
   background-size: 8px 8px;
 }

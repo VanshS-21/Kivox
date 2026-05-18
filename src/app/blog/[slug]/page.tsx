@@ -4,6 +4,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 
 import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 import { getMdxComponents } from "@/components/ui/MdxComponents";
+import { getMetadataBase } from "@/lib/metadata";
 import { BlogPostContent } from "./BlogPostContent";
 
 type Props = {
@@ -49,6 +50,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const { content, ...meta } = post;
   const components = getMdxComponents();
+  const metadataBase = getMetadataBase();
 
   /** Article schema JSON-LD */
   const jsonLd = {
@@ -60,12 +62,12 @@ export default async function BlogPostPage({ params }: Props) {
     author: {
       "@type": "Organization",
       name: "Kivox",
-      url: "https://kivox.in",
+      url: metadataBase.toString(),
     },
     publisher: {
       "@type": "Organization",
       name: "Kivox",
-      url: "https://kivox.in",
+      url: metadataBase.toString(),
     },
   };
 

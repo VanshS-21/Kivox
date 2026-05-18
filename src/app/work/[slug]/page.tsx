@@ -68,25 +68,20 @@ export default async function CaseStudyPage({
   const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
   const nextColor = projectColors[nextProject.slug] || "var(--accent)";
 
-  const ctaLabel =
-    project.slug === "hospital" || project.slug === "hotel"
-      ? "View Live Website"
-      : "View Showcase";
-
   return (
-    <div className="bg-background min-h-screen pt-32 lg:pt-40">
+    <div className="bg-background min-h-screen pt-24 lg:pt-32">
       {/* ═══════════════════════════════════════════════════
           § 1 — HERO HEADER
       ═══════════════════════════════════════════════════ */}
-      <Section spacing="none" className="mb-16 lg:mb-24">
+      <Section spacing="none" className="mb-12 lg:mb-16">
         <Container>
-          <div className="max-w-5xl mb-12 lg:mb-16">
+          <div className="max-w-4xl mb-10 lg:mb-12">
             {/* Breadcrumb + Label */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6 text-sm">
               <Link
                 href="/work"
                 prefetch={false}
-                className="font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="inline-flex min-h-11 items-center font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
                 ← Back to showcase
               </Link>
@@ -99,16 +94,14 @@ export default async function CaseStudyPage({
             </div>
 
             {/* Title */}
-            <h1 className="studio-h1-headline text-foreground mb-6">
+            <h1 className="studio-h1-headline text-foreground mb-5">
               {project.title}
               <span style={{ color }}>.</span>
             </h1>
 
             {/* Subtitle */}
             {project.subtitle && (
-              <p
-                className="studio-body-serif text-xl sm:text-2xl text-muted-foreground max-w-3xl mb-10"
-              >
+              <p className="studio-body-serif text-lg sm:text-xl text-muted-foreground max-w-3xl mb-8">
                 {project.subtitle}
               </p>
             )}
@@ -146,12 +139,11 @@ export default async function CaseStudyPage({
           {/* ═══════════════════════════════════════════════════
               § 2 — HERO IMAGE / CAROUSEL
           ═══════════════════════════════════════════════════ */}
-          <div className="mb-16 lg:mb-24">
+          <div className="mb-16 lg:mb-20 max-w-5xl mx-auto">
             <ProjectCarousel
               images={project.images || [project.image]}
               alt={`${project.title} Case Study`}
               accentColor={color}
-              liveLabel={ctaLabel}
               liveUrl={project.liveUrl}
               priority
             />
@@ -160,16 +152,14 @@ export default async function CaseStudyPage({
           {/* ═══════════════════════════════════════════════════
               § 3 — PROJECT OVERVIEW
           ═══════════════════════════════════════════════════ */}
-          <div className="cv-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
+          <div className="cv-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-16 lg:mb-24 max-w-5xl mx-auto">
             <div className="lg:col-span-4">
               <h2 className="studio-h3-sans text-foreground">
                 Project Overview
               </h2>
             </div>
             <div className="lg:col-span-8">
-              <p
-                className="studio-body-serif text-2xl sm:text-3xl leading-snug text-muted-foreground"
-              >
+              <p className="studio-body-serif text-xl sm:text-2xl leading-snug text-muted-foreground">
                 {project.demonstrates}
               </p>
             </div>
@@ -179,12 +169,12 @@ export default async function CaseStudyPage({
               § 4 — THE CHALLENGE + THE INSIGHT
           ═══════════════════════════════════════════════════ */}
           {(project.challenge || project.insight) && (
-            <div className="cv-auto mb-20 lg:mb-32">
-              <div className="h-px bg-border w-full mb-16 lg:mb-24" />
+            <div className="cv-auto mb-16 lg:mb-24 max-w-5xl mx-auto">
+              <div className="h-px bg-border w-full mb-12 lg:mb-16" />
 
               {/* Challenge */}
               {project.challenge && (
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16 lg:mb-20">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-12 lg:mb-16">
                   <div className="lg:col-span-4">
                     <h2 className="studio-h3-sans text-foreground">
                       The Challenge
@@ -194,7 +184,7 @@ export default async function CaseStudyPage({
                     {project.challenge.split("\n\n").map((para, idx) => (
                       <p
                         key={idx}
-                        className="text-base lg:text-lg leading-[1.85] text-muted-foreground mb-6 last:mb-0"
+                        className="text-sm lg:text-base leading-[1.85] text-muted-foreground mb-5 last:mb-0"
                       >
                         {para}
                       </p>
@@ -206,7 +196,7 @@ export default async function CaseStudyPage({
               {/* Insight callout */}
               {project.insight && (
                 <div
-                  className="relative overflow-hidden rounded-2xl border p-8 lg:p-12"
+                  className="relative overflow-hidden rounded-2xl border p-6 lg:p-10"
                   style={{
                     borderColor: `color-mix(in oklch, ${color}, transparent 68%)`,
                     background: `color-mix(in oklch, ${color}, transparent 94%)`,
@@ -214,12 +204,12 @@ export default async function CaseStudyPage({
                 >
                   <span
                     aria-hidden="true"
-                    className="absolute -right-3 -top-8 font-serif text-[8rem] leading-none opacity-10 lg:-right-2 lg:-top-10 lg:text-[10rem]"
+                    className="absolute -right-3 -top-6 font-serif text-[6rem] leading-none opacity-10 lg:-right-2 lg:-top-8 lg:text-[8rem]"
                     style={{ color }}
                   >
                     &ldquo;
                   </span>
-                  <h2 className="studio-h3-sans text-foreground mb-5">
+                  <h2 className="studio-h3-sans text-foreground mb-4">
                     The Insight
                   </h2>
                   <p className="studio-body-serif text-foreground italic">
@@ -232,14 +222,12 @@ export default async function CaseStudyPage({
 
           {/* Approach */}
           {project.approach && (
-            <div className="cv-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-20 lg:mb-32">
+            <div className="cv-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-16 lg:mb-24 max-w-5xl mx-auto">
               <div className="lg:col-span-4">
-                <h2 className="studio-h3-sans text-foreground">
-                  Our Approach
-                </h2>
+                <h2 className="studio-h3-sans text-foreground">Our Approach</h2>
               </div>
               <div className="lg:col-span-8">
-                <p className="text-base lg:text-lg leading-[1.85] text-muted-foreground">
+                <p className="text-sm lg:text-base leading-[1.85] text-muted-foreground">
                   {project.approach}
                 </p>
               </div>
@@ -250,16 +238,16 @@ export default async function CaseStudyPage({
               § 5 — OUR PROCESS (Timeline)
           ═══════════════════════════════════════════════════ */}
           {project.process && project.process.length > 0 && (
-            <div className="cv-auto mb-20 lg:mb-32">
-              <div className="h-px bg-border w-full mb-16 lg:mb-24" />
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
+            <div className="cv-auto mb-16 lg:mb-24 max-w-5xl mx-auto">
+              <div className="h-px bg-border w-full mb-12 lg:mb-16" />
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-10">
                 <div className="lg:col-span-4">
                   <h2 className="studio-h3-sans text-foreground">
                     Our Process
                   </h2>
                 </div>
                 <div className="lg:col-span-8">
-                  <p className="text-base lg:text-lg leading-relaxed text-muted-foreground">
+                  <p className="text-sm lg:text-base leading-relaxed text-muted-foreground">
                     A structured approach from research through launch — each
                     phase building on the insights of the last.
                   </p>
@@ -284,10 +272,10 @@ export default async function CaseStudyPage({
               § 6 — DESIGN PHILOSOPHY
           ═══════════════════════════════════════════════════ */}
           {project.designPhilosophy && (
-            <div className="cv-auto mb-20 lg:mb-32">
-              <div className="h-px bg-border w-full mb-16 lg:mb-24" />
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="studio-h3-sans text-foreground mb-8">
+            <div className="cv-auto mb-16 lg:mb-24 max-w-4xl mx-auto">
+              <div className="h-px bg-border w-full mb-12 lg:mb-16" />
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="studio-h3-sans text-foreground mb-6">
                   Design Philosophy
                 </h2>
                 <blockquote className="studio-body-serif text-foreground italic">
@@ -302,16 +290,16 @@ export default async function CaseStudyPage({
           ═══════════════════════════════════════════════════ */}
           {project.keyDesignDecisions &&
             project.keyDesignDecisions.length > 0 && (
-              <div className="cv-auto mb-20 lg:mb-32">
-                <div className="h-px bg-border w-full mb-16 lg:mb-24" />
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
+              <div className="cv-auto mb-16 lg:mb-24 max-w-5xl mx-auto">
+                <div className="h-px bg-border w-full mb-12 lg:mb-16" />
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-10">
                   <div className="lg:col-span-4">
                     <h2 className="studio-h3-sans text-foreground">
                       Key Design Decisions
                     </h2>
                   </div>
                   <div className="lg:col-span-8">
-                    <p className="text-base lg:text-lg leading-relaxed text-muted-foreground">
+                    <p className="text-sm lg:text-base leading-relaxed text-muted-foreground">
                       The choices that shaped the project — and why each one was
                       made.
                     </p>
@@ -335,16 +323,16 @@ export default async function CaseStudyPage({
               § 8 — RESULTS & IMPACT
           ═══════════════════════════════════════════════════ */}
           {project.results && project.results.length > 0 && (
-            <div className="cv-auto mb-20 lg:mb-32">
-              <div className="h-px bg-border w-full mb-16 lg:mb-24" />
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
+            <div className="cv-auto mb-16 lg:mb-24 max-w-5xl mx-auto">
+              <div className="h-px bg-border w-full mb-12 lg:mb-16" />
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-10">
                 <div className="lg:col-span-4">
                   <h2 className="studio-h3-sans text-foreground">
                     Results & Impact
                   </h2>
                 </div>
                 <div className="lg:col-span-8">
-                  <p className="text-base lg:text-lg leading-relaxed text-muted-foreground">
+                  <p className="text-sm lg:text-base leading-relaxed text-muted-foreground">
                     Measurable outcomes from design decisions — not vanity
                     metrics.
                   </p>
@@ -363,12 +351,10 @@ export default async function CaseStudyPage({
               § 9 — TECH STACK
           ═══════════════════════════════════════════════════ */}
           {project.techStack && project.techStack.length > 0 && (
-            <div className="cv-auto mb-20 lg:mb-32">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+            <div className="cv-auto mb-16 lg:mb-24 max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
                 <div className="lg:col-span-4">
-                  <h2 className="studio-h3-sans text-foreground">
-                    Tech Stack
-                  </h2>
+                  <h2 className="studio-h3-sans text-foreground">Tech Stack</h2>
                 </div>
                 <div className="lg:col-span-8">
                   <div className="flex flex-wrap items-center gap-3">
@@ -390,8 +376,8 @@ export default async function CaseStudyPage({
               § 10 — CLIENT TESTIMONIAL
           ═══════════════════════════════════════════════════ */}
           {project.testimonial && (
-            <div className="cv-auto mb-20 lg:mb-32">
-              <div className="h-px bg-border w-full mb-16 lg:mb-24" />
+            <div className="cv-auto mb-16 lg:mb-24 max-w-5xl mx-auto">
+              <div className="h-px bg-border w-full mb-12 lg:mb-16" />
               <TestimonialBlock
                 testimonial={project.testimonial}
                 color={color}
@@ -405,8 +391,8 @@ export default async function CaseStudyPage({
           {(project.targetAudience ||
             project.primaryActions ||
             project.coreSections) && (
-            <div className="cv-auto mb-20 lg:mb-32 bg-card/20 border border-border/50 rounded-2xl p-8 lg:p-12">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-14">
+            <div className="cv-auto mb-16 lg:mb-24 bg-card/20 border border-border/50 rounded-2xl p-6 lg:p-10 max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
                 {project.targetAudience && (
                   <DataBlock
                     label="Who it serves"
@@ -438,7 +424,7 @@ export default async function CaseStudyPage({
           § 12 — NEXT PROJECT FOOTER
       ═══════════════════════════════════════════════════ */}
       <Section
-        className="cv-auto border-t border-border bg-card/10 py-24 lg:py-32 text-center"
+        className="cv-auto border-t border-border bg-card/10 py-16 lg:py-24 text-center"
         spacing="none"
       >
         <Container>
@@ -450,7 +436,7 @@ export default async function CaseStudyPage({
             prefetch={false}
             className="group inline-block"
           >
-            <h2 className="studio-h1-headline text-foreground mb-4 group-hover:text-accent transition-colors duration-500">
+            <h2 className="studio-h1-headline text-foreground mb-3 group-hover:text-accent transition-colors duration-500">
               {nextProject.title}
             </h2>
             <div className="flex items-center justify-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors duration-500">
@@ -503,7 +489,7 @@ function ProcessBlock({
   const num = String(index + 1).padStart(2, "0");
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 relative">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 relative">
       {/* Timeline line */}
       <div className="hidden lg:flex lg:col-span-1 justify-center">
         <div className="relative flex flex-col items-center w-6">
@@ -534,8 +520,8 @@ function ProcessBlock({
       </div>
 
       {/* Phase content */}
-      <div className="lg:col-span-8 pb-12 lg:pb-16">
-        <p className="text-base leading-[1.8] text-muted-foreground mb-6">
+      <div className="lg:col-span-8 pb-10 lg:pb-12">
+        <p className="text-sm lg:text-base leading-[1.8] text-muted-foreground mb-5">
           {phase.description}
         </p>
         {phase.deliverables && phase.deliverables.length > 0 && (
@@ -568,8 +554,8 @@ function DecisionCard({
   const num = String(index + 1).padStart(2, "0");
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 p-8 lg:p-10 rounded-2xl bg-card/20 border border-border/50">
-      <div className="lg:col-span-4 flex items-start gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 p-6 lg:p-8 rounded-2xl bg-card/20 border border-border/50">
+      <div className="lg:col-span-4 flex items-start gap-3">
         <span
           className="text-sm font-mono font-bold studio-tabular shrink-0 mt-0.5"
           style={{ color }}
@@ -581,7 +567,7 @@ function DecisionCard({
         </h3>
       </div>
       <div className="lg:col-span-8">
-        <p className="text-base leading-[1.85] text-muted-foreground">
+        <p className="text-sm lg:text-base leading-[1.85] text-muted-foreground">
           {decision.rationale}
         </p>
       </div>
@@ -598,11 +584,8 @@ function ResultCard({
   color: string;
 }) {
   return (
-    <div className="p-6 lg:p-8 rounded-2xl bg-card/20 border border-border/50">
-      <span
-        className="block studio-h1-headline mb-2"
-        style={{ color }}
-      >
+    <div className="p-5 lg:p-6 rounded-2xl bg-card/20 border border-border/50">
+      <span className="block studio-h1-headline mb-2" style={{ color }}>
         {metric.value}
       </span>
       <span className="block text-sm font-semibold text-foreground mb-2">
@@ -626,21 +609,20 @@ function TestimonialBlock({
   color: string;
 }) {
   return (
-    <div className="max-w-4xl mx-auto text-center">
-      <h2 className="studio-h3-sans text-foreground mb-8">
+    <div className="max-w-3xl mx-auto text-center">
+      <h2 className="studio-h3-sans text-foreground mb-6">
         Client Testimonial
       </h2>
 
-      {/* Large quote mark */}
       <span
-        className="block studio-h1-headline font-serif leading-none mb-6 opacity-20 select-none"
+        className="block studio-h1-headline font-serif leading-none mb-4 opacity-20 select-none"
         style={{ color }}
         aria-hidden="true"
       >
         &ldquo;
       </span>
 
-      <blockquote className="studio-body-serif text-foreground italic -mt-16 lg:-mt-20 mb-10">
+      <blockquote className="studio-body-serif text-lg lg:text-xl text-foreground italic -mt-8 lg:-mt-12 mb-8">
         {testimonial.quote}
       </blockquote>
 
@@ -668,14 +650,12 @@ function DataBlock({
 }) {
   return (
     <div>
-      <h3 className="studio-h4-sans text-foreground mb-5">
-        {label}
-      </h3>
-      <ul className="space-y-3">
+      <h3 className="studio-h4-sans text-foreground mb-4">{label}</h3>
+      <ul className="space-y-2">
         {items.map((item) => (
           <li
             key={item}
-            className="flex items-start gap-3 text-base text-muted-foreground leading-snug"
+            className="flex items-start gap-3 text-sm lg:text-base text-muted-foreground leading-snug"
           >
             <span
               className="mt-1.5 w-1 h-1 rounded-full shrink-0"

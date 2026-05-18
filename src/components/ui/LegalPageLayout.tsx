@@ -20,6 +20,7 @@ interface LegalPageLayoutProps {
 }
 
 export function LegalPageLayout({
+  eyebrow,
   title,
   intro,
   sections,
@@ -29,13 +30,12 @@ export function LegalPageLayout({
   return (
     <div className="pt-28 sm:pt-32 pb-16 sm:pb-20">
       <Container size="narrow">
+        <p className="studio-eyebrow mb-4 text-accent">[ {eyebrow} ]</p>
         {/* Header — staggered entrance */}
         <motion.h1
-          initial={reduce ? false : { opacity: 0, y: 16, filter: "blur(6px)" }}
-          animate={
-            reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
-          }
-          transition={{ duration: 0.7, ease: easeOutQuint }}
+          initial={reduce ? false : { opacity: 0, y: 14 }}
+          animate={reduce ? undefined : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: easeOutQuint }}
           className="studio-h1-headline text-foreground"
         >
           {title}
@@ -72,15 +72,25 @@ export function LegalPageLayout({
                 delay: idx < 3 ? idx * 0.08 : 0,
               }}
             >
-              <h2 className="studio-h3-sans text-foreground mb-4">{section.title}</h2>
-              {section.lead ? <p className="studio-body text-foreground font-medium mb-4">{section.lead}</p> : null}
+              <h2 className="studio-h3-sans text-foreground mb-4">
+                {section.title}
+              </h2>
+              {section.lead ? (
+                <p className="studio-body text-foreground font-medium mb-4">
+                  {section.lead}
+                </p>
+              ) : null}
               {section.paragraphs?.map((p) => (
-                <p key={p} className="studio-body text-muted-foreground mb-4">{p}</p>
+                <p key={p} className="studio-body text-muted-foreground mb-4">
+                  {p}
+                </p>
               ))}
               {section.bullets ? (
                 <ul className="list-disc pl-5 space-y-2 mb-4">
                   {section.bullets.map((b) => (
-                    <li key={b} className="studio-body text-muted-foreground">{b}</li>
+                    <li key={b} className="studio-body text-muted-foreground">
+                      {b}
+                    </li>
                   ))}
                 </ul>
               ) : null}

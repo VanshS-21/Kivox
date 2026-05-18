@@ -1,288 +1,109 @@
 "use client";
 
-import { useRef, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 
-import { home } from "@/content/pages/home";
-import { brand } from "@/content/brand";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { brand } from "@/content/brand";
+import { home } from "@/content/pages/home";
 import { easeOutExpo, easeOutQuint, viewportOnce } from "@/lib/motion";
-
-/** Magnetic button that shifts toward cursor */
-function MagneticCTA({
-  href,
-  children,
-  reduce,
-}: {
-  href: string;
-  children: React.ReactNode;
-  reduce: boolean | null;
-}) {
-  const buttonRef = useRef<HTMLAnchorElement>(null);
-  const [isPressed, setIsPressed] = useState(false);
-  const offsetRef = useRef({ x: 0, y: 0 });
-
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (reduce) return;
-      const btn = buttonRef.current;
-      if (!btn) return;
-      const rect = btn.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) * 0.2;
-      const dy = (e.clientY - cy) * 0.2;
-      offsetRef.current = { x: dx, y: dy };
-      btn.style.transform = `translate(${dx}px, ${dy}px)`;
-      // Dynamic glow follows displacement
-      btn.style.boxShadow = `${dx * 0.3}px ${dy * 0.3 + 8}px 30px var(--accent-glow)`;
-    },
-    [reduce]
-  );
-
-  const handleMouseLeave = useCallback(() => {
-    const btn = buttonRef.current;
-    if (!btn) return;
-    btn.style.transform = "translate(0px, 0px)";
-    btn.style.boxShadow = "";
-  }, []);
-
-  const handleMouseDown = useCallback(() => setIsPressed(true), []);
-  const handleMouseUp = useCallback(() => {
-    setIsPressed(false);
-    // Snap-back animation
-    const btn = buttonRef.current;
-    if (!btn) return;
-    btn.style.transition = "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)";
-    btn.style.transform = "translate(0px, 0px) scale(1.02)";
-    setTimeout(() => {
-      if (btn) {
-        btn.style.transform = "translate(0px, 0px) scale(1)";
-        btn.style.transition = "";
-      }
-    }, 200);
-  }, []);
-
-  return (
-    <Link
-      ref={buttonRef}
-      href={href}
-      prefetch={false}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onTouchStart={handleMouseDown}
-      onTouchEnd={handleMouseUp}
-      className="inline-flex items-center gap-3 px-10 py-5 bg-accent text-accent-ink rounded-full text-base font-semibold tracking-tight transition-all duration-300"
-      style={{
-        transitionProperty: "background-color, color, border-color, scale",
-        transform: isPressed ? "scale(0.96)" : undefined,
-      }}
-    >
-      {children}
-    </Link>
-  );
-}
-
-/**
- * Magnetic field overlay — content elements drift microscopically
- * toward the cursor, creating a gravitational pull across the section.
- */
-function useMagneticField(reduce: boolean | null) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>(0);
-  const targetRef = useRef({ x: 0, y: 0 });
-  const currentRef = useRef({ x: 0, y: 0 });
-  const isVisibleRef = useRef(false);
-
-  useEffect(() => {
-    if (reduce) return;
-    const section = sectionRef.current;
-    const content = contentRef.current;
-    if (!section || !content) return;
-
-    function handleMouseMove(e: MouseEvent) {
-      if (!section) return;
-      const rect = section.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / rect.width;
-      const dy = (e.clientY - cy) / rect.height;
-      targetRef.current = { x: dx * 6, y: dy * 4 };
-    }
-
-    function handleMouseLeave() {
-      targetRef.current = { x: 0, y: 0 };
-    }
-
-    function tick() {
-      if (!isVisibleRef.current) return;
-
-      const curr = currentRef.current;
-      const tgt = targetRef.current;
-      curr.x += (tgt.x - curr.x) * 0.08;
-      curr.y += (tgt.y - curr.y) * 0.08;
-
-      if (content) {
-        content.style.transform = `translate(${curr.x}px, ${curr.y}px)`;
-      }
-
-      rafRef.current = requestAnimationFrame(tick);
-    }
-
-    // Only run the rAF loop when the section is visible
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisibleRef.current = entry.isIntersecting;
-        if (entry.isIntersecting) {
-          rafRef.current = requestAnimationFrame(tick);
-        } else {
-          cancelAnimationFrame(rafRef.current);
-        }
-      },
-      { threshold: 0 }
-    );
-    observer.observe(section);
-
-    section.addEventListener("mousemove", handleMouseMove, { passive: true });
-    section.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      section.removeEventListener("mousemove", handleMouseMove);
-      section.removeEventListener("mouseleave", handleMouseLeave);
-      cancelAnimationFrame(rafRef.current);
-      observer.disconnect();
-    };
-  }, [reduce]);
-
-  return { sectionRef, contentRef };
-}
 
 export function HomeContact() {
   const reduce = useReducedMotion();
-  const { sectionRef, contentRef } = useMagneticField(reduce);
 
   return (
-    <div ref={sectionRef}>
-      <Section id="contact" className="relative pt-[60px] md:pt-[80px] lg:pt-[100px] pb-[40px] md:pb-[60px] lg:pb-[80px] overflow-hidden bg-background border-t border-border">
-        {/* Ambient amber glow */}
-        <motion.div
-          animate={
-            reduce
-              ? undefined
-              : {
-                  opacity: [0.45, 0.65, 0.45],
-                  scale: [1, 1.05, 1],
-                }
-          }
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-[15%] left-[15%] w-[240px] md:w-[400px] lg:w-[600px] h-[240px] md:h-[400px] lg:h-[600px] rounded-full blur-[80px] md:blur-[120px] lg:blur-[200px] pointer-events-none"
-          style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.65)' }}
-        />
-        {/* Rose counterpoint */}
-        <motion.div
-          animate={
-            reduce
-              ? undefined
-              : {
-                  opacity: [0.18, 0.28, 0.18],
-                  scale: [1, 1.08, 1],
-                }
-          }
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1, // Offset timing
-          }}
-          className="absolute bottom-[20%] right-[15%] w-[160px] md:w-[280px] lg:w-[480px] h-[160px] md:h-[280px] lg:h-[480px] rounded-full blur-[70px] md:blur-[100px] lg:blur-[180px] pointer-events-none"
-          style={{ background: 'var(--accent-rose)', opacity: 'calc(var(--hero-glow-opacity) * 0.28)' }}
-        />
+    <Section
+      className="relative overflow-hidden border-t border-border bg-background pb-[40px] pt-[60px] md:pb-[60px] md:pt-[80px] lg:pb-[80px] lg:pt-[100px]"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute left-[15%] top-[15%] h-[240px] w-[240px] rounded-full blur-[80px] pointer-events-none md:h-[400px] md:w-[400px] md:blur-[120px] lg:h-[600px] lg:w-[600px] lg:blur-[200px]"
+        style={{
+          background: "var(--accent)",
+          opacity: "calc(var(--hero-glow-opacity) * 0.58)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-[20%] right-[15%] h-[160px] w-[160px] rounded-full blur-[70px] pointer-events-none md:h-[280px] md:w-[280px] md:blur-[100px] lg:h-[480px] lg:w-[480px] lg:blur-[180px]"
+        style={{
+          background: "var(--accent-rose)",
+          opacity: "calc(var(--hero-glow-opacity) * 0.24)",
+        }}
+      />
 
-        <Container className="relative z-10">
-          {/* Content with magnetic drift */}
-          <div
-            ref={contentRef}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center"
-            style={{
-              transition: "transform 0.1s linear",
-            }}
-          >
-            {/* Left side: Heading and body */}
-            <div className="flex flex-col items-start text-left">
-              <motion.h2
-                initial={reduce ? false : { opacity: 0, y: 20 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
-                className="studio-h1-headline text-foreground mb-6"
+      <Container className="relative z-10">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
+          <div className="flex flex-col items-start text-left">
+            <motion.h2
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.55, ease: easeOutQuint, delay: 0.05 }}
+              className="studio-h1-headline mb-6 text-foreground"
+            >
+              Ready to build
+              <br />
+              something{" "}
+              <em
+                className="font-serif italic text-accent"
+                style={{ fontStyle: "italic" }}
               >
-                Ready to build
-                <br />
-                something{" "}
-                <em className="font-serif italic text-accent" style={{ fontStyle: "italic" }}>
-                  exceptional?
-                </em>
-              </motion.h2>
+                exceptional?
+              </em>
+            </motion.h2>
 
-              <motion.p
-                initial={reduce ? false : { opacity: 0, y: 14 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.15 }}
-                className="studio-body-serif text-muted-foreground max-w-md mb-8 lg:mb-12"
-              >
-                {home.contact.line}
-              </motion.p>
-            </div>
-
-            {/* Right side: Magnetic CTA and link */}
-            <div className="flex flex-col items-start lg:items-end text-left lg:text-right">
-              <motion.div
-                initial={reduce ? false : { opacity: 0, y: 16 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.25 }}
-                className="mb-8"
-              >
-                <MagneticCTA href="/contact" reduce={reduce}>
-                  Book a Free Call
-                  <motion.span
-                    className="text-base inline-block"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-                  >
-                    →
-                  </motion.span>
-                </MagneticCTA>
-              </motion.div>
-
-              <motion.div
-                initial={reduce ? false : { opacity: 0 }}
-                whileInView={reduce ? undefined : { opacity: 1 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.4 }}
-              >
-                <span className="block text-base text-muted-foreground mb-1">or reach us directly at</span>
-                <a
-                  href={`mailto:${brand.contact.email}`}
-                  className="text-lg md:text-xl text-accent hover:underline underline-offset-4 transition-colors font-medium"
-                >
-                  {brand.contact.email}
-                </a>
-              </motion.div>
-            </div>
+            <motion.p
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.45, ease: easeOutExpo, delay: 0.12 }}
+              className="studio-body-serif mb-8 max-w-md text-muted-foreground lg:mb-12"
+            >
+              {home.contact.line}
+            </motion.p>
           </div>
-        </Container>
-      </Section>
-    </div>
+
+          <div className="flex flex-col items-start text-left lg:items-end lg:text-right">
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.45, ease: easeOutExpo, delay: 0.2 }}
+              className="mb-8"
+            >
+              <Link
+                href="/contact"
+                prefetch={false}
+                className="inline-flex items-center gap-3 rounded-full bg-accent px-10 py-5 text-base font-semibold tracking-tight text-accent-ink transition-colors duration-200 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              >
+                Book a Free Call
+                <span className="text-base" aria-hidden="true">
+                  -&gt;
+                </span>
+              </Link>
+            </motion.div>
+
+            <motion.div
+              initial={reduce ? false : { opacity: 0 }}
+              whileInView={reduce ? undefined : { opacity: 1 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.4, ease: easeOutExpo, delay: 0.32 }}
+            >
+              <span className="mb-1 block text-base text-muted-foreground">
+                or reach us directly at
+              </span>
+              <a
+                href={`mailto:${brand.contact.email}`}
+                className="text-lg font-medium text-accent underline-offset-4 transition-colors hover:underline md:text-xl"
+              >
+                {brand.contact.email}
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </Container>
+    </Section>
   );
 }

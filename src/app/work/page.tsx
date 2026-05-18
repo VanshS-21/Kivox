@@ -62,16 +62,16 @@ export default function WorkPage() {
                 "DEVELOPMENT",
               ];
               const num = String(idx + 1).padStart(2, "0");
+              const liveIsExternal = Boolean(
+                project.liveUrl && !project.liveUrl.startsWith("/"),
+              );
 
               return (
-                <div
-                  key={project.slug}
-                  className="group flex flex-col"
-                >
+                <div key={project.slug} className="group flex flex-col">
                   <Link
                     href={`/work/${project.slug}`}
                     prefetch={false}
-                    className="relative mb-8 block aspect-[8/1] w-full overflow-hidden rounded-xl bg-muted/20 sm:aspect-video"
+                    className="relative mb-8 block aspect-[4/3] w-full overflow-hidden rounded-xl bg-muted/20 sm:aspect-video"
                   >
                     <Image
                       src={project.images?.[0] || project.image}
@@ -116,12 +116,12 @@ export default function WorkPage() {
                     </p>
 
                     {/* Tags & Link */}
-                    <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
-                      <div className="flex items-center gap-3">
+                    <div className="mt-auto flex flex-col gap-4 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                         {tags.slice(0, 2).map((tag, tagIdx) => (
                           <span
                             key={tag}
-                            className="text-[10px] sm:text-xs font-mono text-subtle-foreground uppercase tracking-wider flex items-center gap-3"
+                            className="flex items-center gap-3 text-[10px] font-mono uppercase tracking-wider text-subtle-foreground sm:text-xs"
                           >
                             {tagIdx > 0 && (
                               <span className="opacity-40">·</span>
@@ -131,20 +131,45 @@ export default function WorkPage() {
                         ))}
                       </div>
 
-                      <Link
-                        href={`/work/${project.slug}`}
-                        prefetch={false}
-                        className="flex items-center gap-2 text-sm font-semibold transition-colors duration-300"
-                        style={{ color }}
-                      >
-                        <span className="hidden sm:inline">
-                          View Case Study
-                        </span>
-                        <span className="sm:hidden">View</span>
-                        <span className="transition-transform duration-300 group-hover:translate-x-1">
+                      <div className="flex flex-wrap items-center gap-3">
+                        {project.liveUrl && (
+                          <Link
+                            href={project.liveUrl}
+                            prefetch={false}
+                            rel={
+                              liveIsExternal ? "noopener noreferrer" : undefined
+                            }
+                            target={liveIsExternal ? "_blank" : undefined}
+                            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-4 text-sm font-semibold text-[var(--work-primary-cta-fg)] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                            style={{ backgroundColor: color }}
+                          >
+                            <span>Live Website</span>
+                            <span
+                              aria-hidden="true"
+                              className="transition-transform duration-300 group-hover:translate-x-1"
+                            >
+                              -&gt;
+                            </span>
+                          </Link>
+                        )}
+
+                        <Link
+                          href={`/work/${project.slug}`}
+                          prefetch={false}
+                          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border bg-surface px-4 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                          style={{
+                            borderColor: `color-mix(in oklch, ${color} 38%, var(--border))`,
+                          }}
+                        >
+                          <span>Case Study</span>
+                          <span
+                            aria-hidden="true"
+                            className="transition-transform duration-300 group-hover:translate-x-1"
+                          >
                           →
-                        </span>
-                      </Link>
+                          </span>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>

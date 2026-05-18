@@ -1,78 +1,51 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useReducedMotion } from "motion/react";
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   Constellation Canvas — Hero Background (Overdrive: Cursor-Magnetic)
-   
-   Floating nodes connected by proximity edges with subtle amber-tinted
-   polygon fills. Nodes respond to cursor proximity with spring physics:
-   amber nodes drift toward the cursor, neutral nodes scatter gently.
-
-   Performance optimizations:
-   - Squared-distance comparisons (no sqrt in edge loop)
-   - Batched canvas draw calls (one beginPath/stroke per color)
-   - Polygon pass removed (negligible visual contribution at 4% opacity)
-   - Reduced node count on mobile
-   ═══════════════════════════════════════════════════════════════════════════ */
 
 interface ConstellationCanvasProps {
   className?: string;
-  /** Color palette variant */
   variant?: "light" | "dark";
 }
 
-/** Color config per theme variant */
 const palettes = {
   dark: {
     nodeNeutral: (a: number) => `oklch(0.85 0.008 65 / ${a})`,
-    nodeAmber: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
-    nodeGlow: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
+    nodeAmber: (a: number) => `oklch(0.72 0.18 78 / ${a})`,
+    nodeGlow: (a: number) => `oklch(0.72 0.18 78 / ${a})`,
     edgeNeutral: (a: number) => `oklch(0.85 0.008 65 / ${a})`,
-    edgeAmber: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
-    neutralAlpha: (glow: number) => 0.3 + glow * 0.25,
-    amberAlpha: (glow: number) => 0.6 + glow * 0.4,
-    edgeNeutralMul: 0.10,
-    edgeAmberMul: 0.32,
+    edgeAmber: (a: number) => `oklch(0.72 0.18 78 / ${a})`,
+    neutralAlpha: (glow: number) => 0.26 + glow * 0.18,
+    amberAlpha: (glow: number) => 0.52 + glow * 0.28,
+    edgeNeutralMul: 0.08,
+    edgeAmberMul: 0.24,
     edgeWidthNeutral: 0.5,
-    edgeWidthAmber: 0.9,
-    glowMul: 0.18,
-    cursorGlow: (a: number) => `oklch(0.72 0.18 65 / ${a})`,
+    edgeWidthAmber: 0.85,
+    glowMul: 0.12,
   },
   light: {
     nodeNeutral: (a: number) => `oklch(0.42 0.035 65 / ${a})`,
-    nodeAmber: (a: number) => `oklch(0.56 0.20 65 / ${a})`,
-    nodeGlow: (a: number) => `oklch(0.63 0.19 65 / ${a})`,
+    nodeAmber: (a: number) => `oklch(0.56 0.20 78 / ${a})`,
+    nodeGlow: (a: number) => `oklch(0.63 0.19 78 / ${a})`,
     edgeNeutral: (a: number) => `oklch(0.44 0.032 65 / ${a})`,
-    edgeAmber: (a: number) => `oklch(0.56 0.20 65 / ${a})`,
-    neutralAlpha: (glow: number) => 0.24 + glow * 0.18,
-    amberAlpha: (glow: number) => 0.66 + glow * 0.26,
-    edgeNeutralMul: 0.10,
-    edgeAmberMul: 0.31,
+    edgeAmber: (a: number) => `oklch(0.56 0.20 78 / ${a})`,
+    neutralAlpha: (glow: number) => 0.2 + glow * 0.14,
+    amberAlpha: (glow: number) => 0.58 + glow * 0.2,
+    edgeNeutralMul: 0.08,
+    edgeAmberMul: 0.23,
     edgeWidthNeutral: 0.55,
-    edgeWidthAmber: 0.9,
-    glowMul: 0.06,
-    cursorGlow: (a: number) => `oklch(0.63 0.19 65 / ${a})`,
+    edgeWidthAmber: 0.85,
+    glowMul: 0.05,
   },
 } as const;
 
 type Palette = (typeof palettes)[keyof typeof palettes];
 
-/** Cursor state tracked across frames */
-interface CursorState {
-  x: number;
-  y: number;
-  active: boolean;
-}
+const NODE_DRIFT_SPEED = 0.46;
 
-/** Spring physics constants */
-const CURSOR_RADIUS = 200;        // Influence radius
-const CURSOR_RADIUS_SQ = CURSOR_RADIUS * CURSOR_RADIUS;
-const ATTRACT_STRENGTH = 0.012;   // How strongly amber nodes pull toward cursor
-const REPEL_STRENGTH = 0.006;     // How gently neutral nodes scatter
-const DAMPING = 0.92;             // Velocity damping (spring settle)
-const MAX_CURSOR_VEL = 1.8;       // Clamp cursor-induced velocity
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
 
 class Node {
   id: number;
@@ -80,89 +53,37 @@ class Node {
   y: number;
   vx: number;
   vy: number;
-  /** Spring velocity from cursor interaction (separate from drift) */
-  cvx: number;
-  cvy: number;
   r: number;
   amber: boolean;
   pulse: number;
   pulseSpeed: number;
-  /** Proximity intensity to cursor: 0 = far, 1 = touching */
-  cursorProximity: number;
 
   constructor(id: number, w: number, h: number, init: boolean) {
     this.id = id;
     this.x = Math.random() * w;
-    this.y = init ? Math.random() * h : (Math.random() < 0.5 ? -5 : h + 5);
-    this.vx = (Math.random() - 0.5) * 0.45;
-    this.vy = (Math.random() - 0.5) * 0.45;
-    this.cvx = 0;
-    this.cvy = 0;
-    this.r = Math.random() * 2.2 + 0.6;
-    this.amber = Math.random() < 0.25;
+    this.y = init ? Math.random() * h : Math.random() < 0.5 ? -5 : h + 5;
+    this.vx = (Math.random() - 0.5) * NODE_DRIFT_SPEED;
+    this.vy = (Math.random() - 0.5) * NODE_DRIFT_SPEED;
+    this.r = Math.random() * 1.8 + 0.6;
+    this.amber = Math.random() < 0.22;
     this.pulse = Math.random() * Math.PI * 2;
-    this.pulseSpeed = 0.012 + Math.random() * 0.018;
-    this.cursorProximity = 0;
+    this.pulseSpeed = 0.008 + Math.random() * 0.012;
   }
 
   reset(w: number, h: number) {
     this.x = Math.random() * w;
     this.y = Math.random() < 0.5 ? -5 : h + 5;
-    this.vx = (Math.random() - 0.5) * 0.45;
-    this.vy = (Math.random() - 0.5) * 0.45;
-    this.cvx = 0;
-    this.cvy = 0;
-    this.r = Math.random() * 2.2 + 0.6;
-    this.amber = Math.random() < 0.25;
+    this.vx = (Math.random() - 0.5) * NODE_DRIFT_SPEED;
+    this.vy = (Math.random() - 0.5) * NODE_DRIFT_SPEED;
+    this.r = Math.random() * 1.8 + 0.6;
+    this.amber = Math.random() < 0.22;
     this.pulse = Math.random() * Math.PI * 2;
-    this.pulseSpeed = 0.012 + Math.random() * 0.018;
-    this.cursorProximity = 0;
+    this.pulseSpeed = 0.008 + Math.random() * 0.012;
   }
 
-  update(w: number, h: number, cursor: CursorState) {
-    // Cursor-magnetic spring physics
-    if (cursor.active) {
-      const dx = cursor.x - this.x;
-      const dy = cursor.y - this.y;
-      const distSq = dx * dx + dy * dy;
-
-      if (distSq < CURSOR_RADIUS_SQ && distSq > 0.01) {
-        // Only compute sqrt when within influence radius (much rarer)
-        const dist = Math.sqrt(distSq);
-        const t = 1 - dist / CURSOR_RADIUS;
-        const nx = dx / dist;
-        const ny = dy / dist;
-
-        if (this.amber) {
-          this.cvx += nx * t * t * ATTRACT_STRENGTH * 60;
-          this.cvy += ny * t * t * ATTRACT_STRENGTH * 60;
-        } else {
-          this.cvx -= nx * t * REPEL_STRENGTH * 60;
-          this.cvy -= ny * t * REPEL_STRENGTH * 60;
-        }
-
-        this.cursorProximity = t;
-      } else {
-        this.cursorProximity *= 0.92;
-      }
-    } else {
-      this.cursorProximity *= 0.95;
-    }
-
-    // Clamp cursor velocity
-    const cvMag = Math.sqrt(this.cvx * this.cvx + this.cvy * this.cvy);
-    if (cvMag > MAX_CURSOR_VEL) {
-      this.cvx = (this.cvx / cvMag) * MAX_CURSOR_VEL;
-      this.cvy = (this.cvy / cvMag) * MAX_CURSOR_VEL;
-    }
-
-    // Apply damping (spring settle)
-    this.cvx *= DAMPING;
-    this.cvy *= DAMPING;
-
-    // Move: base drift + cursor spring
-    this.x += this.vx + this.cvx;
-    this.y += this.vy + this.cvy;
+  update(w: number, h: number) {
+    this.x += this.vx;
+    this.y += this.vy;
     this.pulse += this.pulseSpeed;
 
     if (this.x < -20 || this.x > w + 20 || this.y < -20 || this.y > h + 20) {
@@ -173,172 +94,80 @@ class Node {
   draw(ctx: CanvasRenderingContext2D, p: Palette) {
     const glow = Math.sin(this.pulse) * 0.5 + 0.5;
     const alpha = this.amber ? p.amberAlpha(glow) : p.neutralAlpha(glow);
-    const color = this.amber ? p.nodeAmber(alpha) : p.nodeNeutral(alpha);
-
-    // Cursor proximity boosts node size and brightness
-    const proxBoost = 1 + this.cursorProximity * 0.6;
 
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r * (1 + glow * 0.4) * proxBoost, 0, Math.PI * 2);
-    ctx.fillStyle = color;
+    ctx.arc(this.x, this.y, this.r * (1 + glow * 0.35), 0, Math.PI * 2);
+    ctx.fillStyle = this.amber ? p.nodeAmber(alpha) : p.nodeNeutral(alpha);
     ctx.fill();
 
-    // Amber nodes get an extra glow halo (boosted by cursor proximity)
-    if (this.amber && (glow > 0.6 || this.cursorProximity > 0.3)) {
-      const haloGlow = Math.max(glow - 0.6, 0) + this.cursorProximity * 0.5;
+    if (this.amber && glow > 0.68) {
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r * (3.5 + this.cursorProximity * 3), 0, Math.PI * 2);
-      ctx.fillStyle = p.nodeGlow(haloGlow * p.glowMul * (1 + this.cursorProximity));
-      ctx.fill();
-    }
-
-    // Cursor-proximity glow ring for neutral nodes too
-    if (!this.amber && this.cursorProximity > 0.4) {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r * 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = p.cursorGlow((this.cursorProximity - 0.4) * 0.08);
+      ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
+      ctx.fillStyle = p.nodeGlow((glow - 0.68) * p.glowMul);
       ctx.fill();
     }
   }
 }
 
-/**
- * Batched edge drawing — groups edges by color type and draws in two
- * beginPath/stroke calls instead of one per edge (~6000 → 2).
- */
-function drawEdges(ctx: CanvasRenderingContext2D, nodes: Node[], maxDistSq: number, maxDist: number, p: Palette) {
-  // Collect edges by type for batching
-  const neutralEdges: { x1: number; y1: number; x2: number; y2: number; alpha: number }[] = [];
-  const amberEdges: { x1: number; y1: number; x2: number; y2: number; alpha: number }[] = [];
-
-  // Spatial Hashing Grid
-  const cellSize = maxDist;
-  const grid: Record<string, Node[]> = {};
-
-  // 1. Populate the grid
+function drawEdges(
+  ctx: CanvasRenderingContext2D,
+  nodes: Node[],
+  maxDistSq: number,
+  maxDist: number,
+  p: Palette,
+) {
   for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-    const cx = Math.floor(node.x / cellSize);
-    const cy = Math.floor(node.y / cellSize);
-    const key = `${cx},${cy}`;
-    if (!grid[key]) grid[key] = [];
-    grid[key].push(node);
-  }
+    const a = nodes[i];
 
-  // 2. Query the grid to find edges
-  for (let i = 0; i < nodes.length; i++) {
-    const ni = nodes[i];
-    const cx = Math.floor(ni.x / cellSize);
-    const cy = Math.floor(ni.y / cellSize);
+    for (let j = i + 1; j < nodes.length; j++) {
+      const b = nodes[j];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const distanceSq = dx * dx + dy * dy;
 
-    // Check this cell and the 4 "forward" neighboring cells to avoid duplicates
-    // Standard half-check for spatial grid: right, bottom-left, bottom, bottom-right
-    const neighborKeys = [
-      `${cx},${cy}`,         // current cell
-      `${cx + 1},${cy}`,     // right
-      `${cx - 1},${cy + 1}`, // bottom-left
-      `${cx},${cy + 1}`,     // bottom
-      `${cx + 1},${cy + 1}`, // bottom-right
-    ];
+      if (distanceSq >= maxDistSq) continue;
 
-    for (const key of neighborKeys) {
-      const cellNodes = grid[key];
-      if (!cellNodes) continue;
+      const t = 1 - Math.sqrt(distanceSq) / maxDist;
+      const isAmber = a.amber || b.amber;
+      const alpha = isAmber ? t * t * p.edgeAmberMul : t * t * p.edgeNeutralMul;
 
-      for (let j = 0; j < cellNodes.length; j++) {
-        const nj = cellNodes[j];
-        
-        // Skip self or already checked pairs (ensure we only do A->B, not B->A within the same cell)
-        if (key === `${cx},${cy}` && ni.id >= nj.id) continue;
-
-        const dx = ni.x - nj.x;
-        const dy = ni.y - nj.y;
-        const dSq = dx * dx + dy * dy;
-
-        // Squared-distance comparison — no sqrt needed
-        if (dSq < maxDistSq) {
-          const t = 1 - Math.sqrt(dSq) / maxDist;
-          const isAmber = ni.amber || nj.amber;
-          const proxBoost = 1 + (ni.cursorProximity + nj.cursorProximity) * 0.3;
-          const alpha = isAmber
-            ? t * t * p.edgeAmberMul * proxBoost
-            : t * t * p.edgeNeutralMul * proxBoost;
-
-          const edge = { x1: ni.x, y1: ni.y, x2: nj.x, y2: nj.y, alpha };
-          if (isAmber) {
-            amberEdges.push(edge);
-          } else {
-            neutralEdges.push(edge);
-          }
-        }
-      }
-    }
-  }
-
-  // Batch draw neutral edges
-  if (neutralEdges.length > 0) {
-    ctx.lineWidth = p.edgeWidthNeutral;
-    for (const e of neutralEdges) {
       ctx.beginPath();
-      ctx.moveTo(e.x1, e.y1);
-      ctx.lineTo(e.x2, e.y2);
-      ctx.strokeStyle = p.edgeNeutral(e.alpha);
-      ctx.stroke();
-    }
-  }
-
-  // Batch draw amber edges
-  if (amberEdges.length > 0) {
-    ctx.lineWidth = p.edgeWidthAmber;
-    for (const e of amberEdges) {
-      ctx.beginPath();
-      ctx.moveTo(e.x1, e.y1);
-      ctx.lineTo(e.x2, e.y2);
-      ctx.strokeStyle = p.edgeAmber(e.alpha);
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.lineWidth = isAmber ? p.edgeWidthAmber : p.edgeWidthNeutral;
+      ctx.strokeStyle = isAmber ? p.edgeAmber(alpha) : p.edgeNeutral(alpha);
       ctx.stroke();
     }
   }
 }
 
-/** Draw a subtle radial glow at the cursor position */
-function drawCursorAura(ctx: CanvasRenderingContext2D, cursor: CursorState, p: Palette) {
-  if (!cursor.active) return;
-  const gradient = ctx.createRadialGradient(
-    cursor.x, cursor.y, 0,
-    cursor.x, cursor.y, CURSOR_RADIUS * 0.6
-  );
-  gradient.addColorStop(0, p.cursorGlow(0.06));
-  gradient.addColorStop(0.5, p.cursorGlow(0.02));
-  gradient.addColorStop(1, p.cursorGlow(0));
-  ctx.fillStyle = gradient;
-  ctx.fillRect(
-    cursor.x - CURSOR_RADIUS,
-    cursor.y - CURSOR_RADIUS,
-    CURSOR_RADIUS * 2,
-    CURSOR_RADIUS * 2
-  );
+function getNodeCount(width: number, height: number): number {
+  const areaCount = Math.round((width * height) / 8600);
+
+  if (width < 640) return clamp(areaCount, 54, 66);
+  if (width < 1024) return clamp(areaCount, 78, 98);
+  if (width < 1440) return clamp(areaCount, 110, 128);
+
+  return clamp(areaCount, 126, 148);
 }
 
-/** Get appropriate node count based on screen width */
-function getNodeCount(): number {
-  if (typeof window === "undefined") return 110;
-  return window.innerWidth < 768 ? 60 : 110;
-}
-
-export function ConstellationCanvas({ className, variant = "dark" }: ConstellationCanvasProps) {
+export function ConstellationCanvas({
+  className,
+  variant = "dark",
+}: ConstellationCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const nodesRef = useRef<Node[]>([]);
-  const cursorRef = useRef<CursorState>({ x: 0, y: 0, active: false });
   const reduce = useReducedMotion();
   const palette = palettes[variant];
 
   const initNodes = useCallback((w: number, h: number) => {
-    const count = getNodeCount();
     const nodes: Node[] = [];
-    for (let i = 0; i < count; i++) {
+
+    for (let i = 0; i < getNodeCount(w, h); i++) {
       nodes.push(new Node(i, w, h, true));
     }
+
     nodesRef.current = nodes;
   }, []);
 
@@ -348,45 +177,26 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    const canvasEl = canvas;
+    const context = ctx;
 
     let isVisible = true;
     let resizeFrame = 0;
-
-    // Mouse tracking relative to canvas
-    function handleMouseMove(e: MouseEvent) {
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      cursorRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        active: true,
-      };
-    }
-
-    function handleMouseLeave() {
-      cursorRef.current = { ...cursorRef.current, active: false };
-    }
-
-    // Listen on the parent (the hero section) for smoother coverage
-    const parent = canvas.parentElement;
-    if (parent) {
-      parent.addEventListener("mousemove", handleMouseMove, { passive: true });
-      parent.addEventListener("mouseleave", handleMouseLeave);
-    }
+    let lastFrame = 0;
 
     function resize() {
-      if (!canvas) return;
-      const parent = canvas.parentElement;
+      const parent = canvasEl.parentElement;
       if (!parent) return;
 
       const width = parent.offsetWidth;
       const height = parent.offsetHeight;
       if (width === 0 || height === 0) return;
 
-      const sizeChanged = canvas.width !== width || canvas.height !== height;
+      const sizeChanged =
+        canvasEl.width !== width || canvasEl.height !== height;
       if (sizeChanged) {
-        canvas.width = width;
-        canvas.height = height;
+        canvasEl.width = width;
+        canvasEl.height = height;
         initNodes(width, height);
       } else if (nodesRef.current.length === 0) {
         initNodes(width, height);
@@ -401,7 +211,12 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
     resize();
     window.addEventListener("resize", scheduleResize);
 
-    const resizeObserver = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(scheduleResize);
+    const parent = canvasEl.parentElement;
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(scheduleResize);
+
     if (parent && resizeObserver) {
       resizeObserver.observe(parent);
     }
@@ -412,15 +227,22 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
       attributeFilter: ["data-theme"],
     });
 
-    const MAX_DIST = 130;
-    const MAX_DIST_SQ = MAX_DIST * MAX_DIST;
-    const p = palette;
+    const maxDist = 130;
+    const maxDistSq = maxDist * maxDist;
+    const frameInterval = 1000 / 40;
 
-    function frame() {
-      if (!ctx || !canvas || !isVisible) return;
-      const w = canvas.width;
-      const h = canvas.height;
-      const cursor = cursorRef.current;
+    function frame(now: number) {
+      if (!isVisible) return;
+
+      if (now - lastFrame < frameInterval) {
+        animationRef.current = requestAnimationFrame(frame);
+        return;
+      }
+
+      lastFrame = now;
+
+      const w = canvasEl.width;
+      const h = canvasEl.height;
 
       if (w === 0 || h === 0) {
         scheduleResize();
@@ -428,21 +250,16 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
         return;
       }
 
-      ctx.clearRect(0, 0, w, h);
-
-      // Cursor aura glow
-      drawCursorAura(ctx, cursor, p);
-
-      // Edges only — polygon pass removed (negligible at 4% opacity, halves computation)
-      drawEdges(ctx, nodesRef.current, MAX_DIST_SQ, MAX_DIST, p);
-      nodesRef.current.forEach((n) => {
-        n.update(w, h, cursor);
-        n.draw(ctx, p);
+      context.clearRect(0, 0, w, h);
+      drawEdges(context, nodesRef.current, maxDistSq, maxDist, palette);
+      nodesRef.current.forEach((node) => {
+        node.update(w, h);
+        node.draw(context, palette);
       });
+
       animationRef.current = requestAnimationFrame(frame);
     }
 
-    // Pause when off-screen, resume when visible
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
@@ -452,11 +269,11 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
           cancelAnimationFrame(animationRef.current);
         }
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
-    observer.observe(canvas);
 
-    frame();
+    observer.observe(canvasEl);
+    animationRef.current = requestAnimationFrame(frame);
 
     return () => {
       cancelAnimationFrame(resizeFrame);
@@ -465,10 +282,6 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
       resizeObserver?.disconnect();
       themeObserver.disconnect();
       observer.disconnect();
-      if (parent) {
-        parent.removeEventListener("mousemove", handleMouseMove);
-        parent.removeEventListener("mouseleave", handleMouseLeave);
-      }
     };
   }, [reduce, initNodes, palette]);
 
@@ -477,7 +290,7 @@ export function ConstellationCanvas({ className, variant = "dark" }: Constellati
   return (
     <canvas
       ref={canvasRef}
-      className={`absolute inset-0 w-full h-full pointer-events-none ${className || ""}`}
+      className={`absolute inset-0 h-full w-full pointer-events-none ${className || ""}`}
     />
   );
 }

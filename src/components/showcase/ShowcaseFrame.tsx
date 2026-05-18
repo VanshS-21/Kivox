@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, LayoutGrid } from "lucide-react";
 
-/* Showcase route name → case study slug (when they differ) */
+/* Showcase route name -> case study slug (when they differ) */
 const showcaseToCaseStudy: Record<string, string> = {
   medqueue: "hospital",
 };
@@ -12,24 +12,37 @@ const showcaseToCaseStudy: Record<string, string> = {
 export function ShowcaseFrame() {
   const pathname = usePathname();
 
-  // Extract showcase name from the 3rd path segment: /showcase/{name}/...
+  // Extract showcase name from /showcase/{name}/...
   const segments = pathname.split("/").filter(Boolean);
   const showcaseName = segments[1] || "";
   const caseStudySlug = showcaseToCaseStudy[showcaseName] || showcaseName;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-[var(--bg-primary)] text-[var(--fg-primary)] border-b border-[var(--border)] font-sans text-sm">
-      <div className="flex items-center gap-4">
+    <div className="fixed left-0 right-0 top-0 z-50 flex min-h-12 items-center justify-between gap-3 border-b border-[var(--border)] bg-[var(--bg-primary)] px-4 py-1.5 font-sans text-sm text-[var(--fg-primary)] sm:px-6">
+      <div className="flex min-w-0 items-center gap-4">
         <Link
           href={`/work/${caseStudySlug}`}
-          className="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
+          prefetch={false}
+          className="flex min-h-11 min-w-0 items-center gap-2 opacity-70 transition-opacity hover:opacity-100"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Case Study</span>
+          <ArrowLeft className="h-4 w-4 shrink-0" />
+          <span className="truncate">
+            <span className="hidden sm:inline">Back to </span>Case Study
+          </span>
         </Link>
       </div>
-      <div className="flex items-center gap-4">
-        <span className="opacity-50 tracking-widest uppercase text-xs font-semibold">Kivox Demo</span>
+      <div className="flex shrink-0 items-center gap-4">
+        <Link
+          href="/work"
+          prefetch={false}
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--border)] px-3 text-xs font-semibold uppercase tracking-[0.12em] opacity-75 transition-opacity hover:opacity-100"
+        >
+          <LayoutGrid className="h-3.5 w-3.5" />
+          <span>All Work</span>
+        </Link>
+        <span className="hidden opacity-50 tracking-widest uppercase text-xs font-semibold sm:inline">
+          Kivox Demo
+        </span>
       </div>
     </div>
   );

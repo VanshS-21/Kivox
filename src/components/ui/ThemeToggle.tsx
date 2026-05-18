@@ -16,7 +16,8 @@ function getSystemTheme(): "dark" | "light" {
 function getStoredTheme(): Theme {
   if (typeof window === "undefined") return "system";
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "dark" || stored === "light" || stored === "system") return stored;
+  if (stored === "dark" || stored === "light" || stored === "system")
+    return stored;
   return "system";
 }
 
@@ -36,14 +37,20 @@ function applyTheme(theme: Theme) {
   }
 }
 
-export function ThemeToggle({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
+export function ThemeToggle({
+  className = "",
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const [theme, setTheme] = useState<Theme>("system");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(getStoredTheme());
-     
+
     setMounted(true);
   }, []);
 
@@ -73,7 +80,7 @@ export function ThemeToggle({ className = "", style }: { className?: string; sty
     // SSR placeholder — same size, no icon
     return (
       <button
-        className={`w-9 h-9 rounded-lg flex items-center justify-center ${className}`}
+        className={`flex h-11 w-11 items-center justify-center rounded-lg ${className}`}
         aria-label="Toggle theme"
       />
     );
@@ -82,7 +89,7 @@ export function ThemeToggle({ className = "", style }: { className?: string; sty
   return (
     <button
       onClick={cycle}
-      className={`w-9 h-9 rounded-lg flex items-center justify-center hover:bg-accent/10 transition-colors ${className}`}
+      className={`flex h-11 w-11 items-center justify-center rounded-lg transition-colors hover:bg-accent/10 ${className}`}
       style={style}
       aria-label={`Theme: ${theme}. Click to change.`}
       title={`Theme: ${theme}`}

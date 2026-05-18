@@ -9,6 +9,7 @@ export type { BlogPost, BlogPostMeta };
 export { formatDate } from "./blog-types";
 
 const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
+const SAFE_SLUG_PATTERN = /^[a-z0-9-]+$/;
 
 /** Return all .mdx filenames from the blog content directory */
 function getBlogFiles(): string[] {
@@ -56,6 +57,8 @@ export function getAllSlugs(): string[] {
 
 /** Get a single post by slug (includes content) */
 export function getPostBySlug(slug: string): BlogPost | null {
+  if (!SAFE_SLUG_PATTERN.test(slug)) return null;
+
   const filename = `${slug}.mdx`;
   const filePath = path.join(BLOG_DIR, filename);
   if (!fs.existsSync(filePath)) return null;

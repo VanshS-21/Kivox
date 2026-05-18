@@ -2,16 +2,30 @@ import dynamic from "next/dynamic";
 import { HomeHero } from "@/components/sections/HomeHero";
 import { HomeProjectBand } from "@/components/sections/HomeProjectBand";
 import { HomeProofBand } from "@/components/sections/HomeProofBand";
+import { HomeTeam } from "@/components/sections/HomeTeam";
 import { HomeWorkPreview } from "@/components/sections/HomeWorkPreview";
 import { LazySection } from "@/components/ui/LazySection";
 
-const HomeServices = dynamic(() => import("@/components/sections/HomeServices").then(mod => mod.HomeServices));
-const HomeTestimonials = dynamic(() => import("@/components/sections/HomeTestimonials").then(mod => mod.HomeTestimonials));
-const HomePOV = dynamic(() => import("@/components/sections/HomePOV").then(mod => mod.HomePOV));
-const HomeProcess = dynamic(() => import("@/components/sections/HomeProcess").then(mod => mod.HomeProcess));
-const HomeFAQ = dynamic(() => import("@/components/sections/HomeFAQ").then(mod => mod.HomeFAQ));
-const HomeTeam = dynamic(() => import("@/components/sections/HomeTeam").then(mod => mod.HomeTeam));
-const HomeContact = dynamic(() => import("@/components/sections/HomeContact").then(mod => mod.HomeContact));
+const HomeServices = dynamic(() =>
+  import("@/components/sections/HomeServices").then((mod) => mod.HomeServices),
+);
+const HomeTestimonials = dynamic(() =>
+  import("@/components/sections/HomeTestimonials").then(
+    (mod) => mod.HomeTestimonials,
+  ),
+);
+const HomePOV = dynamic(() =>
+  import("@/components/sections/HomePOV").then((mod) => mod.HomePOV),
+);
+const HomeProcess = dynamic(() =>
+  import("@/components/sections/HomeProcess").then((mod) => mod.HomeProcess),
+);
+const HomeFAQ = dynamic(() =>
+  import("@/components/sections/HomeFAQ").then((mod) => mod.HomeFAQ),
+);
+const HomeContact = dynamic(() =>
+  import("@/components/sections/HomeContact").then((mod) => mod.HomeContact),
+);
 
 export default function Home() {
   return (
@@ -31,12 +45,12 @@ export default function Home() {
         </div>
       </LazySection>
       <LazySection rootMargin="0px">
-        <div className="cv-auto">
+        <div id="services" className="scroll-mt-24 cv-auto">
           <HomeServices />
         </div>
       </LazySection>
       <LazySection rootMargin="0px">
-        <div className="cv-auto">
+        <div id="process" className="scroll-mt-24 cv-auto">
           <HomeProcess />
         </div>
       </LazySection>
@@ -55,13 +69,9 @@ export default function Home() {
           <HomeFAQ />
         </div>
       </LazySection>
+      <HomeTeam />
       <LazySection rootMargin="0px">
-        <div className="cv-auto">
-          <HomeTeam />
-        </div>
-      </LazySection>
-      <LazySection rootMargin="0px">
-        <div className="cv-auto">
+        <div id="contact" className="scroll-mt-24 cv-auto">
           <HomeContact />
         </div>
       </LazySection>

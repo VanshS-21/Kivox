@@ -4,11 +4,11 @@ export const school = {
   subtitle:
     "Building trust architecture for parents navigating admissions season.",
   label: "Education · Trust Architecture",
-  image: "/work/school copy.webp",
+  image: "/media/work/greenfield-academy-cover.webp",
   images: [
-    "/work/mockups/School-1.webp",
-    "/work/mockups/School-2.webp",
-    "/work/mockups/School-3.webp",
+    "/media/work/mockups/greenfield-academy-01.webp",
+    "/media/work/mockups/greenfield-academy-02.webp",
+    "/media/work/mockups/greenfield-academy-03.webp",
   ],
   liveUrl: "/showcase/school",
   year: "2024",

@@ -27,17 +27,22 @@ export default function MedQueueLayout({
           fontFamily: mq.font.body,
         }}
       >
-        <style>{`
-          .medqueue-scope :focus-visible {
-            outline: none;
-          }
-        `}</style>
         <MQNav />
-        <main>{children}</main>
-        <footer className="mx-auto max-w-7xl px-4 py-10 text-sm md:px-6" style={{ color: mq.color.muted }}>
-          <div className="rounded-[28px] border p-5" style={{ backgroundColor: mq.color.panel, borderColor: mq.color.rule }}>
-            MedQueue is a fictional healthcare product showcase. It does not provide medical advice, process payments,
-            connect to real patient records, or represent real clinicians.
+        <div>{children}</div>
+        <footer
+          className="mx-auto max-w-7xl px-4 py-10 text-sm md:px-6"
+          style={{ color: mq.color.muted }}
+        >
+          <div
+            className="rounded-[28px] border p-5"
+            style={{
+              backgroundColor: mq.color.panel,
+              borderColor: mq.color.rule,
+            }}
+          >
+            MedQueue is a fictional healthcare product showcase. It does not
+            provide medical advice, process payments, connect to real patient
+            records, or represent real clinicians.
           </div>
         </footer>
       </div>

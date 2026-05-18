@@ -19,13 +19,13 @@ export default defineConfig({
     },
   ],
 
-  // In this project, we assume the user already has npm run dev running on 3000.
-  // If we needed to start the server automatically, we would uncomment this:
-  /*
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
+    command: "npm run dev",
+    env: {
+      ...process.env,
+      NEXT_PUBLIC_ENABLE_ANALYTICS: "false",
+    },
+    url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
   },
-  */
 });

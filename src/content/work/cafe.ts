@@ -4,11 +4,11 @@ export const cafe = {
   subtitle:
     "Turning a neighborhood cafe's digital presence into a visit-driving machine.",
   label: "Hospitality · Brand & Web",
-  image: "/work/cafe copy.webp",
+  image: "/media/work/the-roastery-cover.webp",
   images: [
-    "/work/mockups/Cafe-1.webp",
-    "/work/mockups/Cafe-2.webp",
-    "/work/mockups/Cafe-3.webp",
+    "/media/work/mockups/the-roastery-01.webp",
+    "/media/work/mockups/the-roastery-02.webp",
+    "/media/work/mockups/the-roastery-03.webp",
   ],
   liveUrl: "/showcase/cafe",
   year: "2024",

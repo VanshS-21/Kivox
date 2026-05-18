@@ -14,10 +14,11 @@ import {
 } from "@/features/inquiry/inquiry.schema";
 import type { Inquiry, InquiryInput } from "@/features/inquiry/inquiry.types";
 import { submitProjectInquiry } from "@/features/inquiry/submitProjectInquiry";
+import { contact } from "@/content/pages/contact";
+import { motion, AnimatePresence } from "motion/react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Floating-label field — editorial form treatment
-   Input sits on a subtle bottom border, label floats above on focus/fill.
+   Impeccable input style — rounded, subtle border, focus glow
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function FormField({
@@ -37,36 +38,47 @@ function FormField({
 }) {
   const errorId = `${id}-error`;
   return (
-    <div className={`flex flex-col gap-2 min-w-0 ${className || ""}`}>
+    <div className={`flex flex-col gap-2 min-w-0 group ${className || ""}`}>
       <div className="flex items-center justify-between gap-4">
-        <label htmlFor={id} className="text-sm uppercase tracking-widest font-mono font-medium text-muted-foreground flex gap-1">
+        <label htmlFor={id} className="text-[0.8125rem] font-medium tracking-wide text-foreground/80 flex gap-1 transition-colors group-focus-within:text-accent">
           {label} {required && <span className="text-accent">*</span>}
         </label>
-        {error && (
-          <span id={errorId} className="text-xs text-error" role="alert">
-            {error}
-          </span>
-        )}
       </div>
       {children}
+      <AnimatePresence>
+        {error && (
+          <motion.span
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            id={errorId}
+            className="text-xs font-medium text-error flex items-center gap-1 mt-1"
+            role="alert"
+          >
+            <span className="inline-block w-1 h-1 rounded-full bg-error" aria-hidden="true" />
+            {error}
+          </motion.span>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-/** Clean input style — bottom border only, transparent background */
+/** Clean input style — 1px border, 14px radius, 5% white opacity background */
 const getInputStyle = (hasError?: boolean) => [
-  "w-full px-0 py-3 sm:py-4",
-  "bg-transparent",
-  hasError ? "border-0 border-b border-error text-error" : "border-0 border-b border-border text-foreground",
-  "text-lg",
-  "outline-none transition-colors duration-200",
-  hasError ? "focus:border-error focus:bg-error/5" : "focus:border-accent focus:bg-accent-muted/50",
-  "placeholder:text-muted-foreground/40 placeholder:text-base",
+  "w-full px-5 py-4",
+  "bg-foreground/[0.02] hover:bg-foreground/[0.04]",
+  "border",
+  hasError ? "border-error text-error" : "border-border/50 text-foreground",
+  "rounded-[14px]",
+  "text-base font-sans shadow-sm",
+  "outline-none transition-all duration-300",
+  hasError
+    ? "focus:border-error focus:ring-4 focus:ring-error/10 focus:bg-transparent"
+    : "focus:border-accent focus:ring-4 focus:ring-accent/10 focus:bg-transparent",
+  "placeholder:text-muted-foreground/40",
   "disabled:opacity-50 disabled:pointer-events-none",
 ].join(" ");
-
-
-
 
 export function InquiryForm() {
   const [hp, setHp] = useState("");
@@ -77,6 +89,7 @@ export function InquiryForm() {
   const uid = useId();
   const fieldId = (name: string) => `${uid}-${name}`;
   const errorId = (name: string) => `${uid}-${name}-error`;
+  const f = contact.form.fields;
 
   const form = useForm<InquiryInput, unknown, Inquiry>({
     resolver: zodResolver(inquirySchema),
@@ -118,7 +131,7 @@ export function InquiryForm() {
   const isDisabled = status.type === "submitting" || status.type === "success";
 
   return (
-    <form className="flex flex-col gap-8 sm:gap-10" onSubmit={form.handleSubmit(onSubmit)} noValidate>
+    <form className="flex flex-col gap-6 sm:gap-8" onSubmit={form.handleSubmit(onSubmit)} noValidate>
       {/* Honeypot */}
       <input
         autoComplete="off"
@@ -130,29 +143,28 @@ export function InquiryForm() {
         aria-hidden="true"
       />
 
-      {/* Row 1: Name + Email */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8">
-        <FormField label="Your full name" error={errors.name?.message} id={fieldId("name")} required>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+        <FormField label={f.name.label} error={errors.name?.message} id={fieldId("name")} required>
           <input
             id={fieldId("name")}
             autoComplete="name"
             className={getInputStyle(!!errors.name)}
             disabled={isDisabled}
-            placeholder="e.g. John Doe"
+            placeholder={f.name.placeholder}
             maxLength={100}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? errorId("name") : undefined}
             {...form.register("name")}
           />
         </FormField>
-        <FormField label="Email address" error={errors.email?.message} id={fieldId("email")} required>
+        <FormField label={f.email.label} error={errors.email?.message} id={fieldId("email")} required>
           <input
             id={fieldId("email")}
             autoComplete="email"
             className={getInputStyle(!!errors.email)}
             disabled={isDisabled}
             type="email"
-            placeholder="e.g. john@yourbusiness.com"
+            placeholder={f.email.placeholder}
             maxLength={254}
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? errorId("email") : undefined}
@@ -161,23 +173,22 @@ export function InquiryForm() {
         </FormField>
       </div>
 
-      {/* Row 2: Phone + Business type */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8">
-        <FormField label="Phone number" error={errors.phone?.message} id={fieldId("phone")} required>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+        <FormField label={f.phone.label} error={errors.phone?.message} id={fieldId("phone")} required>
           <input
             id={fieldId("phone")}
             autoComplete="tel"
             className={getInputStyle(!!errors.phone)}
             disabled={isDisabled}
             type="tel"
-            placeholder="e.g. +91 98765 43210"
+            placeholder={f.phone.placeholder}
             maxLength={20}
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? errorId("phone") : undefined}
             {...form.register("phone")}
           />
         </FormField>
-        <FormField label="What kind of business do you run?" error={errors.businessType?.message} id={fieldId("businessType")} required>
+        <FormField label={f.businessType.label} error={errors.businessType?.message} id={fieldId("businessType")} required>
           <Controller
             name="businessType"
             control={form.control}
@@ -189,16 +200,15 @@ export function InquiryForm() {
                 options={businessTypeOptions}
                 disabled={isDisabled}
                 hasError={!!errors.businessType}
-                placeholder="Select an option"
+                placeholder={f.businessType.placeholder}
               />
             )}
           />
         </FormField>
       </div>
 
-      {/* Row 3: What you need + Timeline */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-8">
-        <FormField label="What can we help you with?" error={errors.whatYouNeed?.message} id={fieldId("whatYouNeed")} required>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+        <FormField label={f.whatYouNeed.label} error={errors.whatYouNeed?.message} id={fieldId("whatYouNeed")} required>
           <Controller
             name="whatYouNeed"
             control={form.control}
@@ -210,12 +220,12 @@ export function InquiryForm() {
                 options={whatYouNeedOptions}
                 disabled={isDisabled}
                 hasError={!!errors.whatYouNeed}
-                placeholder="Select what you need"
+                placeholder={f.whatYouNeed.placeholder}
               />
             )}
           />
         </FormField>
-        <FormField label="When do you need this by? (optional)" error={errors.timeline?.message} id={fieldId("timeline")}>
+        <FormField label={f.timeline.label} error={errors.timeline?.message} id={fieldId("timeline")}>
           <Controller
             name="timeline"
             control={form.control}
@@ -227,67 +237,76 @@ export function InquiryForm() {
                 options={timelineOptions}
                 disabled={isDisabled}
                 hasError={!!errors.timeline}
-                placeholder="Select a timeline"
+                placeholder={f.timeline.placeholder}
               />
             )}
           />
         </FormField>
       </div>
 
-      {/* Full-width fields */}
-      <div>
-      <FormField label="Tell us a bit more about your goals (optional)" error={errors.notes?.message} id={fieldId("notes")}>
+      <FormField label={f.notes.label} error={errors.notes?.message} id={fieldId("notes")} className="col-span-1 sm:col-span-2">
         <textarea
           id={fieldId("notes")}
-          className={`${getInputStyle(!!errors.notes)} min-h-16 resize-y`}
+          className={`${getInputStyle(!!errors.notes)} min-h-[140px] resize-y py-5`}
           disabled={isDisabled}
-          placeholder="Any specific features you need? Or just say hi!"
+          placeholder={f.notes.placeholder}
           maxLength={5000}
           aria-invalid={!!errors.notes}
           aria-describedby={errors.notes ? errorId("notes") : undefined}
           {...form.register("notes")}
         />
       </FormField>
-      </div>
 
-      {/* Submit row */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-4">
+      <div className="mt-4 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between border-t border-border/50 pt-8">
         <Button
           disabled={isDisabled}
           type="submit"
           variant="primary"
-          className="px-10 py-3.5 text-sm font-semibold active:scale-[0.9] transition-transform duration-200"
+          className="group relative overflow-hidden h-12 px-10 text-[0.95rem] font-semibold transition-all duration-300 active:scale-[0.98] shadow-[0_1px_2px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_20px_var(--amber-glow)]"
         >
-          {status.type === "submitting"
-            ? "Sending…"
-            : status.type === "success"
-              ? "Message Sent ✓"
-              : "Send message →"}
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            {status.type === "submitting"
+              ? contact.form.submit.submitting
+              : status.type === "success"
+                ? contact.form.submit.success
+                : contact.form.submit.idle}
+          </span>
+          <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] transition-transform duration-700 ease-in-out group-hover:translate-x-[100%]" />
         </Button>
-        <span className="text-xs text-muted-foreground">
-          We&apos;ll review and reply within 24 hours.
+        <span className="text-[0.8125rem] text-muted-foreground flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-success/60 animate-pulse" />
+          {contact.form.disclaimer}
         </span>
       </div>
 
-      {/* Status messages — aria-live for screen reader announcements */}
       <div aria-live="polite" aria-atomic="true">
-        {status.type === "error" && (
-          <div
-            className="rounded-xl border border-error/20 bg-error/5 text-error px-5 py-4 text-base break-words"
-            role="alert"
-          >
-            {status.message} Please try again, or reach us at kivox.contact@gmail.com.
-          </div>
-        )}
+        <AnimatePresence>
+          {status.type === "error" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: "auto", marginTop: 16 }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              className="rounded-[14px] border border-error/20 bg-error/5 text-error px-5 py-4 text-sm break-words flex items-start gap-3"
+              role="alert"
+            >
+              <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span>{status.message} {contact.form.status.errorSuffix}</span>
+            </motion.div>
+          )}
 
-        {status.type === "success" && (
-          <div
-            className="rounded-xl border border-success/20 bg-success/5 text-success px-5 py-4 text-base"
-            role="status"
-          >
-            Received. We&apos;ll reply within 24 hours with next steps.
-          </div>
-        )}
+          {status.type === "success" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: "auto", marginTop: 16 }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              className="rounded-[14px] border border-success/20 bg-success/5 text-success px-5 py-4 text-sm flex items-start gap-3"
+              role="status"
+            >
+              <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span>{contact.form.status.success}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </form>
   );

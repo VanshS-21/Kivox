@@ -20,7 +20,7 @@ export const legal: {
   privacy: {
     title: "Privacy Policy",
     intro:
-      "This is a draft placeholder for the initial launch. It should be reviewed and updated with final legal business details before public launch.",
+      "This page explains what information Kivox collects when you contact us, why we use it, and how to reach us about privacy questions.",
     sections: [
       {
         title: "What We Collect",
@@ -63,7 +63,9 @@ export const legal: {
       {
         title: "Contact",
         lead: undefined,
-        paragraphs: ["For privacy-related requests, contact: kivox.contact@gmail.com"],
+        paragraphs: [
+          "For privacy-related requests, contact: kivox.contact@gmail.com",
+        ],
         bullets: undefined,
       },
     ],
@@ -71,7 +73,7 @@ export const legal: {
   terms: {
     title: "Terms",
     intro:
-      "This is a draft placeholder for the initial launch. It should be reviewed and updated with final legal business details before public launch.",
+      "These terms explain how this website should be used and how project work is agreed before it begins.",
     sections: [
       {
         title: "General Information",

@@ -1,11 +1,11 @@
 import Image from "next/image";
-import * as motion from "motion/react-client";
 
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { ConstellationCanvas } from "@/components/ui/ConstellationCanvas";
 import { ButtonLink } from "@/components/ui/Button";
 import { HeroHeadline } from "@/components/sections/HeroHeadline";
+import { HeroMockupFrame } from "@/components/sections/HeroMockupFrame";
 import { home } from "@/content/pages/home";
 
 export function HomeHero() {
@@ -14,10 +14,16 @@ export function HomeHero() {
       spacing="none"
       className="home-hero relative flex items-center overflow-hidden pt-[calc(5rem+env(safe-area-inset-top))] pb-12 sm:pt-24 sm:pb-16 md:pt-[calc(6rem+env(safe-area-inset-top))] md:pb-20 lg:pt-28 lg:pb-24"
     >
-      <div aria-hidden="true" className="home-hero__constellation home-hero__constellation--light absolute inset-0 z-0">
+      <div
+        aria-hidden="true"
+        className="home-hero__constellation home-hero__constellation--light absolute inset-0 z-0"
+      >
         <ConstellationCanvas variant="light" />
       </div>
-      <div aria-hidden="true" className="home-hero__constellation home-hero__constellation--dark absolute inset-0 z-0">
+      <div
+        aria-hidden="true"
+        className="home-hero__constellation home-hero__constellation--dark absolute inset-0 z-0"
+      >
         <ConstellationCanvas variant="dark" />
       </div>
 
@@ -26,11 +32,11 @@ export function HomeHero() {
           <div className="max-w-[38rem] pt-8 lg:pt-0">
             <HeroHeadline className="mb-4" />
 
-            <p className="mb-6 max-w-[34rem] studio-body text-muted-foreground sm:mb-8 sm:text-base lg:max-w-[28rem]">
+            <p className="motion-hero-copy mb-6 max-w-[34rem] studio-body text-muted-foreground sm:mb-8 sm:text-base lg:max-w-[28rem]">
               {home.hero.subhead}
             </p>
 
-            <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
+            <div className="motion-hero-actions flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
               <ButtonLink href="/contact" variant="primary">
                 {home.hero.ctas.primary}
                 <span aria-hidden="true" className="ml-2">
@@ -43,11 +49,7 @@ export function HomeHero() {
             </div>
           </div>
 
-          <motion.div 
-            animate={{ y: [0, -12, 0] }}
-            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-            className="relative mx-auto mt-8 w-full max-w-[20rem] sm:max-w-lg lg:mt-0 lg:max-w-[520px] xl:max-w-[560px]"
-          >
+          <HeroMockupFrame>
             <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#141413]/85 shadow-[0_32px_90px_-52px_rgba(217,119,87,0.62)] ring-1 ring-white/10">
               <div className="relative aspect-[16/10] bg-[#141413]">
                 <Image
@@ -62,7 +64,7 @@ export function HomeHero() {
               </div>
               <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/10" />
             </div>
-          </motion.div>
+          </HeroMockupFrame>
         </div>
       </Container>
     </Section>

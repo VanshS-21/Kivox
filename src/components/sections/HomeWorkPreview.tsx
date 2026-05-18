@@ -1,848 +1,330 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
-  type MotionValue,
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  useReducedMotion,
-  useMotionValue,
-} from "motion/react";
-import { Magnetic } from "@/components/ui/Magnetic";
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Pause,
+  Play,
+} from "lucide-react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
+
 import { Section } from "@/components/ui/Section";
-
 import { work } from "@/content/pages/work";
-import { easeOutExpo } from "@/lib/motion";
+import { fadeUp, transitionDefault, viewportOnce } from "@/lib/motion";
 
-const MotionLink = motion.create(Link);
+const projectTags: Record<string, string[]> = {
+  hospital: ["STRATEGY", "DESIGN", "DEVELOPMENT"],
+  cafe: ["BRANDING", "DESIGN", "DEVELOPMENT"],
+  hotel: ["STRATEGY", "DESIGN", "ENGINEERING"],
+  school: ["UX RESEARCH", "DESIGN", "DEVELOPMENT"],
+  fitness: ["DESIGN", "DEVELOPMENT", "BRANDING"],
+};
+
+const projectColors: Record<string, string> = {
+  hospital: "var(--project-hospital)",
+  cafe: "var(--project-cafe)",
+  hotel: "var(--project-hotel)",
+  school: "var(--project-school)",
+  fitness: "var(--project-fitness)",
+};
+
+const AUTOPLAY_INTERVAL_MS = 4000;
 
 export function HomeWorkPreview() {
-  const reduce = useReducedMotion();
   const featuredWork = work.featured;
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isCompact = useMediaQuery("(max-width: 1439px)");
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  const smoothScrollYProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
-  // Spring-based horizontal translation for momentum overshoot + settle
-  const rawX = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, -(featuredWork.length - 1) * 100],
-  );
-
-  // Spring config: creates momentum overshoot then settles naturally
-  const springX = useSpring(rawX, {
-    stiffness: 80,
-    damping: 28,
-    mass: 1.0,
-    restDelta: 0.01,
-  });
-
-  // For the x style, we need vw units
-  const x = useTransform(springX, (v: number) => `${v}vw`);
-  const progressOpacity = useTransform(smoothScrollYProgress, [0, 0.88, 1], [1, 1, 0]);
-
-  // Track current project index for the counter
+  const [isAutoPaused, setIsAutoPaused] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const reduce = useReducedMotion();
   const totalPanels = featuredWork.length;
-  const desktopRunwayVh = Math.max(totalPanels * 124, 340);
-  const progressNum = useTransform(smoothScrollYProgress, [0, 1], [1, totalPanels]);
-
-  // Entrance 3D tilt animation
-  const { scrollYProgress: enterProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "start start"],
-  });
-
-  const smoothEnterProgress = useSpring(enterProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
-  const sectionScale = useTransform(smoothEnterProgress, [0, 1], [0.92, 1]);
-  const sectionRotateX = useTransform(smoothEnterProgress, [0, 1], [15, 0]);
-  const sectionOpacity = useTransform(smoothEnterProgress, [0, 0.6], [0, 1]);
-
-  // Service tags per project type
-  const projectTags: Record<string, string[]> = {
-    hospital: ["STRATEGY", "DESIGN", "DEVELOPMENT"],
-    cafe: ["BRANDING", "DESIGN", "DEVELOPMENT"],
-    hotel: ["STRATEGY", "DESIGN", "ENGINEERING"],
-    school: ["UX RESEARCH", "DESIGN", "DEVELOPMENT"],
-    fitness: ["DESIGN", "DEVELOPMENT", "BRANDING"],
-  };
-
-  // Project-specific accent colors (CSS custom properties)
-  const projectColors: Record<string, string> = {
-    hospital: "var(--project-hospital)",
-    cafe: "var(--project-cafe)",
-    hotel: "var(--project-hotel)",
-    school: "var(--project-school)",
-    fitness: "var(--project-fitness)",
-  };
-
-  const scrollToIndex = (idx: number) => {
-    if (!containerRef.current) return;
-    const scrollableDistance = containerRef.current.scrollHeight - window.innerHeight;
-    const targetY = containerRef.current.offsetTop + (idx / (totalPanels - 1)) * scrollableDistance;
-    window.scrollTo({ top: targetY, behavior: "smooth" });
-  };
+  const autoplayPaused = isAutoPaused;
 
   useEffect(() => {
-    if (!isCompact || reduce) return;
+    if (autoplayPaused || totalPanels < 2) return;
 
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % featuredWork.length);
-    }, 4200);
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) =>
+        current === totalPanels - 1 ? 0 : current + 1,
+      );
+    }, AUTOPLAY_INTERVAL_MS);
 
-    return () => window.clearInterval(timer);
-  }, [featuredWork.length, isCompact, reduce]);
+    return () => window.clearInterval(intervalId);
+  }, [autoplayPaused, totalPanels]);
 
-  if (isCompact) {
-    return (
-      <Section spacing="loose" ref={containerRef} className="relative overflow-hidden bg-background border-t border-border work-showcase">
-        <div className="mx-auto mb-6 flex max-w-6xl justify-end px-5 sm:px-6 md:px-10 lg:px-12">
-          <div className="hidden shrink-0 font-mono text-sm text-muted-foreground md:block">
-            <h2 className="sr-only">Featured Work</h2>
-            {String(activeIndex + 1).padStart(2, "0")} /{" "}
-            {String(totalPanels).padStart(2, "0")}
+  const goToPrevious = () => {
+    setActiveIndex((current) =>
+      current === 0 ? totalPanels - 1 : current - 1,
+    );
+  };
+
+  const goToNext = () => {
+    setActiveIndex((current) =>
+      current === totalPanels - 1 ? 0 : current + 1,
+    );
+  };
+
+  const getAnimations = (idx: number) => {
+    let offset = idx - activeIndex;
+    if (offset > totalPanels / 2) offset -= totalPanels;
+    if (offset < -totalPanels / 2) offset += totalPanels;
+
+    if (offset === 0) {
+      return { x: "0%", z: 0, rotateY: 0, opacity: 1, scale: 1, zIndex: 30 };
+    } else if (offset === 1) {
+      return { x: "45%", z: -100, rotateY: -12, opacity: 0.6, scale: 0.85, zIndex: 20 };
+    } else if (offset === -1) {
+      return { x: "-45%", z: -100, rotateY: 12, opacity: 0.6, scale: 0.85, zIndex: 20 };
+    } else if (offset > 1) {
+      return { x: "80%", z: -200, rotateY: -20, opacity: 0, scale: 0.7, zIndex: 10 };
+    } else {
+      return { x: "-80%", z: -200, rotateY: 20, opacity: 0, scale: 0.7, zIndex: 10 };
+    }
+  };
+
+  return (
+    <Section
+      spacing="loose"
+      className="work-showcase relative overflow-hidden border-t border-border bg-background"
+    >
+      {/* Ambient Cinematic Background */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={activeIndex}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 0.25, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={featuredWork[activeIndex].image}
+              alt=""
+              fill
+              className="object-cover blur-[100px] saturate-[1.5]"
+            />
+          </motion.div>
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-6 md:px-10 lg:px-12">
+        <motion.div
+          initial={reduce ? false : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={viewportOnce}
+          variants={fadeUp}
+          transition={transitionDefault}
+          className="mb-10 flex flex-col gap-5 md:mb-16 md:flex-row md:items-end md:justify-between"
+        >
+          <div className="max-w-3xl">
+            <p className="studio-eyebrow mb-4 text-accent drop-shadow-sm">[ Featured Work ]</p>
+            <h2 className="studio-h2-editorial text-foreground drop-shadow-sm">
+              Proof that feels built, not staged.
+            </h2>
           </div>
-        </div>
 
-        <div className="relative mx-auto max-w-6xl px-5 sm:px-6 md:px-10 lg:px-12">
-          <div className="overflow-hidden rounded-[2rem]">
-            <motion.div
-              animate={{ x: `-${activeIndex * 100}%` }}
-              className="flex"
-              transition={
-                reduce ? { duration: 0 } : { duration: 0.75, ease: easeOutExpo }
-              }
-            >
-              {featuredWork.map((project, idx) => (
-                <article
-                  inert={idx !== activeIndex}
-                  className="w-full shrink-0"
-                  key={project.slug}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 font-mono text-xs text-subtle-foreground/80">
+              <span className="studio-tabular text-foreground font-semibold">
+                {String(activeIndex + 1).padStart(2, "0")}
+              </span>
+              <span aria-hidden="true">/</span>
+              <span className="studio-tabular">
+                {String(totalPanels).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                aria-label="Show previous project"
+                className="grid h-11 w-11 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                onClick={goToPrevious}
+                type="button"
+              >
+                <ChevronLeft aria-hidden="true" className="h-4 w-4" />
+              </button>
+              <button
+                aria-label={isAutoPaused ? "Start autoplay" : "Pause autoplay"}
+                className="grid h-11 w-11 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                onClick={() => setIsAutoPaused((p) => !p)}
+                type="button"
+              >
+                {isAutoPaused ? (
+                  <Play aria-hidden="true" className="h-4 w-4" />
+                ) : (
+                  <Pause aria-hidden="true" className="h-4 w-4" />
+                )}
+              </button>
+              <button
+                aria-label="Show next project"
+                className="grid h-11 w-11 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                onClick={goToNext}
+                type="button"
+              >
+                <ChevronRight aria-hidden="true" className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Cinematic 3D Carousel Track */}
+        <div
+          aria-label="Featured work cinematic carousel"
+          className="relative flex h-[350px] w-full items-center justify-center [perspective:2000px] sm:h-[450px] md:h-[500px] lg:h-[600px]"
+          onBlurCapture={() => setIsHovering(false)}
+          onFocusCapture={() => setIsHovering(true)}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          {featuredWork.map((project, idx) => {
+            const accent = projectColors[project.slug] || "var(--accent)";
+            const isActive = idx === activeIndex;
+
+            return (
+              <motion.article
+                key={project.slug}
+                aria-hidden={!isActive}
+                initial={false}
+                animate={reduce ? (isActive ? { opacity: 1, zIndex: 30 } : { opacity: 0, zIndex: 0 }) : getAnimations(idx)}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute w-[90vw] max-w-[1050px] shrink-0 origin-center [transform-style:preserve-3d]"
+                style={{ aspectRatio: "16 / 10" }}
+                onClick={() => {
+                  if (!isActive) setActiveIndex(idx);
+                }}
+              >
+                {/* Carousel Frame - Signature Deep Recessed Well */}
+                <div className="absolute inset-0 rounded-[1.5rem] bg-[oklch(0.13_0.015_55)] p-3 sm:p-4 shadow-[0_2px_4px_rgba(0,0,0,0.4),0_12px_24px_rgba(0,0,0,0.3),0_24px_48px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.4)] sm:rounded-[2rem] transition-all duration-500"
+                     style={{ 
+                       cursor: isActive ? "default" : "pointer",
+                       boxShadow: isActive ? `0 34px 120px -50px ${accent}` : undefined 
+                     }}
                 >
-                  <div className="grid overflow-hidden rounded-[2rem] border border-border/50 bg-surface md:min-h-[460px] md:grid-cols-[0.92fr_1.08fr] lg:min-h-[500px] lg:grid-cols-[1.05fr_0.95fr]">
-                    <MotionLink
-                      whileTap={reduce ? undefined : { scale: 0.98 }}
-                      className="group relative block h-[250px] overflow-hidden bg-surface-alt sm:h-[340px] md:h-auto transition-transform duration-300 ease-[var(--ease-out-expo)]"
-                      href={project.liveUrl || `/work/${project.slug}`}
-                      prefetch={false}
-                      rel={
-                        project.liveUrl?.startsWith("/")
-                          ? undefined
-                          : "noopener noreferrer"
+                  <div className="relative h-full w-full overflow-hidden rounded-[1rem] sm:rounded-[1.25rem] shadow-[inset_0_4px_30px_rgba(0,0,0,0.7)] group">
+                    <motion.div
+                      animate={
+                        isActive && !reduce && isHovering
+                          ? { scale: 1.03 }
+                          : { scale: 1 }
                       }
-                      target={
-                        project.liveUrl?.startsWith("/") ? undefined : "_blank"
-                      }
+                      transition={{ duration: 2, ease: "easeOut" }}
+                      className="absolute inset-0"
                     >
                       <Image
                         alt={`${project.title} project showcase`}
-                        className="object-cover object-left-top transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-[1.08] group-hover:rotate-2"
+                        className="object-cover object-left-top"
                         fill
-                        loading="lazy"
-                        sizes="(max-width: 767px) 88vw, (max-width: 1439px) 58vw, 50vw"
-                        src={project.images?.[0] ?? project.image}
+                        loading={idx === 0 ? "eager" : "lazy"}
+                        sizes="(max-width: 1279px) 100vw, 1180px"
+                        src={project.image}
                       />
-                      <div className="absolute bottom-4 left-4 rounded-full border border-border/30 bg-elevated/80 px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.14em] text-foreground backdrop-blur-md md:bottom-6 md:left-6">
-                        Live showcase <span className="sr-only">for {project.title}</span>
-                      </div>
-                    </MotionLink>
-
-                    <div className="flex min-h-[320px] flex-col justify-between p-6 sm:p-8 md:min-h-0 md:p-8 lg:p-10">
-                      <div>
-                        <p
-                          className="studio-eyebrow mb-4 font-bold"
-                          style={{
-                            color:
-                              projectColors[project.slug] || "var(--accent)",
-                          }}
-                        >
-                          Showcase - {project.title}
-                        </p>
-                        <h3 className="max-w-[10ch] studio-h3-sans text-foreground">
-                          {project.title.split(" ")[0]}{" "}
-                          <span className="font-serif italic text-accent">
-                            {project.title.split(" ").slice(1).join(" ") ||
-                              "Project"}
-                            .
-                          </span>
-                        </h3>
-                        <p className="mt-4 max-w-xl studio-body text-muted-foreground">
-                          {project.demonstrates}
-                        </p>
-                      </div>
-
-                      <div className="mt-6 space-y-5">
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.68rem] font-mono uppercase tracking-[0.15em] text-subtle-foreground sm:text-xs">
-                          {(
-                            projectTags[project.slug] || [
-                              "DESIGN",
-                              "DEVELOPMENT",
-                            ]
-                          ).map((tag, tagIdx) => (
-                            <span
-                              className="inline-flex items-center gap-4"
-                              key={tag}
-                            >
-                              {tagIdx > 0 ? (
-                                <span className="opacity-35">/</span>
-                              ) : null}
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                          {project.liveUrl ? (
-                            <MotionLink
-                              whileTap={reduce ? undefined : { scale: 0.95 }}
-                              className="inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5"
-                              href={project.liveUrl}
-                              prefetch={false}
-                              rel={
-                                project.liveUrl.startsWith("/")
-                                  ? undefined
-                                  : "noopener noreferrer"
-                              }
-                              style={{
-                                backgroundColor:
-                                  projectColors[project.slug] ||
-                                  "var(--accent)",
-                              }}
-                              target={
-                                project.liveUrl.startsWith("/")
-                                  ? undefined
-                                  : "_blank"
-                              }
-                            >
-                              View Live Website
-                              <span className="ml-2">→</span>
-                              <span className="sr-only"> for {project.title}</span>
-                            </MotionLink>
-                          ) : null}
-                          <MotionLink
-                            whileTap={reduce ? undefined : { scale: 0.95 }}
-                            className="inline-flex min-h-12 items-center justify-center rounded-full border bg-[var(--work-secondary-cta-bg)] px-6 text-sm font-semibold transition-all hover:bg-accent hover:text-[var(--work-primary-cta-fg)]"
-                            href={`/work/${project.slug}`}
-                            prefetch={false}
-                            style={{
-                              borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 34%, transparent)`,
-                              color:
-                                projectColors[project.slug] || "var(--accent)",
-                            }}
-                          >
-                            Case Study
-                            <span className="sr-only"> for {project.title}</span>
-                          </MotionLink>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-6 flex max-w-6xl items-center justify-between px-5 sm:px-6 md:px-10 lg:px-12">
-          <div className="flex items-center gap-2">
-            {featuredWork.map((project, idx) => (
-              <button
-                aria-label={`Show ${project.title}`}
-                className="relative min-w-[44px] min-h-[44px] flex items-center justify-center transition-all"
-                key={project.slug}
-                onClick={() => setActiveIndex(idx)}
-                type="button"
-              >
-                <span
-                  className="block h-2.5 rounded-full transition-all"
-                  style={{
-                    width: idx === activeIndex ? "2rem" : "0.625rem",
-                    backgroundColor:
-                      idx === activeIndex
-                        ? projectColors[project.slug] || "var(--accent)"
-                        : "var(--border-strong)",
-                  }}
-                />
-              </button>
-            ))}
-          </div>
-          <div className="font-mono text-xs text-subtle-foreground md:hidden">
-            {String(activeIndex + 1).padStart(2, "0")} /{" "}
-            {String(totalPanels).padStart(2, "0")}
-          </div>
-        </div>
-      </Section>
-    );
-  }
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative bg-background work-showcase"
-      // Height creates the scroll runway: N panels × 100vh for horizontal scroll.
-      // In reduced motion, we let the normal vertical flow dictate height.
-      style={reduce ? {} : { height: `${desktopRunwayVh}vh` }}
-    >
-      {/* Sticky viewport container */}
-      <motion.div
-        className={
-          reduce ? "flex flex-col" : "sticky top-0 h-screen overflow-hidden flex flex-col w-full"
-        }
-        style={
-          reduce
-            ? {}
-            : {
-                scale: sectionScale,
-                rotateX: sectionRotateX,
-                opacity: sectionOpacity,
-                transformOrigin: "bottom center",
-                perspective: "1200px",
-              }
-        }
-      >
-        {/* Section Heading for full-bleed cinematic effect hidden visually */}
-        <h2 className="sr-only">Featured Work</h2>
-
-        {/* Counter — top right with rolling animation */}
-        {!reduce && (
-          <div
-            className="absolute top-24 sm:top-28 right-6 lg:right-12 z-20 flex items-center gap-2"
-            aria-hidden="true"
-          >
-            <motion.span className="text-sm font-mono text-accent studio-tabular">
-              <Counter value={progressNum} />
-            </motion.span>
-            <span className="text-sm font-mono text-subtle-foreground">/</span>
-            <span className="text-sm font-mono text-subtle-foreground studio-tabular">
-              {String(totalPanels).padStart(2, "0")}
-            </span>
-          </div>
-        )}
-
-        {/* Horizontal track — or vertical stack in reduced motion */}
-        <motion.div
-          style={reduce ? {} : { x, willChange: "transform" }}
-          className={reduce ? "flex flex-col w-full" : "flex flex-1"}
-        >
-          {featuredWork.map((project) => (
-            <div
-              key={project.slug}
-              className={
-                reduce
-                  ? "w-full min-h-[85vh] flex items-center relative overflow-hidden border-b border-border/20"
-                  : "w-[100vw] shrink-0 h-full flex items-center relative overflow-hidden carousel-frame"
-              }
-            >
-              {/* ── Full-bleed background image ── */}
-              <div className="absolute inset-0 z-0">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    willChange: "transform",
-                    transform: "translateZ(0)",
-                  }}
-                >
-                  <Image
-                    src={project.image}
-                    alt={`${project.title} project showcase`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 100vw"
-                    loading="lazy"
-                  />
-                </div>
-                {/* Opacity overlay — controls visibility in both themes */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: "var(--work-stage-bg, var(--bg-primary))",
-                    opacity: "var(--work-bg-overlay, 0.82)",
-                  }}
-                />
-                {/* Project-color accent wash */}
-                <div
-                  className="absolute inset-0 opacity-[0.06]"
-                  style={{
-                    background: `radial-gradient(ellipse at 70% 50%, ${projectColors[project.slug] || "var(--accent)"}, transparent 60%)`,
-                  }}
-                />
-              </div>
-
-              {/* ── Content layer ── */}
-              <div className="relative z-10 w-full h-full flex flex-col justify-center">
-                {/* Main content */}
-                <div className="relative max-w-[1400px] w-full mx-auto px-6 md:px-12 lg:px-16 xl:-translate-y-4 2xl:-translate-y-6">
-                  <motion.div
-                    initial={reduce ? false : "hidden"}
-                    whileInView={reduce ? undefined : "show"}
-                    viewport={{ once: true, amount: 0.3 }}
-                    variants={{
-                      hidden: {},
-                      show: {
-                        transition: {
-                          staggerChildren: 0.1,
-                          delayChildren: 0.1,
-                        },
-                      },
-                    }}
-                    className="max-w-[44rem] space-y-6 work-preview-content"
-                  >
-                    {/* Chapter label — project-colored */}
-                    <motion.div
-                      variants={{
-                        hidden: { opacity: 0, x: -16 },
-                        show: {
-                          opacity: 1,
-                          x: 0,
-                          transition: { duration: 0.5, ease: easeOutExpo },
-                        },
-                      }}
-                      className="flex items-center gap-4 work-preview-flex-center"
-                    >
-                      <span
-                        className="studio-eyebrow font-bold"
-                        style={{
-                          color: projectColors[project.slug] || "var(--accent)",
-                        }}
-                      >
-                        Showcase · {project.title}
-                      </span>
                     </motion.div>
 
-                    {/* Project headline — BIG */}
-                      <motion.h3
-                        variants={{
-                          hidden: {},
-                          show: {
-                            transition: {
-                              staggerChildren: 0.1,
-                              delayChildren: 0.2,
-                            },
-                          },
-                        }}
-                        className="studio-h1-headline text-foreground"
-                      >
-                      <motion.span
-                        variants={{
-                          hidden: { opacity: 0, y: 24, rotateX: -15 },
-                          show: {
-                            opacity: 1,
-                            y: 0,
-                            rotateX: 0,
-                            transition: { duration: 0.8, ease: easeOutExpo },
-                          },
-                        }}
-                        className="inline-block"
-                        style={{ transformOrigin: "top center" }}
-                      >
-                        {project.title.split(" ")[0]}
-                      </motion.span>{" "}
-                      {project.title
-                        .split(" ")
-                        .slice(1)
-                        .map((word, wIdx, arr) => (
-                          <motion.span
-                            key={wIdx}
-                            variants={{
-                              hidden: { opacity: 0, y: 24, rotateX: -15 },
-                              show: {
-                                opacity: 1,
-                                y: 0,
-                                rotateX: 0,
-                                transition: {
-                                  duration: 0.8,
-                                  ease: easeOutExpo,
-                                },
-                              },
-                            }}
-                            className="inline-block font-serif font-normal text-accent"
-                            style={{
-                              fontStyle: "italic",
-                              transformOrigin: "top center",
-                            }}
-                          >
-                            {word}
-                            {wIdx === arr.length - 1 ? "." : "\u00A0"}
-                          </motion.span>
-                        ))}
-                    </motion.h3>
+                    <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15)] rounded-[1rem] sm:rounded-[1.25rem] z-40" />
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
 
-                      <motion.p
-                        variants={{
-                          hidden: { opacity: 0, y: 12 },
-                          show: {
-                            opacity: 1,
-                            y: 0,
-                            transition: { duration: 0.5, ease: easeOutExpo },
-                          },
-                        }}
-                        className="work-preview-description max-w-xl text-muted-foreground work-preview-content studio-body-large"
-                      >
-                      {project.demonstrates}
-                    </motion.p>
+        {/* Active Project Details (Centered below carousel) */}
+        <div className="relative z-20 mx-auto mt-10 sm:mt-14 flex max-w-4xl flex-col items-center text-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="flex flex-col items-center"
+            >
+              {(() => {
+                const project = featuredWork[activeIndex];
+                const accent = projectColors[project.slug] || "var(--accent)";
+                const tags = projectTags[project.slug] || ["DESIGN", "DEVELOPMENT"];
+                const liveHref = project.liveUrl || `/work/${project.slug}`;
+                const liveIsExternal = !liveHref.startsWith("/");
 
-                    {/* Service tags + CTA row */}
-                    <motion.div
-                      variants={{
-                        hidden: { opacity: 0 },
-                        show: { opacity: 1, transition: { duration: 0.5 } },
-                      }}
-                      className="flex flex-col sm:flex-row sm:items-center gap-5 pt-1 work-preview-tags-row"
+                return (
+                  <>
+                    <div className="mb-4 flex items-center justify-center gap-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-foreground/70">
+                      <span>{project.year}</span>
+                      <span aria-hidden="true" className="opacity-40">
+                        /
+                      </span>
+                      <span>{project.duration}</span>
+                    </div>
+
+                    <p
+                      className="studio-eyebrow mb-3 font-bold sm:mb-4"
+                      style={{ color: accent }}
                     >
-                      {/* Tags */}
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono tracking-[0.15em] uppercase text-subtle-foreground work-preview-flex-center">
-                        {(
-                          projectTags[project.slug] || ["DESIGN", "DEVELOPMENT"]
-                        ).map((tag, tagIdx) => (
-                          <span key={tag} className="flex items-center gap-4">
+                      Showcase - {project.label}
+                    </p>
+                    <h3 className="font-sans text-4xl font-semibold leading-[0.95] tracking-tight text-foreground sm:text-5xl md:text-6xl">
+                      {project.title}
+                    </h3>
+                    <p className="mt-5 max-w-2xl font-sans text-base text-foreground/80 sm:text-lg sm:leading-relaxed">
+                      {project.demonstrates}
+                    </p>
+
+                    <div className="mt-8 flex flex-col items-center gap-6 sm:mt-10">
+                      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[0.68rem] font-mono uppercase tracking-[0.15em] text-foreground/60 sm:text-xs">
+                        {tags.map((tag, tagIdx) => (
+                          <span className="inline-flex items-center gap-4" key={tag}>
                             {tagIdx > 0 ? (
-                              <span className="opacity-40">·</span>
+                              <span className="opacity-35">/</span>
                             ) : null}
                             {tag}
                           </span>
                         ))}
                       </div>
-                    </motion.div>
-                  </motion.div>
-                </div>
 
-                {/* Clickable showcase link — bottom right */}
-                <div className="absolute bottom-20 left-6 right-auto z-30 sm:left-auto sm:right-8 lg:bottom-24 lg:right-16 xl:right-24">
-                  <div className="flex flex-wrap items-center gap-3">
-                    {project.liveUrl ? (
-                      <Magnetic strength={0.2}>
+                      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap justify-center mt-2">
+                        {project.liveUrl ? (
+                          <Link
+                            className="group/live inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-24px_var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                            href={project.liveUrl}
+                            prefetch={false}
+                            rel={liveIsExternal ? "noopener noreferrer" : undefined}
+                            style={{ backgroundColor: accent }}
+                            target={liveIsExternal ? "_blank" : undefined}
+                          >
+                            View Live Website
+                            <ArrowUpRight
+                              aria-hidden="true"
+                              className="h-4 w-4 transition-transform duration-300 group-hover/live:-translate-y-0.5 group-hover/live:translate-x-0.5"
+                            />
+                            <span className="sr-only"> for {project.title}</span>
+                          </Link>
+                        ) : null}
                         <Link
-                          href={project.liveUrl}
+                          className="inline-flex min-h-12 items-center justify-center rounded-full border bg-surface px-7 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-surface/60 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                          href={`/work/${project.slug}`}
                           prefetch={false}
-                          rel={
-                            project.liveUrl.startsWith("/")
-                              ? undefined
-                              : "noopener noreferrer"
-                          }
-                          target={
-                            project.liveUrl.startsWith("/")
-                              ? undefined
-                              : "_blank"
-                          }
-                          className="inline-flex items-center gap-3 rounded-full px-5 py-2.5 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                           style={{
-                            backgroundColor:
-                              projectColors[project.slug] || "var(--accent)",
+                            borderColor: `color-mix(in oklch, ${accent} 40%, transparent)`,
                           }}
                         >
-                          View Live Website<span className="sr-only"> for {project.title}</span>
-                          <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-                            →
-                          </span>
+                          Case Study
+                          <span className="sr-only"> for {project.title}</span>
                         </Link>
-                      </Magnetic>
-                    ) : null}
-                    <Magnetic strength={0.2}>
-                      <Link
-                        href={`/work/${project.slug}`}
-                        prefetch={false}
-                        className="inline-flex items-center gap-4 rounded-full text-sm font-semibold opacity-90 transition-opacity duration-300 hover:opacity-100 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-                        style={{
-                          color: projectColors[project.slug] || "var(--accent)",
-                        }}
-                      >
-                        <span
-                          className="block rounded-full border bg-[var(--work-secondary-cta-bg)] px-5 py-2.5 shadow-[var(--work-secondary-cta-shadow)] backdrop-blur-md transition-colors duration-300"
-                          style={{
-                            borderColor: `color-mix(in oklch, ${projectColors[project.slug] || "var(--accent)"} 28%, var(--work-secondary-cta-border))`,
-                          }}
-                        >
-                          Case Study <span className="sr-only">for {project.title}</span> →
-                        </span>
-                      </Link>
-                    </Magnetic>
-                  </div>
-                </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-                {/* ── Cinematic Staggered Media Grid ── */}
-                <ShowcaseMediaCluster
-                  images={project.images}
-                  href={project.liveUrl || `/work/${project.slug}`}
-                  title={project.title}
-                />
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Full-width scroll progress bar — bottom */}
-        <motion.div
-          className="absolute bottom-5 sm:bottom-8 left-0 right-0 z-20 px-6 md:px-12 lg:px-16 max-w-[1400px] mx-auto"
-          style={reduce ? {} : { opacity: progressOpacity }}
-        >
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 lg:gap-6">
-            <div className="flex items-center gap-4 flex-1 w-full">
-              {/* Desktop Pagination Dots */}
-              <div className="hidden sm:flex items-center gap-2 shrink-0" role="tablist" aria-label="Project carousel pagination">
-                {featuredWork.map((project, idx) => (
-                  <DesktopDot 
-                    key={project.slug} 
-                    idx={idx} 
-                    totalPanels={totalPanels} 
-                    project={project} 
-                    projectColors={projectColors} 
-                    smoothScrollYProgress={smoothScrollYProgress} 
-                    onClick={() => scrollToIndex(idx)} 
-                  />
-                ))}
-              </div>
-              
-              {/* Label for Mobile */}
-              <div className="flex sm:hidden items-center gap-2 shrink-0">
-                <span className="studio-tag text-subtle-foreground">
-                  More work
-                </span>
-                <motion.span
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="text-subtle-foreground text-xs"
-                >
-                  →
-                </motion.span>
-              </div>
-
-              {/* Full-width track */}
-              <div className="flex-1 h-[2px] bg-border-soft rounded-full overflow-hidden">
-                <motion.div
-                  style={{ scaleX: smoothScrollYProgress }}
-                  className="h-full bg-accent origin-left"
-                />
-              </div>
-
-              {/* Percentage */}
-              <motion.span
-                className="text-xs font-mono text-subtle-foreground studio-tabular shrink-0"
-                aria-hidden="true"
-              >
-                {reduce ? "100%" : <Percentage value={smoothScrollYProgress} />}
-              </motion.span>
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
-    </div>
-  );
-}
-
-function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia(query);
-    const update = () => setMatches(media.matches);
-
-    update();
-    media.addEventListener("change", update);
-
-    return () => media.removeEventListener("change", update);
-  }, [query]);
-
-  return matches;
-}
-
-/** Animated counter that displays the current panel number */
-function Counter({ value }: { value: MotionValue<number> }) {
-  const rounded = useTransform(value, (v: number) =>
-    String(Math.round(v)).padStart(2, "0"),
-  );
-  return <motion.span>{rounded}</motion.span>;
-}
-
-/** Animated percentage display */
-function Percentage({ value }: { value: MotionValue<number> }) {
-  const pct = useTransform(value, (v: number) => `${Math.round(v * 100)}%`);
-  return <motion.span>{pct}</motion.span>;
-}
-
-/** Staggered Bento Media Cluster for high-craft showcase right side */
-function ShowcaseMediaCluster({
-  images,
-  href,
-  title,
-}: {
-  images: string[];
-  href: string;
-  title: string;
-}) {
-  const reduce = useReducedMotion();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 25 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 25 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [8, -8]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-8, 8]);
-  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], [100, -100]);
-  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], [100, -100]);
-
-  if (!images || images.length < 3) return null;
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <Link
-      href={href}
-      prefetch={false}
-      target={href.startsWith("/") ? undefined : "_blank"}
-      rel={href.startsWith("/") ? undefined : "noopener noreferrer"}
-      aria-label="View Live Showcase"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="showcase-cluster absolute top-0 bottom-0 right-[4%] lg:right-[6%] w-[45%] max-w-[800px] flex items-center justify-center z-10 hidden lg:flex group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-3xl"
-      style={{ perspective: "1500px" }}
-    >
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="showcase-cluster-frame relative w-full aspect-[4/3] transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-      >
-        {/* Back Image (Project view 3) */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 40, x: 20 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
-          transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          className="showcase-media-card absolute top-[8%] right-[5%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-strong border border-border/10 bg-surface z-10"
-        >
-          <Image
-            src={images[2]}
-            alt={`${title} secondary interface view`}
-            fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 25vw"
-            quality={90}
-          />
-        </motion.div>
-
-        {/* Middle Image (Project view 2) */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 50, x: 20 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
-          transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.2 }}
-          viewport={{ once: true, amount: 0.3 }}
-          className="showcase-media-card absolute top-[20%] right-[15%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-strong border border-border/15 z-20 bg-surface"
-        >
-          <Image
-            src={images[1]}
-            alt={`${title} detail interface view`}
-            fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 25vw"
-            quality={90}
-          />
-        </motion.div>
-
-        {/* Front Image (Project view 1 - Main) */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 60, x: 20 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0, x: 0 }}
-          transition={{ duration: 1.0, ease: easeOutExpo, delay: 0.3 }}
-          viewport={{ once: true, amount: 0.3 }}
-          style={{ translateZ: "40px" }}
-          className="showcase-media-card absolute top-[32%] right-[25%] w-[65%] aspect-[16/10] rounded-2xl overflow-hidden shadow-strong border border-border/20 z-30 bg-surface"
-        >
-          <Image
-            src={images[0]}
-            alt={`${title} main interface view`}
-            fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 30vw"
-            quality={90}
-          />
-          {/* Dynamic Glare Effect */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{
-              background:
-                "radial-gradient(circle at center, color-mix(in oklch, var(--fg-primary) 15%, transparent) 0%, transparent 60%)",
-              x: glareX,
-              y: glareY,
-              scale: 2,
-            }}
-          />
-        </motion.div>
-      </motion.div>
-    </Link>
-  );
-}
-
-/** Interactive pagination dot for desktop carousel to bypass scroll trap */
-function DesktopDot({
-  idx,
-  totalPanels,
-  project,
-  projectColors,
-  smoothScrollYProgress,
-  onClick,
-}: {
-  idx: number;
-  totalPanels: number;
-  project: { slug: string; title: string; [key: string]: unknown };
-  projectColors: Record<string, string>;
-  smoothScrollYProgress: MotionValue<number>;
-  onClick: () => void;
-}) {
-  const dotWidth = useTransform(smoothScrollYProgress, (v: number) => {
-    const targetProgress = idx / (totalPanels - 1);
-    const distance = Math.abs(v - targetProgress);
-    const isActive = distance < 1 / ((totalPanels - 1) * 2);
-    return isActive ? "2rem" : "0.625rem";
-  });
-  
-  const dotColor = useTransform(smoothScrollYProgress, (v: number) => {
-    const targetProgress = idx / (totalPanels - 1);
-    const distance = Math.abs(v - targetProgress);
-    const isActive = distance < 1 / ((totalPanels - 1) * 2);
-    return isActive ? projectColors[project.slug] || "var(--accent)" : "var(--border-strong)";
-  });
-
-  return (
-    <motion.button
-      onClick={onClick}
-      aria-label={`Jump to ${project.title}`}
-      className="h-2.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors cursor-pointer"
-      style={{
-        width: dotWidth,
-        backgroundColor: dotColor,
-      }}
-      type="button"
-      role="tab"
-    />
+      </div>
+    </Section>
   );
 }

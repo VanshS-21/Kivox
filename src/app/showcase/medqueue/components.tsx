@@ -19,11 +19,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import {
-  Doctor,
-  Slot,
-  useMedQueue,
-} from "./context";
+import { Doctor, Slot, useMedQueue } from "./context";
 import { mq, routes } from "./tokens";
 
 export function MQButton({
@@ -186,7 +182,9 @@ export function MQSectionLabel({
 
 export function MQNav() {
   const { appointments, resetDemo } = useMedQueue();
-  const upcoming = appointments.filter((appointment) => appointment.status === "upcoming");
+  const upcoming = appointments.filter(
+    (appointment) => appointment.status === "upcoming",
+  );
 
   return (
     <header
@@ -197,7 +195,11 @@ export function MQNav() {
       }}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-        <Link className="flex items-center gap-3" href={routes.home} prefetch={false}>
+        <Link
+          className="flex min-h-11 items-center gap-3"
+          href={routes.home}
+          prefetch={false}
+        >
           <span
             className="grid h-10 w-10 place-items-center rounded-2xl"
             style={{
@@ -209,23 +211,44 @@ export function MQNav() {
             <HeartPulse aria-hidden="true" className="h-5 w-5" />
           </span>
           <span className="leading-tight">
-            <span className="block text-sm font-black" style={{ color: mq.color.ink }}>
+            <span
+              className="block text-sm font-black"
+              style={{ color: mq.color.ink }}
+            >
               MedQueue
             </span>
-            <span className="hidden text-xs font-semibold md:block" style={{ color: mq.color.muted }}>
+            <span
+              className="hidden text-xs font-semibold md:block"
+              style={{ color: mq.color.muted }}
+            >
               Patient concierge demo
             </span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 text-sm font-semibold md:flex" style={{ color: mq.color.muted }}>
-          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.search} prefetch={false}>
+        <nav
+          className="hidden items-center gap-1 text-sm font-semibold md:flex"
+          style={{ color: mq.color.muted }}
+        >
+          <Link
+            className="inline-flex min-h-11 items-center rounded-full px-3 transition hover:bg-white"
+            href={routes.search}
+            prefetch={false}
+          >
             Find care
           </Link>
-          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.portal} prefetch={false}>
+          <Link
+            className="inline-flex min-h-11 items-center rounded-full px-3 transition hover:bg-white"
+            href={routes.portal}
+            prefetch={false}
+          >
             Portal
           </Link>
-          <Link className="rounded-full px-3 py-2 transition hover:bg-white" href={routes.designSystem} prefetch={false}>
+          <Link
+            className="inline-flex min-h-11 items-center rounded-full px-3 transition hover:bg-white"
+            href={routes.designSystem}
+            prefetch={false}
+          >
             System
           </Link>
         </nav>
@@ -233,7 +256,7 @@ export function MQNav() {
         <div className="flex items-center gap-2">
           <button
             aria-label="Reset MedQueue demo state"
-            className="hidden h-10 w-10 place-items-center rounded-full border transition hover:bg-white md:grid"
+            className="hidden h-11 w-11 place-items-center rounded-full border transition hover:bg-white md:grid"
             onClick={resetDemo}
             style={{ borderColor: mq.color.rule, color: mq.color.muted }}
             type="button"
@@ -241,7 +264,7 @@ export function MQNav() {
             <RotateCcw aria-hidden="true" className="h-4 w-4" />
           </button>
           <Link
-            className="inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-bold"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-bold"
             href={routes.portal}
             prefetch={false}
             style={{ backgroundColor: mq.color.ink, color: mq.color.white }}
@@ -301,7 +324,10 @@ export function DoctorCard({
             >
               {doctor.name}
             </h3>
-            <p className="mt-2 text-sm leading-6" style={{ color: mq.color.muted }}>
+            <p
+              className="mt-2 text-sm leading-6"
+              style={{ color: mq.color.muted }}
+            >
               {compact ? doctor.bio.slice(0, 118) + "..." : doctor.bio}
             </p>
           </div>
@@ -315,12 +341,21 @@ export function DoctorCard({
               <div
                 className="rounded-2xl border px-3 py-3"
                 key={label}
-                style={{ backgroundColor: mq.color.porcelain, borderColor: mq.color.rule }}
+                style={{
+                  backgroundColor: mq.color.porcelain,
+                  borderColor: mq.color.rule,
+                }}
               >
-                <div className="text-sm font-black" style={{ color: mq.color.ink }}>
+                <div
+                  className="text-sm font-black"
+                  style={{ color: mq.color.ink }}
+                >
                   {value}
                 </div>
-                <div className="mt-1 text-[11px] font-semibold uppercase" style={{ color: mq.color.faint }}>
+                <div
+                  className="mt-1 text-[11px] font-semibold uppercase"
+                  style={{ color: mq.color.faint }}
+                >
                   {label}
                 </div>
               </div>
@@ -363,14 +398,18 @@ export function SlotGrid({
     <div className="space-y-4">
       {Object.entries(grouped).map(([day, slots]) => (
         <div key={day}>
-          <div className="mb-2 flex items-center gap-2 text-sm font-black" style={{ color: mq.color.ink }}>
+          <div
+            className="mb-2 flex items-center gap-2 text-sm font-black"
+            style={{ color: mq.color.ink }}
+          >
             <Clock3 aria-hidden="true" className="h-4 w-4" />
             {day}
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {slots.map((slot) => {
               const booked = isSlotBooked(doctor.id, slot);
-              const active = selected?.day === slot.day && selected?.time === slot.time;
+              const active =
+                selected?.day === slot.day && selected?.time === slot.time;
               return (
                 <button
                   className="min-h-12 rounded-2xl border px-3 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-45"
@@ -378,14 +417,20 @@ export function SlotGrid({
                   key={`${slot.day}-${slot.time}`}
                   onClick={() => onSelect?.(slot)}
                   style={{
-                    backgroundColor: active ? mq.color.trust : booked ? mq.color.paper : mq.color.white,
+                    backgroundColor: active
+                      ? mq.color.trust
+                      : booked
+                        ? mq.color.paper
+                        : mq.color.white,
                     borderColor: active ? mq.color.trust : mq.color.rule,
                     color: active ? mq.color.white : mq.color.ink,
                   }}
                   type="button"
                 >
                   {slot.time}
-                  {booked ? <span className="block text-[10px]">Booked</span> : null}
+                  {booked ? (
+                    <span className="block text-[10px]">Booked</span>
+                  ) : null}
                 </button>
               );
             })}
@@ -396,11 +441,7 @@ export function SlotGrid({
   );
 }
 
-export function CarePath({
-  active = 1,
-}: {
-  active?: 1 | 2 | 3 | 4;
-}) {
+export function CarePath({ active = 1 }: { active?: 1 | 2 | 3 | 4 }) {
   const steps = ["Search", "Match", "Verify", "Visit"] as const;
   return (
     <div className="grid grid-cols-4 gap-2">
@@ -416,11 +457,18 @@ export function CarePath({
             }}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-black" style={{ color: complete ? mq.color.clay : mq.color.faint }}>
+              <span
+                className="text-xs font-black"
+                style={{ color: complete ? mq.color.clay : mq.color.faint }}
+              >
                 {step}
               </span>
               {index < steps.length - 1 ? (
-                <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" style={{ color: mq.color.faint }} />
+                <ChevronRight
+                  aria-hidden="true"
+                  className="h-3.5 w-3.5"
+                  style={{ color: mq.color.faint }}
+                />
               ) : null}
             </div>
           </div>
@@ -432,20 +480,42 @@ export function CarePath({
 
 export function TrustStack() {
   const items: Array<[string, string, LucideIcon]> = [
-    ["Verified clinicians", "License, hospital affiliation, and specialty are visible before booking.", ShieldCheck],
-    ["Insurance clarity", "Mock eligibility shows what is covered before the appointment is confirmed.", Check],
-    ["Persistent portal", "Appointments, prescriptions, reports, and follow-ups stay connected.", CalendarCheck2],
+    [
+      "Verified clinicians",
+      "License, hospital affiliation, and specialty are visible before booking.",
+      ShieldCheck,
+    ],
+    [
+      "Insurance clarity",
+      "Mock eligibility shows what is covered before the appointment is confirmed.",
+      Check,
+    ],
+    [
+      "Persistent portal",
+      "Appointments, prescriptions, reports, and follow-ups stay connected.",
+      CalendarCheck2,
+    ],
   ];
 
   return (
     <div className="grid gap-3 sm:grid-cols-3">
       {items.map(([title, body, Icon]) => (
         <MQPanel className="p-5" key={String(title)} tone="white">
-          <Icon aria-hidden="true" className="h-5 w-5" style={{ color: mq.color.trust }} />
-          <h3 className="mt-4 text-base font-black" style={{ color: mq.color.ink }}>
+          <Icon
+            aria-hidden="true"
+            className="h-5 w-5"
+            style={{ color: mq.color.trust }}
+          />
+          <h3
+            className="mt-4 text-base font-black"
+            style={{ color: mq.color.ink }}
+          >
             {title}
           </h3>
-          <p className="mt-2 text-sm leading-6" style={{ color: mq.color.muted }}>
+          <p
+            className="mt-2 text-sm leading-6"
+            style={{ color: mq.color.muted }}
+          >
             {body}
           </p>
         </MQPanel>

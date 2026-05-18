@@ -1,22 +1,20 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import type { Variants } from "motion/react";
 
 import { RotatingText } from "@/components/ui/RotatingText";
 import { cn } from "@/lib/cn";
 
 const wordVariants: Variants = {
-  hidden: { opacity: 0, filter: "blur(8px)", y: 12 },
+  hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
-    filter: "blur(0px)",
     y: 0,
     transition: {
-      type: "spring",
-      damping: 20,
-      stiffness: 100,
+      duration: 0.42,
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
@@ -65,15 +63,14 @@ export function HeroHeadline({
     <motion.h1
       className={cn("studio-h1-headline text-foreground", className)}
       variants={reduce ? undefined : containerVariants}
-      initial={reduce ? false : "hidden"}
+      initial={false}
       animate={reduce ? undefined : "visible"}
       custom={delay}
     >
-      <AnimatedWords text="We build" reduce={reduce} />
+      <AnimatedWords text="We build" reduce={reduce} />{" "}
       <br className="hidden lg:block" />
-      <AnimatedWords text="websites that" reduce={reduce} />
-      <br />
-      <AnimatedWords text="turn visitors into" reduce={reduce} />{" "}
+      <AnimatedWords text="websites that" reduce={reduce} /> <br />
+      <AnimatedWords text="turn attention into" reduce={reduce} />{" "}
       <motion.span
         variants={reduce ? undefined : wordVariants}
         className="inline-block align-bottom"

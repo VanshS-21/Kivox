@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { brand } from "@/content/brand";
 import { navigation } from "@/content/navigation";
@@ -72,6 +73,7 @@ export function Navigation() {
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,7 +92,13 @@ export function Navigation() {
   }, []);
 
   useEffect(() => {
-    const sectionIds = ["live-examples", "services", "process", "team", "contact"];
+    const sectionIds = [
+      "live-examples",
+      "services",
+      "process",
+      "team",
+      "contact",
+    ];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -111,6 +119,17 @@ export function Navigation() {
     return () => observers.forEach((observer) => observer.disconnect());
   }, []);
 
+  // Close mobile menu automatically if resized to desktop breakpoint
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024 && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isOpen]);
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
@@ -128,11 +147,18 @@ export function Navigation() {
         return;
       }
 
-      if (event.key !== "Tab" || !overlayRef.current) return;
+      if (event.key !== "Tab" || !overlayRef.current || !hamburger) return;
 
-      const focusable = overlayRef.current.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      const focusable = Array.from(
+        overlayRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        )
       );
+      
+      // The hamburger button is in the <nav> outside the overlay. 
+      // We must explicitly add it to the focus trap cycle.
+      focusable.unshift(hamburger);
+
       if (focusable.length === 0) return;
 
       const first = focusable[0];
@@ -163,8 +189,10 @@ export function Navigation() {
 
   const isActiveLink = (href: string) => {
     if (href === "/") return pathname === "/" && !pastHero;
-    if (href.startsWith("/#")) return activeSection === href.substring(2);
-    return pathname === href || pathname.startsWith(`${href}/`);
+    if (href.startsWith("/#")) {
+      return pathname === "/" && activeSection === href.substring(2);
+    }
+    return pathname === href;
   };
 
   const closeMenu = () => setIsOpen(false);
@@ -173,7 +201,7 @@ export function Navigation() {
     <>
       <nav
         className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ease-out ${
-          isScrolled ? "border-b border-border backdrop-blur-xl" : ""
+          isScrolled && !isOpen ? "border-b border-border backdrop-blur-xl" : ""
         }`}
       >
         <div
@@ -193,7 +221,7 @@ export function Navigation() {
                   closeMenu();
                 }
               }}
-              className="relative z-[60] flex items-center gap-2 text-foreground transition-colors duration-300 hover:text-accent"
+              className="relative z-[60] flex min-h-11 items-center gap-2 text-foreground transition-colors duration-300 hover:text-accent"
               data-cursor="logo"
             >
               <KivoxLogo height={32} variant="mono" />
@@ -208,7 +236,7 @@ export function Navigation() {
                     key={item.label}
                     href={item.href}
                     prefetch={false}
-                    className={`block text-sm font-semibold tracking-tight transition-colors duration-200 hover:-translate-y-0.5 ${
+                    className={`inline-flex min-h-11 min-w-11 items-center justify-center px-1 text-sm font-semibold tracking-tight transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 ${
                       isActive
                         ? "text-accent"
                         : "text-muted-foreground hover:text-foreground"
@@ -225,7 +253,7 @@ export function Navigation() {
                 <Link
                   href="/contact"
                   prefetch={false}
-                  className="hidden items-center gap-2 rounded-lg bg-accent px-6 py-2.5 text-sm font-medium tracking-tight text-accent-ink transition-all duration-200 hover:scale-105 hover:shadow-amber-glow active:scale-[0.97] sm:flex"
+                  className="hidden min-h-11 items-center gap-2 rounded-lg bg-accent px-6 text-sm font-medium tracking-tight text-accent-ink transition-all duration-200 hover:scale-105 hover:shadow-amber-glow active:scale-[0.97] sm:flex"
                 >
                   Book a Free Call
                   <span aria-hidden="true">&rarr;</span>
@@ -237,7 +265,7 @@ export function Navigation() {
               <button
                 ref={hamburgerRef}
                 onClick={() => setIsOpen((value) => !value)}
-                className="flex rounded-lg p-2 transition-colors hover:bg-accent/10 lg:hidden"
+                className="flex h-11 w-11 items-center justify-center rounded-lg transition-colors hover:bg-accent/10 lg:hidden"
                 aria-label="Toggle menu"
                 aria-expanded={isOpen}
                 aria-controls="mobile-navigation"
@@ -245,7 +273,11 @@ export function Navigation() {
                 <span className="flex flex-col gap-1.5">
                   <span
                     className="h-0.5 w-6 bg-foreground transition-transform duration-300"
-                    style={{ transform: isOpen ? "translateY(8px) rotate(45deg)" : undefined }}
+                    style={{
+                      transform: isOpen
+                        ? "translateY(8px) rotate(45deg)"
+                        : undefined,
+                    }}
                   />
                   <span
                     className="h-0.5 w-6 bg-foreground transition-opacity duration-200"
@@ -253,7 +285,11 @@ export function Navigation() {
                   />
                   <span
                     className="h-0.5 w-6 bg-foreground transition-transform duration-300"
-                    style={{ transform: isOpen ? "translateY(-8px) rotate(-45deg)" : undefined }}
+                    style={{
+                      transform: isOpen
+                        ? "translateY(-8px) rotate(-45deg)"
+                        : undefined,
+                    }}
                   />
                 </span>
               </button>
@@ -262,14 +298,19 @@ export function Navigation() {
         </div>
       </nav>
 
-      {isOpen && (
-        <div
+      <AnimatePresence initial={false}>
+        {isOpen && (
+        <motion.div
           id="mobile-navigation"
           ref={overlayRef}
           className="fixed inset-0 z-40 bg-background"
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={reduce ? undefined : { opacity: 1 }}
+          exit={reduce ? undefined : { opacity: 0 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-soft-light"
@@ -286,7 +327,18 @@ export function Navigation() {
                   const isActive = isActiveLink(item.href);
 
                   return (
-                    <div key={item.href} className="border-b border-border">
+                    <motion.div
+                      key={item.href}
+                      className="border-b border-border"
+                      initial={reduce ? false : { opacity: 0, y: 18 }}
+                      animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                      exit={reduce ? undefined : { opacity: 0, y: 8 }}
+                      transition={{
+                        duration: 0.36,
+                        ease: [0.16, 1, 0.3, 1],
+                        delay: idx * 0.045,
+                      }}
+                    >
                       <Link
                         href={item.href}
                         prefetch={false}
@@ -313,10 +365,13 @@ export function Navigation() {
                           style={{ width: isActive ? "100%" : "0" }}
                         />
                         {isActive && (
-                          <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+                          <span
+                            className="h-2 w-2 rounded-full bg-accent"
+                            aria-hidden="true"
+                          />
                         )}
                       </Link>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </nav>
@@ -334,7 +389,7 @@ export function Navigation() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMenu}
-                    className="flex items-center gap-2 text-base text-muted-foreground transition-colors hover:text-foreground"
+                    className="flex min-h-11 items-center gap-2 text-base text-muted-foreground transition-colors hover:text-foreground"
                   >
                     <LinkedinIcon className="w-5 h-5" />
                     <span>LinkedIn</span>
@@ -345,7 +400,7 @@ export function Navigation() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMenu}
-                    className="flex items-center gap-2 text-base text-muted-foreground transition-colors hover:text-foreground"
+                    className="flex min-h-11 items-center gap-2 text-base text-muted-foreground transition-colors hover:text-foreground"
                   >
                     <InstagramIcon className="w-5 h-5" />
                     <span>Instagram</span>
@@ -356,7 +411,7 @@ export function Navigation() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMenu}
-                    className="flex items-center gap-2 text-base text-muted-foreground transition-colors hover:text-foreground"
+                    className="flex min-h-11 items-center gap-2 text-base text-muted-foreground transition-colors hover:text-foreground"
                   >
                     <FacebookIcon className="w-5 h-5" />
                     <span>Facebook</span>
@@ -373,7 +428,7 @@ export function Navigation() {
                     href={`mailto:${brand.contact.email}`}
                     prefetch={false}
                     onClick={closeMenu}
-                    className="inline-block text-lg font-medium text-foreground transition-colors hover:text-accent"
+                    className="inline-flex min-h-11 items-center text-lg font-medium text-foreground transition-colors hover:text-accent"
                   >
                     {brand.contact.email}
                   </Link>
@@ -381,8 +436,9 @@ export function Navigation() {
               </div>
             </div>
           </div>
-        </div>
-      )}
+        </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

@@ -4,11 +4,11 @@ export const fitness = {
   subtitle:
     "Converting scroll-and-compare visitors into trial bookings.",
   label: "Fitness · Lead Generation",
-  image: "/work/gym.webp",
+  image: "/media/work/vortex-fitness-cover.webp",
   images: [
-    "/work/mockups/Gym-1.webp",
-    "/work/mockups/Gym-2.webp",
-    "/work/mockups/Gym-3.webp",
+    "/media/work/mockups/vortex-fitness-01.webp",
+    "/media/work/mockups/vortex-fitness-02.webp",
+    "/media/work/mockups/vortex-fitness-03.webp",
   ],
   liveUrl: "/showcase/fitness",
   year: "2024",

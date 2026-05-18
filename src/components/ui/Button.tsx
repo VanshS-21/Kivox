@@ -8,14 +8,14 @@ type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md";
 
 const base =
-  "inline-flex items-center justify-center whitespace-nowrap rounded-full font-medium transition will-change-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] disabled:opacity-60 disabled:pointer-events-none";
+  "inline-flex items-center justify-center whitespace-nowrap rounded-full font-medium transition-all duration-300 ease-[var(--ease-out-expo)] will-change-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg-primary)] disabled:opacity-60 disabled:pointer-events-none motion-reduce:transition-none";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-accent text-accent-ink shadow-[var(--shadow-1)] hover:shadow-[var(--shadow-2)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-[var(--shadow-1)]",
+    "bg-accent text-accent-ink shadow-rest hover:shadow-amber-glow hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98]",
   secondary:
-    "bg-surface-1 text-foreground border border-border shadow-[var(--shadow-1)] hover:shadow-[var(--shadow-2)] hover:-translate-y-0.5 active:translate-y-0",
-  ghost: "text-foreground hover:bg-surface-2",
+    "bg-surface text-foreground border border-border shadow-rest hover:border-accent/40 hover:shadow-hover hover:-translate-y-0.5 hover:scale-[1.01] active:translate-y-0 active:scale-[0.98]",
+  ghost: "text-foreground hover:bg-accent-muted active:scale-[0.98]",
 };
 
 const sizes: Record<Size, string> = {

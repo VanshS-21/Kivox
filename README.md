@@ -8,7 +8,7 @@ The site is a modern, static-optimized Next.js application that showcases Kivox'
 
 ## Tech Stack
 
-*   **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+*   **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
 *   **UI Library:** [React 19](https://react.dev/)
 *   **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
 *   **Animation:** [Motion (Framer Motion)](https://motion.dev/)
@@ -89,7 +89,6 @@ The project relies on `next/font` for optimal loading of a curated typographic h
 *   **Spectral:** Sophisticated editorial serif for subheads and storytelling.
 *   **Figtree:** Clean, geometric-humanist sans for high-readability body copy.
 *   **Geist Mono:** Precise monospace for technical labels, step counters, and metadata.
-*   **Caveat:** Hand-written accent font used sparingly for annotations.
 
 ## Documentation
 

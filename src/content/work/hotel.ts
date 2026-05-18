@@ -4,13 +4,13 @@ export const hotel = {
   subtitle:
     "Crafting digital luxury that converts browsers into direct bookings.",
   label: "Luxury · Hospitality",
-  image: "/work/hotel copy.webp",
+  image: "/media/work/aurelia-grand-cover.webp",
   images: [
-    "/work/mockups/Hotel-1.webp",
-    "/work/mockups/Hotel-2.webp",
-    "/work/mockups/Hotel-3.webp",
+    "/media/work/mockups/aurelia-grand-01.webp",
+    "/media/work/mockups/aurelia-grand-02.webp",
+    "/media/work/mockups/aurelia-grand-03.webp",
   ],
-  liveUrl: "https://example.com/hotel",
+  liveUrl: "https://aurum-palace.vercel.app/",
   year: "2024",
   duration: "10 weeks",
   clientType: "Boutique Luxury Hotel",

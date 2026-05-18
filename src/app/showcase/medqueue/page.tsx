@@ -29,7 +29,9 @@ export default function MedQueueHomePage() {
   const router = useRouter();
   const { doctors, filters, updateFilter, appointments } = useMedQueue();
   const featuredDoctors = doctors.slice(0, 3);
-  const upcoming = appointments.filter((appointment) => appointment.status === "upcoming");
+  const upcoming = appointments.filter(
+    (appointment) => appointment.status === "upcoming",
+  );
   const stats: Array<[string, string, LucideIcon]> = [
     ["6", "specialists", UserRoundCheck],
     ["24", "visible slots", CalendarDays],
@@ -41,17 +43,23 @@ export default function MedQueueHomePage() {
     <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 md:px-6 md:pt-16">
       <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
-          <MQSectionLabel icon={HeartHandshake}>Premium patient concierge</MQSectionLabel>
+          <MQSectionLabel icon={HeartHandshake}>
+            Premium patient concierge
+          </MQSectionLabel>
           <h1
             className="max-w-4xl text-5xl font-black leading-[0.95] md:text-7xl"
             style={{ color: mq.color.ink, fontFamily: mq.font.display }}
           >
             Healthcare booking that feels calm before it feels clinical.
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8" style={{ color: mq.color.muted }}>
-            MedQueue turns doctor discovery, insurance checks, appointment booking, and after-visit records into one
-            warm patient app. Every state is simulated, so the showcase behaves like a real product without touching
-            real medical data.
+          <p
+            className="mt-6 max-w-2xl text-lg leading-8"
+            style={{ color: mq.color.muted }}
+          >
+            MedQueue turns doctor discovery, insurance checks, appointment
+            booking, and after-visit records into one warm patient app. Every
+            state is simulated, so the showcase behaves like a real product
+            without touching real medical data.
           </p>
 
           <MQPanel className="mt-8" tone="white">
@@ -63,7 +71,9 @@ export default function MedQueueHomePage() {
               }}
             >
               <label className="group relative">
-                <span className="sr-only">Search doctors, symptoms, or specialty</span>
+                <span className="sr-only">
+                  Search doctors, symptoms, or specialty
+                </span>
                 <Search
                   aria-hidden="true"
                   className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2"
@@ -71,7 +81,9 @@ export default function MedQueueHomePage() {
                 />
                 <input
                   className="min-h-14 w-full rounded-2xl border bg-white pl-12 pr-4 text-sm font-semibold outline-none transition"
-                  onChange={(event) => updateFilter("query", event.target.value)}
+                  onChange={(event) =>
+                    updateFilter("query", event.target.value)
+                  }
                   placeholder="Cardiologist, anxiety, skin rash..."
                   style={{ borderColor: mq.color.rule, color: mq.color.ink }}
                   value={filters.query}
@@ -100,8 +112,16 @@ export default function MedQueueHomePage() {
           </MQPanel>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {["Verified license", "Insurance-aware", "No urgency games", "Persistent portal"].map((label) => (
-              <MQChip key={label} tone={label === "No urgency games" ? "care" : "trust"}>
+            {[
+              "Verified license",
+              "Insurance-aware",
+              "No urgency games",
+              "Persistent portal",
+            ].map((label) => (
+              <MQChip
+                key={label}
+                tone={label === "No urgency games" ? "care" : "trust"}
+              >
                 <ShieldCheck aria-hidden="true" className="h-3 w-3" />
                 {label}
               </MQChip>
@@ -112,46 +132,73 @@ export default function MedQueueHomePage() {
         <MQPanel className="relative overflow-hidden" tone="warm">
           <div
             className="absolute right-6 top-6 h-24 w-24 rounded-full border"
-            style={{ borderColor: mq.color.care, backgroundColor: "oklch(0.98 0.025 58 / 0.72)" }}
+            style={{
+              borderColor: mq.color.care,
+              backgroundColor: "oklch(0.98 0.025 58 / 0.72)",
+            }}
           />
           <div className="relative">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <MQChip tone="recovery">Live patient state</MQChip>
-                <h2 className="mt-5 text-3xl font-black leading-tight" style={{ fontFamily: mq.font.display }}>
+                <h2
+                  className="mt-5 text-3xl font-black leading-tight"
+                  style={{ fontFamily: mq.font.display }}
+                >
                   Your next appointment is always visible.
                 </h2>
               </div>
               <div
                 className="grid h-14 w-14 place-items-center rounded-2xl"
-                style={{ backgroundColor: mq.color.white, color: mq.color.trust }}
+                style={{
+                  backgroundColor: mq.color.white,
+                  color: mq.color.trust,
+                }}
               >
                 <CalendarDays aria-hidden="true" className="h-7 w-7" />
               </div>
             </div>
 
             <div className="mt-8 space-y-3">
-              {(upcoming.length ? upcoming : [{ doctorName: "No active booking yet", day: "Choose a doctor", time: "Open search", specialty: "Concierge ready" }]).map(
-                (appointment) => (
-                  <div
-                    className="rounded-3xl border p-4"
-                    key={`${appointment.doctorName}-${appointment.time}`}
-                    style={{ backgroundColor: mq.color.white, borderColor: mq.color.rule }}
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-black" style={{ color: mq.color.ink }}>
-                          {appointment.doctorName}
-                        </p>
-                        <p className="mt-1 text-sm" style={{ color: mq.color.muted }}>
-                          {appointment.specialty} - {appointment.day} - {appointment.time}
-                        </p>
-                      </div>
-                      <MQChip tone="care">Ready</MQChip>
+              {(upcoming.length
+                ? upcoming
+                : [
+                    {
+                      doctorName: "No active booking yet",
+                      day: "Choose a doctor",
+                      time: "Open search",
+                      specialty: "Concierge ready",
+                    },
+                  ]
+              ).map((appointment) => (
+                <div
+                  className="rounded-3xl border p-4"
+                  key={`${appointment.doctorName}-${appointment.time}`}
+                  style={{
+                    backgroundColor: mq.color.white,
+                    borderColor: mq.color.rule,
+                  }}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p
+                        className="text-sm font-black"
+                        style={{ color: mq.color.ink }}
+                      >
+                        {appointment.doctorName}
+                      </p>
+                      <p
+                        className="mt-1 text-sm"
+                        style={{ color: mq.color.muted }}
+                      >
+                        {appointment.specialty} - {appointment.day} -{" "}
+                        {appointment.time}
+                      </p>
                     </div>
+                    <MQChip tone="care">Ready</MQChip>
                   </div>
-                ),
-              )}
+                </div>
+              ))}
             </div>
 
             <div className="mt-8">
@@ -164,11 +211,21 @@ export default function MedQueueHomePage() {
       <section className="mt-16 grid gap-4 md:grid-cols-4">
         {stats.map(([value, label, Icon]) => (
           <MQPanel className="p-5" key={label} tone="white">
-            <Icon aria-hidden="true" className="h-5 w-5" style={{ color: mq.color.trust }} />
-            <div className="mt-5 text-3xl font-black" style={{ fontFamily: mq.font.display }}>
+            <Icon
+              aria-hidden="true"
+              className="h-5 w-5"
+              style={{ color: mq.color.trust }}
+            />
+            <div
+              className="mt-5 text-3xl font-black"
+              style={{ fontFamily: mq.font.display }}
+            >
               {value}
             </div>
-            <div className="mt-1 text-sm font-semibold" style={{ color: mq.color.muted }}>
+            <div
+              className="mt-1 text-sm font-semibold"
+              style={{ color: mq.color.muted }}
+            >
               {label}
             </div>
           </MQPanel>
@@ -178,8 +235,13 @@ export default function MedQueueHomePage() {
       <section className="mt-16">
         <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <MQSectionLabel icon={UserRoundCheck}>Matched clinicians</MQSectionLabel>
-            <h2 className="text-4xl font-black" style={{ fontFamily: mq.font.display }}>
+            <MQSectionLabel icon={UserRoundCheck}>
+              Matched clinicians
+            </MQSectionLabel>
+            <h2
+              className="text-4xl font-black"
+              style={{ fontFamily: mq.font.display }}
+            >
               Searchable, bookable, and trust-first.
             </h2>
           </div>
@@ -197,15 +259,29 @@ export default function MedQueueHomePage() {
       <section className="mt-16 grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
         <MQPanel tone="trust">
           <MQSectionLabel icon={ShieldCheck}>Concierge promise</MQSectionLabel>
-          <h2 className="text-4xl font-black leading-tight" style={{ fontFamily: mq.font.display }}>
-            The product slows down the scary parts and speeds up the admin parts.
+          <h2
+            className="text-4xl font-black leading-tight"
+            style={{ fontFamily: mq.font.display }}
+          >
+            The product slows down the scary parts and speeds up the admin
+            parts.
           </h2>
-          <p className="mt-5 text-base leading-7" style={{ color: mq.color.muted }}>
-            MedQueue avoids fake scarcity, vague availability, and hidden coverage friction. The north-star is a patient
-            who understands who they are seeing, what happens next, and where their care record lives.
+          <p
+            className="mt-5 text-base leading-7"
+            style={{ color: mq.color.muted }}
+          >
+            MedQueue avoids fake scarcity, vague availability, and hidden
+            coverage friction. The north-star is a patient who understands who
+            they are seeing, what happens next, and where their care record
+            lives.
           </p>
           <div className="mt-6">
-            <Link className="inline-flex items-center gap-2 text-sm font-black" href={routes.designSystem} prefetch={false} style={{ color: mq.color.trust }}>
+            <Link
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-black"
+              href={routes.designSystem}
+              prefetch={false}
+              style={{ color: mq.color.trust }}
+            >
               View project design system
               <Search aria-hidden="true" className="h-4 w-4" />
             </Link>

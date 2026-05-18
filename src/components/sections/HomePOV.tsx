@@ -1,12 +1,17 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
 
 import { home } from "@/content/pages/home";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { fadeUp, transitionDefault, viewportOnce, easeOutExpo, easeOutQuint } from "@/lib/motion";
+import {
+  easeOutExpo,
+  easeOutQuint,
+  fadeUp,
+  transitionDefault,
+  viewportOnce,
+} from "@/lib/motion";
 
 /** Word-by-word reveal that triggers when the section scrolls into view */
 function WordByWordReveal({
@@ -104,24 +109,14 @@ function HandDrawnUnderline({ reduce }: { reduce: boolean | null }) {
 
 export function HomePOV() {
   const reduce = useReducedMotion();
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  // Parallax for background glows
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const glowY1 = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
   return (
-    <div ref={sectionRef} className="relative">
+    <div className="relative">
     <Section
       className="relative py-12 md:py-16 lg:py-20 overflow-hidden bg-surface-alt border-t border-border"
     >
       {/* Committed amber glow — restrained size so it doesn't bleed into adjacent sections */}
-      <motion.div
-        style={{ y: reduce ? 0 : glowY1 }}
+      <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] md:w-[600px] lg:w-[1000px] h-[320px] md:h-[600px] lg:h-[1000px] rounded-full blur-[80px] md:blur-[100px] lg:blur-[160px] pointer-events-none"
         data-glow="primary"
       >
@@ -129,7 +124,7 @@ export function HomePOV() {
           className="w-full h-full rounded-full"
           style={{ background: 'var(--accent)', opacity: 'calc(var(--hero-glow-opacity) * 0.65)' }}
         />
-      </motion.div>
+      </div>
 
       <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end">
@@ -149,12 +144,10 @@ export function HomePOV() {
               {/* Special emphasis on "crafted." with hand-drawn underline */}
               <motion.em
                 aria-hidden="true"
-                initial={reduce ? false : { opacity: 0, scale: 0.8, rotate: -15 }}
-                whileInView={reduce ? undefined : { opacity: 1, scale: 1, rotate: 0 }}
-                whileHover={reduce ? undefined : { scale: 1.15, rotate: 8 }}
-                whileTap={reduce ? undefined : { scale: 0.9, rotate: -5 }}
+                initial={reduce ? false : { opacity: 0, y: 8 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
-                transition={{ type: "spring", stiffness: 400, damping: 12, delay: 0.9 }}
+                transition={{ duration: 0.45, ease: easeOutQuint, delay: 0.9 }}
                 className="text-accent inline-block relative not-italic text-2xl sm:text-3xl lg:text-4xl font-serif"
                 style={{
                   fontWeight: 300,

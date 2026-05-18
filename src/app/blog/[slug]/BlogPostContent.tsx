@@ -69,7 +69,7 @@ export function BlogPostContent({
           >
             <Link
               href="/blog"
-              className="group inline-flex items-center gap-2 font-mono text-muted-foreground hover:text-accent transition-colors duration-200 mb-8"
+              className="group mb-8 inline-flex min-h-11 items-center gap-2 font-mono text-muted-foreground transition-colors duration-200 hover:text-accent"
               style={{
                 fontSize: "0.75rem",
                 letterSpacing: "0.05em",
@@ -98,13 +98,9 @@ export function BlogPostContent({
           </motion.div>
 
           <motion.h1
-            initial={
-              reduce ? false : { opacity: 0, y: 20, filter: "blur(8px)" }
-            }
-            animate={
-              reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
-            }
-            transition={{ duration: 0.8, ease: easeOutQuint, delay: 0.05 }}
+            initial={reduce ? false : { opacity: 0, y: 18 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: easeOutQuint, delay: 0.05 }}
             className="studio-h1-headline text-foreground"
           >
             {post.title}
@@ -157,13 +153,9 @@ export function BlogPostContent({
 
           {/* Lead paragraph — article description as lede */}
           <motion.p
-            initial={
-              reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }
-            }
-            animate={
-              reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
-            }
-            transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.28 }}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: easeOutExpo, delay: 0.28 }}
             className="mt-6 studio-lede"
           >
             {post.description}
@@ -202,9 +194,9 @@ export function BlogPostContent({
             <div className="mt-4 flex flex-col sm:flex-row gap-4">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 font-semibold text-accent hover:text-accent-hover transition-colors duration-200 text-base"
+                className="group inline-flex min-h-11 items-center gap-2 text-base font-semibold text-accent transition-colors duration-200 hover:text-accent-hover"
               >
-                Start a project
+                Book a free call
                 <svg
                   width="16"
                   height="16"
@@ -225,7 +217,7 @@ export function BlogPostContent({
               </Link>
               <Link
                 href="/blog"
-                className="group inline-flex items-center gap-2 font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm"
+                className="group inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-foreground"
               >
                 <svg
                   width="14"

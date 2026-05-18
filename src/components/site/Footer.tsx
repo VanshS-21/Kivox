@@ -87,7 +87,7 @@ export function Footer() {
             <div className="flex flex-col items-start gap-2">
               <a
                 href={`mailto:${brand.contact.email}`}
-                className="break-all text-2xl font-medium text-foreground transition-colors hover:text-accent md:text-3xl"
+                className="inline-flex min-h-11 items-center break-all text-2xl font-medium text-foreground transition-colors hover:text-accent md:text-3xl"
               >
                 {brand.contact.email}
               </a>
@@ -96,7 +96,7 @@ export function Footer() {
             <div className="flex flex-col gap-1">
               <a
                 href={`tel:${brand.contact.phone.replace(/\s+/g, "")}`}
-                className="text-base text-muted-foreground transition-colors hover:text-accent"
+                className="inline-flex min-h-11 items-center text-base text-muted-foreground transition-colors hover:text-accent"
               >
                 {brand.contact.phone}
               </a>
@@ -122,7 +122,7 @@ export function Footer() {
                       key={link.href}
                       href={link.href}
                       prefetch={false}
-                      className="text-sm font-medium text-foreground transition-colors hover:text-accent sm:text-base"
+                      className="inline-flex min-h-11 min-w-11 items-center text-sm font-medium text-foreground transition-colors hover:text-accent sm:text-base"
                     >
                       {link.label}
                     </Link>
@@ -149,7 +149,7 @@ export function Footer() {
                     key={link.href}
                     href={link.href}
                     prefetch={false}
-                    className="text-sm font-medium text-foreground transition-colors hover:text-accent sm:text-base"
+                    className="inline-flex min-h-11 min-w-11 items-center text-sm font-medium text-foreground transition-colors hover:text-accent sm:text-base"
                   >
                     {link.label}
                   </Link>
@@ -166,7 +166,7 @@ export function Footer() {
                 className="flex flex-col items-start gap-2.5 sm:gap-3"
               >
                 <a
-                  className="group flex items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
+                  className="group flex min-h-11 items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
                   href={brand.socials.linkedin}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -175,7 +175,7 @@ export function Footer() {
                   <span>LinkedIn</span>
                 </a>
                 <a
-                  className="group flex items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
+                  className="group flex min-h-11 items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
                   href={brand.socials.instagram}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -184,7 +184,7 @@ export function Footer() {
                   <span>Instagram</span>
                 </a>
                 <a
-                  className="group flex items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
+                  className="group flex min-h-11 items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
                   href={brand.socials.facebook}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -193,10 +193,21 @@ export function Footer() {
                   <span>Facebook</span>
                 </a>
                 <a
-                  className="group flex items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
+                  className="group flex min-h-11 items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
                   href={`mailto:${brand.contact.email}`}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 sm:h-5 sm:w-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
+                  >
                     <rect width="20" height="16" x="2" y="4" rx="2" />
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                   </svg>
@@ -243,7 +254,7 @@ export function Footer() {
               ].map(([label, href]) => (
                 <Link
                   key={href}
-                  className="studio-caption -mx-1 px-1 py-2 text-muted-foreground opacity-60 transition-colors hover:text-accent hover:opacity-100 sm:py-0"
+                  className="studio-caption -mx-1 inline-flex min-h-11 min-w-11 items-center px-1 text-muted-foreground opacity-60 transition-colors hover:text-accent hover:opacity-100"
                   href={href}
                   prefetch={false}
                 >

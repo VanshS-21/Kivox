@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { getAllPosts } from "@/lib/blog";
+import { getMetadataBase } from "@/lib/metadata";
 import { BlogListingContent } from "./BlogListingContent";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const posts = getAllPosts();
+  const metadataBase = getMetadataBase();
 
   /** Blog listing JSON-LD: CollectionPage with all articles */
   const jsonLd = {
@@ -22,18 +24,18 @@ export default function BlogPage() {
     name: "Kivox Blog",
     description:
       "Practical writing on web design, trust, SEO, and building a business presence online.",
-    url: "https://kivox.in/blog",
+    url: new URL("/blog", metadataBase).toString(),
     publisher: {
       "@type": "Organization",
       name: "Kivox",
-      url: "https://kivox.in",
+      url: metadataBase.toString(),
     },
     mainEntity: {
       "@type": "ItemList",
       itemListElement: posts.map((post, idx) => ({
         "@type": "ListItem",
         position: idx + 1,
-        url: `https://kivox.in/blog/${post.slug}`,
+        url: new URL(`/blog/${post.slug}`, metadataBase).toString(),
         name: post.title,
       })),
     },

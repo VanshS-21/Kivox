@@ -4,11 +4,11 @@ export const hospital = {
   subtitle:
     "Reimagining how 12 million patients find and book the right doctor — in under 90 seconds.",
   label: "Healthcare · Product Design",
-  image: "/work/hospital copy.webp",
+  image: "/media/work/medqueue-cover.webp",
   images: [
-    "/work/mockups/Hospital-1.webp",
-    "/work/mockups/Hospital-2.webp",
-    "/work/mockups/Hospital-3.webp",
+    "/media/work/mockups/medqueue-01.webp",
+    "/media/work/mockups/medqueue-02.webp",
+    "/media/work/mockups/medqueue-03.webp",
   ],
   liveUrl: "/showcase/medqueue",
   year: "2024",

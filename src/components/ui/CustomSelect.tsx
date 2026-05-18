@@ -24,6 +24,7 @@ export function CustomSelect({
 }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const listboxId = `${id}-listbox`;
 
   // Close when clicking outside
   useEffect(() => {
@@ -74,11 +75,12 @@ export function CustomSelect({
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
-        className={`w-full px-0 py-3 sm:py-4 bg-transparent border-0 border-b text-left text-lg outline-none transition-colors duration-200 flex items-center justify-between disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${
-          hasError ? "border-error text-error" : "border-border text-foreground hover:border-accent focus:border-accent focus:bg-accent-muted/50"
+        className={`w-full px-5 py-4 bg-foreground/[0.02] hover:bg-foreground/[0.04] border rounded-[14px] text-left text-base font-sans shadow-sm outline-none transition-all duration-300 flex items-center justify-between disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${
+          hasError ? "border-error text-error focus:border-error focus:ring-4 focus:ring-error/10" : "border-border/50 text-foreground focus:border-accent focus:ring-4 focus:ring-accent/10 focus:bg-transparent"
         } ${!value ? "text-muted-foreground/40" : ""}`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-controls={isOpen ? listboxId : undefined}
       >
         <span className="text-left pe-4 min-w-0 break-words truncate">{value || placeholder}</span>
         <div
@@ -95,11 +97,12 @@ export function CustomSelect({
       {/* Dropdown Options */}
       {isOpen && (
         <ul
+          id={listboxId}
           className="absolute z-50 w-full mt-1 bg-background border border-border/50 rounded-xl shadow-2xl overflow-hidden py-1 max-h-60 overflow-y-auto"
           role="listbox"
         >
             {/* Optional empty state option for Timeline */}
-            {placeholder === "Choose a timeline" && (
+            {placeholder === "Select a timeline" && (
                <li
                  role="option"
                  aria-selected={!value}

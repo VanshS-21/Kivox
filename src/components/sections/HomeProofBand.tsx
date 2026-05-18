@@ -1,11 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { motion, useReducedMotion } from "motion/react";
 
 import { Container } from "@/components/ui/Container";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { work } from "@/content/pages/work";
 import { home } from "@/content/pages/home";
+import { fadeUp, transitionDefault, viewportOnce } from "@/lib/motion";
 
 const projectColors: Record<string, string> = {
   cafe: "var(--project-cafe)",
@@ -20,6 +24,7 @@ type ProjectAccentStyle = CSSProperties & {
 
 export function HomeProofBand() {
   const proofItems = work.featured;
+  const reduce = useReducedMotion();
 
   return (
     <section
@@ -41,7 +46,13 @@ export function HomeProofBand() {
 
       <Container className="relative z-10">
         <div className="space-y-8 sm:space-y-10">
-          <div>
+          <motion.div
+            initial={reduce ? false : "hidden"}
+            whileInView={reduce ? undefined : "show"}
+            viewport={viewportOnce}
+            variants={fadeUp}
+            transition={transitionDefault}
+          >
             <p className="studio-eyebrow mb-5" style={{ color: "var(--proof-muted)" }}>[ {home.workPreview.label} ]</p>
             <h2
               id="home-proof-band-title"
@@ -50,10 +61,10 @@ export function HomeProofBand() {
             >
               {home.workPreview.summary}
             </h2>
-          </div>
+          </motion.div>
 
           <div className="space-y-5 sm:space-y-6">
-            {proofItems.map((project) => {
+            {proofItems.map((project, idx) => {
               const accent =
                 projectColors[project.slug] ?? "var(--proof-accent)";
               const liveIsExternal = Boolean(
@@ -62,8 +73,16 @@ export function HomeProofBand() {
               const liveHref = project.liveUrl ?? `/work/${project.slug}`;
 
               return (
-                <article
-                  className="group grid overflow-hidden border bg-[var(--proof-surface)] transition-transform duration-300 ease-out hover:-translate-y-1 sm:grid-cols-[minmax(280px,0.9fr)_1fr]"
+                <motion.article
+                  initial={reduce ? false : "hidden"}
+                  whileInView={reduce ? undefined : "show"}
+                  viewport={viewportOnce}
+                  variants={fadeUp}
+                  transition={{
+                    ...transitionDefault,
+                    delay: reduce ? 0 : Math.min(0.18, idx * 0.06),
+                  }}
+                  className="group grid overflow-hidden border bg-[var(--proof-surface)] transition-transform duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 motion-reduce:transition-none sm:grid-cols-[minmax(280px,0.9fr)_1fr]"
                   key={project.slug}
                   style={{
                     "--project-accent": accent,
@@ -86,7 +105,7 @@ export function HomeProofBand() {
                       fill
                       loading="lazy"
                       sizes="(max-width: 639px) 88vw, (max-width: 1279px) 44vw, 34vw"
-                      src={project.images?.[0] ?? project.image}
+                      src={project.image}
                     />
                     <div
                       aria-hidden="true"
@@ -183,7 +202,7 @@ export function HomeProofBand() {
                       </div>
                     </div>
                   </div>
-                </article>
+                </motion.article>
               );
             })}
           </div>

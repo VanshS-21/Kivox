@@ -1,11 +1,18 @@
 import Image from "next/image";
-import { ArrowRight, BookOpen, Users, ChevronRight, GraduationCap, MapPin, Phone, Mail } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Users,
+  ChevronRight,
+  GraduationCap,
+  MapPin,
+  Phone,
+  Mail,
+} from "lucide-react";
 
 export default function SchoolShowcase() {
   return (
-    <div 
-      className="relative bg-white text-[#1E392A] min-h-screen font-sans selection:bg-[#8A9A5B] selection:text-white"
-    >
+    <div className="relative bg-white text-[#1E392A] min-h-screen font-sans selection:bg-[#8A9A5B] selection:text-white">
       {/* NAVIGATION */}
       <nav className="fixed top-12 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#1E392A]/10 transition-all duration-300 shadow-sm">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 h-20 flex justify-between items-center">
@@ -15,28 +22,63 @@ export default function SchoolShowcase() {
               <span className="font-serif text-xl font-bold">W</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-bold tracking-tight leading-none text-[#1E392A]">WELLINGTON</span>
-              <span className="text-[9px] font-semibold tracking-[0.2em] uppercase mt-1 text-[#8A9A5B]">Preparatory Academy</span>
+              <span className="text-lg font-bold tracking-tight leading-none text-[#1E392A]">
+                WELLINGTON
+              </span>
+              <span className="text-[9px] font-semibold tracking-[0.2em] uppercase mt-1 text-[#8A9A5B]">
+                Preparatory Academy
+              </span>
             </div>
           </div>
 
           {/* Desktop Links */}
           <div className="hidden lg:flex items-center gap-8 text-[11px] font-bold tracking-[0.15em] uppercase text-[#1E392A]">
-            <a href="#" className="hover:text-[#8A9A5B] transition-colors">About Us</a>
-            <a href="#" className="hover:text-[#8A9A5B] transition-colors">Academics</a>
-            <a href="#" className="hover:text-[#8A9A5B] transition-colors">Admissions</a>
-            <a href="#" className="hover:text-[#8A9A5B] transition-colors">Student Life</a>
-            <a href="#" className="hover:text-[#8A9A5B] transition-colors">Athletics</a>
+            <a
+              href="#about"
+              className="inline-flex min-h-11 items-center hover:text-[#8A9A5B] transition-colors"
+            >
+              About Us
+            </a>
+            <a
+              href="#academics"
+              className="inline-flex min-h-11 items-center hover:text-[#8A9A5B] transition-colors"
+            >
+              Academics
+            </a>
+            <a
+              href="#admissions"
+              className="inline-flex min-h-11 items-center hover:text-[#8A9A5B] transition-colors"
+            >
+              Admissions
+            </a>
+            <a
+              href="#student-life"
+              className="inline-flex min-h-11 items-center hover:text-[#8A9A5B] transition-colors"
+            >
+              Student Life
+            </a>
+            <a
+              href="#student-life"
+              className="inline-flex min-h-11 items-center hover:text-[#8A9A5B] transition-colors"
+            >
+              Athletics
+            </a>
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-4">
-            <a href="#" className="hidden md:block text-[10px] font-bold tracking-[0.1em] uppercase text-[#1E392A]/60 hover:text-[#1E392A] transition-colors pr-4 border-r border-[#1E392A]/20">
+            <a
+              href="#community"
+              className="hidden min-h-11 items-center border-r border-[#1E392A]/20 pr-4 text-[10px] font-bold uppercase tracking-[0.1em] text-[#1E392A]/60 transition-colors hover:text-[#1E392A] md:inline-flex"
+            >
               Parent Portal
             </a>
-            <button className="px-6 py-2.5 bg-[#1E392A] text-white text-[10px] font-bold tracking-[0.15em] uppercase hover:bg-[#8A9A5B] transition-colors rounded-sm">
+            <a
+              href="#admissions"
+              className="inline-flex min-h-11 items-center rounded-sm bg-[#1E392A] px-6 text-[10px] font-bold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#8A9A5B]"
+            >
               Inquire
-            </button>
+            </a>
           </div>
         </div>
       </nav>
@@ -44,10 +86,10 @@ export default function SchoolShowcase() {
       {/* HERO SECTION */}
       <section className="relative pt-48 h-[80vh] min-h-[600px] max-h-[900px] flex items-center md:items-end pb-12 md:pb-24 px-6 md:px-12">
         <div className="absolute inset-0 z-0">
-          <Image 
-            src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2000&auto=format&fit=crop" 
-            alt="Historic campus building" 
-            fill 
+          <Image
+            src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2000&auto=format&fit=crop"
+            alt="Historic campus building"
+            fill
             sizes="100vw"
             className="object-cover"
             fetchPriority="high"
@@ -62,64 +104,105 @@ export default function SchoolShowcase() {
               Est. 1892
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif text-white tracking-tight leading-[1.05] mb-6">
-              Cultivating Intellect.<br/>
+              Cultivating Intellect.
+              <br />
               Inspiring Character.
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed mb-8 font-light">
-              A premier independent day and boarding school for grades 9-12, fostering academic excellence and ethical leadership in the heart of New England.
+              A premier independent day and boarding school for grades 9-12,
+              fostering academic excellence and ethical leadership in the heart
+              of New England.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-4 bg-white text-[#1E392A] text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#8A9A5B] hover:text-white transition-colors rounded-sm flex items-center justify-center gap-2 group">
+              <a
+                href="#about"
+                className="px-8 py-4 bg-white text-[#1E392A] text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#8A9A5B] hover:text-white transition-colors rounded-sm flex items-center justify-center gap-2 group"
+              >
                 Discover Wellington
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="px-8 py-4 bg-transparent border border-white/30 text-white text-xs font-bold tracking-[0.15em] uppercase hover:bg-white/10 transition-colors rounded-sm text-center">
+              </a>
+              <a
+                href="#student-life"
+                className="px-8 py-4 bg-transparent border border-white/30 text-white text-xs font-bold tracking-[0.15em] uppercase hover:bg-white/10 transition-colors rounded-sm text-center"
+              >
                 Virtual Tour
-              </button>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* QUICK STATS & HERITAGE */}
-      <section className="bg-[#1E392A] text-white py-16 md:py-24 relative overflow-hidden">
+      <section
+        id="student-life"
+        className="bg-[#1E392A] text-white py-16 md:py-24 relative overflow-hidden"
+      >
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}></div>
-        
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          }}
+        ></div>
+
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10 grid md:grid-cols-4 gap-8 md:gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
           <div className="py-6 md:py-0 flex flex-col items-center justify-center">
-            <span className="text-4xl lg:text-6xl font-serif text-[#8A9A5B] mb-2">100%</span>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70">College Matriculation</span>
+            <span className="text-4xl lg:text-6xl font-serif text-[#8A9A5B] mb-2">
+              100%
+            </span>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70">
+              College Matriculation
+            </span>
           </div>
           <div className="py-6 md:py-0 flex flex-col items-center justify-center">
-            <span className="text-4xl lg:text-6xl font-serif text-[#8A9A5B] mb-2">6:1</span>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70">Student-Teacher Ratio</span>
+            <span className="text-4xl lg:text-6xl font-serif text-[#8A9A5B] mb-2">
+              6:1
+            </span>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70">
+              Student-Teacher Ratio
+            </span>
           </div>
           <div className="py-6 md:py-0 flex flex-col items-center justify-center">
-            <span className="text-4xl lg:text-6xl font-serif text-[#8A9A5B] mb-2">45</span>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70">States & Countries Represented</span>
+            <span className="text-4xl lg:text-6xl font-serif text-[#8A9A5B] mb-2">
+              45
+            </span>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70">
+              States & Countries Represented
+            </span>
           </div>
           <div className="py-6 md:py-0 flex flex-col items-center justify-center">
-            <span className="text-4xl lg:text-6xl font-serif text-[#8A9A5B] mb-2">75+</span>
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70">Varsity & Club Athletics</span>
+            <span className="text-4xl lg:text-6xl font-serif text-[#8A9A5B] mb-2">
+              75+
+            </span>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70">
+              Varsity & Club Athletics
+            </span>
           </div>
         </div>
       </section>
 
       {/* HEADMASTER'S WELCOME */}
-      <section className="py-24 md:py-32 px-6 md:px-12 max-w-[1600px] mx-auto">
+      <section
+        id="about"
+        className="py-24 md:py-32 px-6 md:px-12 max-w-[1600px] mx-auto"
+      >
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <div className="order-2 lg:order-1 relative aspect-[3/4] w-full max-w-md mx-auto lg:max-w-full">
-            <Image 
-              src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=1500&auto=format&fit=crop" 
-              alt="Historic academy library" 
+            <Image
+              src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=1500&auto=format&fit=crop"
+              alt="Historic academy library"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover rounded-sm"
             />
             <div className="absolute -bottom-8 -right-8 w-2/3 aspect-[4/3] border-8 border-white bg-[#1E392A] p-8 hidden md:flex flex-col justify-center rounded-sm">
-              <span className="font-serif text-3xl text-white mb-4 leading-tight">&quot;A community where tradition meets forward-thinking.&quot;</span>
-              <span className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.15em] uppercase">— Dr. Eleanor Vance, Head of School</span>
+              <span className="font-serif text-3xl text-white mb-4 leading-tight">
+                &quot;A community where tradition meets forward-thinking.&quot;
+              </span>
+              <span className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.15em] uppercase">
+                — Dr. Eleanor Vance, Head of School
+              </span>
             </div>
           </div>
 
@@ -131,25 +214,40 @@ export default function SchoolShowcase() {
               Preparing scholars for a world of complexity.
             </h3>
             <p className="text-base md:text-lg text-[#1E392A]/70 leading-relaxed mb-6 font-light">
-              Since our founding, Wellington Preparatory Academy has been dedicated to rigorous intellectual inquiry. We do not simply teach students what to think; we empower them with the analytical tools to determine how to think.
+              Since our founding, Wellington Preparatory Academy has been
+              dedicated to rigorous intellectual inquiry. We do not simply teach
+              students what to think; we empower them with the analytical tools
+              to determine how to think.
             </p>
             <p className="text-base md:text-lg text-[#1E392A]/70 leading-relaxed mb-10 font-light">
-              Our Harkness-style classrooms demand active participation, ensuring that every voice is heard and every assumption is challenged in a supportive, collaborative environment.
+              Our Harkness-style classrooms demand active participation,
+              ensuring that every voice is heard and every assumption is
+              challenged in a supportive, collaborative environment.
             </p>
-            <button className="group flex items-center gap-3 text-[11px] font-bold tracking-[0.15em] uppercase text-[#1E392A] hover:text-[#8A9A5B] transition-colors pb-1 border-b border-[#1E392A]/20 hover:border-[#8A9A5B]">
+            <a
+              href="#academics"
+              className="group flex min-h-11 items-center gap-3 border-b border-[#1E392A]/20 text-[11px] font-bold uppercase tracking-[0.15em] text-[#1E392A] transition-colors hover:border-[#8A9A5B] hover:text-[#8A9A5B]"
+            >
               Read the Strategic Plan
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
           </div>
         </div>
       </section>
 
       {/* ACADEMIC PROGRAMS (Age-Based, per Case Study) */}
-      <section className="bg-gray-50 py-24 md:py-32 px-6 md:px-12">
+      <section
+        id="academics"
+        className="bg-gray-50 py-24 md:py-32 px-6 md:px-12"
+      >
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-            <h2 className="text-[#8A9A5B] text-[11px] font-bold tracking-[0.2em] uppercase mb-4">Academic Programs</h2>
-            <h3 className="text-4xl md:text-5xl font-serif tracking-tight text-[#1E392A]">Structured for developmental excellence.</h3>
+            <h2 className="text-[#8A9A5B] text-[11px] font-bold tracking-[0.2em] uppercase mb-4">
+              Academic Programs
+            </h2>
+            <h3 className="text-4xl md:text-5xl font-serif tracking-tight text-[#1E392A]">
+              Structured for developmental excellence.
+            </h3>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -159,28 +257,31 @@ export default function SchoolShowcase() {
                 title: "Early Years",
                 subtitle: "Pre-K — Grade 4",
                 desc: "Building foundational curiosity, joy in learning, and social-emotional resilience through play-based and structured inquiry.",
-                img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop"
+                img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop",
               },
               {
                 icon: BookOpen,
                 title: "Middle School",
                 subtitle: "Grades 5 — 8",
                 desc: "Fostering independence, critical thinking, and character development during the pivotal early adolescent years.",
-                img: "https://images.unsplash.com/photo-1427504494785-319ce247ae2b?q=80&w=800&auto=format&fit=crop"
+                img: "https://images.unsplash.com/photo-1427504494785-319ce247ae2b?q=80&w=800&auto=format&fit=crop",
               },
               {
                 icon: GraduationCap,
                 title: "Upper School",
                 subtitle: "Grades 9 — 12",
                 desc: "Advanced scholarship, leadership preparation, and rigorous college readiness in a Harkness-driven environment.",
-                img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop"
-              }
+                img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop",
+              },
             ].map((pillar, idx) => (
-              <div key={idx} className="group flex flex-col bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-xl transition-shadow duration-500">
+              <div
+                key={idx}
+                className="group flex flex-col bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-xl transition-shadow duration-500"
+              >
                 <div className="aspect-[4/3] relative overflow-hidden">
-                  <Image 
-                    src={pillar.img} 
-                    alt={pillar.title} 
+                  <Image
+                    src={pillar.img}
+                    alt={pillar.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -192,15 +293,24 @@ export default function SchoolShowcase() {
                     <pillar.icon className="w-8 h-8" strokeWidth={1.5} />
                   </div>
                   <div className="mt-6 mb-4">
-                    <h4 className="text-2xl font-serif text-[#1E392A] mb-1">{pillar.title}</h4>
-                    <p className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.15em] uppercase">{pillar.subtitle}</p>
+                    <h4 className="text-2xl font-serif text-[#1E392A] mb-1">
+                      {pillar.title}
+                    </h4>
+                    <p className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.15em] uppercase">
+                      {pillar.subtitle}
+                    </p>
                   </div>
-                  <p className="text-sm text-[#1E392A]/70 leading-relaxed flex-grow font-light">{pillar.desc}</p>
+                  <p className="text-sm text-[#1E392A]/70 leading-relaxed flex-grow font-light">
+                    {pillar.desc}
+                  </p>
                   <div className="mt-8 pt-6 border-t border-gray-100">
-                    <button className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#8A9A5B] flex items-center gap-2 group/btn">
+                    <a
+                      href="#admissions"
+                      className="flex min-h-11 items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#8A9A5B] group/btn"
+                    >
                       Explore Curriculum
                       <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -210,28 +320,40 @@ export default function SchoolShowcase() {
       </section>
 
       {/* ADMISSIONS JOURNEY (Case Study Promise: 3-step process) */}
-      <section className="relative py-24 md:py-32 px-6 md:px-12 bg-[#1E392A] text-white overflow-hidden">
+      <section
+        id="admissions"
+        className="relative py-24 md:py-32 px-6 md:px-12 bg-[#1E392A] text-white overflow-hidden"
+      >
         <div className="max-w-[1200px] mx-auto relative z-10 text-center mb-16 md:mb-24">
-          <h2 className="text-[#8A9A5B] text-[11px] font-bold tracking-[0.2em] uppercase mb-4">Admissions</h2>
+          <h2 className="text-[#8A9A5B] text-[11px] font-bold tracking-[0.2em] uppercase mb-4">
+            Admissions
+          </h2>
           <h3 className="text-4xl md:text-5xl font-serif tracking-tight leading-[1.1] mb-6">
             Your journey begins here.
           </h3>
           <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-2xl mx-auto font-light">
-            We seek intellectually curious students eager to contribute to our community. Follow our clear, three-step admissions process.
+            We seek intellectually curious students eager to contribute to our
+            community. Follow our clear, three-step admissions process.
           </p>
         </div>
 
         <div className="max-w-[1200px] mx-auto grid md:grid-cols-3 gap-8 relative z-10">
           {/* Step 1 */}
           <div className="bg-white/5 border border-white/10 p-8 md:p-10 rounded-sm hover:bg-white/10 transition-colors flex flex-col items-center text-center">
-            <div className="w-12 h-12 rounded-full bg-[#8A9A5B] text-[#1E392A] font-bold text-xl flex items-center justify-center mb-6">1</div>
+            <div className="w-12 h-12 rounded-full bg-[#8A9A5B] text-[#1E392A] font-bold text-xl flex items-center justify-center mb-6">
+              1
+            </div>
             <h4 className="text-xl font-serif mb-3">Inquire & Discover</h4>
             <p className="text-white/70 text-sm font-light mb-6 flex-grow">
-              Submit an inquiry to receive our viewbook and connect with your dedicated admissions counselor.
+              Submit an inquiry to receive our viewbook and connect with your
+              dedicated admissions counselor.
             </p>
-            <button className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#8A9A5B] hover:text-white transition-colors border-b border-[#8A9A5B] pb-1">
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center border-b border-[#8A9A5B] text-[10px] font-bold uppercase tracking-[0.15em] text-[#8A9A5B] transition-colors hover:text-white"
+            >
               Submit Inquiry
-            </button>
+            </a>
           </div>
 
           {/* Step 2 */}
@@ -239,73 +361,155 @@ export default function SchoolShowcase() {
             {/* Connecting lines for desktop */}
             <div className="hidden md:block absolute top-14 -left-4 w-8 border-t-2 border-dashed border-[#8A9A5B]/30" />
             <div className="hidden md:block absolute top-14 -right-4 w-8 border-t-2 border-dashed border-[#8A9A5B]/30" />
-            
-            <div className="w-12 h-12 rounded-full bg-[#8A9A5B] text-[#1E392A] font-bold text-xl flex items-center justify-center mb-6">2</div>
+
+            <div className="w-12 h-12 rounded-full bg-[#8A9A5B] text-[#1E392A] font-bold text-xl flex items-center justify-center mb-6">
+              2
+            </div>
             <h4 className="text-xl font-serif mb-3">Visit Campus</h4>
             <p className="text-white/70 text-sm font-light mb-6 flex-grow">
-              Experience Wellington firsthand. Schedule a student-led tour and an interview with our team.
+              Experience Wellington firsthand. Schedule a student-led tour and
+              an interview with our team.
             </p>
-            <button className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#8A9A5B] hover:text-white transition-colors border-b border-[#8A9A5B] pb-1">
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center border-b border-[#8A9A5B] text-[10px] font-bold uppercase tracking-[0.15em] text-[#8A9A5B] transition-colors hover:text-white"
+            >
               Schedule Visit
-            </button>
+            </a>
           </div>
 
           {/* Step 3 */}
           <div className="bg-white/5 border border-white/10 p-8 md:p-10 rounded-sm hover:bg-white/10 transition-colors flex flex-col items-center text-center">
-            <div className="w-12 h-12 rounded-full bg-[#8A9A5B] text-[#1E392A] font-bold text-xl flex items-center justify-center mb-6">3</div>
+            <div className="w-12 h-12 rounded-full bg-[#8A9A5B] text-[#1E392A] font-bold text-xl flex items-center justify-center mb-6">
+              3
+            </div>
             <h4 className="text-xl font-serif mb-3">Apply</h4>
             <p className="text-white/70 text-sm font-light mb-6 flex-grow">
-              Complete your application, including transcripts, recommendations, and standardized test scores.
+              Complete your application, including transcripts, recommendations,
+              and standardized test scores.
             </p>
-            <button className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#8A9A5B] hover:text-white transition-colors border-b border-[#8A9A5B] pb-1">
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center border-b border-[#8A9A5B] text-[10px] font-bold uppercase tracking-[0.15em] text-[#8A9A5B] transition-colors hover:text-white"
+            >
               Start Application
-            </button>
+            </a>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#0F2218] text-white pt-24 pb-12 px-6 md:px-12 border-t border-white/10">
+      <footer
+        id="community"
+        className="bg-[#0F2218] text-white pt-24 pb-12 px-6 md:px-12 border-t border-white/10"
+      >
         <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
           <div className="flex flex-col">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 bg-white text-[#1E392A] flex items-center justify-center rounded-sm">
                 <span className="font-serif text-lg font-bold">W</span>
               </div>
-              <span className="text-lg font-bold tracking-tight">Wellington Academy</span>
+              <span className="text-lg font-bold tracking-tight">
+                Wellington Academy
+              </span>
             </div>
             <p className="text-sm text-white/60 leading-relaxed mb-8 max-w-xs font-light">
               Fostering academic excellence and ethical leadership since 1892.
             </p>
             <div className="flex flex-col gap-3 text-sm text-white/70 font-light">
-              <div className="flex items-center gap-3"><MapPin className="w-4 h-4 text-[#8A9A5B]" /> 1892 Academy Lane, Boston, MA</div>
-              <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-[#8A9A5B]" /> (555) 123-4567</div>
-              <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-[#8A9A5B]" /> admissions@wellington.edu</div>
+              <div className="flex items-center gap-3">
+                <MapPin className="w-4 h-4 text-[#8A9A5B]" /> 1892 Academy Lane,
+                Boston, MA
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-[#8A9A5B]" /> (555) 123-4567
+              </div>
+              <div className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-[#8A9A5B]" />{" "}
+                admissions@wellington.edu
+              </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h5 className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.2em] uppercase mb-4">Admissions</h5>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">How to Apply</a>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">Tuition & Financial Aid</a>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">Visit Campus</a>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">International Students</a>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">Request Information</a>
+            <h5 className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+              Admissions
+            </h5>
+            <a
+              href="#admissions"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              How to Apply
+            </a>
+            <a
+              href="#admissions"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              Tuition & Financial Aid
+            </a>
+            <a
+              href="#admissions"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              Visit Campus
+            </a>
+            <a
+              href="#admissions"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              International Students
+            </a>
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              Request Information
+            </a>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h5 className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.2em] uppercase mb-4">Community</h5>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">Alumni Network</a>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">Parents Association</a>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">Giving to Wellington</a>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">Careers</a>
-            <a href="#" className="text-sm text-white/70 hover:text-white transition-colors font-light">News & Events</a>
+            <h5 className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+              Community
+            </h5>
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              Alumni Network
+            </a>
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              Parents Association
+            </a>
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              Giving to Wellington
+            </a>
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              Careers
+            </a>
+            <a
+              href="#student-life"
+              className="inline-flex min-h-11 items-center text-sm font-light text-white/70 transition-colors hover:text-white"
+            >
+              News & Events
+            </a>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h5 className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.2em] uppercase mb-4">Accreditation</h5>
+            <h5 className="text-[#8A9A5B] text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+              Accreditation
+            </h5>
             <p className="text-sm text-white/60 mb-6 font-light">
-              Wellington Preparatory Academy is accredited by the New England Association of Schools and Colleges (NEASC).
+              Wellington Preparatory Academy is accredited by the New England
+              Association of Schools and Colleges (NEASC).
             </p>
             <div className="w-16 h-16 border border-white/20 flex items-center justify-center rounded-full">
               <GraduationCap className="w-6 h-6 text-white/40" />
@@ -316,9 +520,24 @@ export default function SchoolShowcase() {
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-[10px] font-bold tracking-[0.15em] uppercase text-white/40">
           <p>© {new Date().getFullYear()} Wellington Preparatory Academy.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Employment</a>
-            <a href="#" className="hover:text-white transition-colors">Directory</a>
+            <a
+              href="/privacy"
+              className="inline-flex min-h-11 items-center transition-colors hover:text-white"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center transition-colors hover:text-white"
+            >
+              Employment
+            </a>
+            <a
+              href="#community"
+              className="inline-flex min-h-11 items-center transition-colors hover:text-white"
+            >
+              Directory
+            </a>
           </div>
         </div>
       </footer>

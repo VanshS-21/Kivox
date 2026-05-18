@@ -6,17 +6,17 @@ export const viewportOnce = { once: true, amount: 0.35 } as const;
 export const viewportOnceEager = { once: true, amount: 0.15 } as const;
 
 export const transitionDefault = {
-  duration: 0.6,
+  duration: 0.45,
   ease: easeOutExpo,
 } as const;
 
 export const transitionSlow = {
-  duration: 0.9,
+  duration: 0.7,
   ease: easeOutExpo,
 } as const;
 
 export const transitionEntrance = {
-  duration: 0.8,
+  duration: 0.6,
   ease: easeOutQuint,
 } as const;
 
@@ -26,8 +26,8 @@ export function prefersReducedMotion(): boolean {
 }
 
 export const fadeUp = {
-  hidden: { opacity: 0, y: 12, filter: "blur(6px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)" },
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0 },
 } as const;
 
 export const fadeIn = {
@@ -36,18 +36,18 @@ export const fadeIn = {
 } as const;
 
 export const scaleIn = {
-  hidden: { opacity: 0, scale: 0.95, filter: "blur(4px)" },
-  show: { opacity: 1, scale: 1, filter: "blur(0px)" },
+  hidden: { opacity: 0, scale: 0.97 },
+  show: { opacity: 1, scale: 1 },
 } as const;
 
 export const slideInLeft = {
-  hidden: { opacity: 0, x: -30, filter: "blur(6px)" },
-  show: { opacity: 1, x: 0, filter: "blur(0px)" },
+  hidden: { opacity: 0, x: -20 },
+  show: { opacity: 1, x: 0 },
 } as const;
 
 export const slideInRight = {
-  hidden: { opacity: 0, x: 30, filter: "blur(6px)" },
-  show: { opacity: 1, x: 0, filter: "blur(0px)" },
+  hidden: { opacity: 0, x: 20 },
+  show: { opacity: 1, x: 0 },
 } as const;
 
 export const stagger = {
@@ -90,8 +90,8 @@ export const staggerContainer = {
 
 /** Word-level reveal variant for text splits */
 export const wordReveal = {
-  hidden: { opacity: 0, y: 8, filter: "blur(4px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)" },
+  hidden: { opacity: 0, y: 6 },
+  show: { opacity: 1, y: 0 },
 } as const;
 
 /** Draw line animation — for expanding horizontal rules */

@@ -8,6 +8,7 @@ export function FaqPageContent() {
   return (
     <div className="pt-28 sm:pt-32 pb-16 sm:pb-24">
       <Container size="narrow">
+        <p className="studio-eyebrow mb-4 text-accent">[ FAQ ]</p>
         <h1 className="studio-h1-headline text-foreground">{faq.title}</h1>
 
         <p className="mt-4 studio-lede">{faq.intro}</p>
@@ -23,7 +24,10 @@ export function FaqPageContent() {
               textTransform: "uppercase",
             }}
           >
-            {faq.categories.reduce((sum, category) => sum + category.items.length, 0)}{" "}
+            {faq.categories.reduce(
+              (sum, category) => sum + category.items.length,
+              0,
+            )}{" "}
             questions across {faq.categories.length} topics
           </span>
         </div>
@@ -39,7 +43,7 @@ export function FaqPageContent() {
           <Link
             href="/contact"
             prefetch={false}
-            className="group mt-3 inline-flex items-center gap-2 font-sans text-base font-semibold text-accent transition-colors duration-200 hover:text-accent-hover"
+            className="group mt-3 inline-flex min-h-11 items-center gap-2 font-sans text-base font-semibold text-accent transition-colors duration-200 hover:text-accent-hover"
           >
             Get in touch
             <svg
