@@ -58,10 +58,10 @@ export const team: {
     {
       id: "sacchidanand-pandey",
       name: "Sacchidanand Pandey",
-      role: "R&D, Ui/Ux",
-      focus: "Backend systems, integrations, deployment",
+      role: "Business Analyst",
+      focus: "Requirements gathering, process optimization, data analysis",
       image: "/media/team/sachidanand-pandey.webp",
-      quote: "I explore what's possible so the team can ship what's right. Research only matters when it leads somewhere.",
+      quote: "I translate complex business challenges into clear, actionable requirements so the team can build exactly what's needed.",
       objectPosition: "center 68%",
     },
     {

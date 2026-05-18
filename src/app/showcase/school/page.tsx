@@ -264,14 +264,14 @@ export default function SchoolShowcase() {
                 title: "Middle School",
                 subtitle: "Grades 5 — 8",
                 desc: "Fostering independence, critical thinking, and character development during the pivotal early adolescent years.",
-                img: "https://images.unsplash.com/photo-1427504494785-319ce247ae2b?q=80&w=800&auto=format&fit=crop",
+                img: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=800&auto=format&fit=crop",
               },
               {
                 icon: GraduationCap,
                 title: "Upper School",
                 subtitle: "Grades 9 — 12",
                 desc: "Advanced scholarship, leadership preparation, and rigorous college readiness in a Harkness-driven environment.",
-                img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop",
+                img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop",
               },
             ].map((pillar, idx) => (
               <div

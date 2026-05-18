@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -32,16 +32,19 @@ const projectColors: Record<string, string> = {
   fitness: "var(--project-fitness)",
 };
 
-const AUTOPLAY_INTERVAL_MS = 4000;
+const AUTOPLAY_INTERVAL_MS = 6500;
 
 export function HomeWorkPreview() {
   const featuredWork = work.featured;
+  const sectionRef = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPaused, setIsAutoPaused] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const reduce = useReducedMotion();
+  const reduceMotion = Boolean(reduce);
+  const [isInView, setIsInView] = useState(false);
   const totalPanels = featuredWork.length;
-  const autoplayPaused = isAutoPaused;
+  const autoplayPaused = isAutoPaused || isHovering || !isInView || reduceMotion;
 
   useEffect(() => {
     if (autoplayPaused || totalPanels < 2) return;
@@ -54,6 +57,24 @@ export function HomeWorkPreview() {
 
     return () => window.clearInterval(intervalId);
   }, [autoplayPaused, totalPanels]);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+
+    if (!node || typeof IntersectionObserver === "undefined") {
+      setIsInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.28 },
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
 
   const goToPrevious = () => {
     setActiveIndex((current) =>
@@ -87,33 +108,28 @@ export function HomeWorkPreview() {
 
   return (
     <Section
+      ref={sectionRef}
       spacing="tight"
       className="work-showcase relative overflow-hidden border-t border-border bg-background"
     >
-      {/* Ambient Cinematic Background */}
+      {/* Stable background avoids repaint flashes from swapping blurred images. */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 0.25, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={featuredWork[activeIndex].image}
-              alt=""
-              fill
-              className="object-cover blur-[100px] saturate-[1.5]"
-            />
-          </motion.div>
-        </AnimatePresence>
-        <div className="absolute inset-0 bg-background/80" />
+        <div className="absolute inset-0 bg-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-surface/45 via-background to-background" />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-6 md:px-10 lg:px-12 2xl:max-w-7xl">
+      <div
+        className="relative z-10 mx-auto max-w-6xl px-5 sm:px-6 md:px-10 lg:px-12 2xl:max-w-7xl"
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            setIsHovering(false);
+          }
+        }}
+        onFocusCapture={() => setIsHovering(true)}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         <motion.div
           initial={reduce ? false : "hidden"}
           whileInView={reduce ? undefined : "show"}
@@ -176,10 +192,6 @@ export function HomeWorkPreview() {
         <div
           aria-label="Featured work cinematic carousel"
           className="relative flex h-[320px] w-full items-center justify-center [perspective:1600px] xl:h-[430px] 2xl:h-[520px]"
-          onBlurCapture={() => setIsHovering(false)}
-          onFocusCapture={() => setIsHovering(true)}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
         >
           {featuredWork.map((project, idx) => {
             const accent = projectColors[project.slug] || "var(--accent)";
@@ -191,7 +203,7 @@ export function HomeWorkPreview() {
                 aria-hidden={!isActive}
                 initial={false}
                 animate={reduce ? (isActive ? { opacity: 1, zIndex: 30 } : { opacity: 0, zIndex: 0 }) : getAnimations(idx)}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: reduceMotion ? 0 : 0.55, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute w-[82vw] max-w-[720px] shrink-0 origin-center [transform-style:preserve-3d] 2xl:max-w-[920px]"
                 style={{ aspectRatio: "16 / 10" }}
                 onClick={() => {
@@ -208,7 +220,7 @@ export function HomeWorkPreview() {
                   <div className="relative h-full w-full overflow-hidden rounded-[1rem] sm:rounded-[1.25rem] shadow-[inset_0_4px_30px_rgba(0,0,0,0.7)] group">
                     <motion.div
                       animate={
-                        isActive && !reduce && isHovering
+                        isActive && !reduceMotion && isHovering
                           ? { scale: 1.03 }
                           : { scale: 1 }
                       }
@@ -219,7 +231,7 @@ export function HomeWorkPreview() {
                         alt={`${project.title} project showcase`}
                         className="object-cover object-left-top"
                         fill
-                        loading={idx === 0 ? "eager" : "lazy"}
+                        loading="eager"
                         sizes="(max-width: 1279px) 100vw, 1180px"
                         src={project.image}
                       />
@@ -234,14 +246,14 @@ export function HomeWorkPreview() {
         </div>
 
         {/* Active Project Details (Centered below carousel) */}
-        <div className="relative z-20 mx-auto mt-8 flex max-w-3xl flex-col items-center text-center 2xl:mt-12 2xl:max-w-4xl">
-          <AnimatePresence mode="wait">
+        <div className="relative z-20 mx-auto mt-8 flex min-h-[310px] sm:min-h-[330px] xl:min-h-[290px] 2xl:min-h-[310px] max-w-3xl flex-col items-center text-center 2xl:mt-12 2xl:max-w-4xl">
+          <AnimatePresence initial={false}>
             <motion.div
               key={activeIndex}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: reduceMotion ? 0 : 0.28, ease: "easeOut" }}
               className="flex flex-col items-center"
             >
               {(() => {

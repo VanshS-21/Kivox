@@ -1,13 +1,15 @@
 "use client";
 
+import type { SVGProps } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 
 import { brand } from "@/content/brand";
 import { navigation } from "@/content/navigation";
 import { KivoxLogo } from "@/components/ui/KivoxLogo";
 
-const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (
+const LinkedinIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -26,7 +28,7 @@ const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
+const InstagramIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -45,7 +47,7 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
+const FacebookIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -62,209 +64,323 @@ const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const intentLinks = [
+  {
+    label: "See Proof",
+    title: "Explore the work",
+    href: "/work",
+  },
+  {
+    label: "Check Fit",
+    title: "Scan our services",
+    href: "/#services",
+  },
+  {
+    label: "Ask Directly",
+    title: "Book a free call",
+    href: "/contact",
+  },
+] as const;
+
+const studioLinks = [
+  { label: "Our Process", href: "/#process" },
+  { label: "The Team", href: "/#team" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Blog", href: "/blog" },
+] as const;
+
+const proofLinks = [
+  { label: "All Work", href: "/work" },
+  { label: "The Roastery", href: "/work/cafe" },
+  { label: "Aurelia Grand", href: "/work/hotel" },
+  { label: "Greenfield Academy", href: "/work/school" },
+] as const;
+
+const legalLinks = [
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+] as const;
+
 export function Footer() {
   const pathname = usePathname();
+  const currentYear = new Date().getFullYear();
+  const phoneHref = `tel:${brand.contact.phone.replace(/\s+/g, "")}`;
 
   if (pathname.startsWith("/showcase")) return null;
 
   return (
-    <footer className="relative overflow-hidden border-t border-border bg-surface-alt">
-      <div className="mx-auto max-w-[1320px] px-6 pb-5 pt-10 md:px-10 md:pt-14 lg:px-14 lg:pt-16">
-        <div className="mb-8 flex flex-col justify-between gap-8 lg:mb-10 lg:flex-row lg:gap-10">
-          <div className="flex max-w-xl flex-col gap-4 md:gap-5">
-            <div>
-              <h2 className="studio-h2-editorial mb-3 text-foreground">
-                Let&apos;s start a{" "}
-                <em
-                  className="font-serif italic text-muted-foreground"
-                  style={{ fontStyle: "italic" }}
-                >
-                  conversation.
-                </em>
-              </h2>
-            </div>
+    <footer className="relative isolate overflow-hidden border-t border-border bg-surface-alt text-foreground selection:bg-accent-muted">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-70"
+        style={{
+          background:
+            "linear-gradient(180deg, oklch(0.11 0.012 65 / 0.72), transparent 34%), linear-gradient(110deg, transparent 0%, oklch(0.72 0.18 65 / 0.08) 42%, transparent 72%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.18]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, var(--border-soft) 1px, transparent 1px), linear-gradient(to bottom, var(--border-soft) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
 
-            <div className="flex flex-col items-start gap-2">
+      <div className="mx-auto max-w-[1320px] px-5 py-8 sm:px-6 sm:py-14 md:px-10 lg:px-14 lg:py-18 xl:py-20">
+        <div className="grid gap-7 border-b border-border/70 pb-8 sm:gap-10 md:pb-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.85fr)] lg:items-end lg:gap-12 xl:pb-14">
+          <div className="max-w-3xl">
+            <Link
+              href="/"
+              prefetch={false}
+              aria-label="Kivox home"
+              className="hidden min-h-11 items-center sm:inline-flex"
+            >
+              <KivoxLogo height={34} variant="mono" className="text-foreground" />
+            </Link>
+            <p className="studio-eyebrow text-accent sm:mt-8">
+              [ Ready when you are ]
+            </p>
+            <h2 className="mt-4 max-w-4xl font-sans text-[clamp(2.35rem,9vw,3.25rem)] font-semibold leading-[0.94] tracking-tight text-foreground sm:text-[clamp(2.5rem,8vw,6.25rem)] sm:leading-[0.92]">
+              Build a website customers can trust.
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
+              Premium websites, sharper journeys, and launch-ready digital
+              systems for businesses that need trust to show up fast.
+            </p>
+            <div className="mt-6 flex flex-col gap-3 min-[460px]:flex-row sm:mt-8">
+              <Link
+                href="/contact"
+                prefetch={false}
+                className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-accent px-6 text-sm font-semibold text-accent-ink shadow-[0_20px_55px_-28px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-[0_28px_70px_-30px_var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+              >
+                Book a Free Call
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
               <a
                 href={`mailto:${brand.contact.email}`}
-                className="inline-flex min-h-11 items-center break-all text-2xl font-medium text-foreground transition-colors hover:text-accent md:text-3xl"
+                className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-border/80 px-6 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
               >
-                {brand.contact.email}
+                <Mail aria-hidden="true" className="h-4 w-4" />
+                Email Us
               </a>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <a
-                href={`tel:${brand.contact.phone.replace(/\s+/g, "")}`}
-                className="inline-flex min-h-11 items-center text-base text-muted-foreground transition-colors hover:text-accent"
-              >
-                {brand.contact.phone}
-              </a>
-              <span className="text-base text-muted-foreground">
-                {brand.contact.address}
-              </span>
             </div>
           </div>
 
-          <div className="grid w-full grid-cols-3 gap-4 sm:flex sm:w-auto sm:flex-nowrap sm:gap-9 lg:gap-14">
-            <div>
-              <h3 className="studio-eyebrow mb-3 text-foreground opacity-60 sm:mb-4">
-                Navigate
-              </h3>
-              <nav
-                aria-label="Footer navigation"
-                className="flex flex-col items-start gap-2.5 sm:gap-3"
-              >
-                {navigation.primary.map((link) => {
-                  if (pathname === link.href) return null;
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      prefetch={false}
-                      className="inline-flex min-h-11 min-w-11 items-center text-sm font-medium text-foreground transition-colors hover:text-accent sm:text-base"
-                    >
-                      {link.label}
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
-
-            <div>
-              <h3 className="studio-eyebrow mb-3 text-foreground opacity-60 sm:mb-4">
-                Studio
-              </h3>
-              <nav
-                aria-label="Studio sections"
-                className="flex flex-col items-start gap-2.5 sm:gap-3"
-              >
-                {[
-                  { label: "Our Process", href: "/#process" },
-                  { label: "The Team", href: "/#team" },
-                  { label: "FAQ", href: "/faq" },
-                  { label: "Work Showcase", href: "/work" },
-                ].map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    prefetch={false}
-                    className="inline-flex min-h-11 min-w-11 items-center text-sm font-medium text-foreground transition-colors hover:text-accent sm:text-base"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-
-            <div>
-              <h3 className="studio-eyebrow mb-3 text-foreground opacity-60 sm:mb-4">
-                Connect
-              </h3>
-              <nav
-                aria-label="Social connections"
-                className="flex flex-col items-start gap-2.5 sm:gap-3"
-              >
-                <a
-                  className="group flex min-h-11 items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
-                  href={brand.socials.linkedin}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <LinkedinIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span>LinkedIn</span>
-                </a>
-                <a
-                  className="group flex min-h-11 items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
-                  href={brand.socials.instagram}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <InstagramIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span>Instagram</span>
-                </a>
-                <a
-                  className="group flex min-h-11 items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
-                  href={brand.socials.facebook}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <FacebookIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span>Facebook</span>
-                </a>
-                <a
-                  className="group flex min-h-11 items-center gap-2 text-sm font-medium text-foreground opacity-60 transition-all hover:text-accent hover:opacity-100 sm:gap-3 sm:text-base"
-                  href={`mailto:${brand.contact.email}`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4 sm:h-5 sm:w-5"
-                  >
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                  </svg>
-                  <span>Email Us</span>
-                </a>
-              </nav>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex w-full justify-center pb-4">
-          <Link
-            href="/"
-            prefetch={false}
-            aria-label="Back to top"
-            className="group block w-full max-w-[260px] cursor-pointer sm:max-w-[380px] lg:max-w-[520px]"
-            data-cursor="logo"
+          <nav
+            aria-label="Next steps"
+            className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1"
           >
-            <KivoxLogo
-              fluid
-              variant="mono"
-              className="text-foreground opacity-12 transition-opacity duration-500 group-hover:opacity-22 dark:opacity-16 dark:group-hover:opacity-28"
-            />
-          </Link>
+            {intentLinks.map((link, index) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                prefetch={false}
+                className="group flex min-h-16 items-center justify-between gap-4 border border-border/70 bg-[oklch(0.1_0.006_65/0.58)] px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/60 hover:bg-[oklch(0.12_0.01_65/0.74)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:min-h-[132px] sm:flex-col sm:items-start sm:px-5 sm:py-4 lg:min-h-[92px] lg:flex-row lg:items-center"
+                style={{ borderRadius: "var(--radius-md)" }}
+              >
+                <span>
+                  <span className="studio-tag studio-tabular block text-muted-foreground">
+                    {String(index + 1).padStart(2, "0")} / {link.label}
+                  </span>
+                  <span className="mt-1 block text-lg font-semibold tracking-tight text-foreground sm:mt-2 sm:text-2xl lg:text-xl xl:text-2xl">
+                    {link.title}
+                  </span>
+                </span>
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-5 w-5 shrink-0 text-accent transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+                />
+              </Link>
+            ))}
+          </nav>
         </div>
-      </div>
 
-      <div className="relative z-10 border-t border-accent/10 bg-surface-alt">
-        <div className="mx-auto max-w-[1320px] px-6 py-3 md:px-10 lg:px-14">
-          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <div className="studio-caption">
-              &copy; {new Date().getFullYear()} {brand.name} &middot;{" "}
-              {brand.locationLine}
-            </div>
-            <nav
-              aria-label="Legal"
-              className="flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-6"
-            >
-              {[
-                ["Blog", "/blog"],
-                ["FAQ", "/faq"],
-                ["Privacy", "/privacy"],
-                ["Terms", "/terms"],
-              ].map(([label, href]) => (
-                <Link
-                  key={href}
-                  className="studio-caption -mx-1 inline-flex min-h-11 min-w-11 items-center px-1 text-muted-foreground opacity-60 transition-colors hover:text-accent hover:opacity-100"
-                  href={href}
-                  prefetch={false}
-                >
-                  {label}
-                </Link>
-              ))}
-            </nav>
+        <div className="grid gap-7 py-7 sm:gap-10 sm:py-10 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)] md:gap-12 md:py-12 xl:grid-cols-[minmax(300px,0.9fr)_minmax(0,1.6fr)_minmax(260px,0.75fr)]">
+          <div className="hidden sm:block">
+            <p className="studio-eyebrow text-accent">[ Studio ]</p>
+            <p className="mt-4 max-w-sm text-lg leading-relaxed text-foreground">
+              {brand.tagline}
+            </p>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Based in Bengaluru, working with ambitious businesses across
+              India.
+            </p>
           </div>
+
+          <div className="hidden gap-8 sm:grid sm:grid-cols-3">
+            <FooterLinkGroup
+              ariaLabel="Footer site navigation"
+              title="Site"
+              links={navigation.primary}
+              pathname={pathname}
+            />
+            <FooterLinkGroup
+              ariaLabel="Footer studio navigation"
+              title="Studio"
+              links={studioLinks}
+              pathname={pathname}
+            />
+            <FooterLinkGroup
+              ariaLabel="Footer proof navigation"
+              title="Proof"
+              links={proofLinks}
+              pathname={pathname}
+            />
+          </div>
+
+          <div className="md:col-span-2 xl:col-span-1">
+            <p className="studio-eyebrow text-accent">[ Direct ]</p>
+            <div className="mt-4 grid gap-2 sm:mt-5 sm:grid-cols-3 sm:gap-3 xl:grid-cols-1">
+              <a
+                href={`mailto:${brand.contact.email}`}
+                className="group flex min-h-10 items-start gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground sm:min-h-12"
+              >
+                <Mail
+                  aria-hidden="true"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                />
+                <span className="break-all">{brand.contact.email}</span>
+              </a>
+              <a
+                href={phoneHref}
+                className="group flex min-h-10 items-start gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground sm:min-h-12"
+              >
+                <Phone
+                  aria-hidden="true"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                />
+                <span>{brand.contact.phone}</span>
+              </a>
+              <div className="flex min-h-10 items-start gap-3 text-sm text-muted-foreground sm:min-h-12">
+                <MapPin
+                  aria-hidden="true"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                />
+                <span>{brand.contact.address}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-y border-border/60 py-5 sm:py-8 md:py-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <Link
+              href="/"
+              prefetch={false}
+              aria-label="Back to Kivox home"
+              className="group hidden w-full max-w-[360px] sm:block md:max-w-[520px] lg:max-w-[640px]"
+              data-cursor="logo"
+            >
+              <KivoxLogo
+                fluid
+                variant="mono"
+                className="text-foreground opacity-[0.14] transition-opacity duration-500 group-hover:opacity-25"
+              />
+            </Link>
+            <div className="flex flex-wrap items-center gap-3 sm:justify-start">
+              <SocialLink
+                href={brand.socials.linkedin}
+                label="LinkedIn"
+                icon={<LinkedinIcon aria-hidden="true" className="h-4 w-4" />}
+              />
+              <SocialLink
+                href={brand.socials.instagram}
+                label="Instagram"
+                icon={<InstagramIcon aria-hidden="true" className="h-4 w-4" />}
+              />
+              <SocialLink
+                href={brand.socials.facebook}
+                label="Facebook"
+                icon={<FacebookIcon aria-hidden="true" className="h-4 w-4" />}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3 pt-5 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:pt-6">
+          <p>
+            &copy; {currentYear} {brand.name}. {brand.locationLine}
+          </p>
+          <nav aria-label="Legal" className="flex flex-wrap gap-x-6 gap-y-2">
+            {legalLinks.map((link) => (
+              <Link
+                key={link.href}
+                className="inline-flex min-h-11 items-center transition-colors hover:text-accent"
+                href={link.href}
+                prefetch={false}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterLinkGroup({
+  ariaLabel,
+  title,
+  links,
+  pathname,
+}: {
+  ariaLabel: string;
+  title: string;
+  links: readonly { label: string; href: string }[];
+  pathname: string;
+}) {
+  return (
+    <div>
+      <h3 className="studio-eyebrow text-foreground/55">{title}</h3>
+      <nav aria-label={ariaLabel} className="mt-4 flex flex-col items-start gap-2">
+        {links.map((link) => {
+          const isCurrent = pathname === link.href;
+
+          return (
+            <Link
+              aria-current={isCurrent ? "page" : undefined}
+              key={link.href}
+              href={link.href}
+              prefetch={false}
+              className="group inline-flex min-h-11 items-center gap-2 text-base font-medium text-muted-foreground transition-colors hover:text-accent aria-[current=page]:text-foreground"
+            >
+              <span>{link.label}</span>
+              <ArrowUpRight
+                aria-hidden="true"
+                className="h-3.5 w-3.5 opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
+              />
+            </Link>
+          );
+        })}
+      </nav>
+    </div>
+  );
+}
+
+function SocialLink({
+  href,
+  icon,
+  label,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <a
+      aria-label={label}
+      className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/80 text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-accent-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+      href={href}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      {icon}
+    </a>
   );
 }
