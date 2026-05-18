@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { HomeHero } from "@/components/sections/HomeHero";
 import { HomeProjectBand } from "@/components/sections/HomeProjectBand";
-import { HomeProofBand } from "@/components/sections/HomeProofBand";
 import { HomeTeam } from "@/components/sections/HomeTeam";
 import { HomeWorkPreview } from "@/components/sections/HomeWorkPreview";
 
@@ -34,12 +33,7 @@ export default function Home() {
         <HomeProjectBand />
       </div>
       <div id="live-examples" className="scroll-mt-24">
-        <div className="xl:hidden">
-          <HomeProofBand />
-        </div>
-        <div className="hidden xl:block">
-          <HomeWorkPreview />
-        </div>
+        <HomeWorkPreview />
       </div>
       <div id="services" className="scroll-mt-24 cv-auto">
         <HomeServices />
