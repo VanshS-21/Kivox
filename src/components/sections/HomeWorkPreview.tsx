@@ -32,7 +32,7 @@ const projectColors: Record<string, string> = {
   fitness: "var(--project-fitness)",
 };
 
-const AUTOPLAY_INTERVAL_MS = 6500;
+const AUTOPLAY_INTERVAL_MS = 3000;
 
 export function HomeWorkPreview() {
   const featuredWork = work.featured;
