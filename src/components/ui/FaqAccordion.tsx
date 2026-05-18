@@ -35,10 +35,8 @@ function AccordionItem({
         className="group flex w-full cursor-pointer items-start gap-4 py-5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:py-6"
       >
         <span
-          className="studio-tabular mt-[3px] shrink-0 select-none font-mono text-accent transition-opacity duration-300"
+          className="studio-tag studio-tabular mt-[3px] shrink-0 select-none text-accent transition-opacity duration-300"
           style={{
-            fontSize: "0.6875rem",
-            letterSpacing: "0.05em",
             opacity: isOpen ? 1 : 0.5,
           }}
           aria-hidden="true"
@@ -118,10 +116,7 @@ function CategoryGroup({
       {category.label && (
         <div className="mb-4 mt-2 flex items-baseline gap-3">
           <h2 className="studio-h3-sans text-foreground">{category.label}</h2>
-          <span
-            className="select-none font-mono text-subtle-foreground"
-            style={{ fontSize: "0.625rem", letterSpacing: "0.05em" }}
-          >
+          <span className="studio-tag select-none text-subtle-foreground">
             {String(category.items.length).padStart(2, "0")}
           </span>
         </div>

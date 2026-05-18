@@ -35,12 +35,12 @@ export function ShowcaseFrame() {
         <Link
           href="/work"
           prefetch={false}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--border)] px-3 text-xs font-semibold uppercase tracking-[0.12em] opacity-75 transition-opacity hover:opacity-100"
+          className="studio-tag inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--border)] px-3 opacity-75 transition-opacity hover:opacity-100"
         >
           <LayoutGrid className="h-3.5 w-3.5" />
           <span>All Work</span>
         </Link>
-        <span className="hidden opacity-50 tracking-widest uppercase text-xs font-semibold sm:inline">
+        <span className="studio-tag hidden opacity-50 sm:inline">
           Kivox Demo
         </span>
       </div>

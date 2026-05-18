@@ -37,7 +37,7 @@ export function HomeTeam() {
               People.
             </em>
           </h2>
-          <p className="studio-body-serif text-muted-foreground max-w-xl">
+          <p className="studio-lede max-w-xl">
             {team.intro}
           </p>
         </motion.div>
@@ -130,7 +130,7 @@ function TeamMemberCard({
           <h3 className="studio-h4-sans text-[15px] sm:text-lg text-foreground transition-colors duration-300 group-hover:text-accent">
             {member.name}
           </h3>
-          <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-wider text-accent/80 border border-accent/20 px-1.5 sm:px-2 py-0.5 rounded-full">
+          <span className="studio-tag text-[9px] sm:text-[10px] text-accent/80 border border-accent/20 px-1.5 sm:px-2 py-0.5 rounded-full">
             {member.role}
           </span>
         </div>

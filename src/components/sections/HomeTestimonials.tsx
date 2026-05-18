@@ -177,7 +177,7 @@ const TestimonialCard = memo(function TestimonialCard({
         <div className="font-semibold text-foreground tracking-wide break-words">
           {testimonial.author}
         </div>
-        <div className="text-sm text-muted-foreground mt-1 font-mono uppercase tracking-widest opacity-80 break-words">
+        <div className="studio-tag mt-1 break-words text-muted-foreground opacity-80">
           {testimonial.role}, {testimonial.company}
         </div>
       </div>

@@ -101,7 +101,7 @@ export default async function CaseStudyPage({
 
             {/* Subtitle */}
             {project.subtitle && (
-              <p className="studio-body-serif text-lg sm:text-xl text-muted-foreground max-w-3xl mb-8">
+              <p className="studio-lede max-w-3xl mb-8">
                 {project.subtitle}
               </p>
             )}
@@ -123,7 +123,7 @@ export default async function CaseStudyPage({
                 {project.services.map((service) => (
                   <span
                     key={service}
-                    className="text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full border"
+                    className="studio-tag px-3 py-1.5 rounded-full border"
                     style={{
                       borderColor: `color-mix(in oklch, ${color}, transparent 70%)`,
                       color,
@@ -159,7 +159,7 @@ export default async function CaseStudyPage({
               </h2>
             </div>
             <div className="lg:col-span-8">
-              <p className="studio-body-serif text-xl sm:text-2xl leading-snug text-muted-foreground">
+              <p className="studio-lede max-w-3xl">
                 {project.demonstrates}
               </p>
             </div>
@@ -465,7 +465,7 @@ export default async function CaseStudyPage({
 function MetaChip({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs font-mono uppercase tracking-wider text-subtle-foreground">
+      <span className="studio-tag text-subtle-foreground">
         {label}
       </span>
       <span className="text-xs text-muted-foreground opacity-30">—</span>
@@ -507,14 +507,14 @@ function ProcessBlock({
       <div className="lg:col-span-3 pb-2">
         <div className="flex items-center gap-3 mb-2">
           <span
-            className="text-sm font-mono font-bold studio-tabular"
+            className="studio-tag studio-tabular font-semibold"
             style={{ color }}
           >
             {num}
           </span>
           <h3 className="text-lg font-bold text-foreground">{phase.phase}</h3>
         </div>
-        <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+        <span className="studio-tag text-muted-foreground">
           {phase.duration}
         </span>
       </div>
@@ -529,7 +529,7 @@ function ProcessBlock({
             {phase.deliverables.map((d) => (
               <span
                 key={d}
-                className="text-xs font-mono px-3 py-1.5 rounded-md bg-card/40 border border-border/50 text-subtle-foreground"
+                className="studio-tag px-3 py-1.5 rounded-md bg-card/40 border border-border/50 text-subtle-foreground"
               >
                 {d}
               </span>
@@ -557,7 +557,7 @@ function DecisionCard({
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 p-6 lg:p-8 rounded-2xl bg-card/20 border border-border/50">
       <div className="lg:col-span-4 flex items-start gap-3">
         <span
-          className="text-sm font-mono font-bold studio-tabular shrink-0 mt-0.5"
+          className="studio-tag studio-tabular shrink-0 mt-0.5 font-semibold"
           style={{ color }}
         >
           {num}

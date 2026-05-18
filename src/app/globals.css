@@ -651,6 +651,7 @@ body {
   line-height: 1.6;
   font-kerning: normal;
   font-optical-sizing: auto;
+  font-feature-settings: "kern" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -751,9 +752,9 @@ p {
 
   /* Headline: bold sans (Bricolage Grotesque) — hero titles, section headings */
   .studio-h1-headline {
-    font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
-    line-height: 1.02;
-    letter-spacing: -0.025em;
+    font-size: clamp(2.75rem, 4.4vw + 0.9rem, 4.375rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
     font-family: var(--font-sans);
     font-weight: 700;
   }
@@ -761,8 +762,8 @@ p {
   /* Editorial: regular serif (Spectral) — subheads, inner-page h2 */
   .studio-h2-editorial {
     font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
-    line-height: 1.1;
-    letter-spacing: -0.015em;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
     font-family: var(--font-serif);
     font-weight: 400;
   }
@@ -787,8 +788,8 @@ p {
   /* Body serif — editorial subheads, large body text */
   .studio-body-serif {
     font-size: clamp(1.0625rem, 0.5vw + 0.5rem, 1.25rem);
-    line-height: 1.65;
-    letter-spacing: 0;
+    line-height: 1.7;
+    letter-spacing: 0.005em;
     font-family: var(--font-serif);
     font-weight: 400;
   }
@@ -798,7 +799,7 @@ p {
     font-size: clamp(1.0625rem, 0.5vw + 0.5rem, 1.25rem);
     line-height: 1.65;
     letter-spacing: 0;
-    font-family: var(--font-serif);
+    font-family: var(--font-body);
     font-weight: 400;
     color: var(--fg-muted);
   }
@@ -810,7 +811,7 @@ p {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     line-height: 1.4;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     font-weight: 500;
     text-transform: uppercase;
   }
@@ -829,7 +830,7 @@ p {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     line-height: 1.4;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     font-weight: 500;
     text-transform: uppercase;
   }

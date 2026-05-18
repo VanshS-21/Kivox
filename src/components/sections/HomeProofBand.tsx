@@ -144,7 +144,7 @@ export function HomeProofBand() {
                       <div className="flex flex-wrap gap-2">
                         {project.services.slice(0, 3).map((service) => (
                           <span
-                            className="rounded-full border px-3 py-1.5 text-[0.68rem] font-mono uppercase tracking-[0.08em]"
+                            className="studio-tag rounded-full border px-3 py-1.5"
                             key={service}
                             style={{
                               borderColor: "var(--proof-border)",

@@ -58,7 +58,7 @@ export function HomeProcess() {
             viewport={viewportOnce}
             variants={fadeUp}
             transition={{ ...transitionDefault, delay: 0.1 }}
-            className="lg:col-span-5 studio-body-serif text-muted-foreground self-end"
+            className="lg:col-span-5 studio-lede self-end"
           >
             Every project follows the same disciplined arc, from understanding
             the problem to crafting a solution that endures.
@@ -154,7 +154,7 @@ const ProcessStep = memo(function ProcessStep({
       >
         <span
           className={cn(
-            "font-mono text-sm studio-tabular font-semibold tracking-widest",
+            "studio-tag studio-tabular",
             isDark ? "text-[var(--fg-primary)]/70" : "text-accent",
           )}
         >

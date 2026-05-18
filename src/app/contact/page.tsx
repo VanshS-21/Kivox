@@ -29,19 +29,19 @@ export default function ContactPage() {
           {/* 1. Header (Mobile: Top, Desktop: Top-Left) */}
           <div className="lg:col-start-1 lg:col-span-5 lg:row-start-1 order-1 mb-2 lg:mb-10">
             <h1 className="studio-h1-headline text-foreground mb-5">
-              {contact.headline.part1}
-              <br />
+              <span className="block">
+                {contact.headline.part1}
+                <span className="sr-only"> </span>
+              </span>
               <em
-                className="font-serif font-normal text-accent"
+                className="block font-serif font-normal text-accent"
                 style={{ fontStyle: "italic" }}
               >
                 {contact.headline.part2}
               </em>
             </h1>
 
-            <p className="studio-body-serif text-muted-foreground max-w-xl">
-              {contact.intro}
-            </p>
+            <p className="studio-lede max-w-xl">{contact.intro}</p>
           </div>
 
           {/* 2. Form (Mobile: Middle, Desktop: Right side spanning full height) */}

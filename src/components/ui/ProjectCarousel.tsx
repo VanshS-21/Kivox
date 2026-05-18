@@ -97,7 +97,7 @@ export function ProjectCarousel({
 
         {total > 1 && (
           <div className="absolute bottom-4 right-5 z-10 lg:bottom-6 lg:right-7 pointer-events-none">
-            <span className="font-mono text-xs tracking-widest text-white/80 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm">
+            <span className="studio-tag studio-tabular text-white/80 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm">
               {String(activeIndex + 1).padStart(2, "0")}
               <span className="mx-1 text-white/40">/</span>
               {String(total).padStart(2, "0")}

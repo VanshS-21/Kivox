@@ -130,7 +130,7 @@ export function HomeWorkPreview() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 font-mono text-xs text-subtle-foreground/80">
+            <div className="studio-tag flex items-center gap-3 text-subtle-foreground/80">
               <span className="studio-tabular text-foreground font-semibold">
                 {String(activeIndex + 1).padStart(2, "0")}
               </span>
@@ -253,7 +253,7 @@ export function HomeWorkPreview() {
 
                 return (
                   <>
-                    <div className="mb-4 flex items-center justify-center gap-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-foreground/70">
+                    <div className="studio-tag mb-4 flex items-center justify-center gap-4 text-foreground/70">
                       <span>{project.year}</span>
                       <span aria-hidden="true" className="opacity-40">
                         /
@@ -275,7 +275,7 @@ export function HomeWorkPreview() {
                     </p>
 
                     <div className="mt-8 flex flex-col items-center gap-6 sm:mt-10">
-                      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[0.68rem] font-mono uppercase tracking-[0.15em] text-foreground/60 sm:text-xs">
+                      <div className="studio-tag flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-foreground/60">
                         {tags.map((tag, tagIdx) => (
                           <span className="inline-flex items-center gap-4" key={tag}>
                             {tagIdx > 0 ? (

@@ -69,12 +69,7 @@ export function BlogPostContent({
           >
             <Link
               href="/blog"
-              className="group mb-8 inline-flex min-h-11 items-center gap-2 font-mono text-muted-foreground transition-colors duration-200 hover:text-accent"
-              style={{
-                fontSize: "0.75rem",
-                letterSpacing: "0.05em",
-                textTransform: "uppercase",
-              }}
+              className="studio-tag group mb-8 inline-flex min-h-11 items-center gap-2 text-muted-foreground transition-colors duration-200 hover:text-accent"
             >
               <svg
                 width="14"
@@ -115,8 +110,7 @@ export function BlogPostContent({
           >
             <time
               dateTime={post.date}
-              className="font-mono text-muted-foreground"
-              style={{ fontSize: "0.6875rem", letterSpacing: "0.05em" }}
+              className="studio-tag text-muted-foreground"
             >
               {formatDate(post.date)}
             </time>
@@ -125,8 +119,7 @@ export function BlogPostContent({
               aria-hidden="true"
             />
             <span
-              className="inline-flex items-center gap-1.5 font-mono text-muted-foreground"
-              style={{ fontSize: "0.6875rem", letterSpacing: "0.05em" }}
+              className="studio-tag inline-flex items-center gap-1.5 text-muted-foreground"
             >
               {/* Book icon */}
               <svg

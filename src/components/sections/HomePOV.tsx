@@ -176,7 +176,7 @@ export function HomePOV() {
               viewport={viewportOnce}
               variants={fadeUp}
               transition={{ ...transitionDefault, delay: 1.4 }}
-              className="studio-body-serif text-muted-foreground lg:text-right max-w-md"
+              className="studio-lede max-w-md lg:text-right"
             >
               {home.philosophy.body}
             </motion.p>

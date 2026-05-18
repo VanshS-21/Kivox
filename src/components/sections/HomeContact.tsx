@@ -59,7 +59,7 @@ export function HomeContact() {
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={viewportOnce}
               transition={{ duration: 0.45, ease: easeOutExpo, delay: 0.12 }}
-              className="studio-body-serif mb-8 max-w-md text-muted-foreground lg:mb-12"
+              className="studio-lede mb-8 max-w-md lg:mb-12"
             >
               {home.contact.line}
             </motion.p>

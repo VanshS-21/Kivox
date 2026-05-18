@@ -345,10 +345,7 @@ export function Navigation() {
                         onClick={closeMenu}
                         className="group relative flex items-baseline gap-6 py-5 lg:py-6"
                       >
-                        <span
-                          className="studio-tabular font-mono text-sm text-accent"
-                          style={{ letterSpacing: "0.12em" }}
-                        >
+                        <span className="studio-tag studio-tabular text-accent">
                           {String(idx + 1).padStart(2, "0")}
                         </span>
                         <span

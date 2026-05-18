@@ -39,7 +39,7 @@ export default function WorkPage() {
               </em>
             </h1>
 
-            <p className="studio-body-serif text-muted-foreground max-w-xl">
+            <p className="studio-lede max-w-xl">
               {work.intro}
             </p>
           </div>
@@ -91,12 +91,12 @@ export default function WorkPage() {
                   <div className="flex flex-col flex-1">
                     <div className="flex items-center gap-3 mb-4">
                       <span
-                        className="text-sm font-mono font-bold studio-tabular"
+                        className="studio-tag studio-tabular font-semibold"
                         style={{ color }}
                       >
                         {num}
                       </span>
-                      <span className="text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
+                      <span className="studio-tag text-muted-foreground">
                         {project.label}
                       </span>
                     </div>
@@ -121,7 +121,7 @@ export default function WorkPage() {
                         {tags.slice(0, 2).map((tag, tagIdx) => (
                           <span
                             key={tag}
-                            className="flex items-center gap-3 text-[10px] font-mono uppercase tracking-wider text-subtle-foreground sm:text-xs"
+                            className="studio-tag flex items-center gap-3 text-subtle-foreground"
                           >
                             {tagIdx > 0 && (
                               <span className="opacity-40">·</span>

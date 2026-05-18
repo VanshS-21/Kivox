@@ -16,14 +16,7 @@ export function FaqPageContent() {
         <div className="mt-8 mb-2 h-px bg-border" />
 
         <div className="mt-2 mb-8 flex items-center gap-2">
-          <span
-            className="font-mono text-subtle-foreground"
-            style={{
-              fontSize: "0.625rem",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}
-          >
+          <span className="studio-tag text-subtle-foreground">
             {faq.categories.reduce(
               (sum, category) => sum + category.items.length,
               0,

@@ -18,7 +18,7 @@ export function HomeProjectBand() {
                 <span className="text-xl font-bold tracking-tight text-foreground/50 transition-colors duration-200 group-hover:text-foreground md:text-2xl">
                   {project.name}
                 </span>
-                <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/40 transition-colors duration-200 group-hover:text-accent">
+                <span className="studio-tag text-muted-foreground/40 transition-colors duration-200 group-hover:text-accent">
                   {project.role}
                 </span>
               </div>
@@ -44,7 +44,7 @@ export function HomeProjectBand() {
                 <span className="text-xl font-bold tracking-tight text-foreground/50 transition-colors duration-200 group-hover:text-foreground md:text-2xl">
                   {project.name}
                 </span>
-                <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/40 transition-colors duration-200 group-hover:text-accent">
+                <span className="studio-tag text-muted-foreground/40 transition-colors duration-200 group-hover:text-accent">
                   {project.role}
                 </span>
               </div>

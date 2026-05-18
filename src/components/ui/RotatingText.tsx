@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-
-const words = ["customers.", "inquiries.", "trust."];
-
+const words = ["paying customers.", "qualified leads.", "real growth."];
 export function RotatingText() {
   const [index, setIndex] = useState(0);
   const reduce = useReducedMotion() ?? false;

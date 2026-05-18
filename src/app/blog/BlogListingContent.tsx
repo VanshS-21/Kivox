@@ -34,15 +34,7 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
         style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
         <div className="mb-4 flex items-center gap-3">
-          <span
-            className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-1 font-mono text-accent"
-            style={{
-              fontSize: "0.5625rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              fontWeight: 500,
-            }}
-          >
+          <span className="studio-tag inline-flex items-center rounded-full bg-accent/10 px-2.5 py-1 text-accent">
             Latest
           </span>
           <span className="studio-tag text-accent">{post.category}</span>
@@ -81,10 +73,7 @@ function FeaturedPost({ post }: { post: BlogPostMeta }) {
               <path d="M2 7h10M8 3l4 4-4 4" />
             </svg>
           </span>
-          <span
-            className="inline-flex items-center gap-1.5 font-mono text-subtle-foreground"
-            style={{ fontSize: "0.6875rem", letterSpacing: "0.05em" }}
-          >
+          <span className="studio-tag inline-flex items-center gap-1.5 text-subtle-foreground">
             <ReadingTimeIcon />
             {post.readingTime}
           </span>
@@ -103,14 +92,7 @@ function PostListItem({ post, index }: { post: BlogPostMeta; index: number }) {
         className="group flex flex-col gap-2 border-b border-border py-6 transition-colors duration-400 hover:border-accent/20 sm:flex-row sm:items-baseline sm:gap-6 sm:py-7"
         style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
-        <span
-          className="studio-tabular shrink-0 select-none font-mono text-accent transition-opacity duration-200 group-hover:opacity-100"
-          style={{
-            fontSize: "0.6875rem",
-            letterSpacing: "0.05em",
-            opacity: 0.35,
-          }}
-        >
+        <span className="studio-tag studio-tabular shrink-0 select-none text-accent opacity-35 transition-opacity duration-200 group-hover:opacity-100">
           {String(index + 1).padStart(2, "0")}
         </span>
 
@@ -124,20 +106,10 @@ function PostListItem({ post, index }: { post: BlogPostMeta; index: number }) {
         </div>
 
         <div className="flex shrink-0 items-center gap-3">
-          <span
-            className="hidden items-center rounded bg-accent/5 px-2 py-0.5 font-mono text-subtle-foreground sm:inline-flex"
-            style={{
-              fontSize: "0.5625rem",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}
-          >
+          <span className="studio-tag hidden items-center rounded bg-accent/5 px-2 py-0.5 text-subtle-foreground sm:inline-flex">
             {post.category}
           </span>
-          <span
-            className="inline-flex items-center gap-1 font-mono text-subtle-foreground"
-            style={{ fontSize: "0.625rem", letterSpacing: "0.05em" }}
-          >
+          <span className="studio-tag inline-flex items-center gap-1 text-subtle-foreground">
             <ReadingTimeIcon />
             {post.readingTime}
           </span>
@@ -185,10 +157,7 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
               <h2 className="studio-h3-sans text-foreground">
                 More articles
               </h2>
-              <span
-                className="select-none font-mono text-subtle-foreground"
-                style={{ fontSize: "0.5625rem", letterSpacing: "0.05em" }}
-              >
+              <span className="studio-tag select-none text-subtle-foreground">
                 {String(rest.length).padStart(2, "0")}
               </span>
             </div>
@@ -199,14 +168,7 @@ export function BlogListingContent({ posts }: { posts: BlogPostMeta[] }) {
         )}
 
         <div className="mt-12 border-t border-border pt-6">
-          <span
-            className="font-mono text-subtle-foreground"
-            style={{
-              fontSize: "0.625rem",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}
-          >
+          <span className="studio-tag text-subtle-foreground">
             {posts.length} {posts.length === 1 ? "article" : "articles"}{" "}
             published
           </span>

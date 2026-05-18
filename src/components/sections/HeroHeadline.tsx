@@ -70,7 +70,7 @@ export function HeroHeadline({
       <AnimatedWords text="We build" reduce={reduce} />{" "}
       <br className="hidden lg:block" />
       <AnimatedWords text="websites that" reduce={reduce} /> <br />
-      <AnimatedWords text="turn attention into" reduce={reduce} />{" "}
+      <AnimatedWords text="turn traffic into" reduce={reduce} />{" "}
       <motion.span
         variants={reduce ? undefined : wordVariants}
         className="inline-block align-bottom"
