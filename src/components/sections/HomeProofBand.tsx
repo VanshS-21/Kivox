@@ -53,7 +53,7 @@ export function HomeProofBand() {
             variants={fadeUp}
             transition={transitionDefault}
           >
-            <p className="studio-eyebrow mb-5" style={{ color: "var(--proof-muted)" }}>[ {home.workPreview.label} ]</p>
+            <p className="studio-eyebrow mb-5 text-accent">[ {home.workPreview.label} ]</p>
             <h2
               id="home-proof-band-title"
               className="max-w-5xl studio-h2-editorial"
