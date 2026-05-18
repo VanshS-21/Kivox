@@ -1033,7 +1033,7 @@ html {
 /* ── The frame: dark matte container with premium depth ── */
 .carousel-frame {
   background: oklch(0.13 0.015 55);
-  padding: clamp(16px, 2.5vw, 32px);
+  padding: clamp(12px, 1.8vw, 24px);
   box-shadow:
     0 2px 4px oklch(0.1 0.01 55 / 0.15),
     0 8px 32px oklch(0.1 0.01 55 / 0.25),

@@ -96,7 +96,7 @@ export function ProjectCarousel({
         </div>
 
         {total > 1 && (
-          <div className="absolute bottom-4 right-5 z-10 lg:bottom-6 lg:right-7 pointer-events-none">
+          <div className="pointer-events-none absolute bottom-4 right-5 z-10 lg:bottom-5 lg:right-6">
             <span className="studio-tag studio-tabular text-white/80 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm">
               {String(activeIndex + 1).padStart(2, "0")}
               <span className="mx-1 text-white/40">/</span>
@@ -107,7 +107,7 @@ export function ProjectCarousel({
       </div>
 
       {total > 1 && (
-        <div className="mt-5 flex items-center justify-center gap-2">
+        <div className="mt-4 flex items-center justify-center gap-2">
           {images.map((_, idx) => (
             <button
               aria-current={idx === activeIndex}
@@ -132,9 +132,9 @@ export function ProjectCarousel({
       )}
 
       {liveUrl && (
-        <div className="mt-6 flex justify-center">
+        <div className="mt-5 flex justify-center">
           <Link
-            className="group/live inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full border px-5 py-3 text-sm font-semibold tracking-wide text-background shadow-[0_18px_50px_-28px_var(--accent)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-28px_var(--accent)] sm:min-h-14 sm:w-auto sm:px-7"
+            className="group/live inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-full border px-5 py-2.5 text-sm font-semibold tracking-wide text-background shadow-[0_18px_50px_-28px_var(--accent)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-28px_var(--accent)] sm:w-auto sm:px-6"
             href={liveUrl}
             prefetch={false}
             rel={liveRel}

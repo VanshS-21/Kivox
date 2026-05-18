@@ -29,7 +29,7 @@ export function HomeProofBand() {
   return (
     <section
       aria-labelledby="home-proof-band-title"
-      className="proof-showcase relative overflow-hidden py-14 sm:py-16 lg:py-20 border-t border-border"
+      className="proof-showcase relative overflow-hidden py-12 sm:py-14 lg:py-16 border-t border-border"
     >
       <div
         aria-hidden="true"
@@ -45,7 +45,7 @@ export function HomeProofBand() {
       />
 
       <Container className="relative z-10">
-        <div className="space-y-8 sm:space-y-10">
+        <div className="space-y-7 sm:space-y-8">
           <motion.div
             initial={reduce ? false : "hidden"}
             whileInView={reduce ? undefined : "show"}
@@ -53,7 +53,7 @@ export function HomeProofBand() {
             variants={fadeUp}
             transition={transitionDefault}
           >
-            <p className="studio-eyebrow mb-5 text-accent">[ {home.workPreview.label} ]</p>
+            <p className="studio-eyebrow mb-4 text-accent">[ {home.workPreview.label} ]</p>
             <h2
               id="home-proof-band-title"
               className="max-w-5xl studio-h2-editorial"
@@ -63,7 +63,7 @@ export function HomeProofBand() {
             </h2>
           </motion.div>
 
-          <div className="space-y-5 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-5">
             {proofItems.map((project, idx) => {
               const accent =
                 projectColors[project.slug] ?? "var(--proof-accent)";
@@ -93,7 +93,7 @@ export function HomeProofBand() {
                 >
                   <Link
                     aria-label={`View live site: ${project.title}`}
-                    className="proof-media relative block min-h-[220px] overflow-hidden bg-[var(--proof-linen)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--project-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--proof-bg)] sm:min-h-full"
+                    className="proof-media relative block min-h-[200px] overflow-hidden bg-[var(--proof-linen)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--project-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--proof-bg)] sm:min-h-full"
                     href={liveHref}
                     prefetch={false}
                     rel={liveIsExternal ? "noopener noreferrer" : undefined}
@@ -116,7 +116,7 @@ export function HomeProofBand() {
                     />
                   </Link>
 
-                  <div className="flex min-h-[300px] flex-col justify-between p-5 sm:p-6 lg:p-8">
+                  <div className="flex min-h-[260px] flex-col justify-between p-5 sm:p-6 lg:p-7">
                     <div>
                       <p
                         className="studio-eyebrow mb-4"
@@ -140,7 +140,7 @@ export function HomeProofBand() {
                       </p>
                     </div>
 
-                    <div className="mt-7 space-y-5">
+                    <div className="mt-6 space-y-4">
                       <div className="flex flex-wrap gap-2">
                         {project.services.slice(0, 3).map((service) => (
                           <span
@@ -162,7 +162,7 @@ export function HomeProofBand() {
                         <Magnetic strength={0.2}>
                           <Link
                             aria-label={`View live website: ${project.title}`}
-                            className="group inline-flex items-center gap-3 rounded-full px-5 py-2.5 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                            className="group inline-flex items-center gap-3 rounded-full px-5 py-2 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                             href={liveHref}
                             prefetch={false}
                             rel={
@@ -190,7 +190,7 @@ export function HomeProofBand() {
                             }}
                           >
                             <span
-                              className="block rounded-full border bg-[var(--work-secondary-cta-bg)] px-5 py-2.5 shadow-[var(--work-secondary-cta-shadow)] backdrop-blur-md transition-colors duration-300"
+                              className="block rounded-full border bg-[var(--work-secondary-cta-bg)] px-5 py-2 shadow-[var(--work-secondary-cta-shadow)] backdrop-blur-md transition-colors duration-300"
                               style={{
                                 borderColor: `color-mix(in oklch, ${accent} 28%, var(--work-secondary-cta-border))`,
                               }}

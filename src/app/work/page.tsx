@@ -52,9 +52,9 @@ export default function WorkPage() {
       </Section>
 
       {/* ── Case Study Grid ── */}
-      <section className="pb-24 lg:pb-32 relative">
+      <section className="pb-20 lg:pb-28 relative">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-16 lg:gap-y-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-14 gap-y-12 lg:gap-y-16">
             {allProjects.map((project, idx) => {
               const color = projectColors[project.slug] || "var(--accent)";
               const tags = projectTags[project.slug] || [
@@ -71,7 +71,7 @@ export default function WorkPage() {
                   <Link
                     href={`/work/${project.slug}`}
                     prefetch={false}
-                    className="relative mb-8 block aspect-[4/3] w-full overflow-hidden rounded-xl bg-muted/20 sm:aspect-video"
+                    className="relative mb-6 block aspect-[4/3] w-full overflow-hidden rounded-xl bg-muted/20 sm:aspect-video"
                   >
                     <Image
                       src={project.images?.[0] || project.image}
@@ -89,7 +89,7 @@ export default function WorkPage() {
                   </Link>
 
                   <div className="flex flex-col flex-1">
-                    <div className="flex items-center gap-3 mb-4">
+                    <div className="mb-3 flex items-center gap-3">
                       <span
                         className="studio-tag studio-tabular font-semibold"
                         style={{ color }}
@@ -101,7 +101,7 @@ export default function WorkPage() {
                       </span>
                     </div>
 
-                    <h2 className="studio-h3-sans text-foreground mb-4 line-clamp-2">
+                    <h2 className="studio-h3-sans mb-3 line-clamp-2 text-foreground">
                       {project.title.split(" ").slice(0, -1).join(" ")}{" "}
                       <em
                         className="font-serif italic"
@@ -111,7 +111,7 @@ export default function WorkPage() {
                       </em>
                     </h2>
 
-                    <p className="studio-body text-muted-foreground mb-8 line-clamp-2 flex-1">
+                    <p className="studio-body mb-6 line-clamp-2 flex-1 text-muted-foreground">
                       {project.demonstrates}
                     </p>
 

@@ -197,6 +197,31 @@ export function Navigation() {
 
   const closeMenu = () => setIsOpen(false);
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (pathname === "/") {
+      if (href === "/") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        closeMenu();
+        return;
+      }
+      if (href.startsWith("/#")) {
+        const id = href.substring(2);
+        const el = document.getElementById(id);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: "smooth" });
+          closeMenu();
+          return;
+        }
+      }
+    }
+    closeMenu();
+  };
+
   return (
     <>
       <nav
@@ -214,13 +239,7 @@ export function Navigation() {
             <Link
               href="/"
               prefetch={false}
-              onClick={(event) => {
-                if (pathname === "/") {
-                  event.preventDefault();
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                  closeMenu();
-                }
-              }}
+              onClick={(e) => handleNavClick(e, "/")}
               className="relative z-[60] flex min-h-11 items-center gap-2 text-foreground transition-colors duration-300 hover:text-accent"
               data-cursor="logo"
             >
@@ -236,6 +255,7 @@ export function Navigation() {
                     key={item.label}
                     href={item.href}
                     prefetch={false}
+                    onClick={(e) => handleNavClick(e, item.href)}
                     className={`inline-flex min-h-11 min-w-11 items-center justify-center px-1 text-sm font-semibold tracking-tight transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 ${
                       isActive
                         ? "text-accent"
@@ -342,7 +362,7 @@ export function Navigation() {
                       <Link
                         href={item.href}
                         prefetch={false}
-                        onClick={closeMenu}
+                        onClick={(e) => handleNavClick(e, item.href)}
                         className="group relative flex items-baseline gap-6 py-5 lg:py-6"
                       >
                         <span className="studio-tag studio-tabular text-accent">

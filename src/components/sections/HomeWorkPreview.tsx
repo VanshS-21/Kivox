@@ -87,7 +87,7 @@ export function HomeWorkPreview() {
 
   return (
     <Section
-      spacing="loose"
+      spacing="tight"
       className="work-showcase relative overflow-hidden border-t border-border bg-background"
     >
       {/* Ambient Cinematic Background */}
@@ -113,14 +113,14 @@ export function HomeWorkPreview() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-6 md:px-10 lg:px-12">
+      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-6 md:px-10 lg:px-12 2xl:max-w-7xl">
         <motion.div
           initial={reduce ? false : "hidden"}
           whileInView={reduce ? undefined : "show"}
           viewport={viewportOnce}
           variants={fadeUp}
           transition={transitionDefault}
-          className="mb-10 flex flex-col gap-5 md:mb-16 md:flex-row md:items-end md:justify-between"
+          className="mb-8 flex flex-col gap-5 md:mb-10 md:flex-row md:items-end md:justify-between 2xl:mb-14"
         >
           <div className="max-w-3xl">
             <p className="studio-eyebrow mb-4 text-accent drop-shadow-sm">[ Featured Work ]</p>
@@ -142,7 +142,7 @@ export function HomeWorkPreview() {
             <div className="flex items-center gap-2">
               <button
                 aria-label="Show previous project"
-                className="grid h-11 w-11 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="grid h-9 w-9 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent 2xl:h-10 2xl:w-10"
                 onClick={goToPrevious}
                 type="button"
               >
@@ -150,7 +150,7 @@ export function HomeWorkPreview() {
               </button>
               <button
                 aria-label={isAutoPaused ? "Start autoplay" : "Pause autoplay"}
-                className="grid h-11 w-11 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="grid h-9 w-9 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent 2xl:h-10 2xl:w-10"
                 onClick={() => setIsAutoPaused((p) => !p)}
                 type="button"
               >
@@ -162,7 +162,7 @@ export function HomeWorkPreview() {
               </button>
               <button
                 aria-label="Show next project"
-                className="grid h-11 w-11 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="grid h-9 w-9 place-items-center rounded-full border border-border/50 bg-surface/50 text-foreground backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent 2xl:h-10 2xl:w-10"
                 onClick={goToNext}
                 type="button"
               >
@@ -175,7 +175,7 @@ export function HomeWorkPreview() {
         {/* Cinematic 3D Carousel Track */}
         <div
           aria-label="Featured work cinematic carousel"
-          className="relative flex h-[350px] w-full items-center justify-center [perspective:2000px] sm:h-[450px] md:h-[500px] lg:h-[600px]"
+          className="relative flex h-[320px] w-full items-center justify-center [perspective:1600px] xl:h-[430px] 2xl:h-[520px]"
           onBlurCapture={() => setIsHovering(false)}
           onFocusCapture={() => setIsHovering(true)}
           onMouseEnter={() => setIsHovering(true)}
@@ -192,14 +192,14 @@ export function HomeWorkPreview() {
                 initial={false}
                 animate={reduce ? (isActive ? { opacity: 1, zIndex: 30 } : { opacity: 0, zIndex: 0 }) : getAnimations(idx)}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute w-[90vw] max-w-[1050px] shrink-0 origin-center [transform-style:preserve-3d]"
+                className="absolute w-[82vw] max-w-[720px] shrink-0 origin-center [transform-style:preserve-3d] 2xl:max-w-[920px]"
                 style={{ aspectRatio: "16 / 10" }}
                 onClick={() => {
                   if (!isActive) setActiveIndex(idx);
                 }}
               >
                 {/* Carousel Frame - Signature Deep Recessed Well */}
-                <div className="absolute inset-0 rounded-[1.5rem] bg-[oklch(0.13_0.015_55)] p-3 sm:p-4 shadow-[0_2px_4px_rgba(0,0,0,0.4),0_12px_24px_rgba(0,0,0,0.3),0_24px_48px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.4)] sm:rounded-[2rem] transition-all duration-500"
+                <div className="absolute inset-0 rounded-[1.25rem] bg-[oklch(0.13_0.015_55)] p-2.5 shadow-[0_2px_4px_rgba(0,0,0,0.4),0_12px_24px_rgba(0,0,0,0.3),0_24px_48px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.4)] transition-all duration-500 2xl:rounded-[1.75rem] 2xl:p-4"
                      style={{ 
                        cursor: isActive ? "default" : "pointer",
                        boxShadow: isActive ? `0 34px 120px -50px ${accent}` : undefined 
@@ -234,7 +234,7 @@ export function HomeWorkPreview() {
         </div>
 
         {/* Active Project Details (Centered below carousel) */}
-        <div className="relative z-20 mx-auto mt-10 sm:mt-14 flex max-w-4xl flex-col items-center text-center">
+        <div className="relative z-20 mx-auto mt-8 flex max-w-3xl flex-col items-center text-center 2xl:mt-12 2xl:max-w-4xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
@@ -253,7 +253,7 @@ export function HomeWorkPreview() {
 
                 return (
                   <>
-                    <div className="studio-tag mb-4 flex items-center justify-center gap-4 text-foreground/70">
+                    <div className="studio-tag mb-3 flex items-center justify-center gap-4 text-foreground/70">
                       <span>{project.year}</span>
                       <span aria-hidden="true" className="opacity-40">
                         /
@@ -262,19 +262,19 @@ export function HomeWorkPreview() {
                     </div>
 
                     <p
-                      className="studio-eyebrow mb-3 font-bold sm:mb-4"
+                      className="studio-eyebrow mb-2 font-bold sm:mb-3"
                       style={{ color: accent }}
                     >
                       Showcase - {project.label}
                     </p>
-                    <h3 className="font-sans text-4xl font-semibold leading-[0.95] tracking-tight text-foreground sm:text-5xl md:text-6xl">
+                    <h3 className="font-sans text-3xl font-semibold leading-[0.98] tracking-tight text-foreground sm:text-4xl md:text-5xl 2xl:text-6xl">
                       {project.title}
                     </h3>
-                    <p className="mt-5 max-w-2xl font-sans text-base text-foreground/80 sm:text-lg sm:leading-relaxed">
+                    <p className="mt-4 max-w-xl font-sans text-sm leading-relaxed text-foreground/80 sm:text-base 2xl:max-w-2xl 2xl:text-lg">
                       {project.demonstrates}
                     </p>
 
-                    <div className="mt-8 flex flex-col items-center gap-6 sm:mt-10">
+                    <div className="mt-6 flex flex-col items-center gap-5 sm:mt-7 2xl:mt-9 2xl:gap-6">
                       <div className="studio-tag flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-foreground/60">
                         {tags.map((tag, tagIdx) => (
                           <span className="inline-flex items-center gap-4" key={tag}>
@@ -286,10 +286,10 @@ export function HomeWorkPreview() {
                         ))}
                       </div>
 
-                      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap justify-center mt-2">
+                      <div className="mt-1 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
                         {project.liveUrl ? (
                           <Link
-                            className="group/live inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-24px_var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                            className="group/live inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-[var(--work-primary-cta-fg)] shadow-[0_18px_40px_-24px_var(--accent)] transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-24px_var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                             href={project.liveUrl}
                             prefetch={false}
                             rel={liveIsExternal ? "noopener noreferrer" : undefined}
@@ -305,7 +305,7 @@ export function HomeWorkPreview() {
                           </Link>
                         ) : null}
                         <Link
-                          className="inline-flex min-h-12 items-center justify-center rounded-full border bg-surface px-7 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-surface/60 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                          className="inline-flex min-h-11 items-center justify-center rounded-full border bg-surface px-6 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-surface/60 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                           href={`/work/${project.slug}`}
                           prefetch={false}
                           style={{

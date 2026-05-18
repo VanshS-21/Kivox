@@ -139,7 +139,7 @@ export default async function CaseStudyPage({
           {/* ═══════════════════════════════════════════════════
               § 2 — HERO IMAGE / CAROUSEL
           ═══════════════════════════════════════════════════ */}
-          <div className="mb-16 lg:mb-20 max-w-5xl mx-auto">
+          <div className="mx-auto mb-14 max-w-4xl lg:mb-16">
             <ProjectCarousel
               images={project.images || [project.image]}
               alt={`${project.title} Case Study`}

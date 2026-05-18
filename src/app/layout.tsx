@@ -5,9 +5,11 @@ import {
   Geist_Mono,
   Spectral,
 } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 
-import { Analytics } from "@/components/analytics/Analytics";
+import { PostHogPageView } from "@/components/analytics/PostHogPageView";
+import { PostHogProvider } from "@/components/analytics/PostHogProvider";
 import { Footer } from "@/components/site/Footer";
 import { Navigation } from "@/components/Navigation";
 import { SkipLink } from "@/components/site/SkipLink";
@@ -89,17 +91,21 @@ export default function RootLayout({
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col relative overflow-x-hidden">
         <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
-        <SkipLink />
-        <Navigation />
-        <main className="flex-1" id="main-content">
-          {children}
-        </main>
-        <Footer />
-        <script
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          type="application/ld+json"
-        />
-        <Analytics />
+        <PostHogProvider>
+          <Suspense fallback={null}>
+            <PostHogPageView />
+          </Suspense>
+          <SkipLink />
+          <Navigation />
+          <main className="flex-1" id="main-content">
+            {children}
+          </main>
+          <Footer />
+          <script
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            type="application/ld+json"
+          />
+        </PostHogProvider>
       </body>
     </html>
   );
