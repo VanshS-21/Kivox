@@ -974,6 +974,34 @@ p {
   position: relative;
 }
 
+.cv-auto.cv-band {
+  contain-intrinsic-size: auto 240px;
+}
+
+.cv-auto.cv-services {
+  contain-intrinsic-size: auto 1200px;
+}
+
+.cv-auto.cv-process {
+  contain-intrinsic-size: auto 950px;
+}
+
+.cv-auto.cv-pov {
+  contain-intrinsic-size: auto 750px;
+}
+
+.cv-auto.cv-testimonials {
+  contain-intrinsic-size: auto 600px;
+}
+
+.cv-auto.cv-faq {
+  contain-intrinsic-size: auto 900px;
+}
+
+.cv-auto.cv-contact {
+  contain-intrinsic-size: auto 800px;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Cursor glow blend mode — screen on dark, normal on light                    */
 /* -------------------------------------------------------------------------- */

@@ -39,7 +39,6 @@ export const routes = {
   home: "/showcase/medqueue",
   search: "/showcase/medqueue/search",
   portal: "/showcase/medqueue/portal",
-  designSystem: "/showcase/medqueue/design-system",
   doctor: (id: string) => `/showcase/medqueue/doctor/${id}`,
   book: (id: string, slot?: { day: string; time: string }) => {
     const suffix = slot

@@ -11,6 +11,10 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.2.10",
+    "@fontsource-variable/figtree": "^5.2.10",
+    "@fontsource-variable/geist-mono": "^5.2.8",
+    "@fontsource/spectral": "^5.2.8",
     "@hookform/resolvers": "^5.2.2",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.14.0",

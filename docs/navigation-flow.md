@@ -58,7 +58,7 @@ Showcase routes intentionally hide the normal Kivox navigation so each demo can 
 
 Current showcase routes:
 
-- MedQueue: `/showcase/medqueue`, `/showcase/medqueue/search`, `/showcase/medqueue/doctor/{id}`, `/showcase/medqueue/book/{id}`, `/showcase/medqueue/portal`, `/showcase/medqueue/design-system`
+- MedQueue: `/showcase/medqueue`, `/showcase/medqueue/search`, `/showcase/medqueue/doctor/{id}`, `/showcase/medqueue/book/{id}`, `/showcase/medqueue/portal`
 - The Roastery: `/showcase/cafe`
 - Greenfield Academy: `/showcase/school`
 - Vortex Fitness: `/showcase/fitness`

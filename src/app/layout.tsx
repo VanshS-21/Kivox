@@ -1,10 +1,4 @@
 import type { Metadata } from "next";
-import {
-  Bricolage_Grotesque,
-  Figtree,
-  Geist_Mono,
-  Spectral,
-} from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 
@@ -14,47 +8,10 @@ import { Footer } from "@/components/site/Footer";
 import { Navigation } from "@/components/Navigation";
 import { SkipLink } from "@/components/site/SkipLink";
 import { homeSeo } from "@/content/seo/home";
+import { fontVariables } from "@/lib/fonts";
 import { getMetadataBase } from "@/lib/metadata";
 import { getOrganizationJsonLd } from "@/lib/structuredData";
 import { themeInitScript } from "@/lib/themeScript";
-
-const bricolage = Bricolage_Grotesque({
-  display: "swap",
-  subsets: ["latin"],
-  variable: "--font-bricolage",
-  weight: "variable",
-});
-
-const figtree = Figtree({
-  display: "swap",
-  subsets: ["latin"],
-  variable: "--font-figtree",
-  weight: "variable",
-});
-
-const spectral = Spectral({
-  display: "swap",
-  preload: false,
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  variable: "--font-spectral",
-  weight: ["400", "600"],
-});
-
-const geistMono = Geist_Mono({
-  display: "swap",
-  preload: false,
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-  weight: "variable",
-});
-
-const fontVariables = [
-  bricolage.variable,
-  figtree.variable,
-  spectral.variable,
-  geistMono.variable,
-].join(" ");
 
 export const metadata: Metadata = {
   title: homeSeo.title,
@@ -89,8 +46,10 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${fontVariables} h-full antialiased`}
     >
-      <body suppressHydrationWarning className="min-h-full flex flex-col relative overflow-x-hidden">
+      <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
+      </head>
+      <body suppressHydrationWarning className="min-h-full flex flex-col relative overflow-x-hidden">
         <PostHogProvider>
           <Suspense fallback={null}>
             <PostHogPageView />

@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <>
       <HomeHero />
-      <div className="cv-auto">
+      <div className="cv-auto cv-band">
         <HomeProjectBand />
       </div>
       <div id="live-examples" className="scroll-mt-24">
@@ -41,23 +41,23 @@ export default function Home() {
           <HomeWorkPreview />
         </div>
       </div>
-      <div id="services" className="scroll-mt-24 cv-auto">
+      <div id="services" className="scroll-mt-24 cv-auto cv-services">
         <HomeServices />
       </div>
-      <div id="process" className="scroll-mt-24 cv-auto">
+      <div id="process" className="scroll-mt-24 cv-auto cv-process">
         <HomeProcess />
       </div>
-      <div className="cv-auto">
+      <div className="cv-auto cv-pov">
         <HomePOV />
       </div>
-      <div className="cv-auto">
+      <div className="cv-auto cv-testimonials">
         <HomeTestimonials />
       </div>
-      <div className="cv-auto">
+      <div className="cv-auto cv-faq">
         <HomeFAQ />
       </div>
       <HomeTeam />
-      <div id="contact" className="scroll-mt-24 cv-auto">
+      <div id="contact" className="scroll-mt-24 cv-auto cv-contact">
         <HomeContact />
       </div>
     </>

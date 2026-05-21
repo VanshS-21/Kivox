@@ -244,13 +244,6 @@ export function MQNav() {
           >
             Portal
           </Link>
-          <Link
-            className="inline-flex min-h-11 items-center rounded-full px-3 transition hover:bg-white"
-            href={routes.designSystem}
-            prefetch={false}
-          >
-            System
-          </Link>
         </nav>
 
         <div className="flex items-center gap-2">

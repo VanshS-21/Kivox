@@ -2,13 +2,18 @@
 
 ## Purpose
 
-This document defines the build scope for the five Kivox showcase sub-websites:
+This document defines the build scope for the Kivox showcase sub-websites.
+
+### Locally Built (under `/showcase/*`)
 
 - MedQueue
 - The Roastery
-- Aurelia Grand
 - Greenfield Academy
 - Vortex Fitness
+
+### External Deployment
+
+- **Aurelia Grand** — Maintained as a separate project, deployed at [aurum-palace.vercel.app](https://aurum-palace.vercel.app/). It is **not** built locally under `/showcase/hotel`. The case study content in `src/content/work/hotel.ts` links to this external URL via the `liveUrl` field.
 
 The sub-websites are not static portfolio mockups. Each one should feel like a separate, launchable client property with its own brand, design system, interaction model, state, and conversion path. The current `/showcase/*` routes are not the source of truth for design quality or feature depth. The case studies in `src/content/work/*` are the source of truth.
 
@@ -16,11 +21,10 @@ This document is a scope contract. It defines what each sub-website has, what it
 
 ## Shared Mental Model
 
-Each sub-website has three layers:
+Each sub-website has two layers:
 
 1. **Brand layer**: The public-facing website, visual system, copy, imagery, navigation, responsive layout, and primary conversion path.
 2. **Application layer**: Mock state, client-side interactions, search, filtering, bookings, cart, checkout, dashboards, or portal flows that make the site feel alive.
-3. **Proof layer**: A project-specific design-system route or section that exposes tokens, components, interaction rules, and rationale as proof of Kivox craft.
 
 The goal is to make each property feel like a real business or product that could launch independently, while still being safe as a studio demonstration.
 
@@ -37,7 +41,6 @@ The goal is to make each property feel like a real business or product that coul
 - Keyboard accessible interactive flows with visible focus states.
 - Reduced-motion behavior for animated surfaces.
 - Metadata suitable for each sub-website if launched separately.
-- A visible or hidden design-system route for each property, preferably `/showcase/{property}/design-system`.
 - Clear demonstration labeling or footer note where needed to avoid implying real medical, school, hotel, cafe, or fitness operations.
 
 ### Does Not Have
@@ -70,29 +73,19 @@ State does not need:
 - Authentication sessions.
 - Real payment authorization.
 
-## Shared Design-System Scope
 
-Each sub-website should have a design-system page or section that includes:
-
-- Design intent and physical scene.
-- Color tokens with names and usage.
-- Typography roles.
-- Button, input, card, navigation, and data-display examples.
-- Motion and interaction rules.
-- Accessibility notes.
-- A small explanation of how the system supports the case-study problem.
-
-The design-system page should be beautiful enough to function as proof of craft, not a developer afterthought.
 
 ## Build Order
 
-Recommended order:
+Recommended order for the locally built showcases:
 
 1. MedQueue: Most product-like and already closest to the desired depth.
 2. The Roastery: Best for ecommerce/cart and mobile visit-intent quality.
 3. Vortex Fitness: Best for schedule filtering, booking state, and member dashboard.
 4. Greenfield Academy: Best for information architecture, forms, admissions flow, and parent trust.
-5. Aurelia Grand: Best for cinematic hospitality, direct booking, and policy-as-hospitality.
+
+> [!NOTE]
+> **Aurelia Grand** is excluded from the local build order. It is deployed externally at [aurum-palace.vercel.app](https://aurum-palace.vercel.app/) and referenced via `liveUrl` in `src/content/work/hotel.ts`.
 
 This order can change, but each property should be completed enough to feel independently launchable before moving deeply into the next.
 
@@ -118,7 +111,6 @@ MedQueue is a healthcare booking product. It is not a doctor directory. The core
 - Patient portal dashboard with upcoming appointments, past appointments, prescriptions, test results, and recommended follow-ups.
 - Appointment state that updates across the portal after booking.
 - Skeleton loaders or simulated latency during search and confirmation.
-- MedQueue design-system page.
 - Clear fictional-data disclaimer.
 
 ### Does Not Have
@@ -139,7 +131,6 @@ MedQueue is a healthcare booking product. It is not a doctor directory. The core
 - `/showcase/medqueue/doctor/[id]`
 - `/showcase/medqueue/book/[id]`
 - `/showcase/medqueue/portal`
-- `/showcase/medqueue/design-system`
 
 ### Completion Standard
 
@@ -167,7 +158,6 @@ The Roastery is a visit-intent cafe website. It should answer one question quick
 - Cart state that persists across pages during the session.
 - Location, hours, map/directions block, contact, and wholesale or catering inquiry path.
 - Realistic place and product imagery.
-- The Roastery design-system page.
 - Clear fictional-business disclaimer.
 
 ### Does Not Have
@@ -189,60 +179,38 @@ The Roastery is a visit-intent cafe website. It should answer one question quick
 - `/showcase/cafe/product/[id]`
 - `/showcase/cafe/checkout`
 - `/showcase/cafe/order-success`
-- `/showcase/cafe/design-system`
 
 ### Completion Standard
 
 A mobile visitor can decide whether to visit, view the full menu, get directions, add coffee beans to a cart, complete a mock checkout, and receive a polished order success state.
 
-## Aurelia Grand Scope
+## Aurelia Grand Scope (External Deployment)
+
+> [!IMPORTANT]
+> Aurelia Grand is **not** built locally under `/showcase/hotel`. It is maintained as a separate project deployed at [aurum-palace.vercel.app](https://aurum-palace.vercel.app/).
 
 ### Case Study Source
 
 File: `src/content/work/hotel.ts`
 
-Aurelia Grand is a boutique hotel website competing with OTAs. It must make direct booking feel more trustworthy than leaving for an aggregator.
+Aurelia Grand is a boutique hotel website competing with OTAs. It makes direct booking feel more trustworthy than leaving for an aggregator. The case study content, visual references, process documentation, and results data are all maintained in `hotel.ts` and displayed on the Kivox homepage showcase.
 
-### Has
+### Integration with Kivox
 
-- Public hotel homepage with a single decisive visual point of view.
-- Room listing and room detail pages.
-- Room cards that answer booking questions before aesthetic claims: square footage, bed type, max guests, view, policy summary, and price.
-- Direct booking flow that stays on the hotel property.
-- Date and guest selectors with mock availability.
-- Rate comparison or direct-booking reassurance.
-- Policy pages or sections styled as hospitality, not legal fine print.
-- Concierge contact path for custom requests.
-- Amenities, experiences, and location confidence sections.
-- Simulated booking state and confirmation.
-- Post-booking confirmation page with stay summary.
-- Aurelia Grand design-system page.
-- Clear fictional-hotel disclaimer.
+- The `liveUrl` field in `hotel.ts` (`https://aurum-palace.vercel.app/`) is used by the homepage showcase to link visitors to the external site.
+- No local route exists at `/showcase/hotel`.
+- No local components, state, or design-system routes are needed within the Kivox codebase for this project.
+- The case study narrative, design decisions, results metrics, and testimonial are all served from `hotel.ts` content within the Kivox site itself.
 
-### Does Not Have
+### Reference Design Spec
 
-- Hero carousel.
-- Third-party booking engine UI.
-- Real PMS integration.
-- Real room inventory.
-- Real payment processing.
-- Generic luxury whitespace that hides useful information.
-- Policies buried in tiny footer text.
-- Room descriptions that sell mood but omit practical details.
+The following details describe the external site's design for reference purposes:
 
-### Primary Routes
-
-- `/showcase/hotel`
-- `/showcase/hotel/rooms`
-- `/showcase/hotel/rooms/[id]`
-- `/showcase/hotel/book`
-- `/showcase/hotel/booking-confirmed`
-- `/showcase/hotel/policies`
-- `/showcase/hotel/design-system`
-
-### Completion Standard
-
-A guest can compare rooms, understand policies, select dates, complete a mock direct booking, and land on a confirmation screen that reinforces trust in the direct channel.
+- **Visual Tone**: Modern Restraint. Deep navy-blacks with gold accents.
+- **Room Cards**: Decision interfaces showing square footage, bed type, max guests, view, policy summary, and price.
+- **Direct Booking**: First-party flow with no third-party redirects.
+- **Policies**: Styled as hospitality, not legal fine print.
+- **Scroll Pacing**: Intentionally slow and fluid, matching the brand's unhurried luxury identity.
 
 ## Greenfield Academy Scope
 
@@ -266,7 +234,6 @@ Greenfield Academy is an admissions-first school website. It is for parents eval
 - Candid campus-life section based on "Tuesdays, not graduation day."
 - Admissions dashboard or status tracker for a mock parent inquiry.
 - Form state that produces a success state and updates the tracker.
-- Greenfield Academy design-system page.
 - Clear fictional-school disclaimer.
 
 ### Does Not Have
@@ -288,7 +255,6 @@ Greenfield Academy is an admissions-first school website. It is for parents eval
 - `/showcase/school/admissions`
 - `/showcase/school/inquiry`
 - `/showcase/school/parent-status`
-- `/showcase/school/design-system`
 
 ### Completion Standard
 
@@ -315,7 +281,6 @@ Vortex Fitness is a logistics-first fitness site. Visitors already have intent. 
 - Transparent pricing comparison with no hidden fees.
 - Trainer profiles that lead with credentials and specializations.
 - Simulated confirmation states and empty states.
-- Vortex Fitness design-system page.
 - Clear fictional-gym disclaimer.
 
 ### Does Not Have
@@ -338,7 +303,6 @@ Vortex Fitness is a logistics-first fitness site. Visitors already have intent. 
 - `/showcase/fitness/pricing`
 - `/showcase/fitness/book`
 - `/showcase/fitness/member`
-- `/showcase/fitness/design-system`
 
 ### Completion Standard
 
@@ -368,7 +332,6 @@ Each sub-website should pass this bar before moving to the next:
 - The design system is distinct from Kivox and from the other sub-websites.
 - The main journey works on mobile and desktop.
 - Empty, loading, success, and error states exist where relevant.
-- The design-system page proves craft rather than merely listing tokens.
 - The build can be explained as a million-dollar agency-grade demonstration without exaggerating real integrations.
 
 ## Future Escalation Scope
