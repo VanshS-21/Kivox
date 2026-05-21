@@ -1,22 +1,22 @@
 "use client";
 
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { testimonials } from "@/content/testimonials";
 import { fadeUp, transitionDefault, viewportOnce } from "@/lib/motion";
 
-const MOBILE_AUTOSLIDE_MS = 2600;
-
 export function HomeTestimonials() {
   const reduce = useReducedMotion();
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const media = window.matchMedia("(max-width: 767px)");
+    // Breakpoint: 1024px is Tailwind's 'lg'
+    const media = window.matchMedia("(max-width: 1023px)");
     const updateIsMobile = () => setIsMobile(media.matches);
 
     updateIsMobile();
@@ -25,108 +25,133 @@ export function HomeTestimonials() {
     return () => media.removeEventListener("change", updateIsMobile);
   }, []);
 
+  const maxIndex = isMobile ? testimonials.length - 1 : testimonials.length - 2;
+
+  // Sync index boundary on resize
   useEffect(() => {
-    if (!isMobile || reduce) return;
+    if (currentIndex > maxIndex) {
+      setCurrentIndex(maxIndex);
+    }
+  }, [isMobile, maxIndex, currentIndex]);
 
-    const intervalId = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % testimonials.length);
-    }, MOBILE_AUTOSLIDE_MS);
+  const handlePrev = () => {
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
+  };
 
-    return () => window.clearInterval(intervalId);
-  }, [isMobile, reduce]);
+  const handleNext = () => {
+    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+  };
 
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const scroller = scrollerRef.current;
-    const activeCard = scroller?.querySelector<HTMLElement>(
-      `[data-testimonial-index="${activeIndex}"]`,
-    );
-
-    if (!scroller || !activeCard) return;
-
-    const scrollerRect = scroller.getBoundingClientRect();
-    const activeRect = activeCard.getBoundingClientRect();
-    const centeredLeft =
-      scroller.scrollLeft +
-      activeRect.left -
-      scrollerRect.left -
-      (scrollerRect.width - activeRect.width) / 2;
-
-    scroller.scrollTo({
-      behavior: reduce ? "auto" : "smooth",
-      left: centeredLeft,
-    });
-  }, [activeIndex, isMobile, reduce]);
+  const handleDragEnd = (event: any, info: any) => {
+    if (reduce) return;
+    const swipeThreshold = 50;
+    if (info.offset.x < -swipeThreshold) {
+      handleNext();
+    } else if (info.offset.x > swipeThreshold) {
+      handlePrev();
+    }
+  };
 
   return (
-    <Section spacing="loose" className="bg-background border-t border-border">
+    <Section spacing="loose" className="bg-background border-t border-border overflow-hidden">
       <Container className="max-w-6xl mx-auto">
-        <motion.div
-          initial={reduce ? false : "hidden"}
-          whileInView={reduce ? undefined : "show"}
-          viewport={viewportOnce}
-          variants={fadeUp}
-          transition={transitionDefault}
-          className="mb-16 md:mb-24 flex flex-col items-center text-center"
-        >
-          <p className="studio-eyebrow text-accent mb-4">[ What People Say ]</p>
-          <h2 className="studio-h2-editorial">Trust comes from the work.</h2>
-          <p className="mt-6 max-w-2xl text-muted-foreground studio-body-large">
-            Real notes from business owners who needed clearer websites, calmer
-            launches, and a studio that speaks plainly.
-          </p>
-        </motion.div>
+        {/* --- Header & Controls Row --- */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 md:mb-16 gap-8">
+          <motion.div
+            initial={reduce ? false : "hidden"}
+            whileInView={reduce ? undefined : "show"}
+            viewport={viewportOnce}
+            variants={fadeUp}
+            transition={transitionDefault}
+            className="flex-1"
+          >
+            <p className="studio-eyebrow text-accent mb-4">[ What People Say ]</p>
+            <h2 className="studio-h2-editorial text-foreground">
+              Trust comes from the{" "}
+              <em className="font-serif italic text-accent" style={{ fontStyle: "italic" }}>
+                work.
+              </em>
+            </h2>
+            <p className="mt-4 max-w-xl text-muted-foreground studio-body-large">
+              Real notes from business owners who needed clearer websites, calmer
+              launches, and a studio that speaks plainly.
+            </p>
+          </motion.div>
 
-        <div
-          data-native-scroll
-          ref={scrollerRef}
-          aria-label="Customer testimonials"
-          className="flex overflow-x-auto md:overflow-visible md:grid md:grid-cols-2 snap-x snap-mandatory md:snap-none gap-x-6 gap-y-12 md:gap-x-12 lg:gap-x-24 lg:gap-y-24 pt-12 pb-8 md:pt-0 md:pb-0 -mx-5 px-5 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-        >
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={testimonial.id}
-              data-testimonial-index={index}
-              className={`w-[85vw] sm:w-[60vw] md:w-auto shrink-0 snap-center snap-always ${index === 2 ? "md:col-span-2" : ""}`}
-            >
-              <TestimonialCard
-                testimonial={testimonial}
-                index={index}
-                reduce={reduce}
-              />
+          {/* Slider Pagination & Arrow Navigation */}
+          <motion.div
+            initial={reduce ? false : "hidden"}
+            whileInView={reduce ? undefined : "show"}
+            viewport={viewportOnce}
+            variants={fadeUp}
+            transition={{ ...transitionDefault, delay: 0.1 }}
+            className="flex items-center gap-6 shrink-0 self-start md:self-end"
+          >
+            {/* Pagination Counter */}
+            <div className="studio-tabular font-mono text-sm tracking-widest text-muted-foreground select-none">
+              <span className="text-accent font-semibold">
+                {String(currentIndex + 1).padStart(2, "0")}
+              </span>
+              <span className="mx-2 opacity-30">/</span>
+              <span>
+                {String(maxIndex + 1).padStart(2, "0")}
+              </span>
             </div>
-          ))}
+
+            {/* Navigation Buttons */}
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                disabled={currentIndex === 0}
+                onClick={handlePrev}
+                aria-label="Previous testimonial"
+                className="w-11 h-11 rounded-full border border-border-strong flex items-center justify-center text-foreground hover:text-accent hover:border-accent/40 hover:shadow-hover disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-foreground disabled:hover:border-border-strong disabled:hover:shadow-none transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                <ChevronLeft className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-0.5" />
+              </button>
+              <button
+                type="button"
+                disabled={currentIndex >= maxIndex}
+                onClick={handleNext}
+                aria-label="Next testimonial"
+                className="w-11 h-11 rounded-full border border-border-strong flex items-center justify-center text-foreground hover:text-accent hover:border-accent/40 hover:shadow-hover disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-foreground disabled:hover:border-border-strong disabled:hover:shadow-none transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                <ChevronRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </button>
+            </div>
+          </motion.div>
         </div>
 
-        <div
-          className="mt-2 flex items-center justify-center gap-2 md:hidden"
-          role="tablist"
-          aria-label="Choose testimonial"
-        >
-          {testimonials.map((testimonial, index) => (
-            <button
-              key={testimonial.id}
-              type="button"
-              role="tab"
-              aria-label={`Show testimonial from ${testimonial.author}`}
-              aria-selected={activeIndex === index}
-              className="grid min-h-10 min-w-10 place-items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              onClick={() => setActiveIndex(index)}
+        {/* --- Testimonials Sliding Stage --- */}
+        <div className="relative overflow-visible">
+          <div className="overflow-hidden -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-4 -my-4">
+            <motion.div
+              drag={isMobile && !reduce ? "x" : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              animate={{
+                x: isMobile
+                  ? `calc(-${currentIndex} * (100% + 24px))`
+                  : `calc(-${currentIndex} * (50% + 16px))`,
+              }}
+              transition={reduce ? { duration: 0 } : transitionDefault}
+              className="flex gap-6 lg:gap-8 cursor-grab active:cursor-grabbing select-none"
             >
-              <span
-                aria-hidden="true"
-                className="block h-2 rounded-full transition-all duration-300 motion-reduce:transition-none"
-                style={{
-                  backgroundColor:
-                    activeIndex === index
-                      ? "var(--accent)"
-                      : "var(--border-strong)",
-                  width: activeIndex === index ? "1.75rem" : "0.5rem",
-                }}
-              />
-            </button>
-          ))}
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={testimonial.id}
+                  className="w-full lg:w-[calc(50%-16px)] shrink-0 flex-grow-0"
+                >
+                  <TestimonialCard
+                    testimonial={testimonial}
+                    index={index}
+                    reduce={reduce}
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </Container>
     </Section>
@@ -144,6 +169,7 @@ const TestimonialCard = memo(function TestimonialCard({
     author: string;
     role: string;
     company: string;
+    avatar: string;
   };
   index: number;
   reduce: boolean | null;
@@ -154,31 +180,37 @@ const TestimonialCard = memo(function TestimonialCard({
       whileInView={reduce ? undefined : "show"}
       viewport={viewportOnce}
       variants={fadeUp}
-      transition={{ ...transitionDefault, delay: reduce ? 0 : index * 0.1 }}
-      className={`flex flex-col group h-full ${index === 2 ? "md:items-center md:text-center" : ""}`}
+      transition={{ ...transitionDefault, delay: reduce ? 0 : index * 0.05 }}
+      className="studio-surface studio-surface--noise p-8 md:p-10 flex flex-col justify-between h-full group hover:shadow-hover hover:border-accent/40 transition-all duration-500 select-none"
     >
-      <div className="mb-8 relative">
-        {/* Minimalist static quote mark */}
-        <div
-          className={`absolute -top-6 text-accent/20 font-serif text-8xl leading-none select-none pointer-events-none transition-colors duration-500 group-hover:text-accent/40 ${index === 2 ? "md:left-1/2 md:-translate-x-1/2 -left-4" : "-left-4"}`}
-        >
+      <div className="mb-8 relative z-10">
+        {/* Quote Mark Watermark */}
+        <div className="absolute -top-6 -left-4 text-accent/15 font-serif text-8xl leading-none select-none pointer-events-none transition-colors duration-500 group-hover:text-accent/30 z-0">
           &quot;
         </div>
-        <p
-          className={`studio-body-serif font-light leading-relaxed text-foreground relative z-10 break-words min-w-0 ${index === 2 ? "md:max-w-3xl mx-auto" : ""}`}
-        >
+        <p className="studio-body-serif font-light italic leading-relaxed text-foreground relative z-10 break-words min-w-0">
           {testimonial.quote}
         </p>
       </div>
 
-      <div
-        className={`mt-auto transition-colors duration-500 min-w-0 pt-4 border-t border-accent/30 group-hover:border-accent ${index === 2 ? "md:text-center" : ""}`}
-      >
-        <div className="font-semibold text-foreground tracking-wide break-words">
-          {testimonial.author}
+      {/* Author Footer Info */}
+      <div className="mt-auto pt-6 border-t border-accent/20 flex items-center gap-4 relative z-10">
+        <div className="w-12 h-12 rounded-full overflow-hidden border border-border-strong shrink-0 relative">
+          <Image
+            src={testimonial.avatar}
+            alt={`Headshot of ${testimonial.author}`}
+            fill
+            sizes="48px"
+            className="object-cover transition-all duration-500 group-hover:scale-105"
+          />
         </div>
-        <div className="studio-tag mt-1 break-words text-muted-foreground opacity-80">
-          {testimonial.role}, {testimonial.company}
+        <div className="min-w-0">
+          <h3 className="font-sans font-semibold text-foreground tracking-wide break-words text-base leading-snug">
+            {testimonial.author}
+          </h3>
+          <p className="font-body text-xs text-muted-foreground mt-0.5 break-words">
+            {testimonial.role}, {testimonial.company}
+          </p>
         </div>
       </div>
     </motion.div>

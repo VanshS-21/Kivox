@@ -5,6 +5,7 @@ export const testimonials = [
     author: "Priya Nair",
     role: "Co-Owner",
     company: "Aromas Café, Indiranagar",
+    avatar: "/testimonials/avatar-priya.png",
   },
   {
     id: "srishti-academy",
@@ -12,6 +13,7 @@ export const testimonials = [
     author: "Ramesh Iyer",
     role: "Principal",
     company: "Srishti Academy, Pune",
+    avatar: "/testimonials/avatar-ramesh.png",
   },
   {
     id: "wellcore-fitness",
@@ -19,6 +21,7 @@ export const testimonials = [
     author: "Karan Mehta",
     role: "Founder",
     company: "WellCore Fitness Studio, Bandra",
+    avatar: "/testimonials/avatar-karan.png",
   },
   {
     id: "nirmal-clinic",
@@ -26,6 +29,7 @@ export const testimonials = [
     author: "Dr. Sunita Murthy",
     role: "Dermatologist",
     company: "Nirmal Skin Clinic, Koramangala",
+    avatar: "/testimonials/avatar-sunita.png",
   },
   {
     id: "triveni-jewels",
@@ -33,6 +37,7 @@ export const testimonials = [
     author: "Ashok Trivedi",
     role: "Owner",
     company: "Triveni Jewels, Ahmedabad",
+    avatar: "/testimonials/avatar-ashok.png",
   },
 ];
 
